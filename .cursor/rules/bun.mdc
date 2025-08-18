@@ -1,0 +1,18 @@
+---
+alwaysApply: true
+---
+
+Use Bun for all node-related commands.
+
+- Prefer `bun install` over `npm install`.
+- Prefer `bun run <script>` over `npm run <script>`.
+- When compiling TypeScript or running Nitro codegen:
+  - `bun run typescript`
+  - `bun run nitro-codegen`
+    Use Bun for all node-related commands.
+
+- Prefer `bun install` over `npm install`.
+- Prefer `bun run <script>` over `npm run <script>`.
+- When compiling TypeScript or running Nitro codegen:
+  - `bun run typescript`
+  - `bun run nitro-codegen`
