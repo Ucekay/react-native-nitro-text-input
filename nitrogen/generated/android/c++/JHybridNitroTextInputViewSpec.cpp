@@ -7,10 +7,13 @@
 
 #include "JHybridNitroTextInputViewSpec.hpp"
 
+// Forward declaration of `AutoCapitalize` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 
-
-#include <string>
 #include <optional>
+#include "AutoCapitalize.hpp"
+#include "JAutoCapitalize.hpp"
+#include <string>
 #include <functional>
 #include "JFunc_void_double.hpp"
 
@@ -37,14 +40,41 @@ namespace margelo::nitro::nitrotextinput {
   }
 
   // Properties
-  bool JHybridNitroTextInputViewSpec::getAutoCorrect() {
-    static const auto method = javaClassStatic()->getMethod<jboolean()>("getAutoCorrect");
+  std::optional<bool> JHybridNitroTextInputViewSpec::getAllowFontScaling() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getAllowFontScaling");
     auto __result = method(_javaPart);
-    return static_cast<bool>(__result);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
   }
-  void JHybridNitroTextInputViewSpec::setAutoCorrect(bool autoCorrect) {
-    static const auto method = javaClassStatic()->getMethod<void(jboolean /* autoCorrect */)>("setAutoCorrect");
-    method(_javaPart, autoCorrect);
+  void JHybridNitroTextInputViewSpec::setAllowFontScaling(std::optional<bool> allowFontScaling) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* allowFontScaling */)>("setAllowFontScaling");
+    method(_javaPart, allowFontScaling.has_value() ? jni::JBoolean::valueOf(allowFontScaling.value()) : nullptr);
+  }
+  std::optional<AutoCapitalize> JHybridNitroTextInputViewSpec::getAutoCapitalize() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JAutoCapitalize>()>("getAutoCapitalize");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JAutoCapitalize> /* autoCapitalize */)>("setAutoCapitalize");
+    method(_javaPart, autoCapitalize.has_value() ? JAutoCapitalize::fromCpp(autoCapitalize.value()) : nullptr);
+  }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getAutoCorrect() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getAutoCorrect");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setAutoCorrect(std::optional<bool> autoCorrect) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* autoCorrect */)>("setAutoCorrect");
+    method(_javaPart, autoCorrect.has_value() ? jni::JBoolean::valueOf(autoCorrect.value()) : nullptr);
+  }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMultiline(std::optional<bool> multiline) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* multiline */)>("setMultiline");
+    method(_javaPart, multiline.has_value() ? jni::JBoolean::valueOf(multiline.value()) : nullptr);
   }
   std::optional<std::string> JHybridNitroTextInputViewSpec::getPlaceholder() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getPlaceholder");

@@ -8,6 +8,8 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AutoCapitalize` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 
@@ -16,6 +18,7 @@ namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 
 // Include C++ defined types
+#include "AutoCapitalize.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include <functional>
 #include <memory>
@@ -28,6 +31,24 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
  */
 namespace margelo::nitro::nitrotextinput::bridge::swift {
 
+  // pragma MARK: std::optional<bool>
+  /**
+   * Specialized version of `std::optional<bool>`.
+   */
+  using std__optional_bool_ = std::optional<bool>;
+  inline std::optional<bool> create_std__optional_bool_(const bool& value) {
+    return std::optional<bool>(value);
+  }
+  
+  // pragma MARK: std::optional<AutoCapitalize>
+  /**
+   * Specialized version of `std::optional<AutoCapitalize>`.
+   */
+  using std__optional_AutoCapitalize_ = std::optional<AutoCapitalize>;
+  inline std::optional<AutoCapitalize> create_std__optional_AutoCapitalize_(const AutoCapitalize& value) {
+    return std::optional<AutoCapitalize>(value);
+  }
+  
   // pragma MARK: std::optional<std::string>
   /**
    * Specialized version of `std::optional<std::string>`.

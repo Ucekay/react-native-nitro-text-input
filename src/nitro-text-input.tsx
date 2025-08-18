@@ -14,34 +14,31 @@ export function NitroTextInput(props: NitroTextInputProps) {
     number | undefined
   >(undefined)
 
-  const flattenedStyle = React.useMemo(() => {
-    // `style` can be an object or an array; flatten to inspect height
-    return StyleSheet.flatten((props as any).style) ?? {}
-  }, [props])
+  const flattenedStyle = StyleSheet.flatten(props.style) ?? {}
 
   const hasExplicitHeight = flattenedStyle?.height != null
 
-  const composedStyle = React.useMemo(() => {
+  const composedStyle = () => {
     if (!hasExplicitHeight && measuredInitialHeight != null) {
       return [
         // Preserve original user-provided style(s)
-        (props as any).style,
+        props.style,
         // Apply measured height only when height isn't explicitly set
-        { height: measuredInitialHeight },
+        { height: measuredInitialHeight, width: '100%' as const },
       ]
     }
-    return (props as any).style
-  }, [hasExplicitHeight, measuredInitialHeight, props])
+    return [props.style, { width: '100%' as const }]
+  }
 
-  const handleInitialHeightMeasured = React.useCallback((height: number) => {
+  const handleInitialHeightMeasured = (height: number) => {
     setMeasuredInitialHeight(height)
-  }, [])
+  }
 
   return (
     <NativeNitroTextInput
-      {...(props as any)}
-      style={composedStyle}
-      onInitialHeightMeasured={handleInitialHeightMeasured}
+      {...props}
+      style={composedStyle()}
+      onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}
     />
   )
 }

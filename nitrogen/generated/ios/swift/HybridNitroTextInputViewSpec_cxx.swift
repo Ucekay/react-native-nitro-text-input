@@ -106,14 +106,71 @@ open class HybridNitroTextInputViewSpec_cxx {
   }
 
   // Properties
-  public final var autoCorrect: Bool {
+  public final var allowFontScaling: bridge.std__optional_bool_ {
     @inline(__always)
     get {
-      return self.__implementation.autoCorrect
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.allowFontScaling {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
     }
     @inline(__always)
     set {
-      self.__implementation.autoCorrect = newValue
+      self.__implementation.allowFontScaling = newValue.value
+    }
+  }
+  
+  public final var autoCapitalize: bridge.std__optional_AutoCapitalize_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_AutoCapitalize_ in
+        if let __unwrappedValue = self.__implementation.autoCapitalize {
+          return bridge.create_std__optional_AutoCapitalize_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.autoCapitalize = newValue.value
+    }
+  }
+  
+  public final var autoCorrect: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.autoCorrect {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.autoCorrect = newValue.value
+    }
+  }
+  
+  public final var multiline: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.multiline {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.multiline = newValue.value
     }
   }
   

@@ -42,7 +42,25 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var autoCorrect: Boolean
+  abstract var allowFontScaling: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var autoCapitalize: AutoCapitalize?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var autoCorrect: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var multiline: Boolean?
   
   @get:DoNotStrip
   @get:Keep

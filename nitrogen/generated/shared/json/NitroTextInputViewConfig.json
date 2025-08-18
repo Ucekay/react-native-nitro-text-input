@@ -4,7 +4,10 @@
   "bubblingEventTypes": {},
   "directEventTypes": {},
   "validAttributes": {
+    "allowFontScaling": true,
+    "autoCapitalize": true,
     "autoCorrect": true,
+    "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,
     "hybridRef": true

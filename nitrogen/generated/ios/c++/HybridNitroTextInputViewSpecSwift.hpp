@@ -12,10 +12,12 @@
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
 namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 
+// Forward declaration of `AutoCapitalize` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 
-
-#include <string>
 #include <optional>
+#include "AutoCapitalize.hpp"
+#include <string>
 #include <functional>
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
@@ -55,11 +57,33 @@ namespace margelo::nitro::nitrotextinput {
 
   public:
     // Properties
-    inline bool getAutoCorrect() noexcept override {
-      return _swiftPart.getAutoCorrect();
+    inline std::optional<bool> getAllowFontScaling() noexcept override {
+      auto __result = _swiftPart.getAllowFontScaling();
+      return __result;
     }
-    inline void setAutoCorrect(bool autoCorrect) noexcept override {
-      _swiftPart.setAutoCorrect(std::forward<decltype(autoCorrect)>(autoCorrect));
+    inline void setAllowFontScaling(std::optional<bool> allowFontScaling) noexcept override {
+      _swiftPart.setAllowFontScaling(allowFontScaling);
+    }
+    inline std::optional<AutoCapitalize> getAutoCapitalize() noexcept override {
+      auto __result = _swiftPart.getAutoCapitalize();
+      return __result;
+    }
+    inline void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) noexcept override {
+      _swiftPart.setAutoCapitalize(autoCapitalize);
+    }
+    inline std::optional<bool> getAutoCorrect() noexcept override {
+      auto __result = _swiftPart.getAutoCorrect();
+      return __result;
+    }
+    inline void setAutoCorrect(std::optional<bool> autoCorrect) noexcept override {
+      _swiftPart.setAutoCorrect(autoCorrect);
+    }
+    inline std::optional<bool> getMultiline() noexcept override {
+      auto __result = _swiftPart.getMultiline();
+      return __result;
+    }
+    inline void setMultiline(std::optional<bool> multiline) noexcept override {
+      _swiftPart.setMultiline(multiline);
     }
     inline std::optional<std::string> getPlaceholder() noexcept override {
       auto __result = _swiftPart.getPlaceholder();

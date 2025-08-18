@@ -49,8 +49,14 @@ namespace margelo::nitro::nitrotextinput {
 
   public:
     // Properties
-    bool getAutoCorrect() override;
-    void setAutoCorrect(bool autoCorrect) override;
+    std::optional<bool> getAllowFontScaling() override;
+    void setAllowFontScaling(std::optional<bool> allowFontScaling) override;
+    std::optional<AutoCapitalize> getAutoCapitalize() override;
+    void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) override;
+    std::optional<bool> getAutoCorrect() override;
+    void setAutoCorrect(std::optional<bool> autoCorrect) override;
+    std::optional<bool> getMultiline() override;
+    void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;
     void setPlaceholder(const std::optional<std::string>& placeholder) override;
     std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() override;

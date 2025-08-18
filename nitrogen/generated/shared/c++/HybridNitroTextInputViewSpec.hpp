@@ -13,10 +13,12 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `AutoCapitalize` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 
-
-#include <string>
 #include <optional>
+#include "AutoCapitalize.hpp"
+#include <string>
 #include <functional>
 
 namespace margelo::nitro::nitrotextinput {
@@ -46,8 +48,14 @@ namespace margelo::nitro::nitrotextinput {
 
     public:
       // Properties
-      virtual bool getAutoCorrect() = 0;
-      virtual void setAutoCorrect(bool autoCorrect) = 0;
+      virtual std::optional<bool> getAllowFontScaling() = 0;
+      virtual void setAllowFontScaling(std::optional<bool> allowFontScaling) = 0;
+      virtual std::optional<AutoCapitalize> getAutoCapitalize() = 0;
+      virtual void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) = 0;
+      virtual std::optional<bool> getAutoCorrect() = 0;
+      virtual void setAutoCorrect(std::optional<bool> autoCorrect) = 0;
+      virtual std::optional<bool> getMultiline() = 0;
+      virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;

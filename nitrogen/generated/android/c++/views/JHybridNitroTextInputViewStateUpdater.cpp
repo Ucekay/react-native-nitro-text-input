@@ -36,8 +36,20 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     throw std::runtime_error("HybridNitroTextInputViewState's data doesn't contain any props!");
   }
   const HybridNitroTextInputViewProps& props = maybeProps.value();
+  if (props.allowFontScaling.isDirty) {
+    view->setAllowFontScaling(props.allowFontScaling.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.autoCapitalize.isDirty) {
+    view->setAutoCapitalize(props.autoCapitalize.value);
+    // TODO: Set isDirty = false
+  }
   if (props.autoCorrect.isDirty) {
     view->setAutoCorrect(props.autoCorrect.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.multiline.isDirty) {
+    view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
   }
   if (props.placeholder.isDirty) {

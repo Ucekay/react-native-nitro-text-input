@@ -5,8 +5,13 @@ import type {
   HybridViewProps,
 } from 'react-native-nitro-modules'
 
+export type AutoCapitalize = 'none' | 'sentences' | 'words' | 'characters'
+
 export interface NitroTextInputViewProps extends HybridViewProps {
-  autoCorrect: boolean
+  allowFontScaling?: boolean
+  autoCapitalize?: AutoCapitalize
+  autoCorrect?: boolean
+  multiline?: boolean
   placeholder?: string
   /**
    * Called once when the initial height has been measured (pt).

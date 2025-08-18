@@ -14,8 +14,14 @@ namespace margelo::nitro::nitrotextinput {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
+      prototype.registerHybridGetter("allowFontScaling", &HybridNitroTextInputViewSpec::getAllowFontScaling);
+      prototype.registerHybridSetter("allowFontScaling", &HybridNitroTextInputViewSpec::setAllowFontScaling);
+      prototype.registerHybridGetter("autoCapitalize", &HybridNitroTextInputViewSpec::getAutoCapitalize);
+      prototype.registerHybridSetter("autoCapitalize", &HybridNitroTextInputViewSpec::setAutoCapitalize);
       prototype.registerHybridGetter("autoCorrect", &HybridNitroTextInputViewSpec::getAutoCorrect);
       prototype.registerHybridSetter("autoCorrect", &HybridNitroTextInputViewSpec::setAutoCorrect);
+      prototype.registerHybridGetter("multiline", &HybridNitroTextInputViewSpec::getMultiline);
+      prototype.registerHybridSetter("multiline", &HybridNitroTextInputViewSpec::setMultiline);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);
       prototype.registerHybridSetter("placeholder", &HybridNitroTextInputViewSpec::setPlaceholder);
       prototype.registerHybridGetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::getOnInitialHeightMeasured);

@@ -71,10 +71,25 @@ using namespace margelo::nitro::nitrotextinput::views;
   // 2. Update each prop individually
   swiftPart.beforeUpdate();
 
-  // autoCorrect: boolean
+  // allowFontScaling: optional
+  if (newViewProps.allowFontScaling.isDirty) {
+    swiftPart.setAllowFontScaling(newViewProps.allowFontScaling.value);
+    newViewProps.allowFontScaling.isDirty = false;
+  }
+  // autoCapitalize: optional
+  if (newViewProps.autoCapitalize.isDirty) {
+    swiftPart.setAutoCapitalize(newViewProps.autoCapitalize.value);
+    newViewProps.autoCapitalize.isDirty = false;
+  }
+  // autoCorrect: optional
   if (newViewProps.autoCorrect.isDirty) {
     swiftPart.setAutoCorrect(newViewProps.autoCorrect.value);
     newViewProps.autoCorrect.isDirty = false;
+  }
+  // multiline: optional
+  if (newViewProps.multiline.isDirty) {
+    swiftPart.setMultiline(newViewProps.multiline.value);
+    newViewProps.multiline.isDirty = false;
   }
   // placeholder: optional
   if (newViewProps.placeholder.isDirty) {

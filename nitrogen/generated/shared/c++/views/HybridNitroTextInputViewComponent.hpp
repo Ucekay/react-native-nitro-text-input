@@ -16,6 +16,11 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/components/view/ViewProps.h>
 
+#include <optional>
+#include "AutoCapitalize.hpp"
+#include <optional>
+#include <optional>
+#include <optional>
 #include <string>
 #include <optional>
 #include <functional>
@@ -46,7 +51,10 @@ namespace margelo::nitro::nitrotextinput::views {
                                   const react::RawProps& rawProps);
 
   public:
-    CachedProp<bool> autoCorrect;
+    CachedProp<std::optional<bool>> allowFontScaling;
+    CachedProp<std::optional<AutoCapitalize>> autoCapitalize;
+    CachedProp<std::optional<bool>> autoCorrect;
+    CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> hybridRef;

@@ -1,3 +1,4 @@
+import Foundation
 import NitroModules
 import UIKit
 
@@ -11,7 +12,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     override init() {
         super.init()
-        self.textField.placeholder = " "
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
@@ -25,17 +25,59 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
     }
     // Props
-    var autoCorrect: Bool = false
+    var allowFontScaling: Bool? = true {
+        didSet {
+            Task {
+                @MainActor in
+                textField.adjustsFontForContentSizeCategory =
+                    self.allowFontScaling ?? true
+            }
+        }
+    }
+    var autoCapitalize: AutoCapitalize? {
+        didSet {
+            Task {
+                @MainActor in
+                self.updateAutoCapitalize()
+            }
+        }
+    }
+    var autoCorrect: Bool? = true {
+        didSet {
+            Task {
+                @MainActor in
+                self.updateAutoCorrect()
+            }
+        }
+    }
+    var multiline: Bool? = false
     var placeholder: String? {
         didSet {
             Task { @MainActor in
-                self.updatePlaceholder()
+                textField.placeholder = self.placeholder
             }
         }
     }
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
 
-    private func updatePlaceholder() {
-        textField.placeholder = self.placeholder
+    private func updateAutoCorrect() {
+        if let value = autoCorrect {
+            textField.autocorrectionType = value ? .yes : .no
+        } else {
+            textField.autocorrectionType = .default
+        }
+    }
+
+    private func updateAutoCapitalize() {
+        switch self.autoCapitalize {
+        case nil, .sentences:
+            textField.autocapitalizationType = .sentences
+        case .words:
+            textField.autocapitalizationType = .words
+        case .characters:
+            textField.autocapitalizationType = .allCharacters
+        case .none?:
+            textField.autocapitalizationType = .none
+        }
     }
 }

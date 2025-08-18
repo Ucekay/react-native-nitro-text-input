@@ -8,10 +8,13 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `AutoCapitalize` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 
 // Include C++ defined types
+#include "AutoCapitalize.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include <functional>
 #include <memory>

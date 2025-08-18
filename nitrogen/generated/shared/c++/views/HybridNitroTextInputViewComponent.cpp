@@ -25,14 +25,44 @@ namespace margelo::nitro::nitrotextinput::views {
                                                                const HybridNitroTextInputViewProps& sourceProps,
                                                                const react::RawProps& rawProps):
     react::ViewProps(context, sourceProps, rawProps, filterObjectKeys),
-    autoCorrect([&]() -> CachedProp<bool> {
+    allowFontScaling([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("allowFontScaling", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.allowFontScaling;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.allowFontScaling);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.allowFontScaling: ") + exc.what());
+      }
+    }()),
+    autoCapitalize([&]() -> CachedProp<std::optional<AutoCapitalize>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("autoCapitalize", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.autoCapitalize;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<AutoCapitalize>>::fromRawValue(*runtime, value, sourceProps.autoCapitalize);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.autoCapitalize: ") + exc.what());
+      }
+    }()),
+    autoCorrect([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("autoCorrect", nullptr, nullptr);
         if (rawValue == nullptr) return sourceProps.autoCorrect;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<bool>::fromRawValue(*runtime, value, sourceProps.autoCorrect);
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.autoCorrect);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroTextInputView.autoCorrect: ") + exc.what());
+      }
+    }()),
+    multiline([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("multiline", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.multiline;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.multiline);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.multiline: ") + exc.what());
       }
     }()),
     placeholder([&]() -> CachedProp<std::optional<std::string>> {
@@ -68,14 +98,20 @@ namespace margelo::nitro::nitrotextinput::views {
 
   HybridNitroTextInputViewProps::HybridNitroTextInputViewProps(const HybridNitroTextInputViewProps& other):
     react::ViewProps(),
+    allowFontScaling(other.allowFontScaling),
+    autoCapitalize(other.autoCapitalize),
     autoCorrect(other.autoCorrect),
+    multiline(other.multiline),
     placeholder(other.placeholder),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
   bool HybridNitroTextInputViewProps::filterObjectKeys(const std::string& propName) {
     switch (hashString(propName)) {
+      case hashString("allowFontScaling"): return true;
+      case hashString("autoCapitalize"): return true;
       case hashString("autoCorrect"): return true;
+      case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;

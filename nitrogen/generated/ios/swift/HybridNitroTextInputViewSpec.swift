@@ -11,7 +11,10 @@ import NitroModules
 /// See ``HybridNitroTextInputViewSpec``
 public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView {
   // Properties
-  var autoCorrect: Bool { get set }
+  var allowFontScaling: Bool? { get set }
+  var autoCapitalize: AutoCapitalize? { get set }
+  var autoCorrect: Bool? { get set }
+  var multiline: Bool? { get set }
   var placeholder: String? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
 
