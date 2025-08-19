@@ -19,6 +19,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var caretHidden: Bool? { get set }
   var clearButtonMode: ClearButtonMode? { get set }
   var clearTextOnFocus: Bool? { get set }
+  var defaultValue: String? { get set }
   var multiline: Bool? { get set }
   var placeholder: String? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }

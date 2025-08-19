@@ -68,6 +68,14 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   caretHidden?: boolean
   clearButtonMode?: ClearButtonMode
   clearTextOnFocus?: boolean
+  /**
+   * Provides an initial value that will change when the user starts typing. Useful for simple use-cases where you don’t want to deal with listening to events and updating the value prop to keep the controlled state in sync.
+   *
+   * 注意: NitroTextInput の `defaultValue` は「初期化時にのみ」反映されます。マウント後にこの props を更新しても、既に表示中のテキストは上書きされません。
+   * - 初回マウント時、フィールドが空の場合に初期値として適用されます。
+   * - ユーザー入力などでテキストが既に存在する場合は上書きしません。
+   */
+  defaultValue?: string
   multiline?: boolean
   placeholder?: string
   /**

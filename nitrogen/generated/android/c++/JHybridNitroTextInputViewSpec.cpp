@@ -120,6 +120,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* clearTextOnFocus */)>("setClearTextOnFocus");
     method(_javaPart, clearTextOnFocus.has_value() ? jni::JBoolean::valueOf(clearTextOnFocus.value()) : nullptr);
   }
+  std::optional<std::string> JHybridNitroTextInputViewSpec::getDefaultValue() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getDefaultValue");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setDefaultValue(const std::optional<std::string>& defaultValue) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* defaultValue */)>("setDefaultValue");
+    method(_javaPart, defaultValue.has_value() ? jni::make_jstring(defaultValue.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");
     auto __result = method(_javaPart);

@@ -10,12 +10,12 @@ export default function App() {
         autoCorrect
         autoFocus={true}
         clearButtonMode="while-editing"
-        clearTextOnFocus
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
         clearButtonMode="always"
         placeholder="React Native Text Input"
+        style={{ width: '100%' }}
       />
       <StatusBar style="auto" />
     </View>
