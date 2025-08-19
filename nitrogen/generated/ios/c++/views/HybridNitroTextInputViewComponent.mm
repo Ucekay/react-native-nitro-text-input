@@ -126,10 +126,10 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setEditable(newViewProps.editable.value);
     newViewProps.editable.isDirty = false;
   }
-  // enableReturnKeyAutomatically: optional
-  if (newViewProps.enableReturnKeyAutomatically.isDirty) {
-    swiftPart.setEnableReturnKeyAutomatically(newViewProps.enableReturnKeyAutomatically.value);
-    newViewProps.enableReturnKeyAutomatically.isDirty = false;
+  // enablesReturnKeyAutomatically: optional
+  if (newViewProps.enablesReturnKeyAutomatically.isDirty) {
+    swiftPart.setEnablesReturnKeyAutomatically(newViewProps.enablesReturnKeyAutomatically.value);
+    newViewProps.enablesReturnKeyAutomatically.isDirty = false;
   }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {

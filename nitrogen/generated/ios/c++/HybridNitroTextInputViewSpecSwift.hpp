@@ -140,12 +140,12 @@ namespace margelo::nitro::nitrotextinput {
     inline void setEditable(std::optional<bool> editable) noexcept override {
       _swiftPart.setEditable(editable);
     }
-    inline std::optional<bool> getEnableReturnKeyAutomatically() noexcept override {
-      auto __result = _swiftPart.getEnableReturnKeyAutomatically();
+    inline std::optional<bool> getEnablesReturnKeyAutomatically() noexcept override {
+      auto __result = _swiftPart.getEnablesReturnKeyAutomatically();
       return __result;
     }
-    inline void setEnableReturnKeyAutomatically(std::optional<bool> enableReturnKeyAutomatically) noexcept override {
-      _swiftPart.setEnableReturnKeyAutomatically(enableReturnKeyAutomatically);
+    inline void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) noexcept override {
+      _swiftPart.setEnablesReturnKeyAutomatically(enablesReturnKeyAutomatically);
     }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();

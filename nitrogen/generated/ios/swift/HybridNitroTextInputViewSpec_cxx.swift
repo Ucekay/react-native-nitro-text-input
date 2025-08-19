@@ -299,11 +299,11 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
-  public final var enableReturnKeyAutomatically: bridge.std__optional_bool_ {
+  public final var enablesReturnKeyAutomatically: bridge.std__optional_bool_ {
     @inline(__always)
     get {
       return { () -> bridge.std__optional_bool_ in
-        if let __unwrappedValue = self.__implementation.enableReturnKeyAutomatically {
+        if let __unwrappedValue = self.__implementation.enablesReturnKeyAutomatically {
           return bridge.create_std__optional_bool_(__unwrappedValue)
         } else {
           return .init()
@@ -312,7 +312,7 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.enableReturnKeyAutomatically = newValue.value
+      self.__implementation.enablesReturnKeyAutomatically = newValue.value
     }
   }
   
