@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches: [ "main", "next", "beta" ]
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    env:
+      CI: true
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Build (if scripts exist)
+        run: |
+          bun run | grep -q "^typescript" && bun run typescript || true
+          bun run | grep -q "^nitro-codegen" && bun run nitro-codegen || true
+          bun run | grep -q "^build" && bun run build || true
+
+      - name: Test (if script exists)
+        run: |
+          bun run | grep -q "^test" && bun run test || true
+
+      - name: Release
+        run: bunx semantic-release
