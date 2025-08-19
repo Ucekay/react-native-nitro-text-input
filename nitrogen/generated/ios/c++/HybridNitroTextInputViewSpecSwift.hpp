@@ -112,6 +112,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) noexcept override {
       _swiftPart.setClearButtonMode(clearButtonMode);
     }
+    inline std::optional<bool> getClearTextOnFocus() noexcept override {
+      auto __result = _swiftPart.getClearTextOnFocus();
+      return __result;
+    }
+    inline void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) noexcept override {
+      _swiftPart.setClearTextOnFocus(clearTextOnFocus);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;

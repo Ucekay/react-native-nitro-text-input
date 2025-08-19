@@ -28,6 +28,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("caretHidden", &HybridNitroTextInputViewSpec::setCaretHidden);
       prototype.registerHybridGetter("clearButtonMode", &HybridNitroTextInputViewSpec::getClearButtonMode);
       prototype.registerHybridSetter("clearButtonMode", &HybridNitroTextInputViewSpec::setClearButtonMode);
+      prototype.registerHybridGetter("clearTextOnFocus", &HybridNitroTextInputViewSpec::getClearTextOnFocus);
+      prototype.registerHybridSetter("clearTextOnFocus", &HybridNitroTextInputViewSpec::setClearTextOnFocus);
       prototype.registerHybridGetter("multiline", &HybridNitroTextInputViewSpec::getMultiline);
       prototype.registerHybridSetter("multiline", &HybridNitroTextInputViewSpec::setMultiline);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);

@@ -106,6 +106,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setClearButtonMode(newViewProps.clearButtonMode.value);
     newViewProps.clearButtonMode.isDirty = false;
   }
+  // clearTextOnFocus: optional
+  if (newViewProps.clearTextOnFocus.isDirty) {
+    swiftPart.setClearTextOnFocus(newViewProps.clearTextOnFocus.value);
+    newViewProps.clearTextOnFocus.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

@@ -64,6 +64,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setClearButtonMode(props.clearButtonMode.value);
     // TODO: Set isDirty = false
   }
+  if (props.clearTextOnFocus.isDirty) {
+    view->setClearTextOnFocus(props.clearTextOnFocus.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
