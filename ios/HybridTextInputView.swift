@@ -21,6 +21,7 @@ class CustomTextField: UITextField {
 
 class HybridTextInputView: HybridNitroTextInputViewSpec {
     private let textField = CustomTextField()
+    private var hasAppliedDefaultValue: Bool = false
     var view: UIView { return textField }
 
     override init() {
@@ -104,6 +105,16 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 textField.placeholder = self.placeholder
+            }
+        }
+    }
+    var defaultValue: String? {
+        didSet {
+            Task { @MainActor in
+                guard self.hasAppliedDefaultValue == false else { return }
+                guard let initialText = self.defaultValue, !(self.textField.text?.isEmpty == false) else { return }
+                self.textField.text = initialText
+                self.hasAppliedDefaultValue = true
             }
         }
     }
@@ -304,5 +315,4 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             self.textField.clearButtonMode = .always
         }
     }
-    
 }
