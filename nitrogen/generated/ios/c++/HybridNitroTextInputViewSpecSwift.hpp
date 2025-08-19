@@ -133,6 +133,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setDefaultValue(const std::optional<std::string>& defaultValue) noexcept override {
       _swiftPart.setDefaultValue(defaultValue);
     }
+    inline std::optional<bool> getEditable() noexcept override {
+      auto __result = _swiftPart.getEditable();
+      return __result;
+    }
+    inline void setEditable(std::optional<bool> editable) noexcept override {
+      _swiftPart.setEditable(editable);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;

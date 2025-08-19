@@ -69,6 +69,8 @@ namespace margelo::nitro::nitrotextinput {
     void setContextMenuHidden(std::optional<bool> contextMenuHidden) override;
     std::optional<std::string> getDefaultValue() override;
     void setDefaultValue(const std::optional<std::string>& defaultValue) override;
+    std::optional<bool> getEditable() override;
+    void setEditable(std::optional<bool> editable) override;
     std::optional<bool> getMultiline() override;
     void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;

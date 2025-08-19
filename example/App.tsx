@@ -8,7 +8,6 @@ export default function App() {
       <NitroTextInput
         allowFontScaling
         autoCapitalize="words"
-        autoComplete="name"
         autoCorrect
         autoFocus={true}
         caretHidden={false}
@@ -16,6 +15,7 @@ export default function App() {
         clearTextOnFocus={false}
         contextMenuHidden={false}
         defaultValue=""
+        editable
         placeholder="Nitro Text Input🔥"
       />
       <TextInput

@@ -76,6 +76,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setDefaultValue(props.defaultValue.value);
     // TODO: Set isDirty = false
   }
+  if (props.editable.isDirty) {
+    view->setEditable(props.editable.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false

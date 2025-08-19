@@ -77,6 +77,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
    * - ユーザー入力などでテキストが既に存在する場合は上書きしません。
    */
   defaultValue?: string
+  editable?: boolean
   multiline?: boolean
   placeholder?: string
   /**
