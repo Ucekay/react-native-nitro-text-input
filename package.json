@@ -34,7 +34,9 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "lint-ci": "eslint \"**/*.{js,ts,tsx}\" -f @jamesacarr/github-actions",
     "typescript": "tsc",
-    "specs": "typescript && nitro-codegen --logLevel=\"debug\""
+    "specs": "typescript && nitro-codegen --logLevel=\"debug\"",
+    "prepare": "husky",
+    "release": "semantic-release"
   },
   "keywords": [
     "react-native",
@@ -42,30 +44,41 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrousavy/nitro.git"
+    "url": "git+https://github.com/Ucekay/react-native-nitro-text-input.git"
   },
   "author": "Marc Rousavy <me@mrousavy.com> (https://github.com/mrousavy)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mrousavy/nitro/issues"
+    "url": "https://github.com/Ucekay/react-native-nitro-text-input/issues"
   },
-  "homepage": "https://github.com/mrousavy/nitro#readme",
+  "homepage": "https://github.com/Ucekay/react-native-nitro-text-input#readme",
+  "private": false,
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@react-native/eslint-config": "0.81.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.4",
+    "@semantic-release/npm": "^12.0.2",
     "@types/jest": "^29.5.12",
     "@types/react": "^19.0.6",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
     "nitro-codegen": "*",
     "prettier": "^3.3.3",
     "react": "19.1.0",
     "react-native": "0.81.0",
     "react-native-nitro-modules": "*",
+    "semantic-release": "^24.2.7",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
