@@ -16,11 +16,13 @@ export default function App() {
         contextMenuHidden={false}
         defaultValue=""
         editable
+        enablesReturnKeyAutomatically
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
         clearButtonMode="always"
         placeholder="React Native Text Input"
+        enablesReturnKeyAutomatically
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />
