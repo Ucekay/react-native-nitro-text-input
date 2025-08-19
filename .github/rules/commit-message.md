@@ -36,6 +36,7 @@
       <guideline id="5">scopeは括弧で囲む: (scope)</guideline>
       <guideline id="6">破壊的変更がある場合は、footerに"BREAKING CHANGE:"を含める</guideline>
       <guideline id="7">Issue番号を参照する場合は、footerに記載する</guideline>
+      <guideline id="8">nitro-text-input コンポーネントの実装に直接関係しない変更（例: `example` フォルダ内のサンプルやデモ用の修正、単なる表示/サンプルデータの調整など）は `feat` タイプに含めない。特に `example` への変更は `feat` とせず、適切なタイプ（`docs`、`chore`、`style`、`test` など）を用いること。</guideline>
     </guidelines>
   </format-rules>
 
