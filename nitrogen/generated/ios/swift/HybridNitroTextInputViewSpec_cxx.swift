@@ -316,6 +316,17 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var enterKeyHint: Int32 {
+    @inline(__always)
+    get {
+      return self.__implementation.enterKeyHint.rawValue
+    }
+    @inline(__always)
+    set {
+      self.__implementation.enterKeyHint = margelo.nitro.nitrotextinput.EnterKeyHint(rawValue: newValue)!
+    }
+  }
+  
   public final var multiline: bridge.std__optional_bool_ {
     @inline(__always)
     get {

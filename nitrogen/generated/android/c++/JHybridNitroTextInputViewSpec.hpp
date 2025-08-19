@@ -73,6 +73,8 @@ namespace margelo::nitro::nitrotextinput {
     void setEditable(std::optional<bool> editable) override;
     std::optional<bool> getEnablesReturnKeyAutomatically() override;
     void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) override;
+    EnterKeyHint getEnterKeyHint() override;
+    void setEnterKeyHint(EnterKeyHint enterKeyHint) override;
     std::optional<bool> getMultiline() override;
     void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;

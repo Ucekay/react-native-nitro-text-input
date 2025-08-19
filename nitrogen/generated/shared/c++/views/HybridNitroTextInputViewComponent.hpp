@@ -32,6 +32,7 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include "EnterKeyHint.hpp"
 #include <optional>
 #include <string>
 #include <optional>
@@ -75,6 +76,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<std::string>> defaultValue;
     CachedProp<std::optional<bool>> editable;
     CachedProp<std::optional<bool>> enablesReturnKeyAutomatically;
+    CachedProp<EnterKeyHint> enterKeyHint;
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;

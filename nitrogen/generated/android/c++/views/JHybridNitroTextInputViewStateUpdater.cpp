@@ -84,6 +84,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setEnablesReturnKeyAutomatically(props.enablesReturnKeyAutomatically.value);
     // TODO: Set isDirty = false
   }
+  if (props.enterKeyHint.isDirty) {
+    view->setEnterKeyHint(props.enterKeyHint.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false

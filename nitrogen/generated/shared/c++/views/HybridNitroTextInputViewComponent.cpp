@@ -145,6 +145,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.enablesReturnKeyAutomatically: ") + exc.what());
       }
     }()),
+    enterKeyHint([&]() -> CachedProp<EnterKeyHint> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("enterKeyHint", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.enterKeyHint;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<EnterKeyHint>::fromRawValue(*runtime, value, sourceProps.enterKeyHint);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.enterKeyHint: ") + exc.what());
+      }
+    }()),
     multiline([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("multiline", nullptr, nullptr);
@@ -200,6 +210,7 @@ namespace margelo::nitro::nitrotextinput::views {
     defaultValue(other.defaultValue),
     editable(other.editable),
     enablesReturnKeyAutomatically(other.enablesReturnKeyAutomatically),
+    enterKeyHint(other.enterKeyHint),
     multiline(other.multiline),
     placeholder(other.placeholder),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
@@ -219,6 +230,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("defaultValue"): return true;
       case hashString("editable"): return true;
       case hashString("enablesReturnKeyAutomatically"): return true;
+      case hashString("enterKeyHint"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
       case hashString("onInitialHeightMeasured"): return true;
