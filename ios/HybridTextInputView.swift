@@ -58,6 +58,17 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var autoFocus: Bool? {
+        didSet {
+            Task { @MainActor in
+                if self.autoFocus == true {
+                    self.textField.becomeFirstResponder()
+                } else {
+                    self.textField.resignFirstResponder()
+                }
+            }
+        }
+    }
     var multiline: Bool? = false
     var placeholder: String? {
         didSet {
