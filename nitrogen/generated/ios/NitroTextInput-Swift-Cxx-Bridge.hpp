@@ -18,6 +18,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
@@ -29,6 +31,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "ClearButtonMode.hpp"
 #include "EnterKeyHint.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
+#include "KeyboardType.hpp"
 #include <functional>
 #include <memory>
 #include <optional>
@@ -92,6 +95,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_EnterKeyHint_ = std::optional<EnterKeyHint>;
   inline std::optional<EnterKeyHint> create_std__optional_EnterKeyHint_(const EnterKeyHint& value) {
     return std::optional<EnterKeyHint>(value);
+  }
+  
+  // pragma MARK: std::optional<KeyboardType>
+  /**
+   * Specialized version of `std::optional<KeyboardType>`.
+   */
+  using std__optional_KeyboardType_ = std::optional<KeyboardType>;
+  inline std::optional<KeyboardType> create_std__optional_KeyboardType_(const KeyboardType& value) {
+    return std::optional<KeyboardType>(value);
   }
   
   // pragma MARK: std::function<void(double /* height */)>

@@ -72,6 +72,20 @@ export type EnterKeyHint =
   | 'emergency-call'
   | 'continue'
 
+export type KeyboardType =
+  | 'default'
+  | 'ascii-capable'
+  | 'numbers-and-punctuation'
+  | 'url'
+  | 'number-pad'
+  | 'phone-pad'
+  | 'name-phone-pad'
+  | 'email-address'
+  | 'decimal-pad'
+  | 'twitter'
+  | 'web-search'
+  | 'ascii-capable-number-pad'
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
@@ -93,6 +107,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   editable?: boolean
   enablesReturnKeyAutomatically?: boolean
   enterKeyHint?: EnterKeyHint
+  keyboardType?: KeyboardType
   multiline?: boolean
   placeholder?: string
   /**

@@ -21,6 +21,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `EnterKeyHint` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -28,6 +30,7 @@ namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 #include "ClearButtonMode.hpp"
 #include <string>
 #include "EnterKeyHint.hpp"
+#include "KeyboardType.hpp"
 #include <functional>
 
 namespace margelo::nitro::nitrotextinput {
@@ -83,6 +86,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) = 0;
       virtual std::optional<EnterKeyHint> getEnterKeyHint() = 0;
       virtual void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) = 0;
+      virtual std::optional<KeyboardType> getKeyboardType() = 0;
+      virtual void setKeyboardType(std::optional<KeyboardType> keyboardType) = 0;
       virtual std::optional<bool> getMultiline() = 0;
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;

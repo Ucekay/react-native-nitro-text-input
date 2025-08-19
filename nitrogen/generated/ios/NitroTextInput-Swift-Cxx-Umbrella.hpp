@@ -18,6 +18,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
@@ -25,6 +27,7 @@ namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 #include "ClearButtonMode.hpp"
 #include "EnterKeyHint.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
+#include "KeyboardType.hpp"
 #include <functional>
 #include <memory>
 #include <optional>
