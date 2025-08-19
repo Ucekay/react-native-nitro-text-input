@@ -1,3 +1,9 @@
+## [1.0.0-next.4](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.3...v1.0.0-next.4) (2025-08-19)
+
+### Features
+
+* add new properties to NitroTextInput components ([#11](https://github.com/Ucekay/react-native-nitro-text-input/issues/11)) ([a30c67f](https://github.com/Ucekay/react-native-nitro-text-input/commit/a30c67fab309e244549b24f6c28f3bd51ac93510))
+
 ## [1.0.0-next.3](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.2...v1.0.0-next.3) (2025-08-19)
 
 ### Features
