@@ -9,9 +9,13 @@ export default function App() {
         autoCapitalize="words"
         autoCorrect
         autoFocus={true}
+        clearButtonMode="while-editing"
         placeholder="Nitro Text Input🔥"
       />
-      <TextInput placeholder="React Native Text Input" />
+      <TextInput
+        clearButtonMode="always"
+        placeholder="React Native Text Input"
+      />
       <StatusBar style="auto" />
     </View>
   )
