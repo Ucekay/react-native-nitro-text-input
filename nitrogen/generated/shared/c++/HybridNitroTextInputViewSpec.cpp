@@ -18,6 +18,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("allowFontScaling", &HybridNitroTextInputViewSpec::setAllowFontScaling);
       prototype.registerHybridGetter("autoCapitalize", &HybridNitroTextInputViewSpec::getAutoCapitalize);
       prototype.registerHybridSetter("autoCapitalize", &HybridNitroTextInputViewSpec::setAutoCapitalize);
+      prototype.registerHybridGetter("autoComplete", &HybridNitroTextInputViewSpec::getAutoComplete);
+      prototype.registerHybridSetter("autoComplete", &HybridNitroTextInputViewSpec::setAutoComplete);
       prototype.registerHybridGetter("autoCorrect", &HybridNitroTextInputViewSpec::getAutoCorrect);
       prototype.registerHybridSetter("autoCorrect", &HybridNitroTextInputViewSpec::setAutoCorrect);
       prototype.registerHybridGetter("multiline", &HybridNitroTextInputViewSpec::getMultiline);
