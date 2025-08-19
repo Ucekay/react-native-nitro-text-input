@@ -116,6 +116,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var clearTextOnFocus: Bool? {
+        didSet {
+            self.textField.clearTextOnFocus = self.clearTextOnFocus ?? false
+        }
+    }
     var contextMenuHidden: Bool? {
         didSet {
             Task {
@@ -132,14 +137,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var multiline: Bool? = false
-    var placeholder: String? {
-        didSet {
-            Task { @MainActor in
-                textField.placeholder = self.placeholder
-            }
-        }
-    }
     var defaultValue: String? {
         didSet {
             Task { @MainActor in
@@ -152,11 +149,20 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var clearTextOnFocus: Bool? {
+    var editable: Bool? {
         didSet {
-            self.textField.clearTextOnFocus = self.clearTextOnFocus ?? false
+            self.textField.isEnabled = self.editable ?? true
         }
     }
+    var multiline: Bool? = false
+    var placeholder: String? {
+        didSet {
+            Task { @MainActor in
+                textField.placeholder = self.placeholder
+            }
+        }
+    }
+
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
 
     private func updateAutoCorrect() {
