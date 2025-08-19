@@ -4,6 +4,11 @@ import UIKit
 
 class CustomTextField: UITextField {
     // 追加のカスタマイズがあればここに記述
+    var isCaretHidden: Bool = false
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        return isCaretHidden ? .zero : super.caretRect(for: position)
+    }
 }
 
 class HybridTextInputView: HybridNitroTextInputViewSpec {
@@ -66,6 +71,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 } else {
                     self.textField.resignFirstResponder()
                 }
+            }
+        }
+    }
+    var caretHidden: Bool? {
+        didSet {
+            Task { @MainActor in
+                self.textField.isCaretHidden = self.caretHidden ?? false
+                // Optionally resign and become first responder to force caret redraw
             }
         }
     }
