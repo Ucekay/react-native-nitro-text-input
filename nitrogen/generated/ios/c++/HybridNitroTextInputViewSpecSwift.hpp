@@ -119,6 +119,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) noexcept override {
       _swiftPart.setClearTextOnFocus(clearTextOnFocus);
     }
+    inline std::optional<bool> getContextMenuHidden() noexcept override {
+      auto __result = _swiftPart.getContextMenuHidden();
+      return __result;
+    }
+    inline void setContextMenuHidden(std::optional<bool> contextMenuHidden) noexcept override {
+      _swiftPart.setContextMenuHidden(contextMenuHidden);
+    }
     inline std::optional<std::string> getDefaultValue() noexcept override {
       auto __result = _swiftPart.getDefaultValue();
       return __result;

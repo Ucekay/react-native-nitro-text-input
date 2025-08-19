@@ -105,6 +105,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.clearTextOnFocus: ") + exc.what());
       }
     }()),
+    contextMenuHidden([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("contextMenuHidden", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.contextMenuHidden;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.contextMenuHidden);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.contextMenuHidden: ") + exc.what());
+      }
+    }()),
     defaultValue([&]() -> CachedProp<std::optional<std::string>> {
       try {
         const react::RawValue* rawValue = rawProps.at("defaultValue", nullptr, nullptr);
@@ -166,6 +176,7 @@ namespace margelo::nitro::nitrotextinput::views {
     caretHidden(other.caretHidden),
     clearButtonMode(other.clearButtonMode),
     clearTextOnFocus(other.clearTextOnFocus),
+    contextMenuHidden(other.contextMenuHidden),
     defaultValue(other.defaultValue),
     multiline(other.multiline),
     placeholder(other.placeholder),
@@ -182,6 +193,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("caretHidden"): return true;
       case hashString("clearButtonMode"): return true;
       case hashString("clearTextOnFocus"): return true;
+      case hashString("contextMenuHidden"): return true;
       case hashString("defaultValue"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;

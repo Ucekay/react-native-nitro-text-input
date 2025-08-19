@@ -6,6 +6,7 @@ class CustomTextField: UITextField {
     // 追加のカスタマイズがあればここに記述
     var isCaretHidden: Bool = false
     var clearTextOnFocus: Bool = false
+    var isContextMenuHidden: Bool = false
 
     override func caretRect(for position: UITextPosition) -> CGRect {
         return isCaretHidden ? .zero : super.caretRect(for: position)
@@ -16,6 +17,21 @@ class CustomTextField: UITextField {
             self.text = ""
         }
         return super.becomeFirstResponder()
+    }
+
+    override func canPerformAction(_ action: Selector, withSender sender: Any?)
+        -> Bool
+    {
+        if isContextMenuHidden { return false }
+        return super.canPerformAction(action, withSender: sender)
+    }
+
+    @available(iOS 13.0, *)
+    override func buildMenu(with builder: UIMenuBuilder) {
+        if #available(iOS 17.0, *), isContextMenuHidden {
+            builder.remove(menu: .autoFill)
+        }
+        super.buildMenu(with: builder)
     }
 }
 
@@ -100,6 +116,22 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var contextMenuHidden: Bool? {
+        didSet {
+            Task {
+                @MainActor in
+                self.textField.isContextMenuHidden =
+                    self.contextMenuHidden ?? false
+                if #available(iOS 18.0, *) {
+                    if self.contextMenuHidden == true {
+                        self.textField.writingToolsBehavior = .none
+                    } else {
+                        self.textField.writingToolsBehavior = .default
+                    }
+                }
+            }
+        }
+    }
     var multiline: Bool? = false
     var placeholder: String? {
         didSet {
@@ -112,7 +144,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 guard self.hasAppliedDefaultValue == false else { return }
-                guard let initialText = self.defaultValue, !(self.textField.text?.isEmpty == false) else { return }
+                guard let initialText = self.defaultValue,
+                    !(self.textField.text?.isEmpty == false)
+                else { return }
                 self.textField.text = initialText
                 self.hasAppliedDefaultValue = true
             }

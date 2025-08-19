@@ -6,10 +6,16 @@ export default function App() {
   return (
     <View style={styles.container}>
       <NitroTextInput
+        allowFontScaling
         autoCapitalize="words"
+        autoComplete="name"
         autoCorrect
         autoFocus={true}
+        caretHidden={false}
         clearButtonMode="while-editing"
+        clearTextOnFocus={false}
+        contextMenuHidden={false}
+        defaultValue=""
         placeholder="Nitro Text Input🔥"
       />
       <TextInput

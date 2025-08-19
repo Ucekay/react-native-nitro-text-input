@@ -68,6 +68,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setClearTextOnFocus(props.clearTextOnFocus.value);
     // TODO: Set isDirty = false
   }
+  if (props.contextMenuHidden.isDirty) {
+    view->setContextMenuHidden(props.contextMenuHidden.value);
+    // TODO: Set isDirty = false
+  }
   if (props.defaultValue.isDirty) {
     view->setDefaultValue(props.defaultValue.value);
     // TODO: Set isDirty = false
