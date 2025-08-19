@@ -138,6 +138,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* defaultValue */)>("setDefaultValue");
     method(_javaPart, defaultValue.has_value() ? jni::make_jstring(defaultValue.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getEditable() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getEditable");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setEditable(std::optional<bool> editable) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* editable */)>("setEditable");
+    method(_javaPart, editable.has_value() ? jni::JBoolean::valueOf(editable.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");
     auto __result = method(_javaPart);

@@ -14,6 +14,7 @@
     "clearTextOnFocus": true,
     "contextMenuHidden": true,
     "defaultValue": true,
+    "editable": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,
