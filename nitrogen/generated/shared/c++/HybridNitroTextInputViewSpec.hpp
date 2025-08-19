@@ -15,9 +15,12 @@
 
 // Forward declaration of `AutoCapitalize` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
+// Forward declaration of `AutoComplete` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
+#include "AutoComplete.hpp"
 #include <string>
 #include <functional>
 
@@ -52,6 +55,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setAllowFontScaling(std::optional<bool> allowFontScaling) = 0;
       virtual std::optional<AutoCapitalize> getAutoCapitalize() = 0;
       virtual void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) = 0;
+      virtual std::optional<AutoComplete> getAutoComplete() = 0;
+      virtual void setAutoComplete(std::optional<AutoComplete> autoComplete) = 0;
       virtual std::optional<bool> getAutoCorrect() = 0;
       virtual void setAutoCorrect(std::optional<bool> autoCorrect) = 0;
       virtual std::optional<bool> getMultiline() = 0;

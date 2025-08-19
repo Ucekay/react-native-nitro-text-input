@@ -81,6 +81,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setAutoCapitalize(newViewProps.autoCapitalize.value);
     newViewProps.autoCapitalize.isDirty = false;
   }
+  // autoComplete: optional
+  if (newViewProps.autoComplete.isDirty) {
+    swiftPart.setAutoComplete(newViewProps.autoComplete.value);
+    newViewProps.autoComplete.isDirty = false;
+  }
   // autoCorrect: optional
   if (newViewProps.autoCorrect.isDirty) {
     swiftPart.setAutoCorrect(newViewProps.autoCorrect.value);

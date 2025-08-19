@@ -53,6 +53,8 @@ namespace margelo::nitro::nitrotextinput {
     void setAllowFontScaling(std::optional<bool> allowFontScaling) override;
     std::optional<AutoCapitalize> getAutoCapitalize() override;
     void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) override;
+    std::optional<AutoComplete> getAutoComplete() override;
+    void setAutoComplete(std::optional<AutoComplete> autoComplete) override;
     std::optional<bool> getAutoCorrect() override;
     void setAutoCorrect(std::optional<bool> autoCorrect) override;
     std::optional<bool> getMultiline() override;

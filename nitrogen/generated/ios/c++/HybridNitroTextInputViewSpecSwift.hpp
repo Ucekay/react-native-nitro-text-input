@@ -14,9 +14,12 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 
 // Forward declaration of `AutoCapitalize` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
+// Forward declaration of `AutoComplete` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
+#include "AutoComplete.hpp"
 #include <string>
 #include <functional>
 
@@ -70,6 +73,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) noexcept override {
       _swiftPart.setAutoCapitalize(autoCapitalize);
+    }
+    inline std::optional<AutoComplete> getAutoComplete() noexcept override {
+      auto __result = _swiftPart.getAutoComplete();
+      return __result;
+    }
+    inline void setAutoComplete(std::optional<AutoComplete> autoComplete) noexcept override {
+      _swiftPart.setAutoComplete(autoComplete);
     }
     inline std::optional<bool> getAutoCorrect() noexcept override {
       auto __result = _swiftPart.getAutoCorrect();

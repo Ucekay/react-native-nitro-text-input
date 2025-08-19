@@ -9,10 +9,14 @@
 
 // Forward declaration of `AutoCapitalize` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
+// Forward declaration of `AutoComplete` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "JAutoCapitalize.hpp"
+#include "AutoComplete.hpp"
+#include "JAutoComplete.hpp"
 #include <string>
 #include <functional>
 #include "JFunc_void_double.hpp"
@@ -57,6 +61,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JAutoCapitalize> /* autoCapitalize */)>("setAutoCapitalize");
     method(_javaPart, autoCapitalize.has_value() ? JAutoCapitalize::fromCpp(autoCapitalize.value()) : nullptr);
+  }
+  std::optional<AutoComplete> JHybridNitroTextInputViewSpec::getAutoComplete() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JAutoComplete>()>("getAutoComplete");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setAutoComplete(std::optional<AutoComplete> autoComplete) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JAutoComplete> /* autoComplete */)>("setAutoComplete");
+    method(_javaPart, autoComplete.has_value() ? JAutoComplete::fromCpp(autoComplete.value()) : nullptr);
   }
   std::optional<bool> JHybridNitroTextInputViewSpec::getAutoCorrect() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getAutoCorrect");

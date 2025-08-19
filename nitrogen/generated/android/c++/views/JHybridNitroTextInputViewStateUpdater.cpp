@@ -44,6 +44,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setAutoCapitalize(props.autoCapitalize.value);
     // TODO: Set isDirty = false
   }
+  if (props.autoComplete.isDirty) {
+    view->setAutoComplete(props.autoComplete.value);
+    // TODO: Set isDirty = false
+  }
   if (props.autoCorrect.isDirty) {
     view->setAutoCorrect(props.autoCorrect.value);
     // TODO: Set isDirty = false
