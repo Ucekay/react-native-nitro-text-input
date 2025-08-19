@@ -56,6 +56,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setAutoFocus(props.autoFocus.value);
     // TODO: Set isDirty = false
   }
+  if (props.caretHidden.isDirty) {
+    view->setCaretHidden(props.caretHidden.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false

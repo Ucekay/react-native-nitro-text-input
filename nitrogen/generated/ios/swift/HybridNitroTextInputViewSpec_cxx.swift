@@ -191,6 +191,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var caretHidden: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.caretHidden {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.caretHidden = newValue.value
+    }
+  }
+  
   public final var multiline: bridge.std__optional_bool_ {
     @inline(__always)
     get {

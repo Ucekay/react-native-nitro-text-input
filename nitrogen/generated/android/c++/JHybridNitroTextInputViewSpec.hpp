@@ -59,6 +59,8 @@ namespace margelo::nitro::nitrotextinput {
     void setAutoCorrect(std::optional<bool> autoCorrect) override;
     std::optional<bool> getAutoFocus() override;
     void setAutoFocus(std::optional<bool> autoFocus) override;
+    std::optional<bool> getCaretHidden() override;
+    void setCaretHidden(std::optional<bool> caretHidden) override;
     std::optional<bool> getMultiline() override;
     void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;

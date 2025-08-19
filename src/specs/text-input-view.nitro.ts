@@ -59,6 +59,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   autoComplete?: AutoComplete
   autoCorrect?: boolean
   autoFocus?: boolean
+  caretHidden?: boolean
   multiline?: boolean
   placeholder?: string
   /**

@@ -96,6 +96,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setAutoFocus(newViewProps.autoFocus.value);
     newViewProps.autoFocus.isDirty = false;
   }
+  // caretHidden: optional
+  if (newViewProps.caretHidden.isDirty) {
+    swiftPart.setCaretHidden(newViewProps.caretHidden.value);
+    newViewProps.caretHidden.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

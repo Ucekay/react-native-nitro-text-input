@@ -24,6 +24,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("autoCorrect", &HybridNitroTextInputViewSpec::setAutoCorrect);
       prototype.registerHybridGetter("autoFocus", &HybridNitroTextInputViewSpec::getAutoFocus);
       prototype.registerHybridSetter("autoFocus", &HybridNitroTextInputViewSpec::setAutoFocus);
+      prototype.registerHybridGetter("caretHidden", &HybridNitroTextInputViewSpec::getCaretHidden);
+      prototype.registerHybridSetter("caretHidden", &HybridNitroTextInputViewSpec::setCaretHidden);
       prototype.registerHybridGetter("multiline", &HybridNitroTextInputViewSpec::getMultiline);
       prototype.registerHybridSetter("multiline", &HybridNitroTextInputViewSpec::setMultiline);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);
