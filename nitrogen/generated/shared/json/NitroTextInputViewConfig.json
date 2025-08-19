@@ -8,6 +8,7 @@
     "autoCapitalize": true,
     "autoComplete": true,
     "autoCorrect": true,
+    "autoFocus": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,

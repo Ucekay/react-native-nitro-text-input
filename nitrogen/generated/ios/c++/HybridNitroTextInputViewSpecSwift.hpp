@@ -88,6 +88,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setAutoCorrect(std::optional<bool> autoCorrect) noexcept override {
       _swiftPart.setAutoCorrect(autoCorrect);
     }
+    inline std::optional<bool> getAutoFocus() noexcept override {
+      auto __result = _swiftPart.getAutoFocus();
+      return __result;
+    }
+    inline void setAutoFocus(std::optional<bool> autoFocus) noexcept override {
+      _swiftPart.setAutoFocus(autoFocus);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;
