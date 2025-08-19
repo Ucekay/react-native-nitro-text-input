@@ -11,12 +11,16 @@
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "JAutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "JAutoComplete.hpp"
+#include "ClearButtonMode.hpp"
+#include "JClearButtonMode.hpp"
 #include <string>
 #include <functional>
 #include "JFunc_void_double.hpp"
@@ -97,6 +101,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setCaretHidden(std::optional<bool> caretHidden) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* caretHidden */)>("setCaretHidden");
     method(_javaPart, caretHidden.has_value() ? jni::JBoolean::valueOf(caretHidden.value()) : nullptr);
+  }
+  std::optional<ClearButtonMode> JHybridNitroTextInputViewSpec::getClearButtonMode() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JClearButtonMode>()>("getClearButtonMode");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JClearButtonMode> /* clearButtonMode */)>("setClearButtonMode");
+    method(_javaPart, clearButtonMode.has_value() ? JClearButtonMode::fromCpp(clearButtonMode.value()) : nullptr);
   }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");

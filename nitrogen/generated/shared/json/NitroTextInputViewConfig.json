@@ -10,6 +10,7 @@
     "autoCorrect": true,
     "autoFocus": true,
     "caretHidden": true,
+    "clearButtonMode": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,

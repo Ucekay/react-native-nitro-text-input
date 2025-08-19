@@ -16,10 +16,13 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include <string>
 #include <functional>
 
@@ -101,6 +104,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setCaretHidden(std::optional<bool> caretHidden) noexcept override {
       _swiftPart.setCaretHidden(caretHidden);
+    }
+    inline std::optional<ClearButtonMode> getClearButtonMode() noexcept override {
+      auto __result = _swiftPart.getClearButtonMode();
+      return __result;
+    }
+    inline void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) noexcept override {
+      _swiftPart.setClearButtonMode(clearButtonMode);
     }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();

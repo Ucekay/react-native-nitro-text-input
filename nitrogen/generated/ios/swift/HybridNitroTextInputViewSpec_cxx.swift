@@ -208,6 +208,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var clearButtonMode: bridge.std__optional_ClearButtonMode_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_ClearButtonMode_ in
+        if let __unwrappedValue = self.__implementation.clearButtonMode {
+          return bridge.create_std__optional_ClearButtonMode_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.clearButtonMode = newValue.value
+    }
+  }
+  
   public final var multiline: bridge.std__optional_bool_ {
     @inline(__always)
     get {

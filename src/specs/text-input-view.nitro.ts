@@ -53,6 +53,12 @@ export type AutoComplete =
   | 'flight-number'
   | 'shipment-tracking-number'
 
+export type ClearButtonMode =
+  | 'never'
+  | 'while-editing'
+  | 'unless-editing'
+  | 'always'
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
@@ -60,6 +66,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   autoCorrect?: boolean
   autoFocus?: boolean
   caretHidden?: boolean
+  clearButtonMode?: ClearButtonMode
   multiline?: boolean
   placeholder?: string
   /**
