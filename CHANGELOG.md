@@ -1,3 +1,9 @@
+## [1.0.0-next.2](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.1...v1.0.0-next.2) (2025-08-19)
+
+### Features
+
+* Added a new prop `clearTextOnFocus` ([#9](https://github.com/Ucekay/react-native-nitro-text-input/issues/9)) ([3a4f1e1](https://github.com/Ucekay/react-native-nitro-text-input/commit/3a4f1e16b3aff94e6f8c4b93828eedb7ca21c92a))
+
 ## 1.0.0-next.1 (2025-08-19)
 
 ### Features
