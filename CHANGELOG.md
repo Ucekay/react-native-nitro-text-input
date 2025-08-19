@@ -1,3 +1,9 @@
+## [1.0.0-next.3](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.2...v1.0.0-next.3) (2025-08-19)
+
+### Features
+
+* add defaultValue prop to NitroTextInput component ([#10](https://github.com/Ucekay/react-native-nitro-text-input/issues/10)) ([6d4d44d](https://github.com/Ucekay/react-native-nitro-text-input/commit/6d4d44ddc550130d4e3628682106d7e26a89c181))
+
 ## [1.0.0-next.2](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.1...v1.0.0-next.2) (2025-08-19)
 
 ### Features
