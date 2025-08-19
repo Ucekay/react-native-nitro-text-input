@@ -78,6 +78,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
    */
   defaultValue?: string
   editable?: boolean
+  enableReturnKeyAutomatically?: boolean
   multiline?: boolean
   placeholder?: string
   /**

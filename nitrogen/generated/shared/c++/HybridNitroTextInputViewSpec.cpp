@@ -36,6 +36,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("defaultValue", &HybridNitroTextInputViewSpec::setDefaultValue);
       prototype.registerHybridGetter("editable", &HybridNitroTextInputViewSpec::getEditable);
       prototype.registerHybridSetter("editable", &HybridNitroTextInputViewSpec::setEditable);
+      prototype.registerHybridGetter("enableReturnKeyAutomatically", &HybridNitroTextInputViewSpec::getEnableReturnKeyAutomatically);
+      prototype.registerHybridSetter("enableReturnKeyAutomatically", &HybridNitroTextInputViewSpec::setEnableReturnKeyAutomatically);
       prototype.registerHybridGetter("multiline", &HybridNitroTextInputViewSpec::getMultiline);
       prototype.registerHybridSetter("multiline", &HybridNitroTextInputViewSpec::setMultiline);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);

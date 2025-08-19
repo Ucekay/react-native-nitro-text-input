@@ -135,6 +135,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.editable: ") + exc.what());
       }
     }()),
+    enableReturnKeyAutomatically([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("enableReturnKeyAutomatically", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.enableReturnKeyAutomatically;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.enableReturnKeyAutomatically);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.enableReturnKeyAutomatically: ") + exc.what());
+      }
+    }()),
     multiline([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("multiline", nullptr, nullptr);
@@ -189,6 +199,7 @@ namespace margelo::nitro::nitrotextinput::views {
     contextMenuHidden(other.contextMenuHidden),
     defaultValue(other.defaultValue),
     editable(other.editable),
+    enableReturnKeyAutomatically(other.enableReturnKeyAutomatically),
     multiline(other.multiline),
     placeholder(other.placeholder),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
@@ -207,6 +218,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("contextMenuHidden"): return true;
       case hashString("defaultValue"): return true;
       case hashString("editable"): return true;
+      case hashString("enableReturnKeyAutomatically"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
       case hashString("onInitialHeightMeasured"): return true;

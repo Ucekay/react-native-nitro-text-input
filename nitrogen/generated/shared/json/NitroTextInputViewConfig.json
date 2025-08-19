@@ -15,6 +15,7 @@
     "contextMenuHidden": true,
     "defaultValue": true,
     "editable": true,
+    "enableReturnKeyAutomatically": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,

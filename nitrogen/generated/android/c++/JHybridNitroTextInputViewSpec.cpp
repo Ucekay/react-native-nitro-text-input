@@ -147,6 +147,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* editable */)>("setEditable");
     method(_javaPart, editable.has_value() ? jni::JBoolean::valueOf(editable.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getEnableReturnKeyAutomatically() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getEnableReturnKeyAutomatically");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setEnableReturnKeyAutomatically(std::optional<bool> enableReturnKeyAutomatically) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* enableReturnKeyAutomatically */)>("setEnableReturnKeyAutomatically");
+    method(_javaPart, enableReturnKeyAutomatically.has_value() ? jni::JBoolean::valueOf(enableReturnKeyAutomatically.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");
     auto __result = method(_javaPart);
