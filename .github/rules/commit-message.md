@@ -116,7 +116,8 @@ Existing clients need to update their response parsing logic.
   <validation-rules>
     <rule>コミットメッセージは72文字以内に収める（可能な限り）</rule>
     <rule>bodyを記述する場合は、descriptionとの間に空行を入れる</rule>
-    <rule>bodyは72文字で折り返す</rule>
+  <rule>bodyは72文字で折り返す</rule>
+  <rule>本文の各行は100文字以内にする（厳守）</rule>
     <rule>footerとbodyの間には空行を入れる</rule>
   </validation-rules>
 </commit-message-prompt>
