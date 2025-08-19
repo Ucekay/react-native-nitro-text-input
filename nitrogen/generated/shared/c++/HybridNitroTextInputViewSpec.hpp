@@ -70,6 +70,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) = 0;
       virtual std::optional<bool> getClearTextOnFocus() = 0;
       virtual void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) = 0;
+      virtual std::optional<std::string> getDefaultValue() = 0;
+      virtual void setDefaultValue(const std::optional<std::string>& defaultValue) = 0;
       virtual std::optional<bool> getMultiline() = 0;
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;

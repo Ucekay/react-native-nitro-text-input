@@ -12,6 +12,7 @@
     "caretHidden": true,
     "clearButtonMode": true,
     "clearTextOnFocus": true,
+    "defaultValue": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,
