@@ -8,6 +8,7 @@ export default function App() {
       <NitroTextInput
         autoCapitalize="words"
         autoCorrect
+        autoFocus={true}
         placeholder="こんにちは！"
       />
       <StatusBar style="auto" />
