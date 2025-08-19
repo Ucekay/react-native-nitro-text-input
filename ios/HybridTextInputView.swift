@@ -5,9 +5,17 @@ import UIKit
 class CustomTextField: UITextField {
     // 追加のカスタマイズがあればここに記述
     var isCaretHidden: Bool = false
+    var clearTextOnFocus: Bool = false
 
     override func caretRect(for position: UITextPosition) -> CGRect {
         return isCaretHidden ? .zero : super.caretRect(for: position)
+    }
+
+    override func becomeFirstResponder() -> Bool {
+        if clearTextOnFocus {
+            self.text = ""
+        }
+        return super.becomeFirstResponder()
     }
 }
 
@@ -17,6 +25,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     override init() {
         super.init()
+        // textField.delegate = self  // Removed as per instructions
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
@@ -96,6 +105,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             Task { @MainActor in
                 textField.placeholder = self.placeholder
             }
+        }
+    }
+    var clearTextOnFocus: Bool? {
+        didSet {
+            self.textField.clearTextOnFocus = self.clearTextOnFocus ?? false
         }
     }
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
@@ -290,4 +304,5 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             self.textField.clearButtonMode = .always
         }
     }
+    
 }

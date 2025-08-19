@@ -10,6 +10,7 @@ export default function App() {
         autoCorrect
         autoFocus={true}
         clearButtonMode="while-editing"
+        clearTextOnFocus
         placeholder="Nitro Text Input🔥"
       />
       <TextInput

@@ -95,6 +95,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.clearButtonMode: ") + exc.what());
       }
     }()),
+    clearTextOnFocus([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("clearTextOnFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.clearTextOnFocus;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.clearTextOnFocus);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.clearTextOnFocus: ") + exc.what());
+      }
+    }()),
     multiline([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("multiline", nullptr, nullptr);
@@ -145,6 +155,7 @@ namespace margelo::nitro::nitrotextinput::views {
     autoFocus(other.autoFocus),
     caretHidden(other.caretHidden),
     clearButtonMode(other.clearButtonMode),
+    clearTextOnFocus(other.clearTextOnFocus),
     multiline(other.multiline),
     placeholder(other.placeholder),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
@@ -159,6 +170,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("autoFocus"): return true;
       case hashString("caretHidden"): return true;
       case hashString("clearButtonMode"): return true;
+      case hashString("clearTextOnFocus"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
       case hashString("onInitialHeightMeasured"): return true;

@@ -63,6 +63,8 @@ namespace margelo::nitro::nitrotextinput {
     void setCaretHidden(std::optional<bool> caretHidden) override;
     std::optional<ClearButtonMode> getClearButtonMode() override;
     void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) override;
+    std::optional<bool> getClearTextOnFocus() override;
+    void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) override;
     std::optional<bool> getMultiline() override;
     void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;

@@ -67,6 +67,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   autoFocus?: boolean
   caretHidden?: boolean
   clearButtonMode?: ClearButtonMode
+  clearTextOnFocus?: boolean
   multiline?: boolean
   placeholder?: string
   /**
