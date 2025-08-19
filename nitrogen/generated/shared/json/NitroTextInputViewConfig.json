@@ -6,6 +6,7 @@
   "validAttributes": {
     "allowFontScaling": true,
     "autoCapitalize": true,
+    "autoComplete": true,
     "autoCorrect": true,
     "multiline": true,
     "placeholder": true,

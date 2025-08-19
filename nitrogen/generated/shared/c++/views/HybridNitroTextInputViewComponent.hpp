@@ -19,6 +19,8 @@
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include <optional>
+#include "AutoComplete.hpp"
+#include <optional>
 #include <optional>
 #include <optional>
 #include <string>
@@ -53,6 +55,7 @@ namespace margelo::nitro::nitrotextinput::views {
   public:
     CachedProp<std::optional<bool>> allowFontScaling;
     CachedProp<std::optional<AutoCapitalize>> autoCapitalize;
+    CachedProp<std::optional<AutoComplete>> autoComplete;
     CachedProp<std::optional<bool>> autoCorrect;
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;

@@ -45,6 +45,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.autoCapitalize: ") + exc.what());
       }
     }()),
+    autoComplete([&]() -> CachedProp<std::optional<AutoComplete>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("autoComplete", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.autoComplete;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<AutoComplete>>::fromRawValue(*runtime, value, sourceProps.autoComplete);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.autoComplete: ") + exc.what());
+      }
+    }()),
     autoCorrect([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("autoCorrect", nullptr, nullptr);
@@ -100,6 +110,7 @@ namespace margelo::nitro::nitrotextinput::views {
     react::ViewProps(),
     allowFontScaling(other.allowFontScaling),
     autoCapitalize(other.autoCapitalize),
+    autoComplete(other.autoComplete),
     autoCorrect(other.autoCorrect),
     multiline(other.multiline),
     placeholder(other.placeholder),
@@ -110,6 +121,7 @@ namespace margelo::nitro::nitrotextinput::views {
     switch (hashString(propName)) {
       case hashString("allowFontScaling"): return true;
       case hashString("autoCapitalize"): return true;
+      case hashString("autoComplete"): return true;
       case hashString("autoCorrect"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
