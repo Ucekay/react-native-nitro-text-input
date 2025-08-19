@@ -46,4 +46,6 @@ jobs:
           bun run | grep -q "^test" && bun run test || true
 
       - name: Release
+        env:
+          HUSKY: '0'
         run: bunx semantic-release
