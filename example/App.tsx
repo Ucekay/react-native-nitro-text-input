@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { NitroTextInput } from 'react-native-nitro-text-input'
 
 export default function App() {
@@ -9,8 +9,9 @@ export default function App() {
         autoCapitalize="words"
         autoCorrect
         autoFocus={true}
-        placeholder="こんにちは！"
+        placeholder="Nitro Text Input🔥"
       />
+      <TextInput placeholder="React Native Text Input" />
       <StatusBar style="auto" />
     </View>
   )
@@ -22,5 +23,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 32,
   },
 })
