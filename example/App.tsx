@@ -17,6 +17,7 @@ export default function App() {
         defaultValue=""
         editable
         enablesReturnKeyAutomatically
+        enterKeyHint="done"
         placeholder="Nitro Text Input🔥"
       />
       <TextInput

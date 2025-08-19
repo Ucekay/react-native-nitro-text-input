@@ -13,6 +13,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `EnterKeyHint` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -22,6 +24,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 #include "ClearButtonMode.hpp"
 #include "JClearButtonMode.hpp"
 #include <string>
+#include "EnterKeyHint.hpp"
+#include "JEnterKeyHint.hpp"
 #include <functional>
 #include "JFunc_void_double.hpp"
 
@@ -155,6 +159,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* enablesReturnKeyAutomatically */)>("setEnablesReturnKeyAutomatically");
     method(_javaPart, enablesReturnKeyAutomatically.has_value() ? jni::JBoolean::valueOf(enablesReturnKeyAutomatically.value()) : nullptr);
+  }
+  std::optional<EnterKeyHint> JHybridNitroTextInputViewSpec::getEnterKeyHint() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JEnterKeyHint>()>("getEnterKeyHint");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JEnterKeyHint> /* enterKeyHint */)>("setEnterKeyHint");
+    method(_javaPart, enterKeyHint.has_value() ? JEnterKeyHint::fromCpp(enterKeyHint.value()) : nullptr);
   }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");

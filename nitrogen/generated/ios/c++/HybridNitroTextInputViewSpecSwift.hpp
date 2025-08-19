@@ -18,12 +18,15 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `EnterKeyHint` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
 #include <string>
+#include "EnterKeyHint.hpp"
 #include <functional>
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
@@ -146,6 +149,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) noexcept override {
       _swiftPart.setEnablesReturnKeyAutomatically(enablesReturnKeyAutomatically);
+    }
+    inline std::optional<EnterKeyHint> getEnterKeyHint() noexcept override {
+      auto __result = _swiftPart.getEnterKeyHint();
+      return __result;
+    }
+    inline void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) noexcept override {
+      _swiftPart.setEnterKeyHint(enterKeyHint);
     }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();

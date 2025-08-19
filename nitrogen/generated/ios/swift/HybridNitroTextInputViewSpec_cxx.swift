@@ -316,6 +316,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var enterKeyHint: bridge.std__optional_EnterKeyHint_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_EnterKeyHint_ in
+        if let __unwrappedValue = self.__implementation.enterKeyHint {
+          return bridge.create_std__optional_EnterKeyHint_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.enterKeyHint = newValue.value
+    }
+  }
+  
   public final var multiline: bridge.std__optional_bool_ {
     @inline(__always)
     get {

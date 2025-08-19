@@ -59,6 +59,19 @@ export type ClearButtonMode =
   | 'unless-editing'
   | 'always'
 
+export type EnterKeyHint =
+  | 'go'
+  | 'google'
+  | 'join'
+  | 'next'
+  | 'route'
+  | 'search'
+  | 'send'
+  | 'yahoo'
+  | 'done'
+  | 'emergency-call'
+  | 'continue'
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
@@ -79,6 +92,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   defaultValue?: string
   editable?: boolean
   enablesReturnKeyAutomatically?: boolean
+  enterKeyHint?: EnterKeyHint
   multiline?: boolean
   placeholder?: string
   /**

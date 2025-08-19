@@ -1,1 +1,1 @@
-export { NitroTextInput } from './nitro-text-input'
+export { NitroTextInput } from "./nitro-text-input";
