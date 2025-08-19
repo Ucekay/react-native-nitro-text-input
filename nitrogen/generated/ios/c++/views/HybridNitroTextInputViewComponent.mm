@@ -91,6 +91,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setAutoCorrect(newViewProps.autoCorrect.value);
     newViewProps.autoCorrect.isDirty = false;
   }
+  // autoFocus: optional
+  if (newViewProps.autoFocus.isDirty) {
+    swiftPart.setAutoFocus(newViewProps.autoFocus.value);
+    newViewProps.autoFocus.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

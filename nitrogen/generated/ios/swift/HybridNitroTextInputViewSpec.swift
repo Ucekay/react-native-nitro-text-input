@@ -15,6 +15,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var autoCapitalize: AutoCapitalize? { get set }
   var autoComplete: AutoComplete? { get set }
   var autoCorrect: Bool? { get set }
+  var autoFocus: Bool? { get set }
   var multiline: Bool? { get set }
   var placeholder: String? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }

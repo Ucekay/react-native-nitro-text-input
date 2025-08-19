@@ -52,6 +52,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setAutoCorrect(props.autoCorrect.value);
     // TODO: Set isDirty = false
   }
+  if (props.autoFocus.isDirty) {
+    view->setAutoFocus(props.autoFocus.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
