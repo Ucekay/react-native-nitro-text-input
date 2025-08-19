@@ -1,3 +1,9 @@
+## [1.0.0-next.5](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.4...v1.0.0-next.5) (2025-08-19)
+
+### Features
+
+* add editable property to NitroTextInput and HybridTextInputView ([#12](https://github.com/Ucekay/react-native-nitro-text-input/issues/12)) ([b9d127c](https://github.com/Ucekay/react-native-nitro-text-input/commit/b9d127c969c283bde07aee0cde566f75dda733cd))
+
 ## [1.0.0-next.4](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.3...v1.0.0-next.4) (2025-08-19)
 
 ### Features
