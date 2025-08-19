@@ -129,6 +129,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* contextMenuHidden */)>("setContextMenuHidden");
     method(_javaPart, contextMenuHidden.has_value() ? jni::JBoolean::valueOf(contextMenuHidden.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getEnablesReturnKeyAutomatically() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getEnablesReturnKeyAutomatically");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* enablesReturnKeyAutomatically */)>("setEnablesReturnKeyAutomatically");
+    method(_javaPart, enablesReturnKeyAutomatically.has_value() ? jni::JBoolean::valueOf(enablesReturnKeyAutomatically.value()) : nullptr);
+  }
   std::optional<std::string> JHybridNitroTextInputViewSpec::getDefaultValue() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getDefaultValue");
     auto __result = method(_javaPart);

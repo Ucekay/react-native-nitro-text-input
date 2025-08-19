@@ -70,6 +70,12 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   clearTextOnFocus?: boolean
   contextMenuHidden?: boolean
   /**
+   * Disables the return key automatically when there is no text in the field.
+   * When set to true, the return key becomes enabled only after the user
+   * enters some text.
+   */
+  enablesReturnKeyAutomatically?: boolean
+  /**
    * Provides an initial value that will change when the user starts typing. Useful for simple use-cases where you don’t want to deal with listening to events and updating the value prop to keep the controlled state in sync.
    *
    * 注意: NitroTextInput の `defaultValue` は「初期化時にのみ」反映されます。マウント後にこの props を更新しても、既に表示中のテキストは上書きされません。

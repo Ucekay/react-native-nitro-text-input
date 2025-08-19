@@ -126,6 +126,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setContextMenuHidden(std::optional<bool> contextMenuHidden) noexcept override {
       _swiftPart.setContextMenuHidden(contextMenuHidden);
     }
+    inline std::optional<bool> getEnablesReturnKeyAutomatically() noexcept override {
+      auto __result = _swiftPart.getEnablesReturnKeyAutomatically();
+      return __result;
+    }
+    inline void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) noexcept override {
+      _swiftPart.setEnablesReturnKeyAutomatically(enablesReturnKeyAutomatically);
+    }
     inline std::optional<std::string> getDefaultValue() noexcept override {
       auto __result = _swiftPart.getDefaultValue();
       return __result;

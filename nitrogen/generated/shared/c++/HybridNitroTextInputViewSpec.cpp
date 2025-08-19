@@ -32,6 +32,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("clearTextOnFocus", &HybridNitroTextInputViewSpec::setClearTextOnFocus);
       prototype.registerHybridGetter("contextMenuHidden", &HybridNitroTextInputViewSpec::getContextMenuHidden);
       prototype.registerHybridSetter("contextMenuHidden", &HybridNitroTextInputViewSpec::setContextMenuHidden);
+      prototype.registerHybridGetter("enablesReturnKeyAutomatically", &HybridNitroTextInputViewSpec::getEnablesReturnKeyAutomatically);
+      prototype.registerHybridSetter("enablesReturnKeyAutomatically", &HybridNitroTextInputViewSpec::setEnablesReturnKeyAutomatically);
       prototype.registerHybridGetter("defaultValue", &HybridNitroTextInputViewSpec::getDefaultValue);
       prototype.registerHybridSetter("defaultValue", &HybridNitroTextInputViewSpec::setDefaultValue);
       prototype.registerHybridGetter("editable", &HybridNitroTextInputViewSpec::getEditable);

@@ -72,6 +72,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setContextMenuHidden(props.contextMenuHidden.value);
     // TODO: Set isDirty = false
   }
+  if (props.enablesReturnKeyAutomatically.isDirty) {
+    view->setEnablesReturnKeyAutomatically(props.enablesReturnKeyAutomatically.value);
+    // TODO: Set isDirty = false
+  }
   if (props.defaultValue.isDirty) {
     view->setDefaultValue(props.defaultValue.value);
     // TODO: Set isDirty = false

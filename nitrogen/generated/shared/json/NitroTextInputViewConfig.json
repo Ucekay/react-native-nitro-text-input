@@ -13,6 +13,7 @@
     "clearButtonMode": true,
     "clearTextOnFocus": true,
     "contextMenuHidden": true,
+    "enablesReturnKeyAutomatically": true,
     "defaultValue": true,
     "editable": true,
     "multiline": true,

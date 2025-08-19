@@ -116,6 +116,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setContextMenuHidden(newViewProps.contextMenuHidden.value);
     newViewProps.contextMenuHidden.isDirty = false;
   }
+  // enablesReturnKeyAutomatically: optional
+  if (newViewProps.enablesReturnKeyAutomatically.isDirty) {
+    swiftPart.setEnablesReturnKeyAutomatically(newViewProps.enablesReturnKeyAutomatically.value);
+    newViewProps.enablesReturnKeyAutomatically.isDirty = false;
+  }
   // defaultValue: optional
   if (newViewProps.defaultValue.isDirty) {
     swiftPart.setDefaultValue(newViewProps.defaultValue.value);
