@@ -140,18 +140,19 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var defaultValue: String? {
         didSet {
             Task { @MainActor in
-                guard self.hasAppliedDefaultValue == false else { return }
-                guard let initialText = self.defaultValue,
-                    !(self.textField.text?.isEmpty == false)
-                else { return }
-                self.textField.text = initialText
-                self.hasAppliedDefaultValue = true
+                self.setDefaultValue()
             }
         }
     }
     var editable: Bool? {
         didSet {
             self.textField.isEnabled = self.editable ?? true
+        }
+    }
+    var enablesReturnKeyAutomatically: Bool? {
+        didSet {
+            self.textField.enablesReturnKeyAutomatically =
+                self.enablesReturnKeyAutomatically ?? false
         }
     }
     var multiline: Bool? = false
@@ -354,5 +355,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         case .always:
             self.textField.clearButtonMode = .always
         }
+    }
+
+    private func setDefaultValue() {
+        guard self.hasAppliedDefaultValue == false else { return }
+        guard let initialText = self.defaultValue,
+            !(self.textField.text?.isEmpty == false)
+        else { return }
+        self.textField.text = initialText
+        self.hasAppliedDefaultValue = true
     }
 }
