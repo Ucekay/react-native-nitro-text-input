@@ -126,6 +126,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setEditable(newViewProps.editable.value);
     newViewProps.editable.isDirty = false;
   }
+  // enablesReturnKeyAutomatically: optional
+  if (newViewProps.enablesReturnKeyAutomatically.isDirty) {
+    swiftPart.setEnablesReturnKeyAutomatically(newViewProps.enablesReturnKeyAutomatically.value);
+    newViewProps.enablesReturnKeyAutomatically.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

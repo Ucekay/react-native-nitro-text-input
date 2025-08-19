@@ -32,6 +32,7 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include <optional>
 #include <string>
 #include <optional>
 #include <functional>
@@ -73,6 +74,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> contextMenuHidden;
     CachedProp<std::optional<std::string>> defaultValue;
     CachedProp<std::optional<bool>> editable;
+    CachedProp<std::optional<bool>> enablesReturnKeyAutomatically;
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
