@@ -1,3 +1,9 @@
+## [1.0.0-next.7](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.6...v1.0.0-next.7) (2025-08-19)
+
+### Features
+
+* add EnterKeyHint support to NitroTextInput components ([#15](https://github.com/Ucekay/react-native-nitro-text-input/issues/15)) ([bbb6410](https://github.com/Ucekay/react-native-nitro-text-input/commit/bbb6410a3a256c4f65a43675b52e428a9215c7f4))
+
 ## [1.0.0-next.6](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.5...v1.0.0-next.6) (2025-08-19)
 
 ### Features
