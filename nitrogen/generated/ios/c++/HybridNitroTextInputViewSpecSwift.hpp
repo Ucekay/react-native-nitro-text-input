@@ -95,6 +95,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setAutoFocus(std::optional<bool> autoFocus) noexcept override {
       _swiftPart.setAutoFocus(autoFocus);
     }
+    inline std::optional<bool> getCaretHidden() noexcept override {
+      auto __result = _swiftPart.getCaretHidden();
+      return __result;
+    }
+    inline void setCaretHidden(std::optional<bool> caretHidden) noexcept override {
+      _swiftPart.setCaretHidden(caretHidden);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;
