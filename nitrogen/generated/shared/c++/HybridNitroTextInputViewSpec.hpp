@@ -17,10 +17,13 @@
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include <string>
 #include <functional>
 
@@ -63,6 +66,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setAutoFocus(std::optional<bool> autoFocus) = 0;
       virtual std::optional<bool> getCaretHidden() = 0;
       virtual void setCaretHidden(std::optional<bool> caretHidden) = 0;
+      virtual std::optional<ClearButtonMode> getClearButtonMode() = 0;
+      virtual void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) = 0;
       virtual std::optional<bool> getMultiline() = 0;
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;

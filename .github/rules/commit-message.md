@@ -36,7 +36,28 @@
       <guideline id="5">scopeは括弧で囲む: (scope)</guideline>
       <guideline id="6">破壊的変更がある場合は、footerに"BREAKING CHANGE:"を含める</guideline>
       <guideline id="7">Issue番号を参照する場合は、footerに記載する</guideline>
-      <guideline id="8">nitro-text-input コンポーネントの実装に直接関係しない変更（例: `example` フォルダ内のサンプルやデモ用の修正、単なる表示/サンプルデータの調整など）は `feat` タイプに含めない。特に `example` への変更は `feat` とせず、適切なタイプ（`docs`、`chore`、`style`、`test` など）を用いること。</guideline>
+
+      <!-- 強化されたルール：example/ および実装に無関係な変更 -->
+      <guideline id="8">
+        nitro-text-input コンポーネントの実装に直接関係しない変更は、絶対に `feat` タイプに含めてはいけません。
+        特に `example/` フォルダ配下の変更は実装本体ではなくサンプル・デモ・表示用途に限定されるため、
+        例外なく `feat` を使用しないでください。
+        代わりに、次のタイプのいずれかを選んでください：`docs`、`chore`、`style`、`test`。
+        明確な運用ルール：
+        - コミットがファイルパスの全体または主たる変更対象が `^example/` の場合は、`feat` を禁止する（NG）。
+        - もし変更が `example/` と `src/`（実装）双方を含むなら、実装部分に対しては `feat` または `fix` を使えるが、コミットメッセージの説明で必ず範囲を明確に記述する（例: "feat(native): add X; chore(example): update demo" のように複数コミットに分けることを推奨）。
+        - 自動チェック（コミットフックやCI）で `example/` のみの変更を `feat` としたコミットを検出した場合はエラーにすることを推奨します。
+      </guideline>
+
+      <!-- 参考: NG/OKの具体例 -->
+      <guideline id="9">
+        具体例：
+        - NG: feat(example): update demo screenshots
+        - OK: docs(example): update demo screenshots
+        - OK: chore(example): update sample data
+        - NG: feat: change only files under example/
+        - 推奨: 分離可能な変更はコミットを分ける（実装の変更は実装だけ、サンプルは別コミットで適切な type を使う）
+      </guideline>
     </guidelines>
   </format-rules>
 

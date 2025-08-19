@@ -24,6 +24,8 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include "ClearButtonMode.hpp"
+#include <optional>
 #include <optional>
 #include <string>
 #include <optional>
@@ -61,6 +63,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> autoCorrect;
     CachedProp<std::optional<bool>> autoFocus;
     CachedProp<std::optional<bool>> caretHidden;
+    CachedProp<std::optional<ClearButtonMode>> clearButtonMode;
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;

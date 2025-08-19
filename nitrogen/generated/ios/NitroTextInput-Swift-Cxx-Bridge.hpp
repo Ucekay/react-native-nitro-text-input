@@ -12,6 +12,8 @@
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 
@@ -22,6 +24,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include <functional>
 #include <memory>
@@ -59,6 +62,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_AutoComplete_ = std::optional<AutoComplete>;
   inline std::optional<AutoComplete> create_std__optional_AutoComplete_(const AutoComplete& value) {
     return std::optional<AutoComplete>(value);
+  }
+  
+  // pragma MARK: std::optional<ClearButtonMode>
+  /**
+   * Specialized version of `std::optional<ClearButtonMode>`.
+   */
+  using std__optional_ClearButtonMode_ = std::optional<ClearButtonMode>;
+  inline std::optional<ClearButtonMode> create_std__optional_ClearButtonMode_(const ClearButtonMode& value) {
+    return std::optional<ClearButtonMode>(value);
   }
   
   // pragma MARK: std::optional<std::string>

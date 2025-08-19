@@ -82,6 +82,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var clearButtonMode: ClearButtonMode? {
+        didSet {
+            Task {
+                @MainActor in
+                self.updateClearButtonMode()
+            }
+        }
+    }
     var multiline: Bool? = false
     var placeholder: String? {
         didSet {
@@ -267,6 +275,19 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             textField.textContentType = .shipmentTrackingNumber
         default:
             break
+        }
+    }
+
+    private func updateClearButtonMode() {
+        switch self.clearButtonMode {
+        case .never, .none:
+            self.textField.clearButtonMode = .never
+        case .whileEditing:
+            self.textField.clearButtonMode = .whileEditing
+        case .unlessEditing:
+            self.textField.clearButtonMode = .unlessEditing
+        case .always:
+            self.textField.clearButtonMode = .always
         }
     }
 }

@@ -101,6 +101,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setCaretHidden(newViewProps.caretHidden.value);
     newViewProps.caretHidden.isDirty = false;
   }
+  // clearButtonMode: optional
+  if (newViewProps.clearButtonMode.isDirty) {
+    swiftPart.setClearButtonMode(newViewProps.clearButtonMode.value);
+    newViewProps.clearButtonMode.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

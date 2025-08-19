@@ -60,6 +60,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setCaretHidden(props.caretHidden.value);
     // TODO: Set isDirty = false
   }
+  if (props.clearButtonMode.isDirty) {
+    view->setClearButtonMode(props.clearButtonMode.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
