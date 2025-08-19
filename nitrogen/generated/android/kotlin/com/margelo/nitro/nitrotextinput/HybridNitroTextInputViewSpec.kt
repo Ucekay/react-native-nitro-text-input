@@ -114,7 +114,7 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var enterKeyHint: EnterKeyHint
+  abstract var enterKeyHint: EnterKeyHint?
   
   @get:DoNotStrip
   @get:Keep

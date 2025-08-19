@@ -151,8 +151,19 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
     var enablesReturnKeyAutomatically: Bool? {
         didSet {
-            self.textField.enablesReturnKeyAutomatically =
-                self.enablesReturnKeyAutomatically ?? false
+            Task {
+                @MainActor in
+                self.textField.enablesReturnKeyAutomatically =
+                    self.enablesReturnKeyAutomatically ?? false
+            }
+        }
+    }
+    var enterKeyHint: EnterKeyHint? {
+        didSet {
+            Task {
+                @MainActor in
+                self.updateEnterKeyHint()
+            }
         }
     }
     var multiline: Bool? = false
@@ -188,7 +199,12 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     private func updateAutoComplete() {
-        switch self.autoComplete {
+        guard let auto = self.autoComplete else {
+            // Reset to no content type when unset
+            textField.textContentType = nil
+            return
+        }
+        switch auto {
         case .url:
             textField.textContentType = .URL
         case .namePrefix:
@@ -345,8 +361,12 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     private func updateClearButtonMode() {
-        switch self.clearButtonMode {
-        case .never, .none:
+        guard let mode = self.clearButtonMode else {
+            self.textField.clearButtonMode = .never
+            return
+        }
+        switch mode {
+        case .never:
             self.textField.clearButtonMode = .never
         case .whileEditing:
             self.textField.clearButtonMode = .whileEditing
@@ -364,5 +384,40 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         else { return }
         self.textField.text = initialText
         self.hasAppliedDefaultValue = true
+    }
+
+    private func updateEnterKeyHint() {
+        guard let hint = self.enterKeyHint else {
+            self.textField.returnKeyType = .default
+            return
+        }
+        switch hint {
+        case .go:
+            self.textField.returnKeyType = .go
+        case .google:
+            self.textField.returnKeyType = .google
+        case .join:
+            self.textField.returnKeyType = .join
+        case .next:
+            self.textField.returnKeyType = .next
+        case .route:
+            self.textField.returnKeyType = .route
+        case .search:
+            self.textField.returnKeyType = .search
+        case .send:
+            self.textField.returnKeyType = .send
+        case .yahoo:
+            self.textField.returnKeyType = .yahoo
+        case .done:
+            self.textField.returnKeyType = .done
+        case .emergencyCall:
+            self.textField.returnKeyType = .emergencyCall
+        case .continue:
+            if #available(iOS 9.0, *) {
+                self.textField.returnKeyType = .`continue`
+            } else {
+                self.textField.returnKeyType = .default
+            }
+        }
     }
 }

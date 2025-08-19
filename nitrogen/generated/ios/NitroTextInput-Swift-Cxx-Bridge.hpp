@@ -14,6 +14,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `EnterKeyHint` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 
@@ -25,6 +27,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
+#include "EnterKeyHint.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include <functional>
 #include <memory>
@@ -80,6 +83,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_std__string_ = std::optional<std::string>;
   inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
     return std::optional<std::string>(value);
+  }
+  
+  // pragma MARK: std::optional<EnterKeyHint>
+  /**
+   * Specialized version of `std::optional<EnterKeyHint>`.
+   */
+  using std__optional_EnterKeyHint_ = std::optional<EnterKeyHint>;
+  inline std::optional<EnterKeyHint> create_std__optional_EnterKeyHint_(const EnterKeyHint& value) {
+    return std::optional<EnterKeyHint>(value);
   }
   
   // pragma MARK: std::function<void(double /* height */)>

@@ -145,12 +145,12 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.enablesReturnKeyAutomatically: ") + exc.what());
       }
     }()),
-    enterKeyHint([&]() -> CachedProp<EnterKeyHint> {
+    enterKeyHint([&]() -> CachedProp<std::optional<EnterKeyHint>> {
       try {
         const react::RawValue* rawValue = rawProps.at("enterKeyHint", nullptr, nullptr);
         if (rawValue == nullptr) return sourceProps.enterKeyHint;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<EnterKeyHint>::fromRawValue(*runtime, value, sourceProps.enterKeyHint);
+        return CachedProp<std::optional<EnterKeyHint>>::fromRawValue(*runtime, value, sourceProps.enterKeyHint);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroTextInputView.enterKeyHint: ") + exc.what());
       }

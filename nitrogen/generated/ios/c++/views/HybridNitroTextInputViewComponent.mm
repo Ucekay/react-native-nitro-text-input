@@ -131,9 +131,9 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setEnablesReturnKeyAutomatically(newViewProps.enablesReturnKeyAutomatically.value);
     newViewProps.enablesReturnKeyAutomatically.isDirty = false;
   }
-  // enterKeyHint: enum
+  // enterKeyHint: optional
   if (newViewProps.enterKeyHint.isDirty) {
-    swiftPart.setEnterKeyHint(static_cast<int>(newViewProps.enterKeyHint.value));
+    swiftPart.setEnterKeyHint(newViewProps.enterKeyHint.value);
     newViewProps.enterKeyHint.isDirty = false;
   }
   // multiline: optional

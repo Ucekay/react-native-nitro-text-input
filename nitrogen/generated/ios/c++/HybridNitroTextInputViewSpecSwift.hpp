@@ -150,12 +150,12 @@ namespace margelo::nitro::nitrotextinput {
     inline void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) noexcept override {
       _swiftPart.setEnablesReturnKeyAutomatically(enablesReturnKeyAutomatically);
     }
-    inline EnterKeyHint getEnterKeyHint() noexcept override {
+    inline std::optional<EnterKeyHint> getEnterKeyHint() noexcept override {
       auto __result = _swiftPart.getEnterKeyHint();
-      return static_cast<EnterKeyHint>(__result);
+      return __result;
     }
-    inline void setEnterKeyHint(EnterKeyHint enterKeyHint) noexcept override {
-      _swiftPart.setEnterKeyHint(static_cast<int>(enterKeyHint));
+    inline void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) noexcept override {
+      _swiftPart.setEnterKeyHint(enterKeyHint);
     }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();

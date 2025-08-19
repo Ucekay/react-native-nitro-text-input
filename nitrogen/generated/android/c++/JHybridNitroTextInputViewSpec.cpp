@@ -160,14 +160,14 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* enablesReturnKeyAutomatically */)>("setEnablesReturnKeyAutomatically");
     method(_javaPart, enablesReturnKeyAutomatically.has_value() ? jni::JBoolean::valueOf(enablesReturnKeyAutomatically.value()) : nullptr);
   }
-  EnterKeyHint JHybridNitroTextInputViewSpec::getEnterKeyHint() {
+  std::optional<EnterKeyHint> JHybridNitroTextInputViewSpec::getEnterKeyHint() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JEnterKeyHint>()>("getEnterKeyHint");
     auto __result = method(_javaPart);
-    return __result->toCpp();
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
   }
-  void JHybridNitroTextInputViewSpec::setEnterKeyHint(EnterKeyHint enterKeyHint) {
+  void JHybridNitroTextInputViewSpec::setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JEnterKeyHint> /* enterKeyHint */)>("setEnterKeyHint");
-    method(_javaPart, JEnterKeyHint::fromCpp(enterKeyHint));
+    method(_javaPart, enterKeyHint.has_value() ? JEnterKeyHint::fromCpp(enterKeyHint.value()) : nullptr);
   }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");
