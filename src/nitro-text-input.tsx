@@ -7,9 +7,13 @@ import { NativeNitroTextInput } from './native-nitro-text-input'
 type ReactProps<T> = T extends HostComponent<infer P> ? P : never
 type NativeTextInputProps = ReactProps<typeof NativeNitroTextInput>
 export interface NitroTextInputProps
-  extends Omit<NativeTextInputProps, 'onInitialHeightMeasured' | 'onBlurred'> {
+  extends Omit<
+    NativeTextInputProps,
+    'onInitialHeightMeasured' | 'onBlurred' | 'onTextChanged'
+  > {
   inputMode?: InputModeOptions
   onBlur?: () => void
+  onChangeText?: (text: string) => void
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -17,7 +21,8 @@ export function NitroTextInput(props: NitroTextInputProps) {
     number | undefined
   >(undefined)
 
-  const { style, keyboardType, inputMode, onBlur, ...others } = props
+  const { style, keyboardType, inputMode, onBlur, onChangeText, ...others } =
+    props
 
   const flattenedStyle = StyleSheet.flatten(style) ?? {}
 
@@ -74,6 +79,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
       {...others}
       keyboardType={getKeyboardTypeFromInputMode()}
       onBlurred={{ f: onBlur }}
+      onTextChanged={{ f: onChangeText }}
       onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}
       style={composedStyle()}
     />

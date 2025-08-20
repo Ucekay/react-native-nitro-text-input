@@ -8,6 +8,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var clearTextOnFocus: Bool = false
     var isContextMenuHidden: Bool = false
     var maxLength: Int?
+    var onTextChanged: ((_ text: String) -> Void)?
     var onDidEndEditing: (() -> Void)?
 
     override init(frame: CGRect) {
@@ -103,6 +104,8 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             let limited = current.substring(to: max(0, cutIndex))
             self.text = limited
         }
+        // Notify text changed after any trimming
+        onTextChanged?(self.text ?? "")
     }
 
     deinit {
@@ -292,6 +295,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onBlurred: (() -> Void)?
+    var onTextChanged: ((_ text: String) -> Void)?
 
     private func updateAutoCorrect() {
         if let value = autoCorrect {
@@ -611,6 +615,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
             self.onBlurred?()
+        }
+        self.textField.onTextChanged = { [weak self] text in
+            self?.onTextChanged?(text)
         }
     }
 
