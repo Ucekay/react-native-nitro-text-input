@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+globs: *.ts,*.tsx,*.js,*.jsx
+description: "JSDoc should not be generated unless explicitly requested by the user."
+---
+
+### JSDocの生成ポリシー
+
+JSDocはユーザーの明示的な指示があるまで生成・追加してはならない。既存のJSDocは保持すること。

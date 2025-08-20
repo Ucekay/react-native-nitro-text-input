@@ -29,6 +29,14 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>
+  Func_void_double_double_double_double create_Func_void_double_double_double_double(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroTextInput::Func_void_double_double_double_double::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](double pageX, double pageY, double locationX, double locationY) mutable -> void {
+      swiftClosure.call(pageX, pageY, locationX, locationY);
+    };
+  }
+  
   // pragma MARK: std::function<void(double /* height */)>
   Func_void_double create_Func_void_double(void* _Nonnull swiftClosureWrapper) {
     auto swiftClosure = NitroTextInput::Func_void_double::fromUnsafe(swiftClosureWrapper);

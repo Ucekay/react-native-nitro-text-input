@@ -1,5 +1,11 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, TextInput, View } from 'react-native'
+import {
+  type NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  type TextInputEndEditingEventData,
+  View,
+} from 'react-native'
 import { NitroTextInput } from 'react-native-nitro-text-input'
 
 export default function App() {
@@ -21,6 +27,16 @@ export default function App() {
         onBlur={() => console.log('Blurred')}
         onChangeText={(text) => console.log(text)}
         onEndEditing={(text) => console.log(text)}
+        onPressIn={(
+          pageX: number,
+          pageY: number,
+          locationX: number,
+          locationY: number
+        ) =>
+          console.log(
+            `Pressed at (${pageX}, ${pageY}) - (${locationX}, ${locationY})`
+          )
+        }
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
@@ -29,7 +45,14 @@ export default function App() {
         enablesReturnKeyAutomatically
         maxLength={12}
         onBlur={() => console.log('Blurred')}
-        onEndEditing={(e) => console.log(e.nativeEvent.text)}
+        onEndEditing={(e: NativeSyntheticEvent<TextInputEndEditingEventData>) =>
+          console.log(e.nativeEvent.text)
+        }
+        onPressIn={(e) =>
+          console.log(
+            `Pressed at (${e.nativeEvent.pageX}, ${e.nativeEvent.pageY}) - (${e.nativeEvent.locationX}, ${e.nativeEvent.locationY})`
+          )
+        }
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

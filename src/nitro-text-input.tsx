@@ -9,12 +9,22 @@ type NativeTextInputProps = ReactProps<typeof NativeNitroTextInput>
 export interface NitroTextInputProps
   extends Omit<
     NativeTextInputProps,
-    'onInitialHeightMeasured' | 'onBlurred' | 'onTextChanged' | 'onEditingEnded'
+    | 'onInitialHeightMeasured'
+    | 'onBlurred'
+    | 'onTextChanged'
+    | 'onEditingEnded'
+    | 'onTauchBegan'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
   onChangeText?: (text: string) => void
   onEndEditing?: (text: string) => void
+  onPressIn?: (
+    pageX: number,
+    pageY: number,
+    locationX: number,
+    locationY: number
+  ) => void
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -29,6 +39,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     onBlur,
     onChangeText,
     onEndEditing,
+    onPressIn,
     ...others
   } = props
 
@@ -89,6 +100,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}
       onEditingEnded={{ f: onEndEditing }}
+      onTouchBegan={{ f: onPressIn }}
       onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}
       style={composedStyle()}
     />

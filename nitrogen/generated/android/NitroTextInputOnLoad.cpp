@@ -18,6 +18,7 @@
 #include "JHybridNitroTextInputViewSpec.hpp"
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
+#include "JFunc_void_double_double_double_double.hpp"
 #include "JFunc_void_double.hpp"
 #include "views/JHybridNitroTextInputViewStateUpdater.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
@@ -34,6 +35,7 @@ int initialize(JavaVM* vm) {
     margelo::nitro::nitrotextinput::JHybridNitroTextInputViewSpec::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_std__string_cxx::registerNatives();
+    margelo::nitro::nitrotextinput::JFunc_void_double_double_double_double_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_double_cxx::registerNatives();
     margelo::nitro::nitrotextinput::views::JHybridNitroTextInputViewStateUpdater::registerNatives();
 

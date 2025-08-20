@@ -120,6 +120,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setOnEditingEnded(props.onEditingEnded.value);
     // TODO: Set isDirty = false
   }
+  if (props.onTouchBegan.isDirty) {
+    view->setOnTouchBegan(props.onTouchBegan.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onInitialHeightMeasured.isDirty) {
     view->setOnInitialHeightMeasured(props.onInitialHeightMeasured.value);
     // TODO: Set isDirty = false

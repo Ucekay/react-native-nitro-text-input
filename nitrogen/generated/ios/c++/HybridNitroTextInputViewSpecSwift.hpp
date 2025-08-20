@@ -216,6 +216,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) noexcept override {
       _swiftPart.setOnEditingEnded(onEditingEnded);
     }
+    inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>> getOnTouchBegan() noexcept override {
+      auto __result = _swiftPart.getOnTouchBegan();
+      return __result;
+    }
+    inline void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>& onTouchBegan) noexcept override {
+      _swiftPart.setOnTouchBegan(onTouchBegan);
+    }
     inline std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() noexcept override {
       auto __result = _swiftPart.getOnInitialHeightMeasured();
       return __result;

@@ -33,6 +33,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <functional>
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
+#include "JFunc_void_double_double_double_double.hpp"
 #include "JFunc_void_double.hpp"
 
 namespace margelo::nitro::nitrotextinput {
@@ -276,6 +277,25 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string::javaobject> /* onEditingEnded */)>("setOnEditingEnded_cxx");
     method(_javaPart, onEditingEnded.has_value() ? JFunc_void_std__string_cxx::fromCpp(onEditingEnded.value()) : nullptr);
+  }
+  std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>> JHybridNitroTextInputViewSpec::getOnTouchBegan() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_double_double_double_double::javaobject>()>("getOnTouchBegan_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)> {
+      if (__result->isInstanceOf(JFunc_void_double_double_double_double_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_double_double_double_double_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](double pageX, double pageY, double locationX, double locationY) -> void {
+          return __resultRef->invoke(pageX,pageY,locationX,locationY);
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>& onTouchBegan) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_double_double_double_double::javaobject> /* onTouchBegan */)>("setOnTouchBegan_cxx");
+    method(_javaPart, onTouchBegan.has_value() ? JFunc_void_double_double_double_double_cxx::fromCpp(onTouchBegan.value()) : nullptr);
   }
   std::optional<std::function<void(double /* height */)>> JHybridNitroTextInputViewSpec::getOnInitialHeightMeasured() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_double::javaobject>()>("getOnInitialHeightMeasured_cxx");

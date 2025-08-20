@@ -25,6 +25,7 @@
     "onBlurred": true,
     "onTextChanged": true,
     "onEditingEnded": true,
+    "onTouchBegan": true,
     "onInitialHeightMeasured": true,
     "hybridRef": true
   }
