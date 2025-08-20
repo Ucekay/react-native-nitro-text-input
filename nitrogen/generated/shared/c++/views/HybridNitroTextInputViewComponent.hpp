@@ -43,6 +43,8 @@
 #include <optional>
 #include <functional>
 #include <optional>
+#include <functional>
+#include <optional>
 #include <memory>
 #include "HybridNitroTextInputViewSpec.hpp"
 #include <functional>
@@ -87,6 +89,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<double>> maxLength;
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
+    CachedProp<std::optional<std::function<void()>>> onBlurred;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> hybridRef;
 
