@@ -1,3 +1,9 @@
+## [1.0.0-next.13](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.12...v1.0.0-next.13) (2025-08-20)
+
+### Features
+
+* add onEditingEnded callback to NitroTextInput component ([#20](https://github.com/Ucekay/react-native-nitro-text-input/issues/20)) ([384d208](https://github.com/Ucekay/react-native-nitro-text-input/commit/384d2085210f8cd39446ccd1203048a112bd09db))
+
 ## [1.0.0-next.12](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.11...v1.0.0-next.12) (2025-08-20)
 
 ### Features
