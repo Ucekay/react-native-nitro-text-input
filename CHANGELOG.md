@@ -1,3 +1,9 @@
+## [1.0.0-next.11](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.10...v1.0.0-next.11) (2025-08-20)
+
+### Features
+
+* add onBlurred and onDidEndEditing callbacks to text input components ([#18](https://github.com/Ucekay/react-native-nitro-text-input/issues/18)) ([253b7b7](https://github.com/Ucekay/react-native-nitro-text-input/commit/253b7b7556f9c974f3f95f3b45878b12a3804184))
+
 ## [1.0.0-next.10](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.9...v1.0.0-next.10) (2025-08-20)
 
 ### Features
