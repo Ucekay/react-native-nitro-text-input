@@ -1,3 +1,9 @@
+## [1.0.0-next.14](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.13...v1.0.0-next.14) (2025-08-20)
+
+### Features
+
+* add onTouchBegan (onPressIn) support to NitroTextInput components ([#21](https://github.com/Ucekay/react-native-nitro-text-input/issues/21)) ([007dab6](https://github.com/Ucekay/react-native-nitro-text-input/commit/007dab642c21030dee9a0a38839f7a6f91c1d66a))
+
 ## [1.0.0-next.13](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.12...v1.0.0-next.13) (2025-08-20)
 
 ### Features
