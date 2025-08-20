@@ -166,6 +166,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var keyboardType: KeyboardType? {
+        didSet {
+            Task {
+                @MainActor in
+                self.updateKeyboardType()
+            }
+        }
+    }
     var multiline: Bool? = false
     var placeholder: String? {
         didSet {
@@ -417,6 +425,43 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 self.textField.returnKeyType = .`continue`
             } else {
                 self.textField.returnKeyType = .default
+            }
+        }
+    }
+
+    private func updateKeyboardType() {
+        guard let type = self.keyboardType else {
+            self.textField.keyboardType = .default
+            return
+        }
+        switch type {
+        case .url:
+            self.textField.keyboardType = .URL
+        case .emailAddress:
+            self.textField.keyboardType = .emailAddress
+        case .default:
+            self.textField.keyboardType = .default
+        case .asciiCapable:
+            self.textField.keyboardType = .asciiCapable
+        case .numbersAndPunctuation:
+            self.textField.keyboardType = .numbersAndPunctuation
+        case .numberPad:
+            self.textField.keyboardType = .numberPad
+        case .phonePad:
+            self.textField.keyboardType = .phonePad
+        case .namePhonePad:
+            self.textField.keyboardType = .namePhonePad
+        case .decimalPad:
+            self.textField.keyboardType = .decimalPad
+        case .twitter:
+            self.textField.keyboardType = .twitter
+        case .webSearch:
+            self.textField.keyboardType = .webSearch
+        case .asciiCapableNumberPad:
+            if #available(iOS 10.0, *) {
+                self.textField.keyboardType = .asciiCapableNumberPad
+            } else {
+                self.textField.keyboardType = .numberPad
             }
         }
     }
