@@ -37,6 +37,7 @@ class CustomTextField: UITextField {
 
 class HybridTextInputView: HybridNitroTextInputViewSpec {
     private let textField = CustomTextField()
+    private var baseFont: UIFont = UIFont.systemFont(ofSize: 17)
     private var hasAppliedDefaultValue: Bool = false
     var view: UIView { return textField }
 
@@ -48,20 +49,35 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             // Ensure layout is up-to-date
             self.textField.setNeedsLayout()
             self.textField.layoutIfNeeded()
+            // Cache base font for scaling
+            self.baseFont = self.textField.font ?? UIFont.systemFont(ofSize: 17)
+            self.applyFontScaling()
             // Calculate height using intrinsicContentSize as first measurement
             let initialHeight = self.textField.intrinsicContentSize.height
             if let callback = self.onInitialHeightMeasured {
                 callback(initialHeight)
             }
         }
+        // Listen for Dynamic Type changes
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.handleContentSizeCategoryDidChange),
+            name: UIContentSizeCategory.didChangeNotification,
+            object: nil
+        )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIContentSizeCategory.didChangeNotification, object: nil)
     }
     // Props
     var allowFontScaling: Bool? = true {
         didSet {
             Task {
                 @MainActor in
-                textField.adjustsFontForContentSizeCategory =
-                    self.allowFontScaling ?? true
+                // We'll manage scaling manually to support maxFontSizeMultiplier caps
+                self.textField.adjustsFontForContentSizeCategory = false
+                self.applyFontScaling()
             }
         }
     }
@@ -147,6 +163,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var editable: Bool? {
         didSet {
             self.textField.isEnabled = self.editable ?? true
+        }
+    }
+    var maxFontSizeMultiplier: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyFontScaling()
+            }
         }
     }
     var enablesReturnKeyAutomatically: Bool? {
@@ -464,5 +487,37 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 self.textField.keyboardType = .numberPad
             }
         }
+    }
+
+    // MARK: - Font Scaling (allowFontScaling, maxFontSizeMultiplier)
+    @objc private func handleContentSizeCategoryDidChange() {
+        self.applyFontScaling()
+    }
+
+    private func resolvedMaxFontSizeMultiplier() -> CGFloat? {
+        // Here we only interpret the local value. In a full text tree this would resolve inheritance.
+        guard let value = self.maxFontSizeMultiplier else { return nil } // nil: inherit (treated as no cap here)
+        if value.isNaN { return nil }
+        if value == 0 { return 0 }
+        return CGFloat(value)
+    }
+
+    private func currentMultiplier(baseFont: UIFont) -> CGFloat {
+        guard self.allowFontScaling ?? true else { return 1.0 }
+        let baseSize = max(0.0001, baseFont.pointSize)
+        let metrics = UIFontMetrics(forTextStyle: .body)
+        let scaled = metrics.scaledValue(for: baseSize, compatibleWith: self.textField.traitCollection)
+        var m = max(0.0001, scaled / baseSize)
+        if let cap = resolvedMaxFontSizeMultiplier(), cap >= 1.0 {
+            m = min(m, cap)
+        }
+        return m
+    }
+
+    private func applyFontScaling() {
+        let multiplier = currentMultiplier(baseFont: self.baseFont)
+        let newFont = self.baseFont.withSize(self.baseFont.pointSize * multiplier)
+        self.textField.font = newFont
+        // UITextField is single-line; explicit lineHeight control is not applicable.
     }
 }
