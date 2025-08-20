@@ -21,6 +21,7 @@ export default function App() {
         keyboardType="twitter"
         maxLength={12}
         onBlur={() => console.log('Blurred')}
+        onChangeText={(text) => console.log(text)}
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
