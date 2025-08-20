@@ -1,3 +1,9 @@
+## [1.0.0-next.8](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.7...v1.0.0-next.8) (2025-08-20)
+
+### Features
+
+* add keyboardType and inputMode support to text inputs ([#16](https://github.com/Ucekay/react-native-nitro-text-input/issues/16)) ([554a181](https://github.com/Ucekay/react-native-nitro-text-input/commit/554a1818c3167d6a364f060299148b2f18145586))
+
 ## [1.0.0-next.7](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.6...v1.0.0-next.7) (2025-08-19)
 
 ### Features
