@@ -1,3 +1,10 @@
+## [1.0.0-next.9](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.8...v1.0.0-next.9) (2025-08-20)
+
+### Features
+
+* add maxFontSizeMultiplier support to NitroTextInput components ([fe7323a](https://github.com/Ucekay/react-native-nitro-text-input/commit/fe7323a3631332a2bf37d32dde7b32de82e80c1a))
+* **text-input:** add maxFontSizeMultiplier support for font scaling ([d5455af](https://github.com/Ucekay/react-native-nitro-text-input/commit/d5455af27c616803730bfb033be8cceee2cab529))
+
 ## [1.0.0-next.8](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.7...v1.0.0-next.8) (2025-08-20)
 
 ### Features
