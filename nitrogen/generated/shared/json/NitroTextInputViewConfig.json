@@ -22,8 +22,9 @@
     "maxLength": true,
     "multiline": true,
     "placeholder": true,
-    "onTextChanged": true,
     "onBlurred": true,
+    "onTextChanged": true,
+    "onEditingEnded": true,
     "onInitialHeightMeasured": true,
     "hybridRef": true
   }

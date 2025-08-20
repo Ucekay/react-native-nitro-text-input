@@ -146,6 +146,20 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:Keep
   abstract var placeholder: String?
   
+  abstract var onBlurred: (() -> Unit)?
+  
+  private var onBlurred_cxx: Func_void?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onBlurred?.let { Func_void_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onBlurred = value?.let { it }
+    }
+  
   abstract var onTextChanged: ((text: String) -> Unit)?
   
   private var onTextChanged_cxx: Func_void_std__string?
@@ -160,18 +174,18 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
       onTextChanged = value?.let { it }
     }
   
-  abstract var onBlurred: (() -> Unit)?
+  abstract var onEditingEnded: ((text: String) -> Unit)?
   
-  private var onBlurred_cxx: Func_void?
+  private var onEditingEnded_cxx: Func_void_std__string?
     @Keep
     @DoNotStrip
     get() {
-      return onBlurred?.let { Func_void_java(it) }
+      return onEditingEnded?.let { Func_void_std__string_java(it) }
     }
     @Keep
     @DoNotStrip
     set(value) {
-      onBlurred = value?.let { it }
+      onEditingEnded = value?.let { it }
     }
   
   abstract var onInitialHeightMeasured: ((height: Double) -> Unit)?

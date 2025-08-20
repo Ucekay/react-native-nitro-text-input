@@ -129,7 +129,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             // Cache base font for scaling
             self.baseFont = self.textField.font ?? UIFont.systemFont(ofSize: 17)
             self.applyFontScaling()
-            self.wireBlurCallback()
+            self.wireTextFieldEventCallbacks()
             // Calculate height using intrinsicContentSize as first measurement
             let initialHeight = self.textField.intrinsicContentSize.height
             if let callback = self.onInitialHeightMeasured {
@@ -296,6 +296,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onBlurred: (() -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
+    var onEditingEnded: ((_ text: String) -> Void)?
 
     private func updateAutoCorrect() {
         if let value = autoCorrect {
@@ -611,9 +612,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     // MARK: - Blur event
-    private func wireBlurCallback() {
+    private func wireTextFieldEventCallbacks() {
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
+            // Fire onEditingEnded first with final text, then onBlurred
+            if let onEditingEndedCallback = self.onEditingEnded {
+                onEditingEndedCallback(self.textField.text ?? "")
+            }
             self.onBlurred?()
         }
         self.textField.onTextChanged = { [weak self] text in

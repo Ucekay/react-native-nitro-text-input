@@ -16,8 +16,8 @@
 #include <NitroModules/HybridObjectRegistry.hpp>
 
 #include "JHybridNitroTextInputViewSpec.hpp"
-#include "JFunc_void_std__string.hpp"
 #include "JFunc_void.hpp"
+#include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double.hpp"
 #include "views/JHybridNitroTextInputViewStateUpdater.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
@@ -32,8 +32,8 @@ int initialize(JavaVM* vm) {
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
     margelo::nitro::nitrotextinput::JHybridNitroTextInputViewSpec::registerNatives();
-    margelo::nitro::nitrotextinput::JFunc_void_std__string_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_cxx::registerNatives();
+    margelo::nitro::nitrotextinput::JFunc_void_std__string_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_double_cxx::registerNatives();
     margelo::nitro::nitrotextinput::views::JHybridNitroTextInputViewStateUpdater::registerNatives();
 

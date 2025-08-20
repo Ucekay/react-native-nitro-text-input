@@ -17,11 +17,10 @@ export default function App() {
         defaultValue=""
         editable
         enablesReturnKeyAutomatically
-        enterKeyHint="done"
-        keyboardType="twitter"
         maxLength={12}
         onBlur={() => console.log('Blurred')}
         onChangeText={(text) => console.log(text)}
+        onEndEditing={(text) => console.log(text)}
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
@@ -29,7 +28,8 @@ export default function App() {
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
         maxLength={12}
-        onBlur={(e) => console.log(e)}
+        onBlur={() => console.log('Blurred')}
+        onEndEditing={(e) => console.log(e.nativeEvent.text)}
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

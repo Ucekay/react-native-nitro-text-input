@@ -116,6 +116,8 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   placeholder?: string
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
+  /** Called when editing ends (focus lost). Returns final text. */
+  onEditingEnded?: (text: string) => void
   /**
    * Called once when the initial height has been measured (pt).
    */

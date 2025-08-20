@@ -161,15 +161,20 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setPlaceholder(newViewProps.placeholder.value);
     newViewProps.placeholder.isDirty = false;
   }
+  // onBlurred: optional
+  if (newViewProps.onBlurred.isDirty) {
+    swiftPart.setOnBlurred(newViewProps.onBlurred.value);
+    newViewProps.onBlurred.isDirty = false;
+  }
   // onTextChanged: optional
   if (newViewProps.onTextChanged.isDirty) {
     swiftPart.setOnTextChanged(newViewProps.onTextChanged.value);
     newViewProps.onTextChanged.isDirty = false;
   }
-  // onBlurred: optional
-  if (newViewProps.onBlurred.isDirty) {
-    swiftPart.setOnBlurred(newViewProps.onBlurred.value);
-    newViewProps.onBlurred.isDirty = false;
+  // onEditingEnded: optional
+  if (newViewProps.onEditingEnded.isDirty) {
+    swiftPart.setOnEditingEnded(newViewProps.onEditingEnded.value);
+    newViewProps.onEditingEnded.isDirty = false;
   }
   // onInitialHeightMeasured: optional
   if (newViewProps.onInitialHeightMeasured.isDirty) {
