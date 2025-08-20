@@ -96,6 +96,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
+      virtual std::optional<std::function<void(const std::string& /* text */)>> getOnTextChanged() = 0;
+      virtual void setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) = 0;
       virtual std::optional<std::function<void()>> getOnBlurred() = 0;
       virtual void setOnBlurred(const std::optional<std::function<void()>>& onBlurred) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;

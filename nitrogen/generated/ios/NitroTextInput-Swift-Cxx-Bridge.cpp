@@ -13,6 +13,14 @@
 
 namespace margelo::nitro::nitrotextinput::bridge::swift {
 
+  // pragma MARK: std::function<void(const std::string& /* text */)>
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroTextInput::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& text) mutable -> void {
+      swiftClosure.call(text);
+    };
+  }
+  
   // pragma MARK: std::function<void()>
   Func_void create_Func_void(void* _Nonnull swiftClosureWrapper) {
     auto swiftClosure = NitroTextInput::Func_void::fromUnsafe(swiftClosureWrapper);

@@ -108,6 +108,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setPlaceholder(props.placeholder.value);
     // TODO: Set isDirty = false
   }
+  if (props.onTextChanged.isDirty) {
+    view->setOnTextChanged(props.onTextChanged.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onBlurred.isDirty) {
     view->setOnBlurred(props.onBlurred.value);
     // TODO: Set isDirty = false

@@ -424,6 +424,37 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var onTextChanged: bridge.std__optional_std__function_void_const_std__string_____text______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____text______ in
+        if let __unwrappedValue = self.__implementation.onTextChanged {
+          return bridge.create_std__optional_std__function_void_const_std__string_____text______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onTextChanged = { () -> ((_ text: String) -> Void)? in
+        if let __unwrapped = newValue.value {
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__text: String) -> Void in
+              __wrappedFunction.call(std.string(__text))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var onBlurred: bridge.std__optional_std__function_void____ {
     @inline(__always)
     get {
