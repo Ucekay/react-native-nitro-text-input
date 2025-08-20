@@ -31,6 +31,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include "KeyboardType.hpp"
 #include "JKeyboardType.hpp"
 #include <functional>
+#include "JFunc_void_std__string.hpp"
 #include "JFunc_void.hpp"
 #include "JFunc_void_double.hpp"
 
@@ -218,6 +219,25 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setPlaceholder(const std::optional<std::string>& placeholder) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* placeholder */)>("setPlaceholder");
     method(_javaPart, placeholder.has_value() ? jni::make_jstring(placeholder.value()) : nullptr);
+  }
+  std::optional<std::function<void(const std::string& /* text */)>> JHybridNitroTextInputViewSpec::getOnTextChanged() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string::javaobject>()>("getOnTextChanged_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(const std::string& /* text */)> {
+      if (__result->isInstanceOf(JFunc_void_std__string_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_std__string_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](std::string text) -> void {
+          return __resultRef->invoke(text);
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string::javaobject> /* onTextChanged */)>("setOnTextChanged_cxx");
+    method(_javaPart, onTextChanged.has_value() ? JFunc_void_std__string_cxx::fromCpp(onTextChanged.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnBlurred() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnBlurred_cxx");

@@ -146,6 +146,20 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:Keep
   abstract var placeholder: String?
   
+  abstract var onTextChanged: ((text: String) -> Unit)?
+  
+  private var onTextChanged_cxx: Func_void_std__string?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onTextChanged?.let { Func_void_std__string_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onTextChanged = value?.let { it }
+    }
+  
   abstract var onBlurred: (() -> Unit)?
   
   private var onBlurred_cxx: Func_void?

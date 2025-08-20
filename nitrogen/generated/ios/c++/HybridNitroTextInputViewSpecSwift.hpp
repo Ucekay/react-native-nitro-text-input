@@ -195,6 +195,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setPlaceholder(const std::optional<std::string>& placeholder) noexcept override {
       _swiftPart.setPlaceholder(placeholder);
     }
+    inline std::optional<std::function<void(const std::string& /* text */)>> getOnTextChanged() noexcept override {
+      auto __result = _swiftPart.getOnTextChanged();
+      return __result;
+    }
+    inline void setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) noexcept override {
+      _swiftPart.setOnTextChanged(onTextChanged);
+    }
     inline std::optional<std::function<void()>> getOnBlurred() noexcept override {
       auto __result = _swiftPart.getOnBlurred();
       return __result;

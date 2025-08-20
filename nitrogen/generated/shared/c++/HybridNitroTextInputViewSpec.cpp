@@ -50,6 +50,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("multiline", &HybridNitroTextInputViewSpec::setMultiline);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);
       prototype.registerHybridSetter("placeholder", &HybridNitroTextInputViewSpec::setPlaceholder);
+      prototype.registerHybridGetter("onTextChanged", &HybridNitroTextInputViewSpec::getOnTextChanged);
+      prototype.registerHybridSetter("onTextChanged", &HybridNitroTextInputViewSpec::setOnTextChanged);
       prototype.registerHybridGetter("onBlurred", &HybridNitroTextInputViewSpec::getOnBlurred);
       prototype.registerHybridSetter("onBlurred", &HybridNitroTextInputViewSpec::setOnBlurred);
       prototype.registerHybridGetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::getOnInitialHeightMeasured);
