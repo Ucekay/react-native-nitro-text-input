@@ -19,13 +19,14 @@ export default function App() {
         enablesReturnKeyAutomatically
         enterKeyHint="done"
         keyboardType="twitter"
+        maxLength={12}
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
         clearButtonMode="always"
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
-        inputMode="none"
+        maxLength={12}
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />
