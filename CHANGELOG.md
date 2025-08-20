@@ -1,3 +1,9 @@
+## [1.0.0-next.10](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.9...v1.0.0-next.10) (2025-08-20)
+
+### Features
+
+* add maxLength support to NitroTextInput components ([#17](https://github.com/Ucekay/react-native-nitro-text-input/issues/17)) ([3c46588](https://github.com/Ucekay/react-native-nitro-text-input/commit/3c465885341e0e818b6cd71333c3b01c0715fde4))
+
 ## [1.0.0-next.9](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.8...v1.0.0-next.9) (2025-08-20)
 
 ### Features
