@@ -17,6 +17,7 @@
     "editable": true,
     "enablesReturnKeyAutomatically": true,
     "enterKeyHint": true,
+    "keyboardType": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,

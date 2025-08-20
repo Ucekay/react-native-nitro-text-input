@@ -18,12 +18,14 @@ export default function App() {
         editable
         enablesReturnKeyAutomatically
         enterKeyHint="done"
+        keyboardType="twitter"
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
         clearButtonMode="always"
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
+        inputMode="none"
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

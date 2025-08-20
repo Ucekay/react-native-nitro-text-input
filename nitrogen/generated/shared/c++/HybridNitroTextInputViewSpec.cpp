@@ -40,6 +40,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("enablesReturnKeyAutomatically", &HybridNitroTextInputViewSpec::setEnablesReturnKeyAutomatically);
       prototype.registerHybridGetter("enterKeyHint", &HybridNitroTextInputViewSpec::getEnterKeyHint);
       prototype.registerHybridSetter("enterKeyHint", &HybridNitroTextInputViewSpec::setEnterKeyHint);
+      prototype.registerHybridGetter("keyboardType", &HybridNitroTextInputViewSpec::getKeyboardType);
+      prototype.registerHybridSetter("keyboardType", &HybridNitroTextInputViewSpec::setKeyboardType);
       prototype.registerHybridGetter("multiline", &HybridNitroTextInputViewSpec::getMultiline);
       prototype.registerHybridSetter("multiline", &HybridNitroTextInputViewSpec::setMultiline);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);

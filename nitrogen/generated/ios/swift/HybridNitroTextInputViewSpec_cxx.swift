@@ -333,6 +333,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var keyboardType: bridge.std__optional_KeyboardType_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_KeyboardType_ in
+        if let __unwrappedValue = self.__implementation.keyboardType {
+          return bridge.create_std__optional_KeyboardType_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.keyboardType = newValue.value
+    }
+  }
+  
   public final var multiline: bridge.std__optional_bool_ {
     @inline(__always)
     get {

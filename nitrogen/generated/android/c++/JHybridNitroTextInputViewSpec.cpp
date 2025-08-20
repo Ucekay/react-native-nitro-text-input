@@ -15,6 +15,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `EnterKeyHint` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -26,6 +28,8 @@ namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 #include <string>
 #include "EnterKeyHint.hpp"
 #include "JEnterKeyHint.hpp"
+#include "KeyboardType.hpp"
+#include "JKeyboardType.hpp"
 #include <functional>
 #include "JFunc_void_double.hpp"
 
@@ -168,6 +172,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JEnterKeyHint> /* enterKeyHint */)>("setEnterKeyHint");
     method(_javaPart, enterKeyHint.has_value() ? JEnterKeyHint::fromCpp(enterKeyHint.value()) : nullptr);
+  }
+  std::optional<KeyboardType> JHybridNitroTextInputViewSpec::getKeyboardType() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JKeyboardType>()>("getKeyboardType");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setKeyboardType(std::optional<KeyboardType> keyboardType) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JKeyboardType> /* keyboardType */)>("setKeyboardType");
+    method(_javaPart, keyboardType.has_value() ? JKeyboardType::fromCpp(keyboardType.value()) : nullptr);
   }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");

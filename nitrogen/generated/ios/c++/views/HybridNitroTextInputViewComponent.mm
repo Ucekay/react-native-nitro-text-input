@@ -136,6 +136,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setEnterKeyHint(newViewProps.enterKeyHint.value);
     newViewProps.enterKeyHint.isDirty = false;
   }
+  // keyboardType: optional
+  if (newViewProps.keyboardType.isDirty) {
+    swiftPart.setKeyboardType(newViewProps.keyboardType.value);
+    newViewProps.keyboardType.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

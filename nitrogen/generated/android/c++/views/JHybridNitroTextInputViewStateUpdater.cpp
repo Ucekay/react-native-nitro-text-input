@@ -88,6 +88,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setEnterKeyHint(props.enterKeyHint.value);
     // TODO: Set isDirty = false
   }
+  if (props.keyboardType.isDirty) {
+    view->setKeyboardType(props.keyboardType.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
