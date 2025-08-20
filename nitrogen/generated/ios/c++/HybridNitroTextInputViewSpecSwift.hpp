@@ -174,6 +174,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) noexcept override {
       _swiftPart.setMaxFontSizeMultiplier(maxFontSizeMultiplier);
     }
+    inline std::optional<double> getMaxLength() noexcept override {
+      auto __result = _swiftPart.getMaxLength();
+      return __result;
+    }
+    inline void setMaxLength(std::optional<double> maxLength) noexcept override {
+      _swiftPart.setMaxLength(maxLength);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;

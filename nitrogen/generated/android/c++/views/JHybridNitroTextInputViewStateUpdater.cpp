@@ -96,6 +96,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setMaxFontSizeMultiplier(props.maxFontSizeMultiplier.value);
     // TODO: Set isDirty = false
   }
+  if (props.maxLength.isDirty) {
+    view->setMaxLength(props.maxLength.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false

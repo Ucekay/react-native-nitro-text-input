@@ -90,6 +90,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setKeyboardType(std::optional<KeyboardType> keyboardType) = 0;
       virtual std::optional<double> getMaxFontSizeMultiplier() = 0;
       virtual void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) = 0;
+      virtual std::optional<double> getMaxLength() = 0;
+      virtual void setMaxLength(std::optional<double> maxLength) = 0;
       virtual std::optional<bool> getMultiline() = 0;
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;

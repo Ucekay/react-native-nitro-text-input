@@ -26,6 +26,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var enterKeyHint: EnterKeyHint? { get set }
   var keyboardType: KeyboardType? { get set }
   var maxFontSizeMultiplier: Double? { get set }
+  var maxLength: Double? { get set }
   var multiline: Bool? { get set }
   var placeholder: String? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }

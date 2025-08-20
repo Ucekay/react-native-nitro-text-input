@@ -2,11 +2,24 @@ import Foundation
 import NitroModules
 import UIKit
 
-class CustomTextField: UITextField {
+class CustomTextField: UITextField, UITextFieldDelegate {
     // 追加のカスタマイズがあればここに記述
     var isCaretHidden: Bool = false
     var clearTextOnFocus: Bool = false
     var isContextMenuHidden: Bool = false
+    var maxLength: Int?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidChange(_:)), name: UITextField.textDidChangeNotification, object: self)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidChange(_:)), name: UITextField.textDidChangeNotification, object: self)
+    }
 
     override func caretRect(for position: UITextPosition) -> CGRect {
         return isCaretHidden ? .zero : super.caretRect(for: position)
@@ -33,6 +46,63 @@ class CustomTextField: UITextField {
         }
         super.buildMenu(with: builder)
     }
+
+    // MARK: - UITextFieldDelegate (maxLength enforcement)
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Allow IME composition to proceed without truncation
+        if self.markedTextRange != nil { return true }
+        guard let maxLen = self.maxLength else { return true }
+
+        let current = (self.attributedText?.string ?? self.text ?? "") as NSString
+        let allowedLength = maxLen - current.length + range.length
+        if allowedLength <= 0 {
+            // Always allow deletions
+            return string.isEmpty
+        }
+
+        let incoming = string as NSString
+        if incoming.length > allowedLength {
+            var cutIndex = allowedLength
+            if allowedLength > 0 {
+                let composed = incoming.rangeOfComposedCharacterSequence(at: allowedLength - 1)
+                if composed.location + composed.length > allowedLength { cutIndex = composed.location }
+            }
+            let limited = incoming.substring(to: max(0, cutIndex))
+            let newText = current.replacingCharacters(in: range, with: limited)
+            self.text = newText
+            // Keep caret right after the actually inserted (trimmed) text.
+            // Defer to next runloop to avoid UIKit overriding it after we return false.
+            let targetOffset = min((newText as NSString).length, range.location + (limited as NSString).length)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if let start = self.position(from: self.beginningOfDocument, offset: targetOffset) {
+                    self.selectedTextRange = self.textRange(from: start, to: start)
+                }
+            }
+            return false
+        }
+        return true
+    }
+
+    @objc private func handleTextDidChange(_ notification: Notification) {
+        guard let maxLen = self.maxLength else { return }
+        // Do not enforce while composing
+        if self.markedTextRange != nil { return }
+        let current = (self.attributedText?.string ?? self.text ?? "") as NSString
+        if current.length > maxLen {
+            var cutIndex = maxLen
+            if maxLen > 0 {
+                let composed = current.rangeOfComposedCharacterSequence(at: maxLen - 1)
+                if composed.location + composed.length > maxLen { cutIndex = composed.location }
+            }
+            let limited = current.substring(to: max(0, cutIndex))
+            self.text = limited
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: self)
+    }
 }
 
 class HybridTextInputView: HybridNitroTextInputViewSpec {
@@ -43,7 +113,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     override init() {
         super.init()
-        // textField.delegate = self  // Removed as per instructions
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
@@ -194,6 +263,15 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             Task {
                 @MainActor in
                 self.updateKeyboardType()
+            }
+        }
+    }
+    var maxLength: Double? {
+        didSet {
+            if let value = self.maxLength, value.isFinite {
+                self.textField.maxLength = max(0, Int(floor(value)))
+            } else {
+                self.textField.maxLength = nil
             }
         }
     }
@@ -520,4 +598,5 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         self.textField.font = newFont
         // UITextField is single-line; explicit lineHeight control is not applicable.
     }
+
 }
