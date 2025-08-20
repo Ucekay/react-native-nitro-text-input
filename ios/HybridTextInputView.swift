@@ -8,6 +8,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var clearTextOnFocus: Bool = false
     var isContextMenuHidden: Bool = false
     var maxLength: Int?
+    var onDidEndEditing: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -84,6 +85,10 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         return true
     }
 
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        onDidEndEditing?()
+    }
+
     @objc private func handleTextDidChange(_ notification: Notification) {
         guard let maxLen = self.maxLength else { return }
         // Do not enforce while composing
@@ -121,6 +126,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             // Cache base font for scaling
             self.baseFont = self.textField.font ?? UIFont.systemFont(ofSize: 17)
             self.applyFontScaling()
+            self.wireBlurCallback()
             // Calculate height using intrinsicContentSize as first measurement
             let initialHeight = self.textField.intrinsicContentSize.height
             if let callback = self.onInitialHeightMeasured {
@@ -285,6 +291,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
+    var onBlurred: (() -> Void)?
 
     private func updateAutoCorrect() {
         if let value = autoCorrect {
@@ -597,6 +604,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         let newFont = self.baseFont.withSize(self.baseFont.pointSize * multiplier)
         self.textField.font = newFont
         // UITextField is single-line; explicit lineHeight control is not applicable.
+    }
+
+    // MARK: - Blur event
+    private func wireBlurCallback() {
+        self.textField.onDidEndEditing = { [weak self] in
+            guard let self = self else { return }
+            self.onBlurred?()
+        }
     }
 
 }
