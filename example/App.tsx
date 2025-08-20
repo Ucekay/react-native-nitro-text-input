@@ -20,6 +20,7 @@ export default function App() {
         enterKeyHint="done"
         keyboardType="twitter"
         maxLength={12}
+        onBlur={() => console.log('Blurred')}
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
@@ -27,6 +28,7 @@ export default function App() {
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
         maxLength={12}
+        onBlur={(e) => console.log(e)}
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

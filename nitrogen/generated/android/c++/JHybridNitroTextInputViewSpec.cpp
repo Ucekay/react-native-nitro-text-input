@@ -31,6 +31,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include "KeyboardType.hpp"
 #include "JKeyboardType.hpp"
 #include <functional>
+#include "JFunc_void.hpp"
 #include "JFunc_void_double.hpp"
 
 namespace margelo::nitro::nitrotextinput {
@@ -217,6 +218,25 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setPlaceholder(const std::optional<std::string>& placeholder) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* placeholder */)>("setPlaceholder");
     method(_javaPart, placeholder.has_value() ? jni::make_jstring(placeholder.value()) : nullptr);
+  }
+  std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnBlurred() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnBlurred_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void()> {
+      if (__result->isInstanceOf(JFunc_void_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef]() -> void {
+          return __resultRef->invoke();
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setOnBlurred(const std::optional<std::function<void()>>& onBlurred) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void::javaobject> /* onBlurred */)>("setOnBlurred_cxx");
+    method(_javaPart, onBlurred.has_value() ? JFunc_void_cxx::fromCpp(onBlurred.value()) : nullptr);
   }
   std::optional<std::function<void(double /* height */)>> JHybridNitroTextInputViewSpec::getOnInitialHeightMeasured() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_double::javaobject>()>("getOnInitialHeightMeasured_cxx");

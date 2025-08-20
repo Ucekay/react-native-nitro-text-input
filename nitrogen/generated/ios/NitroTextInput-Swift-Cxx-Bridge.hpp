@@ -115,6 +115,37 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<double>(value);
   }
   
+  // pragma MARK: std::function<void()>
+  /**
+   * Specialized version of `std::function<void()>`.
+   */
+  using Func_void = std::function<void()>;
+  /**
+   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
+   */
+  class Func_void_Wrapper final {
+  public:
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_unique<std::function<void()>>(std::move(func))) {}
+    inline void call() const {
+      _function->operator()();
+    }
+  private:
+    std::unique_ptr<std::function<void()>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_Wrapper wrap_Func_void(Func_void value) {
+    return Func_void_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void()>>
+  /**
+   * Specialized version of `std::optional<std::function<void()>>`.
+   */
+  using std__optional_std__function_void____ = std::optional<std::function<void()>>;
+  inline std::optional<std::function<void()>> create_std__optional_std__function_void____(const std::function<void()>& value) {
+    return std::optional<std::function<void()>>(value);
+  }
+  
   // pragma MARK: std::function<void(double /* height */)>
   /**
    * Specialized version of `std::function<void(double)>`.

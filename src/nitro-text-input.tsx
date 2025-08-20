@@ -7,8 +7,9 @@ import { NativeNitroTextInput } from './native-nitro-text-input'
 type ReactProps<T> = T extends HostComponent<infer P> ? P : never
 type NativeTextInputProps = ReactProps<typeof NativeNitroTextInput>
 export interface NitroTextInputProps
-  extends Omit<NativeTextInputProps, 'onInitialHeightMeasured'> {
+  extends Omit<NativeTextInputProps, 'onInitialHeightMeasured' | 'onBlurred'> {
   inputMode?: InputModeOptions
+  onBlur?: () => void
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -16,15 +17,17 @@ export function NitroTextInput(props: NitroTextInputProps) {
     number | undefined
   >(undefined)
 
-  const flattenedStyle = StyleSheet.flatten(props.style) ?? {}
+  const { style, keyboardType, inputMode, onBlur, ...others } = props
+
+  const flattenedStyle = StyleSheet.flatten(style) ?? {}
 
   const hasExplicitHeight = flattenedStyle?.height != null
 
   // Map inputMode to keyboardType
   const getKeyboardTypeFromInputMode = () => {
-    if (!props.inputMode) return props.keyboardType
+    if (!inputMode) return keyboardType
 
-    switch (props.inputMode) {
+    switch (inputMode) {
       case 'text':
         return 'default'
       case 'decimal':
@@ -40,9 +43,9 @@ export function NitroTextInput(props: NitroTextInputProps) {
       case 'url':
         return 'url'
       case 'none':
-        return props.keyboardType // Keep original keyboardType for 'none'
+        return keyboardType // Keep original keyboardType for 'none'
       default:
-        return props.keyboardType
+        return keyboardType
     }
   }
 
@@ -54,12 +57,12 @@ export function NitroTextInput(props: NitroTextInputProps) {
     if (!hasExplicitHeight && measuredInitialHeight != null) {
       return [
         // Preserve original user-provided style(s)
-        props.style,
+        style,
         // Apply measured height only when height isn't explicitly set
         { height: measuredInitialHeight, width: '100%' as const },
       ]
     }
-    return [props.style, { width: '100%' as const }]
+    return [style, { width: '100%' as const }]
   }
 
   const handleInitialHeightMeasured = (height: number) => {
@@ -68,10 +71,11 @@ export function NitroTextInput(props: NitroTextInputProps) {
 
   return (
     <NativeNitroTextInput
-      {...props}
-      style={composedStyle()}
+      {...others}
       keyboardType={getKeyboardTypeFromInputMode()}
+      onBlurred={{ f: onBlur }}
       onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}
+      style={composedStyle()}
     />
   )
 }

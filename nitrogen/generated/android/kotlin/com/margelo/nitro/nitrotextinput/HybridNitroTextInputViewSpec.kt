@@ -146,6 +146,20 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:Keep
   abstract var placeholder: String?
   
+  abstract var onBlurred: (() -> Unit)?
+  
+  private var onBlurred_cxx: Func_void?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onBlurred?.let { Func_void_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onBlurred = value?.let { it }
+    }
+  
   abstract var onInitialHeightMeasured: ((height: Double) -> Unit)?
   
   private var onInitialHeightMeasured_cxx: Func_void_double?
