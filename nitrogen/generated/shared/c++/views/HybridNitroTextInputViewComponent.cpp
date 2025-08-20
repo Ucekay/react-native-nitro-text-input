@@ -235,6 +235,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onEditingEnded: ") + exc.what());
       }
     }()),
+    onTouchBegan([&]() -> CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onTouchBegan", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onTouchBegan;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTouchBegan);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onTouchBegan: ") + exc.what());
+      }
+    }()),
     onInitialHeightMeasured([&]() -> CachedProp<std::optional<std::function<void(double /* height */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onInitialHeightMeasured", nullptr, nullptr);
@@ -279,6 +289,7 @@ namespace margelo::nitro::nitrotextinput::views {
     onBlurred(other.onBlurred),
     onTextChanged(other.onTextChanged),
     onEditingEnded(other.onEditingEnded),
+    onTouchBegan(other.onTouchBegan),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
@@ -305,6 +316,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("onBlurred"): return true;
       case hashString("onTextChanged"): return true;
       case hashString("onEditingEnded"): return true;
+      case hashString("onTouchBegan"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;
       default: return false;

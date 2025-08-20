@@ -517,6 +517,37 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var onTouchBegan: bridge.std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY______ in
+        if let __unwrappedValue = self.__implementation.onTouchBegan {
+          return bridge.create_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY______({ () -> bridge.Func_void_double_double_double_double in
+            let __closureWrapper = Func_void_double_double_double_double(__unwrappedValue)
+            return bridge.create_Func_void_double_double_double_double(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onTouchBegan = { () -> ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double) -> Void)? in
+        if let __unwrapped = newValue.value {
+          return { () -> (Double, Double, Double, Double) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_double_double_double_double(__unwrapped)
+            return { (__pageX: Double, __pageY: Double, __locationX: Double, __locationY: Double) -> Void in
+              __wrappedFunction.call(__pageX, __pageY, __locationX, __locationY)
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var onInitialHeightMeasured: bridge.std__optional_std__function_void_double____height______ {
     @inline(__always)
     get {

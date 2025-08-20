@@ -177,6 +177,37 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<std::function<void(const std::string& /* text */)>>(value);
   }
   
+  // pragma MARK: std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>
+  /**
+   * Specialized version of `std::function<void(double, double, double, double)>`.
+   */
+  using Func_void_double_double_double_double = std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>;
+  /**
+   * Wrapper class for a `std::function<void(double / * pageX * /, double / * pageY * /, double / * locationX * /, double / * locationY * /)>`, this can be used from Swift.
+   */
+  class Func_void_double_double_double_double_Wrapper final {
+  public:
+    explicit Func_void_double_double_double_double_Wrapper(std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>&& func): _function(std::make_unique<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>(std::move(func))) {}
+    inline void call(double pageX, double pageY, double locationX, double locationY) const {
+      _function->operator()(pageX, pageY, locationX, locationY);
+    }
+  private:
+    std::unique_ptr<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_double_double_double_double create_Func_void_double_double_double_double(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_double_double_double_double_Wrapper wrap_Func_void_double_double_double_double(Func_void_double_double_double_double value) {
+    return Func_void_double_double_double_double_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(double / * pageX * /, double / * pageY * /, double / * locationX * /, double / * locationY * /)>>`.
+   */
+  using std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY______ = std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>;
+  inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>> create_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY______(const std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>& value) {
+    return std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>(value);
+  }
+  
   // pragma MARK: std::function<void(double /* height */)>
   /**
    * Specialized version of `std::function<void(double)>`.

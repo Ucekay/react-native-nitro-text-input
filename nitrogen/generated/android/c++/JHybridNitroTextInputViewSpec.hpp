@@ -91,6 +91,8 @@ namespace margelo::nitro::nitrotextinput {
     void setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) override;
     std::optional<std::function<void(const std::string& /* text */)>> getOnEditingEnded() override;
     void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) override;
+    std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>> getOnTouchBegan() override;
+    void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>& onTouchBegan) override;
     std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() override;
     void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) override;
 
