@@ -114,6 +114,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   maxLength?: number
   multiline?: boolean
   placeholder?: string
+  onBlurred?: () => void
   /**
    * Called once when the initial height has been measured (pt).
    */
