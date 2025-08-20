@@ -205,6 +205,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.placeholder: ") + exc.what());
       }
     }()),
+    onBlurred([&]() -> CachedProp<std::optional<std::function<void()>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onBlurred", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onBlurred;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void()>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onBlurred);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onBlurred: ") + exc.what());
+      }
+    }()),
     onTextChanged([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onTextChanged", nullptr, nullptr);
@@ -215,14 +225,14 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onTextChanged: ") + exc.what());
       }
     }()),
-    onBlurred([&]() -> CachedProp<std::optional<std::function<void()>>> {
+    onEditingEnded([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> {
       try {
-        const react::RawValue* rawValue = rawProps.at("onBlurred", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.onBlurred;
+        const react::RawValue* rawValue = rawProps.at("onEditingEnded", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onEditingEnded;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<std::function<void()>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onBlurred);
+        return CachedProp<std::optional<std::function<void(const std::string& /* text */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onEditingEnded);
       } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.onBlurred: ") + exc.what());
+        throw std::runtime_error(std::string("NitroTextInputView.onEditingEnded: ") + exc.what());
       }
     }()),
     onInitialHeightMeasured([&]() -> CachedProp<std::optional<std::function<void(double /* height */)>>> {
@@ -266,8 +276,9 @@ namespace margelo::nitro::nitrotextinput::views {
     maxLength(other.maxLength),
     multiline(other.multiline),
     placeholder(other.placeholder),
-    onTextChanged(other.onTextChanged),
     onBlurred(other.onBlurred),
+    onTextChanged(other.onTextChanged),
+    onEditingEnded(other.onEditingEnded),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
@@ -291,8 +302,9 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("maxLength"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
-      case hashString("onTextChanged"): return true;
       case hashString("onBlurred"): return true;
+      case hashString("onTextChanged"): return true;
+      case hashString("onEditingEnded"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;
       default: return false;

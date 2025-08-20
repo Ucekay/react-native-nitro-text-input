@@ -115,37 +115,6 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<double>(value);
   }
   
-  // pragma MARK: std::function<void(const std::string& /* text */)>
-  /**
-   * Specialized version of `std::function<void(const std::string&)>`.
-   */
-  using Func_void_std__string = std::function<void(const std::string& /* text */)>;
-  /**
-   * Wrapper class for a `std::function<void(const std::string& / * text * /)>`, this can be used from Swift.
-   */
-  class Func_void_std__string_Wrapper final {
-  public:
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* text */)>&& func): _function(std::make_unique<std::function<void(const std::string& /* text */)>>(std::move(func))) {}
-    inline void call(std::string text) const {
-      _function->operator()(text);
-    }
-  private:
-    std::unique_ptr<std::function<void(const std::string& /* text */)>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
-    return Func_void_std__string_Wrapper(std::move(value));
-  }
-  
-  // pragma MARK: std::optional<std::function<void(const std::string& /* text */)>>
-  /**
-   * Specialized version of `std::optional<std::function<void(const std::string& / * text * /)>>`.
-   */
-  using std__optional_std__function_void_const_std__string_____text______ = std::optional<std::function<void(const std::string& /* text */)>>;
-  inline std::optional<std::function<void(const std::string& /* text */)>> create_std__optional_std__function_void_const_std__string_____text______(const std::function<void(const std::string& /* text */)>& value) {
-    return std::optional<std::function<void(const std::string& /* text */)>>(value);
-  }
-  
   // pragma MARK: std::function<void()>
   /**
    * Specialized version of `std::function<void()>`.
@@ -175,6 +144,37 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_std__function_void____ = std::optional<std::function<void()>>;
   inline std::optional<std::function<void()>> create_std__optional_std__function_void____(const std::function<void()>& value) {
     return std::optional<std::function<void()>>(value);
+  }
+  
+  // pragma MARK: std::function<void(const std::string& /* text */)>
+  /**
+   * Specialized version of `std::function<void(const std::string&)>`.
+   */
+  using Func_void_std__string = std::function<void(const std::string& /* text */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::string& / * text * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__string_Wrapper final {
+  public:
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* text */)>&& func): _function(std::make_unique<std::function<void(const std::string& /* text */)>>(std::move(func))) {}
+    inline void call(std::string text) const {
+      _function->operator()(text);
+    }
+  private:
+    std::unique_ptr<std::function<void(const std::string& /* text */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
+    return Func_void_std__string_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(const std::string& /* text */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const std::string& / * text * /)>>`.
+   */
+  using std__optional_std__function_void_const_std__string_____text______ = std::optional<std::function<void(const std::string& /* text */)>>;
+  inline std::optional<std::function<void(const std::string& /* text */)>> create_std__optional_std__function_void_const_std__string_____text______(const std::function<void(const std::string& /* text */)>& value) {
+    return std::optional<std::function<void(const std::string& /* text */)>>(value);
   }
   
   // pragma MARK: std::function<void(double /* height */)>
