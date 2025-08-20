@@ -1,3 +1,9 @@
+## [1.0.0-next.12](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.11...v1.0.0-next.12) (2025-08-20)
+
+### Features
+
+* add onTextChanged callback to NitroTextInput components ([#19](https://github.com/Ucekay/react-native-nitro-text-input/issues/19)) ([c101d30](https://github.com/Ucekay/react-native-nitro-text-input/commit/c101d30d964a5fd94013895aa1710eb507247544))
+
 ## [1.0.0-next.11](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.10...v1.0.0-next.11) (2025-08-20)
 
 ### Features
