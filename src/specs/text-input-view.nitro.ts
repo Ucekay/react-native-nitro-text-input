@@ -86,6 +86,8 @@ export type KeyboardType =
   | 'web-search'
   | 'ascii-capable-number-pad'
 
+export type MaxFontMultiplier = number | null | undefined
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
@@ -108,6 +110,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   enablesReturnKeyAutomatically?: boolean
   enterKeyHint?: EnterKeyHint
   keyboardType?: KeyboardType
+  maxFontSizeMultiplier?: MaxFontMultiplier
   multiline?: boolean
   placeholder?: string
   /**

@@ -167,6 +167,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setKeyboardType(std::optional<KeyboardType> keyboardType) noexcept override {
       _swiftPart.setKeyboardType(keyboardType);
     }
+    inline std::optional<double> getMaxFontSizeMultiplier() noexcept override {
+      auto __result = _swiftPart.getMaxFontSizeMultiplier();
+      return __result;
+    }
+    inline void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) noexcept override {
+      _swiftPart.setMaxFontSizeMultiplier(maxFontSizeMultiplier);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;

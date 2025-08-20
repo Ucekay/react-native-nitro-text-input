@@ -77,6 +77,8 @@ namespace margelo::nitro::nitrotextinput {
     void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) override;
     std::optional<KeyboardType> getKeyboardType() override;
     void setKeyboardType(std::optional<KeyboardType> keyboardType) override;
+    std::optional<double> getMaxFontSizeMultiplier() override;
+    void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) override;
     std::optional<bool> getMultiline() override;
     void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;

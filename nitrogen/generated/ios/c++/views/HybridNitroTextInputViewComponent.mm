@@ -141,6 +141,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setKeyboardType(newViewProps.keyboardType.value);
     newViewProps.keyboardType.isDirty = false;
   }
+  // maxFontSizeMultiplier: optional
+  if (newViewProps.maxFontSizeMultiplier.isDirty) {
+    swiftPart.setMaxFontSizeMultiplier(newViewProps.maxFontSizeMultiplier.value);
+    newViewProps.maxFontSizeMultiplier.isDirty = false;
+  }
   // multiline: optional
   if (newViewProps.multiline.isDirty) {
     swiftPart.setMultiline(newViewProps.multiline.value);

@@ -92,6 +92,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setKeyboardType(props.keyboardType.value);
     // TODO: Set isDirty = false
   }
+  if (props.maxFontSizeMultiplier.isDirty) {
+    view->setMaxFontSizeMultiplier(props.maxFontSizeMultiplier.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
