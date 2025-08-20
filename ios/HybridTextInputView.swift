@@ -10,17 +10,34 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var maxLength: Int?
     var onTextChanged: ((_ text: String) -> Void)?
     var onDidEndEditing: (() -> Void)?
+    var onTouchBegan:
+        (
+            (
+                _ pageX: Double, _ pageY: Double, _ locationX: Double,
+                _ locationY: Double
+            ) -> Void
+        )?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidChange(_:)), name: UITextField.textDidChangeNotification, object: self)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.handleTextDidChange(_:)),
+            name: UITextField.textDidChangeNotification,
+            object: self
+        )
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleTextDidChange(_:)), name: UITextField.textDidChangeNotification, object: self)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.handleTextDidChange(_:)),
+            name: UITextField.textDidChangeNotification,
+            object: self
+        )
     }
 
     override func caretRect(for position: UITextPosition) -> CGRect {
@@ -50,12 +67,17 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     }
 
     // MARK: - UITextFieldDelegate (maxLength enforcement)
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
         // Allow IME composition to proceed without truncation
         if self.markedTextRange != nil { return true }
         guard let maxLen = self.maxLength else { return true }
 
-        let current = (self.attributedText?.string ?? self.text ?? "") as NSString
+        let current =
+            (self.attributedText?.string ?? self.text ?? "") as NSString
         let allowedLength = maxLen - current.length + range.length
         if allowedLength <= 0 {
             // Always allow deletions
@@ -66,19 +88,32 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         if incoming.length > allowedLength {
             var cutIndex = allowedLength
             if allowedLength > 0 {
-                let composed = incoming.rangeOfComposedCharacterSequence(at: allowedLength - 1)
-                if composed.location + composed.length > allowedLength { cutIndex = composed.location }
+                let composed = incoming.rangeOfComposedCharacterSequence(
+                    at: allowedLength - 1
+                )
+                if composed.location + composed.length > allowedLength {
+                    cutIndex = composed.location
+                }
             }
             let limited = incoming.substring(to: max(0, cutIndex))
             let newText = current.replacingCharacters(in: range, with: limited)
             self.text = newText
             // Keep caret right after the actually inserted (trimmed) text.
             // Defer to next runloop to avoid UIKit overriding it after we return false.
-            let targetOffset = min((newText as NSString).length, range.location + (limited as NSString).length)
+            let targetOffset = min(
+                (newText as NSString).length,
+                range.location + (limited as NSString).length
+            )
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                if let start = self.position(from: self.beginningOfDocument, offset: targetOffset) {
-                    self.selectedTextRange = self.textRange(from: start, to: start)
+                if let start = self.position(
+                    from: self.beginningOfDocument,
+                    offset: targetOffset
+                ) {
+                    self.selectedTextRange = self.textRange(
+                        from: start,
+                        to: start
+                    )
                 }
             }
             return false
@@ -90,16 +125,33 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         onDidEndEditing?()
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let local = touch.location(in: self)
+            var page = local
+            if let window = self.window {
+                page = touch.location(in: window)
+            }
+            onTouchBegan?(page.x, page.y, local.x, local.y)
+        }
+        super.touchesBegan(touches, with: event)
+    }
+
     @objc private func handleTextDidChange(_ notification: Notification) {
         guard let maxLen = self.maxLength else { return }
         // Do not enforce while composing
         if self.markedTextRange != nil { return }
-        let current = (self.attributedText?.string ?? self.text ?? "") as NSString
+        let current =
+            (self.attributedText?.string ?? self.text ?? "") as NSString
         if current.length > maxLen {
             var cutIndex = maxLen
             if maxLen > 0 {
-                let composed = current.rangeOfComposedCharacterSequence(at: maxLen - 1)
-                if composed.location + composed.length > maxLen { cutIndex = composed.location }
+                let composed = current.rangeOfComposedCharacterSequence(
+                    at: maxLen - 1
+                )
+                if composed.location + composed.length > maxLen {
+                    cutIndex = composed.location
+                }
             }
             let limited = current.substring(to: max(0, cutIndex))
             self.text = limited
@@ -109,7 +161,11 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: self)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UITextField.textDidChangeNotification,
+            object: self
+        )
     }
 }
 
@@ -146,7 +202,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self, name: UIContentSizeCategory.didChangeNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIContentSizeCategory.didChangeNotification,
+            object: nil
+        )
     }
     // Props
     var allowFontScaling: Bool? = true {
@@ -297,6 +357,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var onBlurred: (() -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
+    var onTouchBegan:
+        (
+            (
+                _ pageX: Double, _ pageY: Double, _ locationX: Double,
+                _ locationY: Double
+            ) -> Void
+        )?
 
     private func updateAutoCorrect() {
         if let value = autoCorrect {
@@ -586,7 +653,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     private func resolvedMaxFontSizeMultiplier() -> CGFloat? {
         // Here we only interpret the local value. In a full text tree this would resolve inheritance.
-        guard let value = self.maxFontSizeMultiplier else { return nil } // nil: inherit (treated as no cap here)
+        guard let value = self.maxFontSizeMultiplier else { return nil }  // nil: inherit (treated as no cap here)
         if value.isNaN { return nil }
         if value == 0 { return 0 }
         return CGFloat(value)
@@ -596,7 +663,10 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         guard self.allowFontScaling ?? true else { return 1.0 }
         let baseSize = max(0.0001, baseFont.pointSize)
         let metrics = UIFontMetrics(forTextStyle: .body)
-        let scaled = metrics.scaledValue(for: baseSize, compatibleWith: self.textField.traitCollection)
+        let scaled = metrics.scaledValue(
+            for: baseSize,
+            compatibleWith: self.textField.traitCollection
+        )
         var m = max(0.0001, scaled / baseSize)
         if let cap = resolvedMaxFontSizeMultiplier(), cap >= 1.0 {
             m = min(m, cap)
@@ -606,7 +676,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     private func applyFontScaling() {
         let multiplier = currentMultiplier(baseFont: self.baseFont)
-        let newFont = self.baseFont.withSize(self.baseFont.pointSize * multiplier)
+        let newFont = self.baseFont.withSize(
+            self.baseFont.pointSize * multiplier
+        )
         self.textField.font = newFont
         // UITextField is single-line; explicit lineHeight control is not applicable.
     }
@@ -623,6 +695,10 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         self.textField.onTextChanged = { [weak self] text in
             self?.onTextChanged?(text)
+        }
+        self.textField.onTouchBegan = {
+            [weak self] pageX, pageY, locationX, locationY in
+            self?.onTouchBegan?(pageX, pageY, locationX, locationY)
         }
     }
 
