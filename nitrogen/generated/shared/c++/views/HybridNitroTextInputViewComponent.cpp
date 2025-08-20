@@ -175,6 +175,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.maxFontSizeMultiplier: ") + exc.what());
       }
     }()),
+    maxLength([&]() -> CachedProp<std::optional<double>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("maxLength", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.maxLength;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<double>>::fromRawValue(*runtime, value, sourceProps.maxLength);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.maxLength: ") + exc.what());
+      }
+    }()),
     multiline([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("multiline", nullptr, nullptr);
@@ -233,6 +243,7 @@ namespace margelo::nitro::nitrotextinput::views {
     enterKeyHint(other.enterKeyHint),
     keyboardType(other.keyboardType),
     maxFontSizeMultiplier(other.maxFontSizeMultiplier),
+    maxLength(other.maxLength),
     multiline(other.multiline),
     placeholder(other.placeholder),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
@@ -255,6 +266,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("enterKeyHint"): return true;
       case hashString("keyboardType"): return true;
       case hashString("maxFontSizeMultiplier"): return true;
+      case hashString("maxLength"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
       case hashString("onInitialHeightMeasured"): return true;

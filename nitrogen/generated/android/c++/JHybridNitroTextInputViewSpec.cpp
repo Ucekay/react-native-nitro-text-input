@@ -191,6 +191,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* maxFontSizeMultiplier */)>("setMaxFontSizeMultiplier");
     method(_javaPart, maxFontSizeMultiplier.has_value() ? jni::JDouble::valueOf(maxFontSizeMultiplier.value()) : nullptr);
   }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMaxLength() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMaxLength");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMaxLength(std::optional<double> maxLength) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* maxLength */)>("setMaxLength");
+    method(_javaPart, maxLength.has_value() ? jni::JDouble::valueOf(maxLength.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getMultiline() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getMultiline");
     auto __result = method(_javaPart);

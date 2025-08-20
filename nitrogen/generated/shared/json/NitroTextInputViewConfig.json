@@ -19,6 +19,7 @@
     "enterKeyHint": true,
     "keyboardType": true,
     "maxFontSizeMultiplier": true,
+    "maxLength": true,
     "multiline": true,
     "placeholder": true,
     "onInitialHeightMeasured": true,

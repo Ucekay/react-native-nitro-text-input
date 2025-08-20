@@ -111,6 +111,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   enterKeyHint?: EnterKeyHint
   keyboardType?: KeyboardType
   maxFontSizeMultiplier?: MaxFontMultiplier
+  maxLength?: number
   multiline?: boolean
   placeholder?: string
   /**
