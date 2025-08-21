@@ -216,12 +216,19 @@ namespace margelo::nitro::nitrotextinput {
     inline void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) noexcept override {
       _swiftPart.setOnEditingEnded(onEditingEnded);
     }
-    inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>> getOnTouchBegan() noexcept override {
+    inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchBegan() noexcept override {
       auto __result = _swiftPart.getOnTouchBegan();
       return __result;
     }
-    inline void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>& onTouchBegan) noexcept override {
+    inline void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) noexcept override {
       _swiftPart.setOnTouchBegan(onTouchBegan);
+    }
+    inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() noexcept override {
+      auto __result = _swiftPart.getOnTouchEnded();
+      return __result;
+    }
+    inline void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) noexcept override {
+      _swiftPart.setOnTouchEnded(onTouchEnded);
     }
     inline std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() noexcept override {
       auto __result = _swiftPart.getOnInitialHeightMeasured();

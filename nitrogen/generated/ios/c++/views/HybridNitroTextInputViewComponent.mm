@@ -181,6 +181,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setOnTouchBegan(newViewProps.onTouchBegan.value);
     newViewProps.onTouchBegan.isDirty = false;
   }
+  // onTouchEnded: optional
+  if (newViewProps.onTouchEnded.isDirty) {
+    swiftPart.setOnTouchEnded(newViewProps.onTouchEnded.value);
+    newViewProps.onTouchEnded.isDirty = false;
+  }
   // onInitialHeightMeasured: optional
   if (newViewProps.onInitialHeightMeasured.isDirty) {
     swiftPart.setOnInitialHeightMeasured(newViewProps.onInitialHeightMeasured.value);

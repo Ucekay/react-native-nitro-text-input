@@ -121,7 +121,16 @@ export interface NitroTextInputViewProps extends HybridViewProps {
     pageX: number,
     pageY: number,
     locationX: number,
-    locationY: number
+    locationY: number,
+    timestamp: number
+  ) => void
+  /** Called on touch-up or when the touch is canceled/terminated. */
+  onTouchEnded?: (
+    pageX: number,
+    pageY: number,
+    locationX: number,
+    locationY: number,
+    timestamp: number
   ) => void
   /**
    * Called once when the initial height has been measured (pt).
