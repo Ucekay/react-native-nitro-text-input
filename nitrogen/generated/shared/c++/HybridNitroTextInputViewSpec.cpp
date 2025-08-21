@@ -56,6 +56,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("onTextChanged", &HybridNitroTextInputViewSpec::setOnTextChanged);
       prototype.registerHybridGetter("onEditingEnded", &HybridNitroTextInputViewSpec::getOnEditingEnded);
       prototype.registerHybridSetter("onEditingEnded", &HybridNitroTextInputViewSpec::setOnEditingEnded);
+      prototype.registerHybridGetter("onSelectionChanged", &HybridNitroTextInputViewSpec::getOnSelectionChanged);
+      prototype.registerHybridSetter("onSelectionChanged", &HybridNitroTextInputViewSpec::setOnSelectionChanged);
       prototype.registerHybridGetter("onTouchBegan", &HybridNitroTextInputViewSpec::getOnTouchBegan);
       prototype.registerHybridSetter("onTouchBegan", &HybridNitroTextInputViewSpec::setOnTouchBegan);
       prototype.registerHybridGetter("onTouchEnded", &HybridNitroTextInputViewSpec::getOnTouchEnded);

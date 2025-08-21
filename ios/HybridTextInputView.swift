@@ -10,6 +10,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var maxLength: Int?
     var onTextChanged: ((_ text: String) -> Void)?
     var onDidEndEditing: (() -> Void)?
+    var onSelectionChanged: ((_ start: Int, _ end: Int) -> Void)?
     var onTouchBegan:
         (
             (
@@ -195,6 +196,12 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         }
         // Notify text changed after any trimming
         onTextChanged?(self.text ?? "")
+        // Also notify selection changed after text updates
+        if let range = self.selectedTextRange {
+            let start = self.offset(from: self.beginningOfDocument, to: range.start)
+            let end = self.offset(from: self.beginningOfDocument, to: range.end)
+            onSelectionChanged?(max(0, start), max(0, end))
+        }
     }
 
     deinit {

@@ -177,6 +177,37 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<std::function<void(const std::string& /* text */)>>(value);
   }
   
+  // pragma MARK: std::function<void(double /* start */, double /* end */)>
+  /**
+   * Specialized version of `std::function<void(double, double)>`.
+   */
+  using Func_void_double_double = std::function<void(double /* start */, double /* end */)>;
+  /**
+   * Wrapper class for a `std::function<void(double / * start * /, double / * end * /)>`, this can be used from Swift.
+   */
+  class Func_void_double_double_Wrapper final {
+  public:
+    explicit Func_void_double_double_Wrapper(std::function<void(double /* start */, double /* end */)>&& func): _function(std::make_unique<std::function<void(double /* start */, double /* end */)>>(std::move(func))) {}
+    inline void call(double start, double end) const {
+      _function->operator()(start, end);
+    }
+  private:
+    std::unique_ptr<std::function<void(double /* start */, double /* end */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_double_double create_Func_void_double_double(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_double_double_Wrapper wrap_Func_void_double_double(Func_void_double_double value) {
+    return Func_void_double_double_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(double /* start */, double /* end */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(double / * start * /, double / * end * /)>>`.
+   */
+  using std__optional_std__function_void_double____start_____double____end______ = std::optional<std::function<void(double /* start */, double /* end */)>>;
+  inline std::optional<std::function<void(double /* start */, double /* end */)>> create_std__optional_std__function_void_double____start_____double____end______(const std::function<void(double /* start */, double /* end */)>& value) {
+    return std::optional<std::function<void(double /* start */, double /* end */)>>(value);
+  }
+  
   // pragma MARK: std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>
   /**
    * Specialized version of `std::function<void(double, double, double, double, double)>`.
