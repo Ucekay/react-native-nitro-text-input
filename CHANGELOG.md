@@ -1,3 +1,9 @@
+## [1.0.0-next.15](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.14...v1.0.0-next.15) (2025-08-21)
+
+### Features
+
+* add onTouchEnded (onPressOut) aupport ([#23](https://github.com/Ucekay/react-native-nitro-text-input/issues/23)) ([06401fb](https://github.com/Ucekay/react-native-nitro-text-input/commit/06401fb98d353e9f407085a9ab6eb708cdc67866))
+
 ## [1.0.0-next.14](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.13...v1.0.0-next.14) (2025-08-20)
 
 ### Features
