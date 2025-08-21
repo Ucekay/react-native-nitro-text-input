@@ -235,14 +235,24 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onEditingEnded: ") + exc.what());
       }
     }()),
-    onTouchBegan([&]() -> CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>> {
+    onTouchBegan([&]() -> CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onTouchBegan", nullptr, nullptr);
         if (rawValue == nullptr) return sourceProps.onTouchBegan;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTouchBegan);
+        return CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTouchBegan);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroTextInputView.onTouchBegan: ") + exc.what());
+      }
+    }()),
+    onTouchEnded([&]() -> CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onTouchEnded", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onTouchEnded;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTouchEnded);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onTouchEnded: ") + exc.what());
       }
     }()),
     onInitialHeightMeasured([&]() -> CachedProp<std::optional<std::function<void(double /* height */)>>> {
@@ -290,6 +300,7 @@ namespace margelo::nitro::nitrotextinput::views {
     onTextChanged(other.onTextChanged),
     onEditingEnded(other.onEditingEnded),
     onTouchBegan(other.onTouchBegan),
+    onTouchEnded(other.onTouchEnded),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
@@ -317,6 +328,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("onTextChanged"): return true;
       case hashString("onEditingEnded"): return true;
       case hashString("onTouchBegan"): return true;
+      case hashString("onTouchEnded"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;
       default: return false;

@@ -188,18 +188,32 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
       onEditingEnded = value?.let { it }
     }
   
-  abstract var onTouchBegan: ((pageX: Double, pageY: Double, locationX: Double, locationY: Double) -> Unit)?
+  abstract var onTouchBegan: ((pageX: Double, pageY: Double, locationX: Double, locationY: Double, timestamp: Double) -> Unit)?
   
-  private var onTouchBegan_cxx: Func_void_double_double_double_double?
+  private var onTouchBegan_cxx: Func_void_double_double_double_double_double?
     @Keep
     @DoNotStrip
     get() {
-      return onTouchBegan?.let { Func_void_double_double_double_double_java(it) }
+      return onTouchBegan?.let { Func_void_double_double_double_double_double_java(it) }
     }
     @Keep
     @DoNotStrip
     set(value) {
       onTouchBegan = value?.let { it }
+    }
+  
+  abstract var onTouchEnded: ((pageX: Double, pageY: Double, locationX: Double, locationY: Double, timestamp: Double) -> Unit)?
+  
+  private var onTouchEnded_cxx: Func_void_double_double_double_double_double?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onTouchEnded?.let { Func_void_double_double_double_double_double_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onTouchEnded = value?.let { it }
     }
   
   abstract var onInitialHeightMeasured: ((height: Double) -> Unit)?

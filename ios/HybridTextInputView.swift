@@ -14,7 +14,14 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         (
             (
                 _ pageX: Double, _ pageY: Double, _ locationX: Double,
-                _ locationY: Double
+                _ locationY: Double, _ timestamp: Double
+            ) -> Void
+        )?
+    var onTouchEnded:
+        (
+            (
+                _ pageX: Double, _ pageY: Double, _ locationX: Double,
+                _ locationY: Double, _ timestamp: Double
             ) -> Void
         )?
 
@@ -132,9 +139,39 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             if let window = self.window {
                 page = touch.location(in: window)
             }
-            onTouchBegan?(page.x, page.y, local.x, local.y)
+            let ts = touch.timestamp * 1000.0
+            onTouchBegan?(page.x, page.y, local.x, local.y, ts)
         }
         super.touchesBegan(touches, with: event)
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let local = touch.location(in: self)
+            var page = local
+            if let window = self.window {
+                page = touch.location(in: window)
+            }
+            let ts = touch.timestamp * 1000.0
+            onTouchEnded?(page.x, page.y, local.x, local.y, ts)
+        }
+        super.touchesEnded(touches, with: event)
+    }
+
+    override func touchesCancelled(
+        _ touches: Set<UITouch>,
+        with event: UIEvent?
+    ) {
+        if let touch = touches.first {
+            let local = touch.location(in: self)
+            var page = local
+            if let window = self.window {
+                page = touch.location(in: window)
+            }
+            let ts = touch.timestamp * 1000.0
+            onTouchEnded?(page.x, page.y, local.x, local.y, ts)
+        }
+        super.touchesCancelled(touches, with: event)
     }
 
     @objc private func handleTextDidChange(_ notification: Notification) {
@@ -361,7 +398,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         (
             (
                 _ pageX: Double, _ pageY: Double, _ locationX: Double,
-                _ locationY: Double
+                _ locationY: Double, _ timestamp: Double
+            ) -> Void
+        )?
+    var onTouchEnded:
+        (
+            (
+                _ pageX: Double, _ pageY: Double, _ locationX: Double,
+                _ locationY: Double, _ timestamp: Double
             ) -> Void
         )?
 
@@ -697,8 +741,22 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             self?.onTextChanged?(text)
         }
         self.textField.onTouchBegan = {
-            [weak self] pageX, pageY, locationX, locationY in
-            self?.onTouchBegan?(pageX, pageY, locationX, locationY)
+            [weak self]
+            pageX,
+            pageY,
+            locationX,
+            locationY,
+            timestamp in
+            self?.onTouchBegan?(pageX, pageY, locationX, locationY, timestamp)
+        }
+        self.textField.onTouchEnded = {
+            [weak self]
+            pageX,
+            pageY,
+            locationX,
+            locationY,
+            timestamp in
+            self?.onTouchEnded?(pageX, pageY, locationX, locationY, timestamp)
         }
     }
 

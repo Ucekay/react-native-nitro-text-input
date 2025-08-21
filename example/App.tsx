@@ -24,17 +24,10 @@ export default function App() {
         editable
         enablesReturnKeyAutomatically
         maxLength={12}
-        onBlur={() => console.log('Blurred')}
         onChangeText={(text) => console.log(text)}
-        onEndEditing={(text) => console.log(text)}
-        onPressIn={(
-          pageX: number,
-          pageY: number,
-          locationX: number,
-          locationY: number
-        ) =>
+        onPressOut={(pageX, pageY, locationX, locationY, timestamp) =>
           console.log(
-            `Pressed at (${pageX}, ${pageY}) - (${locationX}, ${locationY})`
+            `Pressed out at (${pageX}, ${pageY}) - (${locationX}, ${locationY}) at ${timestamp}`
           )
         }
         placeholder="Nitro Text Input🔥"
@@ -44,15 +37,6 @@ export default function App() {
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
         maxLength={12}
-        onBlur={() => console.log('Blurred')}
-        onEndEditing={(e: NativeSyntheticEvent<TextInputEndEditingEventData>) =>
-          console.log(e.nativeEvent.text)
-        }
-        onPressIn={(e) =>
-          console.log(
-            `Pressed at (${e.nativeEvent.pageX}, ${e.nativeEvent.pageY}) - (${e.nativeEvent.locationX}, ${e.nativeEvent.locationY})`
-          )
-        }
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

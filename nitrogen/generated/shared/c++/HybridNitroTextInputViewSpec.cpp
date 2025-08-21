@@ -58,6 +58,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("onEditingEnded", &HybridNitroTextInputViewSpec::setOnEditingEnded);
       prototype.registerHybridGetter("onTouchBegan", &HybridNitroTextInputViewSpec::getOnTouchBegan);
       prototype.registerHybridSetter("onTouchBegan", &HybridNitroTextInputViewSpec::setOnTouchBegan);
+      prototype.registerHybridGetter("onTouchEnded", &HybridNitroTextInputViewSpec::getOnTouchEnded);
+      prototype.registerHybridSetter("onTouchEnded", &HybridNitroTextInputViewSpec::setOnTouchEnded);
       prototype.registerHybridGetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::getOnInitialHeightMeasured);
       prototype.registerHybridSetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::setOnInitialHeightMeasured);
     });
