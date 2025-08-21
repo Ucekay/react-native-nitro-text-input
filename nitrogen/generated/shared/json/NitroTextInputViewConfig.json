@@ -26,6 +26,7 @@
     "onTextChanged": true,
     "onEditingEnded": true,
     "onTouchBegan": true,
+    "onTouchEnded": true,
     "onInitialHeightMeasured": true,
     "hybridRef": true
   }
