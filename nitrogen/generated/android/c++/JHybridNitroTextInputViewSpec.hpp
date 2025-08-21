@@ -85,6 +85,8 @@ namespace margelo::nitro::nitrotextinput {
     void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPlaceholder() override;
     void setPlaceholder(const std::optional<std::string>& placeholder) override;
+    std::optional<std::function<void()>> getOnFocused() override;
+    void setOnFocused(const std::optional<std::function<void()>>& onFocused) override;
     std::optional<std::function<void()>> getOnBlurred() override;
     void setOnBlurred(const std::optional<std::function<void()>>& onBlurred) override;
     std::optional<std::function<void(const std::string& /* text */)>> getOnTextChanged() override;

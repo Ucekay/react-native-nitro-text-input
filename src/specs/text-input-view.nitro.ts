@@ -114,6 +114,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   maxLength?: number
   multiline?: boolean
   placeholder?: string
+  onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
   onEditingEnded?: (text: string) => void
