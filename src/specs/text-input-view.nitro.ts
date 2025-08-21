@@ -117,6 +117,8 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
   onEditingEnded?: (text: string) => void
+  // Called when a key is pressed (best-effort for UITextField)
+  onKeyPressed?: (key: string) => void
   onTouchBegan?: (
     pageX: number,
     pageY: number,

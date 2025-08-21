@@ -9,7 +9,10 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var isContextMenuHidden: Bool = false
     var maxLength: Int?
     var onTextChanged: ((_ text: String) -> Void)?
+    var onDidBeginEditing: (() -> Void)?
     var onDidEndEditing: (() -> Void)?
+    var onKeyPressed: ((_ key: String) -> Void)?
+    private var textWasPasted: Bool = false
     var onTouchBegan:
         (
             (
@@ -79,6 +82,11 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
+        if self.markedTextRange == nil && self.textWasPasted == false {
+            if !string.isEmpty {
+                onKeyPressed?(string)
+            }
+        }
         // Allow IME composition to proceed without truncation
         if self.markedTextRange != nil { return true }
         guard let maxLen = self.maxLength else { return true }
@@ -128,8 +136,25 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         return true
     }
 
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        onDidBeginEditing?()
+    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         onDidEndEditing?()
+    }
+
+    override func deleteBackward() {
+        onKeyPressed?("Backspace")
+        super.deleteBackward()
+    }
+
+    override func paste(_ sender: Any?) {
+        self.textWasPasted = true
+        super.paste(sender)
+        DispatchQueue.main.async { [weak self] in
+            self?.textWasPasted = false
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -392,6 +417,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onBlurred: (() -> Void)?
+    var onFocused: (() -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
     var onTouchBegan:
@@ -727,8 +753,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         // UITextField is single-line; explicit lineHeight control is not applicable.
     }
 
-    // MARK: - Blur event
+    // MARK: - Focus/Blur events
     private func wireTextFieldEventCallbacks() {
+        self.textField.onDidBeginEditing = { [weak self] in
+            self?.onFocused?()
+        }
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
             // Fire onEditingEnded first with final text, then onBlurred
