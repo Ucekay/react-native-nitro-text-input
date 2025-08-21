@@ -1,0 +1,29 @@
+---
+alwaysApply: true
+description: 'Implementation TODO tracking for react-native-nitro-text-input features'
+---
+
+# 実装 TODO リスト
+
+以下の機能を順次実装する：
+
+## 未実装機能
+
+- [ ] **onFocus** - テキスト入力にフォーカスが当たった時のイベント
+- [ ] **onKeyPress** - キーが押された時のイベント
+- [ ] **onSelectionChange** - テキスト選択範囲が変更された時のイベント
+- [ ] **onSubmitEditing** - 編集完了時のイベント（Enterキー押下など）
+
+## 実装フロー（各機能ごとに）
+
+1. **ブランチ作成**: `next`ブランチから `feat/{機能名}` のブランチを作成
+2. **仕様確認**: `@react-native/` のiOS実装を徹底的に確認
+3. **仕様書作成**: 動作仕様をドキュメント化
+4. **UIKit実装**: SwiftのUIKitで同等の機能を実装（iOSのみ）
+5. **テスト**: 実装の動作確認
+6. **PR作成**: 実装完了後にPull Requestを作成
+
+## 現在の実装状況
+
+- 実装開始前：すべての機能が未実装状態
+- 優先度：上から順に実装予定

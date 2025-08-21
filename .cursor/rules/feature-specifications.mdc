@@ -1,0 +1,118 @@
+---
+alwaysApply: true
+description: 'Detailed specifications for each feature implementation'
+---
+
+# 機能別実装仕様
+
+## onFocus
+
+### 概要
+
+テキスト入力フィールドがフォーカスを受けた時に発火するイベント
+
+### 調査対象
+
+- `@react-native/TextInput` の `onFocus` 実装
+- フォーカス獲得のタイミング
+- イベントパラメータの構造
+
+### UIKit実装
+
+- `UITextFieldDelegate.textFieldDidBeginEditing(_:)`
+- `UITextViewDelegate.textViewDidBeginEditing(_:)`
+
+### 仕様ポイント
+
+- タップによるフォーカス
+- プログラムによるフォーカス
+- フォーカス移動時の挙動
+
+## onKeyPress
+
+### 概要
+
+ユーザーがキーボードのキーを押した時に発火するイベント
+
+### 調査対象
+
+- `@react-native/TextInput` の `onKeyPress` 実装
+- キーイベントの詳細情報
+- 特殊キーの処理
+
+### UIKit実装
+
+- `UIResponder` のキーボードイベント処理
+- `UITextFieldDelegate` または `UITextViewDelegate` のカスタム拡張
+
+### 仕様ポイント
+
+- 文字キーの検出
+- 特殊キーの処理（Enter、Backspaceなど）
+- キーリピートの処理
+
+## onSelectionChange
+
+### 概要
+
+テキストの選択範囲が変更された時に発火するイベント
+
+### 調査対象
+
+- `@react-native/TextInput` の `onSelectionChange` 実装
+- 選択範囲情報の構造
+- 変更タイミング
+
+### UIKit実装
+
+- `UITextField.selectedTextRange` または `UITextView.selectedRange`
+- `UITextViewDelegate.textViewDidChangeSelection(_:)`
+
+### 仕様ポイント
+
+- カーソル位置の変更
+- テキスト選択範囲の変更
+- プログラムによる選択変更
+
+## onSubmitEditing
+
+### 概要
+
+テキスト入力の確定時に発火するイベント（Enterキー押下など）
+
+### 調査対象
+
+- `@react-native/TextInput` の `onSubmitEditing` 実装
+- 確定条件の詳細
+- ReturnKeyTypeとの関連
+
+### UIKit実装
+
+- `UITextFieldDelegate.textFieldShouldReturn(_:)`
+- `UITextView` の改行処理
+
+### 仕様ポイント
+
+- Enterキーの検出
+- ReturnKeyTypeの考慮
+- 複数行テキストでの挙動
+
+## 共通実装要件
+
+### イベントパラメータ
+
+- 各イベントで渡すパラメータの構造を統一
+- ネイティブからJSへのデータ変換
+- エラーハンドリング
+
+### プラットフォーム互換性
+
+- iOSのみの実装（Androidは別途検討）
+- `@react-native/` との完全な互換性維持
+- パフォーマンス最適化
+
+### テスト要件
+
+- ユニットテストの実装
+- 統合テストでの動作確認
+- `@react-native/` との比較テスト
