@@ -1,3 +1,15 @@
+## [1.0.0-next.17](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.16...v1.0.0-next.17) (2025-08-22)
+
+### Features
+
+* add onFocus callback to NitroTextInput component ([#24](https://github.com/Ucekay/react-native-nitro-text-input/issues/24)) ([6048f11](https://github.com/Ucekay/react-native-nitro-text-input/commit/6048f11cc70fecd6588a9cbaf95b4ff529868c5c))
+
+## [1.0.0-next.16](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.15...v1.0.0-next.16) (2025-08-21)
+
+### Features
+
+* add implementation guidelines and TODO tracking for features ([5a838df](https://github.com/Ucekay/react-native-nitro-text-input/commit/5a838df902186cc06e683b0c2d8f520acc4404ad))
+
 ## [1.0.0-next.15](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.14...v1.0.0-next.15) (2025-08-21)
 
 ### Features

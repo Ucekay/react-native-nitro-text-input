@@ -20,11 +20,7 @@ export default function App() {
         enablesReturnKeyAutomatically
         maxLength={12}
         onChangeText={(text) => console.log(text)}
-        onPressOut={(pageX, pageY, locationX, locationY, timestamp) =>
-          console.log(
-            `Pressed out at (${pageX}, ${pageY}) - (${locationX}, ${locationY}) at ${timestamp}`
-          )
-        }
+        onFocus={() => console.log('focused')}
         onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
         placeholder="Nitro Text Input 🔥"
         style={{ width: '100%' }}

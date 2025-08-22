@@ -418,6 +418,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
+    var onFocused: (() -> Void)?
     var onBlurred: (() -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
     var onKeyPressed: ((String) -> Void)?
@@ -757,6 +758,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     // MARK: - Focus/Blur events
     private func wireTextFieldEventCallbacks() {
+        self.textField.onDidBeginEditing = { [weak self] in
+            self?.onFocused?()
+        }
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
             // Fire onEditingEnded first with final text, then onBlurred

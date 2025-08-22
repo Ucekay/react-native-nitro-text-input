@@ -146,6 +146,20 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:Keep
   abstract var placeholder: String?
   
+  abstract var onFocused: (() -> Unit)?
+  
+  private var onFocused_cxx: Func_void?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onFocused?.let { Func_void_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onFocused = value?.let { it }
+    }
+  
   abstract var onBlurred: (() -> Unit)?
   
   private var onBlurred_cxx: Func_void?
