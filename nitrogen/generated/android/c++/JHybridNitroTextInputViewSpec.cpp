@@ -33,6 +33,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <functional>
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
+#include "JFunc_void_double_double.hpp"
 #include "JFunc_void_double_double_double_double_double.hpp"
 #include "JFunc_void_double.hpp"
 
@@ -296,6 +297,25 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string::javaobject> /* onEditingEnded */)>("setOnEditingEnded_cxx");
     method(_javaPart, onEditingEnded.has_value() ? JFunc_void_std__string_cxx::fromCpp(onEditingEnded.value()) : nullptr);
+  }
+  std::optional<std::function<void(double /* start */, double /* end */)>> JHybridNitroTextInputViewSpec::getOnSelectionChanged() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_double_double::javaobject>()>("getOnSelectionChanged_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(double /* start */, double /* end */)> {
+      if (__result->isInstanceOf(JFunc_void_double_double_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_double_double_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](double start, double end) -> void {
+          return __resultRef->invoke(start,end);
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setOnSelectionChanged(const std::optional<std::function<void(double /* start */, double /* end */)>>& onSelectionChanged) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_double_double::javaobject> /* onSelectionChanged */)>("setOnSelectionChanged_cxx");
+    method(_javaPart, onSelectionChanged.has_value() ? JFunc_void_double_double_cxx::fromCpp(onSelectionChanged.value()) : nullptr);
   }
   std::optional<std::function<void(const std::string& /* key */)>> JHybridNitroTextInputViewSpec::getOnKeyPressed() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string::javaobject>()>("getOnKeyPressed_cxx");

@@ -223,6 +223,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) noexcept override {
       _swiftPart.setOnEditingEnded(onEditingEnded);
     }
+    inline std::optional<std::function<void(double /* start */, double /* end */)>> getOnSelectionChanged() noexcept override {
+      auto __result = _swiftPart.getOnSelectionChanged();
+      return __result;
+    }
+    inline void setOnSelectionChanged(const std::optional<std::function<void(double /* start */, double /* end */)>>& onSelectionChanged) noexcept override {
+      _swiftPart.setOnSelectionChanged(onSelectionChanged);
+    }
     inline std::optional<std::function<void(const std::string& /* key */)>> getOnKeyPressed() noexcept override {
       auto __result = _swiftPart.getOnKeyPressed();
       return __result;

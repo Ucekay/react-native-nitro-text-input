@@ -124,6 +124,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setOnEditingEnded(props.onEditingEnded.value);
     // TODO: Set isDirty = false
   }
+  if (props.onSelectionChanged.isDirty) {
+    view->setOnSelectionChanged(props.onSelectionChanged.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onKeyPressed.isDirty) {
     view->setOnKeyPressed(props.onKeyPressed.value);
     // TODO: Set isDirty = false

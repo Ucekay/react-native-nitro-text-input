@@ -245,6 +245,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onEditingEnded: ") + exc.what());
       }
     }()),
+    onSelectionChanged([&]() -> CachedProp<std::optional<std::function<void(double /* start */, double /* end */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onSelectionChanged", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onSelectionChanged;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(double /* start */, double /* end */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onSelectionChanged);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onSelectionChanged: ") + exc.what());
+      }
+    }()),
     onKeyPressed([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* key */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onKeyPressed", nullptr, nullptr);
@@ -320,6 +330,7 @@ namespace margelo::nitro::nitrotextinput::views {
     onBlurred(other.onBlurred),
     onTextChanged(other.onTextChanged),
     onEditingEnded(other.onEditingEnded),
+    onSelectionChanged(other.onSelectionChanged),
     onKeyPressed(other.onKeyPressed),
     onTouchBegan(other.onTouchBegan),
     onTouchEnded(other.onTouchEnded),
@@ -350,6 +361,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("onBlurred"): return true;
       case hashString("onTextChanged"): return true;
       case hashString("onEditingEnded"): return true;
+      case hashString("onSelectionChanged"): return true;
       case hashString("onKeyPressed"): return true;
       case hashString("onTouchBegan"): return true;
       case hashString("onTouchEnded"): return true;
