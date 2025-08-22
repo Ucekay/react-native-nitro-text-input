@@ -22,6 +22,9 @@ export default function App() {
         onChangeText={(text) => console.log(text)}
         onFocus={() => console.log('focused')}
         onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
+        onSelectionChange={({ start, end }) =>
+          console.log(`Selection changed: ${start} - ${end}`)
+        }
         placeholder="Nitro Text Input 🔥"
         style={{ width: '100%' }}
       />
