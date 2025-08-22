@@ -161,6 +161,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setPlaceholder(newViewProps.placeholder.value);
     newViewProps.placeholder.isDirty = false;
   }
+  // onFocused: optional
+  if (newViewProps.onFocused.isDirty) {
+    swiftPart.setOnFocused(newViewProps.onFocused.value);
+    newViewProps.onFocused.isDirty = false;
+  }
   // onBlurred: optional
   if (newViewProps.onBlurred.isDirty) {
     swiftPart.setOnBlurred(newViewProps.onBlurred.value);

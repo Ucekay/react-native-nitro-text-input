@@ -9,6 +9,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var isContextMenuHidden: Bool = false
     var maxLength: Int?
     var onTextChanged: ((_ text: String) -> Void)?
+    var onDidBeginEditing: (() -> Void)?
     var onDidEndEditing: (() -> Void)?
     var onTouchBegan:
         (
@@ -126,6 +127,10 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             return false
         }
         return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        onDidBeginEditing?()
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -391,6 +396,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
+    var onFocused: (() -> Void)?
     var onBlurred: (() -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
@@ -727,8 +733,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         // UITextField is single-line; explicit lineHeight control is not applicable.
     }
 
-    // MARK: - Blur event
+    // MARK: - Focus/Blur events
     private func wireTextFieldEventCallbacks() {
+        self.textField.onDidBeginEditing = { [weak self] in
+            self?.onFocused?()
+        }
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
             // Fire onEditingEnded first with final text, then onBlurred
