@@ -33,6 +33,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var onBlurred: (() -> Void)? { get set }
   var onTextChanged: ((_ text: String) -> Void)? { get set }
   var onEditingEnded: ((_ text: String) -> Void)? { get set }
+  var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)? { get set }
   var onKeyPressed: ((_ key: String) -> Void)? { get set }
   var onTouchBegan: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onTouchEnded: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }

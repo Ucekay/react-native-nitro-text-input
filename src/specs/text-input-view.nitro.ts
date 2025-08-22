@@ -88,6 +88,8 @@ export type KeyboardType =
 
 export type MaxFontMultiplier = number | null | undefined
 
+// (kept simple per RN API shape)
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
@@ -118,6 +120,8 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
   onEditingEnded?: (text: string) => void
+  // Called when selection/caret position changes
+  onSelectionChanged?: (start: number, end: number) => void
   // Called when a key is pressed (best-effort for UITextField)
   onKeyPressed?: (key: string) => void
   onTouchBegan?: (

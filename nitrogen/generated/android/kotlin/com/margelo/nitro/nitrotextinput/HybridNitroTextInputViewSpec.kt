@@ -202,6 +202,20 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
       onEditingEnded = value?.let { it }
     }
   
+  abstract var onSelectionChanged: ((start: Double, end: Double) -> Unit)?
+  
+  private var onSelectionChanged_cxx: Func_void_double_double?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onSelectionChanged?.let { Func_void_double_double_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onSelectionChanged = value?.let { it }
+    }
+  
   abstract var onKeyPressed: ((key: String) -> Unit)?
   
   private var onKeyPressed_cxx: Func_void_std__string?
