@@ -1,11 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
-import {
-  type NativeSyntheticEvent,
-  StyleSheet,
-  TextInput,
-  type TextInputEndEditingEventData,
-  View,
-} from 'react-native'
+
+import { StyleSheet, TextInput, View } from 'react-native'
 import { NitroTextInput } from 'react-native-nitro-text-input'
 
 export default function App() {
@@ -30,7 +25,9 @@ export default function App() {
             `Pressed out at (${pageX}, ${pageY}) - (${locationX}, ${locationY}) at ${timestamp}`
           )
         }
-        placeholder="Nitro Text Input🔥"
+        onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
+        placeholder="Nitro Text Input 🔥"
+        style={{ width: '100%' }}
       />
       <TextInput
         clearButtonMode="always"
