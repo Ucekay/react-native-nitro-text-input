@@ -419,9 +419,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onBlurred: (() -> Void)?
-    var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
     var onKeyPressed: ((String) -> Void)?
+    var onTextChanged: ((_ text: String) -> Void)?
     var onTouchBegan:
         (
             (
