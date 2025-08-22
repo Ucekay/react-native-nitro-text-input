@@ -1,0 +1,218 @@
+---
+alwaysApply: true
+---
+
+# Nitro Text Input 実装同期ルール
+
+## 概要
+
+このルールは、`src/specs/text-input-view.nitro.ts` に新しいコールバックを追加した際に、`ios/HybridTextInputView.swift` の実装を正しく同期させるためのガイドラインです。
+
+## 問題の背景
+
+`src/specs/text-input-view.nitro.ts` に新しいコールバックを追加すると、以下のエラーが発生します：
+
+```
+Type 'HybridTextInputView' does not conform to protocol 'HybridNitroTextInputViewSpec_protocol'
+```
+
+これは、TypeScriptの型定義とSwiftの実装が一致していないことが原因です。
+
+## 実装手順
+
+### 1. TypeScript側の変更
+
+`src/specs/text-input-view.nitro.ts` に新しいコールバックを追加：
+
+```typescript
+export interface NitroTextInputViewProps extends HybridViewProps {
+  // ... 既存のプロパティ ...
+  onNewCallback?: (param: ParamType) => void
+}
+```
+
+### 2. Swift側の実装（場所に注意）
+
+必ず `ios/HybridTextInputView.swift` の `class HybridTextInputView: HybridNitroTextInputViewSpec` の中にプロパティを宣言すること（`CustomTextField` の中だけに追加するのは不十分）。
+
+#### 2.1 プロパティの追加（HybridTextInputView の中）
+
+```swift
+class HybridTextInputView: HybridNitroTextInputViewSpec {
+    // ... 既存のプロパティ ...
+
+    // 新しいコールバックプロパティ（生成されたプロトコルと同じシグネチャ）
+    var onNewCallback: ((_ param: ParamType) -> Void)?
+}
+```
+
+#### 2.2 内部実装からの配線（必要に応じて）
+
+`CustomTextField` 等の内部イベントを、`HybridTextInputView` のコールバックに転送する。
+
+```swift
+private func wireTextFieldEventCallbacks() {
+  // 例: selection 変更を転送
+  self.textField.onSelectionChanged = { [weak self] selection in
+    self?.onSelectionChanged?(selection) // 型は生成物と一致させる
+  }
+}
+```
+
+#### 2.3 型の一致確認
+
+生成されたプロトコル `HybridNitroTextInputViewSpec_protocol` と完全に一致する型定義を使用する必要があります。
+
+**重要**: パラメータの型は、生成されたSwiftファイルの型定義と完全に一致させる必要があります。
+
+### 3. コード生成の実行
+
+変更後、以下のコマンドを実行してコード生成を更新：
+
+```bash
+bun run nitro-codegen
+```
+
+## 実装例
+
+### 正しい実装例（どこに置くかも重要）
+
+```swift
+// ✅ 正しい実装（HybridTextInputView の中に置くこと）
+class HybridTextInputView: HybridNitroTextInputViewSpec {
+  var onSelectionChanged: ((_ selection: TextSelectionRange) -> Void)?
+}
+
+// ❌ 間違った実装（型が一致しない）
+// var onSelectionChanged: ((_ start: Int, _ end: Int) -> Void)?
+
+// ❌ 間違った設置場所（CustomTextField のみで宣言して外側にない）
+// class CustomTextField: UITextField { var onSelectionChanged: ... }
+```
+
+### パラメータ型の確認方法
+
+1. `nitrogen/generated/ios/swift/` ディレクトリ内の生成されたファイルを確認
+2. プロトコル定義 `HybridNitroTextInputViewSpec_protocol` の型定義を参照
+3. 使用する型（例：`TextSelectionRange`）の定義を確認
+4. Swift 実装側（HybridTextInputView）のプロパティ型が完全一致しているか確認
+
+## チェックリスト
+
+新しいコールバックを追加する際は以下を確認：
+
+- [ ] TypeScript側でコールバックの型定義を追加
+- [ ] Swift側で同じ型のプロパティを HybridTextInputView に追加（CustomTextField ではなく）
+- [ ] 生成されたプロトコルとの型一致を確認
+- [ ] `bun run nitro-codegen` を実行
+- [ ] コンパイルエラーがないことを確認
+
+## 注意事項
+
+- 生成されたファイル（`nitrogen/generated/` 内）は直接編集しない
+- 型の不一致がある場合は、TypeScript側の型定義を見直す
+- 複雑な型を使用する場合は、生成されたSwiftファイルで型定義を確認する
+
+## 参考ファイル
+
+- [src/specs/text-input-view.nitro.ts](mdc:src/specs/text-input-view.nitro.ts) - TypeScript型定義
+- [ios/HybridTextInputView.swift](mdc:ios/HybridTextInputView.swift) - Swift実装
+- `nitrogen/generated/ios/swift/HybridNitroTextInputViewSpec.swift` - 生成されたプロトコル
+
+# Nitro Text Input 実装同期ルール
+
+## 概要
+
+このルールは、`src/specs/text-input-view.nitro.ts` に新しいコールバックを追加した際に、`ios/HybridTextInputView.swift` の実装を正しく同期させるためのガイドラインです。
+
+## 問題の背景
+
+`src/specs/text-input-view.nitro.ts` に新しいコールバックを追加すると、以下のエラーが発生します：
+
+```
+Type 'HybridTextInputView' does not conform to protocol 'HybridNitroTextInputViewSpec_protocol'
+```
+
+これは、TypeScriptの型定義とSwiftの実装が一致していないことが原因です。
+
+## 実装手順
+
+### 1. TypeScript側の変更
+
+`src/specs/text-input-view.nitro.ts` に新しいコールバックを追加：
+
+```typescript
+export interface NitroTextInputViewProps extends HybridViewProps {
+  // ... 既存のプロパティ ...
+  onNewCallback?: (param: ParamType) => void
+}
+```
+
+### 2. Swift側の実装
+
+`ios/HybridTextInputView.swift` の `HybridTextInputView` クラスに以下を追加：
+
+#### 2.1 プロパティの追加
+
+```swift
+class HybridTextInputView: HybridNitroTextInputViewSpec {
+    // ... 既存のプロパティ ...
+
+    // 新しいコールバックプロパティ
+    var onNewCallback: ((_ param: ParamType) -> Void)?
+}
+```
+
+#### 2.2 型の一致確認
+
+生成されたプロトコル `HybridNitroTextInputViewSpec_protocol` と完全に一致する型定義を使用する必要があります。
+
+**重要**: パラメータの型は、生成されたSwiftファイルの型定義と完全に一致させる必要があります。
+
+### 3. コード生成の実行
+
+変更後、以下のコマンドを実行してコード生成を更新：
+
+```bash
+bun run nitro-codegen
+```
+
+## 実装例
+
+### 正しい実装例
+
+```swift
+// ✅ 正しい実装
+var onSelectionChanged: ((_ selection: TextSelectionRange) -> Void)?
+
+// ❌ 間違った実装（型が一致しない）
+var onSelectionChanged: ((_ start: Int, _ end: Int) -> Void)?
+```
+
+### パラメータ型の確認方法
+
+1. `nitrogen/generated/ios/swift/` ディレクトリ内の生成されたファイルを確認
+2. プロトコル定義 `HybridNitroTextInputViewSpec_protocol` の型定義を参照
+3. 使用する型（例：`TextSelectionRange`）の定義を確認
+
+## チェックリスト
+
+新しいコールバックを追加する際は以下を確認：
+
+- [ ] TypeScript側でコールバックの型定義を追加
+- [ ] Swift側で同じ型のプロパティを追加
+- [ ] 生成されたプロトコルとの型一致を確認
+- [ ] `bun run nitro-codegen` を実行
+- [ ] コンパイルエラーがないことを確認
+
+## 注意事項
+
+- 生成されたファイル（`nitrogen/generated/` 内）は直接編集しない
+- 型の不一致がある場合は、TypeScript側の型定義を見直す
+- 複雑な型を使用する場合は、生成されたSwiftファイルで型定義を確認する
+
+## 参考ファイル
+
+- [src/specs/text-input-view.nitro.ts](mdc:src/specs/text-input-view.nitro.ts) - TypeScript型定義
+- [ios/HybridTextInputView.swift](mdc:ios/HybridTextInputView.swift) - Swift実装
+- `nitrogen/generated/ios/swift/HybridNitroTextInputViewSpec.swift` - 生成されたプロトコル
