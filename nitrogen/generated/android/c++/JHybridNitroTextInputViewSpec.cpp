@@ -297,6 +297,25 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string::javaobject> /* onEditingEnded */)>("setOnEditingEnded_cxx");
     method(_javaPart, onEditingEnded.has_value() ? JFunc_void_std__string_cxx::fromCpp(onEditingEnded.value()) : nullptr);
   }
+  std::optional<std::function<void(const std::string& /* key */)>> JHybridNitroTextInputViewSpec::getOnKeyPressed() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string::javaobject>()>("getOnKeyPressed_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(const std::string& /* key */)> {
+      if (__result->isInstanceOf(JFunc_void_std__string_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_std__string_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](std::string key) -> void {
+          return __resultRef->invoke(key);
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setOnKeyPressed(const std::optional<std::function<void(const std::string& /* key */)>>& onKeyPressed) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string::javaobject> /* onKeyPressed */)>("setOnKeyPressed_cxx");
+    method(_javaPart, onKeyPressed.has_value() ? JFunc_void_std__string_cxx::fromCpp(onKeyPressed.value()) : nullptr);
+  }
   std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> JHybridNitroTextInputViewSpec::getOnTouchBegan() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_double_double_double_double_double::javaobject>()>("getOnTouchBegan_cxx");
     auto __result = method(_javaPart);

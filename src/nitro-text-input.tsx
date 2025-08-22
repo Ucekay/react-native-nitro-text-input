@@ -16,6 +16,7 @@ export interface NitroTextInputProps
     | 'onTauchBegan'
     | 'onTouchEnded'
     | 'onFocused'
+    | 'onKeyPressed'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
@@ -36,6 +37,7 @@ export interface NitroTextInputProps
     timestamp: number
   ) => void
   onFocus?: () => void
+  onKeyPress?: (key: string) => void
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -53,6 +55,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     onPressIn,
     onPressOut,
     onFocus,
+    onKeyPress,
     ...others
   } = props
 
@@ -116,6 +119,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
       onTouchBegan={{ f: onPressIn }}
       onTouchEnded={{ f: onPressOut }}
       onFocused={{ f: onFocus }}
+      onKeyPressed={{ f: onKeyPress }}
       onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}
       style={composedStyle()}
     />

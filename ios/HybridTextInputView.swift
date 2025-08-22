@@ -11,6 +11,8 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var onTextChanged: ((_ text: String) -> Void)?
     var onDidBeginEditing: (() -> Void)?
     var onDidEndEditing: (() -> Void)?
+    var onKeyPressed: ((_ key: String) -> Void)?
+    private var textWasPasted: Bool = false
     var onTouchBegan:
         (
             (
@@ -80,6 +82,13 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
+        if self.textWasPasted == false {
+            if string == "\n" {
+                onKeyPressed?("Enter")
+            } else if !string.isEmpty {
+                onKeyPressed?(string)
+            }
+        }
         // Allow IME composition to proceed without truncation
         if self.markedTextRange != nil { return true }
         guard let maxLen = self.maxLength else { return true }
@@ -135,6 +144,19 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         onDidEndEditing?()
+    }
+
+    override func deleteBackward() {
+        onKeyPressed?("Backspace")
+        super.deleteBackward()
+    }
+
+    override func paste(_ sender: Any?) {
+        self.textWasPasted = true
+        super.paste(sender)
+        DispatchQueue.main.async { [weak self] in
+            self?.textWasPasted = false
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -398,8 +420,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onFocused: (() -> Void)?
     var onBlurred: (() -> Void)?
-    var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
+    var onKeyPressed: ((String) -> Void)?
+    var onTextChanged: ((_ text: String) -> Void)?
     var onTouchBegan:
         (
             (
@@ -748,6 +771,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         self.textField.onTextChanged = { [weak self] text in
             self?.onTextChanged?(text)
+        }
+        // Key press events are emitted in delegate methods (shouldChangeCharactersIn/deleteBackward)
+        // Wire through to Hybrid layer by copying closures
+        self.textField.onKeyPressed = { [weak self] key in
+            self?.onKeyPressed?(key)
         }
         self.textField.onTouchBegan = {
             [weak self]
