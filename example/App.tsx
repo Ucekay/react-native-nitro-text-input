@@ -25,6 +25,7 @@ export default function App() {
         onSelectionChange={({ start, end }) =>
           console.log(`Selection changed: ${start} - ${end}`)
         }
+        onSubmitEditing={(text) => console.log(`Submitted: ${text}`)}
         placeholder="Nitro Text Input 🔥"
         style={{ width: '100%' }}
       />
