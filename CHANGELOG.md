@@ -1,3 +1,9 @@
+## [1.0.0-next.18](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.17...v1.0.0-next.18) (2025-08-22)
+
+### Features
+
+* add onKeyPress callback to NitroTextInput ([#25](https://github.com/Ucekay/react-native-nitro-text-input/issues/25)) ([6714a2c](https://github.com/Ucekay/react-native-nitro-text-input/commit/6714a2c7dda8cb2397e7f95858ce4fc39971ed90))
+
 ## [1.0.0-next.17](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.16...v1.0.0-next.17) (2025-08-22)
 
 ### Features
