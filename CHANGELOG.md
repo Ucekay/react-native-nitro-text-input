@@ -1,3 +1,9 @@
+## [1.0.0-next.19](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.18...v1.0.0-next.19) (2025-08-22)
+
+### Features
+
+* add onSelectionChange support for NitroTextInput ([#28](https://github.com/Ucekay/react-native-nitro-text-input/issues/28)) ([80eebd6](https://github.com/Ucekay/react-native-nitro-text-input/commit/80eebd67e0b6167cd1ddc78983b5f8d738dedad9))
+
 ## [1.0.0-next.18](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.17...v1.0.0-next.18) (2025-08-22)
 
 ### Features
