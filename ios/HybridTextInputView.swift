@@ -82,8 +82,10 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        if self.markedTextRange == nil && self.textWasPasted == false {
-            if !string.isEmpty {
+        if self.textWasPasted == false {
+            if string == "\n" {
+                onKeyPressed?("Enter")
+            } else if !string.isEmpty {
                 onKeyPressed?(string)
             }
         }
