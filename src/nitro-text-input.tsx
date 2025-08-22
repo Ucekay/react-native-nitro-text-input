@@ -15,11 +15,13 @@ export interface NitroTextInputProps
     | 'onEditingEnded'
     | 'onTauchBegan'
     | 'onTouchEnded'
+    | 'onSelectionChanged'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
   onChangeText?: (text: string) => void
   onEndEditing?: (text: string) => void
+  onSelectionChange?: (selection: { start: number; end: number }) => void
   onPressIn?: (
     pageX: number,
     pageY: number,
@@ -48,6 +50,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     onBlur,
     onChangeText,
     onEndEditing,
+    onSelectionChange,
     onPressIn,
     onPressOut,
     ...others
@@ -110,6 +113,9 @@ export function NitroTextInput(props: NitroTextInputProps) {
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}
       onEditingEnded={{ f: onEndEditing }}
+      onSelectionChanged={{
+        f: (start, end) => onSelectionChange?.({ start, end }),
+      }}
       onTouchBegan={{ f: onPressIn }}
       onTouchEnded={{ f: onPressOut }}
       onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}

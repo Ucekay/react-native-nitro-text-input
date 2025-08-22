@@ -10,7 +10,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var maxLength: Int?
     var onTextChanged: ((_ text: String) -> Void)?
     var onDidEndEditing: (() -> Void)?
-    var onSelectionChanged: ((_ start: Int, _ end: Int) -> Void)?
+    var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)?
     var onTouchBegan:
         (
             (
@@ -35,6 +35,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             name: UITextField.textDidChangeNotification,
             object: self
         )
+        // Selection change will be handled via UITextFieldDelegate (iOS 13+)
     }
 
     required init?(coder: NSCoder) {
@@ -46,6 +47,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             name: UITextField.textDidChangeNotification,
             object: self
         )
+        // Selection change will be handled via UITextFieldDelegate (iOS 13+)
     }
 
     override func caretRect(for position: UITextPosition) -> CGRect {
@@ -198,10 +200,21 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         onTextChanged?(self.text ?? "")
         // Also notify selection changed after text updates
         if let range = self.selectedTextRange {
-            let start = self.offset(from: self.beginningOfDocument, to: range.start)
+            let start = self.offset(
+                from: self.beginningOfDocument,
+                to: range.start
+            )
             let end = self.offset(from: self.beginningOfDocument, to: range.end)
-            onSelectionChanged?(max(0, start), max(0, end))
+            onSelectionChanged?(Double(max(0, start)), Double(max(0, end)))
         }
+    }
+
+    @available(iOS 13.0, *)
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let range = self.selectedTextRange else { return }
+        let start = self.offset(from: self.beginningOfDocument, to: range.start)
+        let end = self.offset(from: self.beginningOfDocument, to: range.end)
+        onSelectionChanged?(Double(max(0, start)), Double(max(0, end)))
     }
 
     deinit {
@@ -210,6 +223,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             name: UITextField.textDidChangeNotification,
             object: self
         )
+        // no selection notification observer to remove
     }
 }
 
@@ -401,6 +415,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var onBlurred: (() -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
+    var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)?
     var onTouchBegan:
         (
             (
@@ -746,6 +761,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         self.textField.onTextChanged = { [weak self] text in
             self?.onTextChanged?(text)
+        }
+        self.textField.onSelectionChanged = { [weak self] start, end in
+            self?.onSelectionChanged?(start, end)
         }
         self.textField.onTouchBegan = {
             [weak self]

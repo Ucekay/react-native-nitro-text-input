@@ -88,6 +88,8 @@ export type KeyboardType =
 
 export type MaxFontMultiplier = number | null | undefined
 
+// (kept simple per RN API shape)
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
