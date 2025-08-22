@@ -1,3 +1,9 @@
+## [1.0.0-next.20](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.19...v1.0.0-next.20) (2025-08-22)
+
+### Features
+
+* **text-input:** add onSubmitEditing support (iOS) ([61c5df7](https://github.com/Ucekay/react-native-nitro-text-input/commit/61c5df76bccf6456361948c61dcef0cf81682d1e))
+
 ## [1.0.0-next.19](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.18...v1.0.0-next.19) (2025-08-22)
 
 ### Features
