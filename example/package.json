@@ -10,11 +10,11 @@
 		"postinstall": "./scripts/postinstall.sh"
 	},
 	"dependencies": {
-		"expo": "~53.0.20",
-		"expo-dev-client": "~5.2.4",
-		"expo-status-bar": "~2.2.3",
-		"react": "19.0.0",
-		"react-native": "0.79.5",
+		"expo": "^54.0.0-preview.6",
+		"expo-dev-client": "~6.0.4",
+		"expo-status-bar": "~3.0.3",
+		"react": "19.1.0",
+		"react-native": "0.81.0",
 		"react-native-nitro-modules": "^0.28.0",
 		"react-native-nitro-text-input": "file:.."
 	},
@@ -23,5 +23,8 @@
 		"@types/react": "~19.0.10",
 		"typescript": "~5.8.3"
 	},
-	"private": true
+	"private": true,
+	"patchedDependencies": {
+		"react-native@0.81.0": "patches/react-native@0.81.0.patch"
+	}
 }
