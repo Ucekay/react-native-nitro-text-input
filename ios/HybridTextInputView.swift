@@ -421,6 +421,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var onBlurred: (() -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
+    var onKeyPressed: ((String) -> Void)?
     var onTouchBegan:
         (
             (
@@ -766,6 +767,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         self.textField.onTextChanged = { [weak self] text in
             self?.onTextChanged?(text)
+        }
+        // Key press events are emitted in delegate methods (shouldChangeCharactersIn/deleteBackward)
+        // Wire through to Hybrid layer by copying closures
+        self.textField.onKeyPressed = { [weak self] key in
+            self?.onKeyPressed?(key)
         }
         self.textField.onTouchBegan = {
             [weak self]
