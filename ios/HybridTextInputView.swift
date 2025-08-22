@@ -13,6 +13,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var onDidEndEditing: (() -> Void)?
     var onKeyPressed: ((_ key: String) -> Void)?
     var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)?
+    var onEditingSubmitted: ((_ text: String) -> Void)?
     private var textWasPasted: Bool = false
     var onTouchBegan:
         (
@@ -147,6 +148,11 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         onDidEndEditing?()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        onEditingSubmitted?(self.text ?? "")
+        return true
     }
 
     override func deleteBackward() {
@@ -441,6 +447,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var onFocused: (() -> Void)?
     var onBlurred: (() -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
+    var onEditingSubmitted: ((_ text: String) -> Void)?
     var onKeyPressed: ((String) -> Void)?
     var onTextChanged: ((_ text: String) -> Void)?
     var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)?
@@ -795,6 +802,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         self.textField.onSelectionChanged = { [weak self] start, end in
             self?.onSelectionChanged?(start, end)
+        }
+        self.textField.onEditingSubmitted = { [weak self] text in
+            self?.onEditingSubmitted?(text)
         }
         // Key press events are emitted in delegate methods (shouldChangeCharactersIn/deleteBackward)
         // Wire through to Hybrid layer by copying closures

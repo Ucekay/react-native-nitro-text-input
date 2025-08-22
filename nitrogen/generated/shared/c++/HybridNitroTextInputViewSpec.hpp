@@ -104,6 +104,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) = 0;
       virtual std::optional<std::function<void(const std::string& /* text */)>> getOnEditingEnded() = 0;
       virtual void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) = 0;
+      virtual std::optional<std::function<void(const std::string& /* text */)>> getOnEditingSubmitted() = 0;
+      virtual void setOnEditingSubmitted(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingSubmitted) = 0;
       virtual std::optional<std::function<void(double /* start */, double /* end */)>> getOnSelectionChanged() = 0;
       virtual void setOnSelectionChanged(const std::optional<std::function<void(double /* start */, double /* end */)>>& onSelectionChanged) = 0;
       virtual std::optional<std::function<void(const std::string& /* key */)>> getOnKeyPressed() = 0;

@@ -548,6 +548,37 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var onEditingSubmitted: bridge.std__optional_std__function_void_const_std__string_____text______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____text______ in
+        if let __unwrappedValue = self.__implementation.onEditingSubmitted {
+          return bridge.create_std__optional_std__function_void_const_std__string_____text______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onEditingSubmitted = { () -> ((_ text: String) -> Void)? in
+        if let __unwrapped = newValue.value {
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__text: String) -> Void in
+              __wrappedFunction.call(std.string(__text))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var onSelectionChanged: bridge.std__optional_std__function_void_double____start_____double____end______ {
     @inline(__always)
     get {
