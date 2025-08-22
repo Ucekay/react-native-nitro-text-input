@@ -1,11 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import {
-  type NativeSyntheticEvent,
-  StyleSheet,
-  TextInput,
-  type TextInputEndEditingEventData,
-  View,
-} from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import { NitroTextInput } from 'react-native-nitro-text-input'
 
 export default function App() {
@@ -30,6 +24,11 @@ export default function App() {
             `Pressed out at (${pageX}, ${pageY}) - (${locationX}, ${locationY}) at ${timestamp}`
           )
         }
+        onSelectionChange={(selection) =>
+          console.log(
+            `Selection changed to ${selection.start} to ${selection.end}`
+          )
+        }
         placeholder="Nitro Text Input🔥"
       />
       <TextInput
@@ -37,6 +36,11 @@ export default function App() {
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
         maxLength={12}
+        onSelectionChange={(e) =>
+          console.log(
+            `Selection changed to ${e.nativeEvent.selection.start} to ${e.nativeEvent.selection.end}`
+          )
+        }
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />
