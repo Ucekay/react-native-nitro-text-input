@@ -119,5 +119,8 @@
 		"trailingComma": "es5",
 		"useTabs": false,
 		"semi": false
+	},
+	"patchedDependencies": {
+		"react-native@0.81.0": "patches/react-native@0.81.0.patch"
 	}
 }
