@@ -26,6 +26,7 @@
     "onBlurred": true,
     "onTextChanged": true,
     "onEditingEnded": true,
+    "onKeyPressed": true,
     "onTouchBegan": true,
     "onTouchEnded": true,
     "onInitialHeightMeasured": true,

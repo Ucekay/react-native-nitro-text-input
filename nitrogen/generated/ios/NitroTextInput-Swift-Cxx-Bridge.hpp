@@ -177,6 +177,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<std::function<void(const std::string& /* text */)>>(value);
   }
   
+  // pragma MARK: std::optional<std::function<void(const std::string& /* key */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const std::string& / * key * /)>>`.
+   */
+  using std__optional_std__function_void_const_std__string_____key______ = std::optional<std::function<void(const std::string& /* key */)>>;
+  inline std::optional<std::function<void(const std::string& /* key */)>> create_std__optional_std__function_void_const_std__string_____key______(const std::function<void(const std::string& /* key */)>& value) {
+    return std::optional<std::function<void(const std::string& /* key */)>>(value);
+  }
+  
   // pragma MARK: std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>
   /**
    * Specialized version of `std::function<void(double, double, double, double, double)>`.
