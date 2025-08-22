@@ -439,6 +439,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 textField.placeholder = self.placeholder
+                self.updatePlaceholderAttributedColor()
+            }
+        }
+    }
+    var placeholderColor: Double? {
+        didSet {
+            Task { @MainActor in
+                self.updatePlaceholderAttributedColor()
             }
         }
     }
@@ -744,6 +752,33 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             } else {
                 self.textField.keyboardType = .numberPad
             }
+        }
+    }
+
+    private func updatePlaceholderAttributedColor() {
+        // Only for single-line (UITextField). For multiline we'd overlay a UILabel.
+        let color: UIColor? = {
+            guard let argb = self.placeholderColor, argb.isFinite else { return nil }
+            let value = UInt32(argb)
+            let a = CGFloat((value >> 24) & 0xFF) / 255.0
+            let r = CGFloat((value >> 16) & 0xFF) / 255.0
+            let g = CGFloat((value >> 8) & 0xFF) / 255.0
+            let b = CGFloat(value & 0xFF) / 255.0
+            return UIColor(red: r, green: g, blue: b, alpha: a)
+        }()
+
+        if let placeholderText = self.placeholder {
+            var attributes: [NSAttributedString.Key: Any] = [:]
+            if let color = color {
+                attributes[.foregroundColor] = color
+            }
+            self.textField.attributedPlaceholder = NSAttributedString(
+                string: placeholderText,
+                attributes: attributes
+            )
+        } else {
+            // Clear to let UIKit default apply
+            self.textField.attributedPlaceholder = nil
         }
     }
 

@@ -26,6 +26,7 @@ export interface NitroTextInputProps
   onEndEditing?: (text: string) => void
   onSubmitEditing?: (text: string) => void
   onSelectionChange?: (selection: { start: number; end: number }) => void
+  placeholderTextColor?: string | number
   onPressIn?: (
     pageX: number,
     pageY: number,
@@ -62,6 +63,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     onPressOut,
     onFocus,
     onKeyPress,
+    placeholderTextColor,
     ...others
   } = props
 
@@ -118,6 +120,10 @@ export function NitroTextInput(props: NitroTextInputProps) {
   return (
     <NativeNitroTextInput
       {...others}
+      placeholderColor={
+        // Map to processed color like RN does
+        (require('react-native').processColor(placeholderTextColor) as any)
+      }
       keyboardType={getKeyboardTypeFromInputMode()}
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}

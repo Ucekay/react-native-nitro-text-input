@@ -205,6 +205,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.placeholder: ") + exc.what());
       }
     }()),
+    placeholderColor([&]() -> CachedProp<std::optional<double>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("placeholderColor", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.placeholderColor;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<double>>::fromRawValue(*runtime, value, sourceProps.placeholderColor);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.placeholderColor: ") + exc.what());
+      }
+    }()),
     onFocused([&]() -> CachedProp<std::optional<std::function<void()>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onFocused", nullptr, nullptr);
@@ -336,6 +346,7 @@ namespace margelo::nitro::nitrotextinput::views {
     maxLength(other.maxLength),
     multiline(other.multiline),
     placeholder(other.placeholder),
+    placeholderColor(other.placeholderColor),
     onFocused(other.onFocused),
     onBlurred(other.onBlurred),
     onTextChanged(other.onTextChanged),
@@ -368,6 +379,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("maxLength"): return true;
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
+      case hashString("placeholderColor"): return true;
       case hashString("onFocused"): return true;
       case hashString("onBlurred"): return true;
       case hashString("onTextChanged"): return true;

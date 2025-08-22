@@ -41,6 +41,7 @@
 #include <optional>
 #include <string>
 #include <optional>
+#include <optional>
 #include <functional>
 #include <optional>
 #include <functional>
@@ -109,6 +110,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<double>> maxLength;
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
+    CachedProp<std::optional<double>> placeholderColor;
     CachedProp<std::optional<std::function<void()>>> onFocused;
     CachedProp<std::optional<std::function<void()>>> onBlurred;
     CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> onTextChanged;

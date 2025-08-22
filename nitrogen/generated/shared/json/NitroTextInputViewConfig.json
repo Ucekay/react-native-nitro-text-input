@@ -22,6 +22,7 @@
     "maxLength": true,
     "multiline": true,
     "placeholder": true,
+    "placeholderColor": true,
     "onFocused": true,
     "onBlurred": true,
     "onTextChanged": true,

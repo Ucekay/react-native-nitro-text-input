@@ -116,6 +116,11 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   maxLength?: number
   multiline?: boolean
   placeholder?: string
+  /**
+   * iOS: Placeholder text color for single-line inputs.
+   * Pass a processed color (ARGB number) from JS.
+   */
+  placeholderColor?: number
   onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
