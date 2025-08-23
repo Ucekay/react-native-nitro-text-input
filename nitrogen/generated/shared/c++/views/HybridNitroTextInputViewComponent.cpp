@@ -165,6 +165,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.keyboardType: ") + exc.what());
       }
     }()),
+    keyboardAppearance([&]() -> CachedProp<std::optional<KeyboardAppearance>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("keyboardAppearance", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.keyboardAppearance;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<KeyboardAppearance>>::fromRawValue(*runtime, value, sourceProps.keyboardAppearance);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.keyboardAppearance: ") + exc.what());
+      }
+    }()),
     maxFontSizeMultiplier([&]() -> CachedProp<std::optional<double>> {
       try {
         const react::RawValue* rawValue = rawProps.at("maxFontSizeMultiplier", nullptr, nullptr);
@@ -342,6 +352,7 @@ namespace margelo::nitro::nitrotextinput::views {
     enablesReturnKeyAutomatically(other.enablesReturnKeyAutomatically),
     enterKeyHint(other.enterKeyHint),
     keyboardType(other.keyboardType),
+    keyboardAppearance(other.keyboardAppearance),
     maxFontSizeMultiplier(other.maxFontSizeMultiplier),
     maxLength(other.maxLength),
     multiline(other.multiline),
@@ -375,6 +386,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("enablesReturnKeyAutomatically"): return true;
       case hashString("enterKeyHint"): return true;
       case hashString("keyboardType"): return true;
+      case hashString("keyboardAppearance"): return true;
       case hashString("maxFontSizeMultiplier"): return true;
       case hashString("maxLength"): return true;
       case hashString("multiline"): return true;

@@ -17,6 +17,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -30,6 +32,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include "JEnterKeyHint.hpp"
 #include "KeyboardType.hpp"
 #include "JKeyboardType.hpp"
+#include "KeyboardAppearance.hpp"
+#include "JKeyboardAppearance.hpp"
 #include <variant>
 #include "JPlaceholderTextColor.hpp"
 #include <functional>
@@ -187,6 +191,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setKeyboardType(std::optional<KeyboardType> keyboardType) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JKeyboardType> /* keyboardType */)>("setKeyboardType");
     method(_javaPart, keyboardType.has_value() ? JKeyboardType::fromCpp(keyboardType.value()) : nullptr);
+  }
+  std::optional<KeyboardAppearance> JHybridNitroTextInputViewSpec::getKeyboardAppearance() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JKeyboardAppearance>()>("getKeyboardAppearance");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setKeyboardAppearance(std::optional<KeyboardAppearance> keyboardAppearance) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JKeyboardAppearance> /* keyboardAppearance */)>("setKeyboardAppearance");
+    method(_javaPart, keyboardAppearance.has_value() ? JKeyboardAppearance::fromCpp(keyboardAppearance.value()) : nullptr);
   }
   std::optional<double> JHybridNitroTextInputViewSpec::getMaxFontSizeMultiplier() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMaxFontSizeMultiplier");

@@ -18,6 +18,7 @@
     "enablesReturnKeyAutomatically": true,
     "enterKeyHint": true,
     "keyboardType": true,
+    "keyboardAppearance": true,
     "maxFontSizeMultiplier": true,
     "maxLength": true,
     "multiline": true,

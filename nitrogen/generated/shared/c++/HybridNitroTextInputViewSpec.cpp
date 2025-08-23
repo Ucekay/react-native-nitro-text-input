@@ -42,6 +42,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("enterKeyHint", &HybridNitroTextInputViewSpec::setEnterKeyHint);
       prototype.registerHybridGetter("keyboardType", &HybridNitroTextInputViewSpec::getKeyboardType);
       prototype.registerHybridSetter("keyboardType", &HybridNitroTextInputViewSpec::setKeyboardType);
+      prototype.registerHybridGetter("keyboardAppearance", &HybridNitroTextInputViewSpec::getKeyboardAppearance);
+      prototype.registerHybridSetter("keyboardAppearance", &HybridNitroTextInputViewSpec::setKeyboardAppearance);
       prototype.registerHybridGetter("maxFontSizeMultiplier", &HybridNitroTextInputViewSpec::getMaxFontSizeMultiplier);
       prototype.registerHybridSetter("maxFontSizeMultiplier", &HybridNitroTextInputViewSpec::setMaxFontSizeMultiplier);
       prototype.registerHybridGetter("maxLength", &HybridNitroTextInputViewSpec::getMaxLength);

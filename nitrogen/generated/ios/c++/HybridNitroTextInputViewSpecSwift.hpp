@@ -22,6 +22,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -30,6 +32,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <string>
 #include "EnterKeyHint.hpp"
 #include "KeyboardType.hpp"
+#include "KeyboardAppearance.hpp"
 #include <variant>
 #include <functional>
 
@@ -167,6 +170,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setKeyboardType(std::optional<KeyboardType> keyboardType) noexcept override {
       _swiftPart.setKeyboardType(keyboardType);
+    }
+    inline std::optional<KeyboardAppearance> getKeyboardAppearance() noexcept override {
+      auto __result = _swiftPart.getKeyboardAppearance();
+      return __result;
+    }
+    inline void setKeyboardAppearance(std::optional<KeyboardAppearance> keyboardAppearance) noexcept override {
+      _swiftPart.setKeyboardAppearance(keyboardAppearance);
     }
     inline std::optional<double> getMaxFontSizeMultiplier() noexcept override {
       auto __result = _swiftPart.getMaxFontSizeMultiplier();
