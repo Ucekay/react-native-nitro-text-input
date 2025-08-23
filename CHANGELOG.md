@@ -1,3 +1,9 @@
+## [1.0.0-next.32](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.31...v1.0.0-next.32) (2025-08-23)
+
+### Features
+
+* add submitBehavior prop ([#42](https://github.com/Ucekay/react-native-nitro-text-input/issues/42)) ([2a52ee6](https://github.com/Ucekay/react-native-nitro-text-input/commit/2a52ee673660d24a75009d6deb05532c57da4e2b))
+
 ## [1.0.0-next.31](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.30...v1.0.0-next.31) (2025-08-23)
 
 ### Features
