@@ -51,6 +51,7 @@ export default function App() {
             : '#0f0'
         }
         selectTextOnFocus
+        showSoftInputOnFocus={false}
         style={{ width: '100%' }}
       />
       <TextInput
