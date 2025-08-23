@@ -14,7 +14,7 @@ export default function App() {
     <View style={styles.container}>
       <NitroTextInput
         allowFontScaling
-        autoCapitalize="words"
+        autoCapitalize="none"
         autoCorrect
         autoFocus={false}
         caretHidden={false}
@@ -25,6 +25,7 @@ export default function App() {
         enablesReturnKeyAutomatically
         keyboardAppearance="default"
         maxLength={12}
+        onBlur={() => console.log('blurred')}
         onChangeText={(text) => console.log(text)}
         onFocus={() => console.log('focused')}
         onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
@@ -50,7 +51,7 @@ export default function App() {
               })
             : '#0f0'
         }
-        selectTextOnFocus
+        selectTextOnFocus={false}
         showSoftInputOnFocus={true}
         spellCheck={true}
         style={{ width: '100%' }}
