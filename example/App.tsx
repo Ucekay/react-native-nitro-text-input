@@ -54,6 +54,8 @@ export default function App() {
         selectTextOnFocus={false}
         showSoftInputOnFocus={true}
         spellCheck={true}
+        submitBehavior="blurAndSubmit"
+        textAlign="center"
         style={{ width: '100%' }}
       />
       <TextInput
