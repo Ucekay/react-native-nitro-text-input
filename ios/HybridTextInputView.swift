@@ -339,17 +339,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var spellCheck: Bool? {
-        didSet {
-            Task { @MainActor in
-                if let v = self.spellCheck {
-                    self.textField.spellCheckingType = v ? .yes : .no
-                } else {
-                    self.textField.spellCheckingType = .default
-                }
-            }
-        }
-    }
     var autoFocus: Bool? {
         didSet {
             Task { @MainActor in
@@ -489,21 +478,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var smartInsertDelete: Bool? {
-        didSet {
-            Task { @MainActor in
-                if #available(iOS 13.0, *) {
-                    if let enabled = self.smartInsertDelete {
-                        self.textField.smartInsertDeleteType =
-                            enabled
-                            ? .yes : .no
-                    } else {
-                        self.textField.smartInsertDeleteType = .default
-                    }
-                }
-            }
-        }
-    }
     var selection: TextSelection? {
         didSet {
             Task { @MainActor in
@@ -545,6 +519,32 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                     }
                 } else {
                     self.textField.inputView = UIView()
+                }
+            }
+        }
+    }
+    var smartInsertDelete: Bool? {
+        didSet {
+            Task { @MainActor in
+                if #available(iOS 13.0, *) {
+                    if let enabled = self.smartInsertDelete {
+                        self.textField.smartInsertDeleteType =
+                            enabled
+                            ? .yes : .no
+                    } else {
+                        self.textField.smartInsertDeleteType = .default
+                    }
+                }
+            }
+        }
+    }
+    var spellCheck: Bool? {
+        didSet {
+            Task { @MainActor in
+                if let v = self.spellCheck {
+                    self.textField.spellCheckingType = v ? .yes : .no
+                } else {
+                    self.textField.spellCheckingType = .default
                 }
             }
         }
