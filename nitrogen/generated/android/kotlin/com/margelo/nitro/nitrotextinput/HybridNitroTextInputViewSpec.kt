@@ -150,7 +150,13 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var placeholderTextColor: PlaceholderTextColor?
+  abstract var placeholderTextColor: ProcessedColor?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var selectionColor: ProcessedColor?
   
   @get:DoNotStrip
   @get:Keep

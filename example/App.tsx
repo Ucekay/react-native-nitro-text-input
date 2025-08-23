@@ -42,6 +42,14 @@ export default function App() {
             : '#00f'
         }
         secureTextEntry={false}
+        selectionColor={
+          Platform.OS === 'ios'
+            ? DynamicColorIOS({
+                light: PlatformColor('systemGreenColor'),
+                dark: 'green',
+              })
+            : '#0f0'
+        }
         style={{ width: '100%' }}
       />
       <TextInput

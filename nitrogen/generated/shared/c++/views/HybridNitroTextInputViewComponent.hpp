@@ -44,6 +44,9 @@
 #include <string>
 #include <variant>
 #include <optional>
+#include <string>
+#include <variant>
+#include <optional>
 #include <optional>
 #include "TextSelection.hpp"
 #include <optional>
@@ -118,6 +121,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<std::variant<std::string, double>>> placeholderTextColor;
+    CachedProp<std::optional<std::variant<std::string, double>>> selectionColor;
     CachedProp<std::optional<bool>> secureTextEntry;
     CachedProp<std::optional<TextSelection>> selection;
     CachedProp<std::optional<std::function<void()>>> onFocused;

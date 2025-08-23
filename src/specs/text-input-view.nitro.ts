@@ -90,9 +90,8 @@ export type KeyboardAppearance = 'default' | 'light' | 'dark'
 
 export type MaxFontMultiplier = number | null | undefined
 
-// Placeholder color is either a processed AARRGGBB number or
-// a JSON stringified OpaqueColor object (semantic/dynamic) from processColor.
-export type PlaceholderTextColor = number | string | null | undefined
+// A processed color (AARRGGBB) or JSON-stringified OpaqueColor (semantic/dynamic)
+export type ProcessedColor = number | string | null | undefined
 
 // (kept simple per RN API shape)
 
@@ -127,7 +126,8 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   maxLength?: number
   multiline?: boolean
   placeholder?: string
-  placeholderTextColor?: PlaceholderTextColor
+  placeholderTextColor?: ProcessedColor
+  selectionColor?: ProcessedColor
   secureTextEntry?: boolean
   selection?: TextSelection
   onFocused?: () => void
