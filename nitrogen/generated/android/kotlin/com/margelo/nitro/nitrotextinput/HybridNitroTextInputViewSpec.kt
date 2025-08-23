@@ -150,7 +150,7 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var placeholderTextColor: Double?
+  abstract var placeholderTextColor: PlaceholderTextColor?
   
   abstract var onFocused: (() -> Unit)?
   

@@ -30,6 +30,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include "JEnterKeyHint.hpp"
 #include "KeyboardType.hpp"
 #include "JKeyboardType.hpp"
+#include <variant>
+#include "JPlaceholderTextColor.hpp"
 #include <functional>
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
@@ -222,14 +224,14 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* placeholder */)>("setPlaceholder");
     method(_javaPart, placeholder.has_value() ? jni::make_jstring(placeholder.value()) : nullptr);
   }
-  std::optional<double> JHybridNitroTextInputViewSpec::getPlaceholderTextColor() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPlaceholderTextColor");
+  std::optional<std::variant<std::string, double>> JHybridNitroTextInputViewSpec::getPlaceholderTextColor() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPlaceholderTextColor>()>("getPlaceholderTextColor");
     auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
   }
-  void JHybridNitroTextInputViewSpec::setPlaceholderTextColor(std::optional<double> placeholderTextColor) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* placeholderTextColor */)>("setPlaceholderTextColor");
-    method(_javaPart, placeholderTextColor.has_value() ? jni::JDouble::valueOf(placeholderTextColor.value()) : nullptr);
+  void JHybridNitroTextInputViewSpec::setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JPlaceholderTextColor> /* placeholderTextColor */)>("setPlaceholderTextColor");
+    method(_javaPart, placeholderTextColor.has_value() ? JPlaceholderTextColor::fromCpp(placeholderTextColor.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");

@@ -30,6 +30,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <string>
 #include "EnterKeyHint.hpp"
 #include "KeyboardType.hpp"
+#include <variant>
 #include <functional>
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
@@ -195,11 +196,11 @@ namespace margelo::nitro::nitrotextinput {
     inline void setPlaceholder(const std::optional<std::string>& placeholder) noexcept override {
       _swiftPart.setPlaceholder(placeholder);
     }
-    inline std::optional<double> getPlaceholderTextColor() noexcept override {
+    inline std::optional<std::variant<std::string, double>> getPlaceholderTextColor() noexcept override {
       auto __result = _swiftPart.getPlaceholderTextColor();
       return __result;
     }
-    inline void setPlaceholderTextColor(std::optional<double> placeholderTextColor) noexcept override {
+    inline void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) noexcept override {
       _swiftPart.setPlaceholderTextColor(placeholderTextColor);
     }
     inline std::optional<std::function<void()>> getOnFocused() noexcept override {

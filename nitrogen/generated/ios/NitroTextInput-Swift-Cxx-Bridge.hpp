@@ -36,6 +36,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <variant>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -113,6 +114,44 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_double_ = std::optional<double>;
   inline std::optional<double> create_std__optional_double_(const double& value) {
     return std::optional<double>(value);
+  }
+  
+  // pragma MARK: std::variant<std::string, double>
+  /**
+   * Wrapper struct for `std::variant<std::string, double>`.
+   * std::variant cannot be used in Swift because of a Swift bug.
+   * Not even specializing it works. So we create a wrapper struct.
+   */
+  struct std__variant_std__string__double_ {
+    std::variant<std::string, double> variant;
+    std__variant_std__string__double_(std::variant<std::string, double> variant): variant(variant) { }
+    operator std::variant<std::string, double>() const {
+      return variant;
+    }
+    inline size_t index() const {
+      return variant.index();
+    }
+    inline std::string get_0() const {
+      return std::get<0>(variant);
+    }
+    inline double get_1() const {
+      return std::get<1>(variant);
+    }
+  };
+  inline std__variant_std__string__double_ create_std__variant_std__string__double_(const std::string& value) {
+    return std__variant_std__string__double_(value);
+  }
+  inline std__variant_std__string__double_ create_std__variant_std__string__double_(double value) {
+    return std__variant_std__string__double_(value);
+  }
+  
+  // pragma MARK: std::optional<std::variant<std::string, double>>
+  /**
+   * Specialized version of `std::optional<std::variant<std::string, double>>`.
+   */
+  using std__optional_std__variant_std__string__double__ = std::optional<std::variant<std::string, double>>;
+  inline std::optional<std::variant<std::string, double>> create_std__optional_std__variant_std__string__double__(const std::variant<std::string, double>& value) {
+    return std::optional<std::variant<std::string, double>>(value);
   }
   
   // pragma MARK: std::function<void()>
