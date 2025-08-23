@@ -23,6 +23,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 
@@ -34,6 +36,7 @@ namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include <variant>
+#include "TextSelection.hpp"
 #include <functional>
 #include "ReturnKeyType.hpp"
 
@@ -104,6 +107,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) = 0;
       virtual std::optional<bool> getSecureTextEntry() = 0;
       virtual void setSecureTextEntry(std::optional<bool> secureTextEntry) = 0;
+      virtual std::optional<TextSelection> getSelection() = 0;
+      virtual void setSelection(const std::optional<TextSelection>& selection) = 0;
       virtual std::optional<std::function<void()>> getOnFocused() = 0;
       virtual void setOnFocused(const std::optional<std::function<void()>>& onFocused) = 0;
       virtual std::optional<std::function<void()>> getOnBlurred() = 0;

@@ -21,7 +21,6 @@ export default function App() {
         clearButtonMode="while-editing"
         clearTextOnFocus={false}
         contextMenuHidden={false}
-        defaultValue=""
         editable
         enablesReturnKeyAutomatically
         keyboardAppearance="default"
@@ -49,8 +48,6 @@ export default function App() {
         clearButtonMode="always"
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
-        maxLength={12}
-        placeholderTextColor={'red'}
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

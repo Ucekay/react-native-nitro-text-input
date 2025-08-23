@@ -17,6 +17,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 
@@ -34,6 +36,8 @@ namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 #include "JKeyboardAppearance.hpp"
 #include <variant>
 #include "JPlaceholderTextColor.hpp"
+#include "TextSelection.hpp"
+#include "JTextSelection.hpp"
 #include <functional>
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
@@ -245,6 +249,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setSecureTextEntry(std::optional<bool> secureTextEntry) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* secureTextEntry */)>("setSecureTextEntry");
     method(_javaPart, secureTextEntry.has_value() ? jni::JBoolean::valueOf(secureTextEntry.value()) : nullptr);
+  }
+  std::optional<TextSelection> JHybridNitroTextInputViewSpec::getSelection() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextSelection>()>("getSelection");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSelection(const std::optional<TextSelection>& selection) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextSelection> /* selection */)>("setSelection");
+    method(_javaPart, selection.has_value() ? JTextSelection::fromCpp(selection.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");

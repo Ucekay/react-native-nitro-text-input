@@ -22,6 +22,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
@@ -35,6 +37,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
 #include "ReturnKeyType.hpp"
+#include "TextSelection.hpp"
 #include <functional>
 #include <memory>
 #include <optional>
@@ -155,6 +158,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_std__variant_std__string__double__ = std::optional<std::variant<std::string, double>>;
   inline std::optional<std::variant<std::string, double>> create_std__optional_std__variant_std__string__double__(const std::variant<std::string, double>& value) {
     return std::optional<std::variant<std::string, double>>(value);
+  }
+  
+  // pragma MARK: std::optional<TextSelection>
+  /**
+   * Specialized version of `std::optional<TextSelection>`.
+   */
+  using std__optional_TextSelection_ = std::optional<TextSelection>;
+  inline std::optional<TextSelection> create_std__optional_TextSelection_(const TextSelection& value) {
+    return std::optional<TextSelection>(value);
   }
   
   // pragma MARK: std::function<void()>

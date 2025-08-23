@@ -32,6 +32,8 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.clipsToBounds = false
+        self.layer.masksToBounds = false
         self.delegate = self
         NotificationCenter.default.addObserver(
             self,
@@ -44,6 +46,8 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        self.clipsToBounds = false
+        self.layer.masksToBounds = false
         self.delegate = self
         NotificationCenter.default.addObserver(
             self,
@@ -267,6 +271,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     override init() {
         super.init()
+        self.textField.clipsToBounds = false
+        self.textField.layer.masksToBounds = false
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
@@ -462,6 +468,25 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.updatePlaceholderAttributedColor()
+            }
+        }
+    }
+    var selection: TextSelection? {
+        didSet {
+            Task { @MainActor in
+                guard let sel = self.selection else { return }
+                let startOffset = Int(sel.start)
+                let endOffset = Int(sel.end)
+                guard let start = self.textField.position(
+                    from: self.textField.beginningOfDocument,
+                    offset: startOffset
+                ), let end = self.textField.position(
+                    from: self.textField.beginningOfDocument,
+                    offset: endOffset
+                ) else { return }
+                if let range = self.textField.textRange(from: start, to: end) {
+                    self.textField.selectedTextRange = range
+                }
             }
         }
     }
