@@ -122,6 +122,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   maxFontSizeMultiplier?: MaxFontMultiplier
   maxLength?: number
   multiline?: boolean
+  passwordRules?: string | null
   placeholder?: string
   textAlign?: TextAlign
   placeholderTextColor?: ProcessedColor

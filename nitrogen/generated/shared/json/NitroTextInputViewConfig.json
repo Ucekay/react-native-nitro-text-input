@@ -21,6 +21,7 @@
     "maxFontSizeMultiplier": true,
     "maxLength": true,
     "multiline": true,
+    "passwordRules": true,
     "placeholder": true,
     "textAlign": true,
     "placeholderTextColor": true,

@@ -231,6 +231,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* multiline */)>("setMultiline");
     method(_javaPart, multiline.has_value() ? jni::JBoolean::valueOf(multiline.value()) : nullptr);
   }
+  std::optional<std::string> JHybridNitroTextInputViewSpec::getPasswordRules() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getPasswordRules");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPasswordRules(const std::optional<std::string>& passwordRules) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* passwordRules */)>("setPasswordRules");
+    method(_javaPart, passwordRules.has_value() ? jni::make_jstring(passwordRules.value()) : nullptr);
+  }
   std::optional<std::string> JHybridNitroTextInputViewSpec::getPlaceholder() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getPlaceholder");
     auto __result = method(_javaPart);
