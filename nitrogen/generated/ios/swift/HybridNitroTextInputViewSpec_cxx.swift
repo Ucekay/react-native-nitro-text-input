@@ -444,9 +444,9 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.placeholderTextColor = { () -> PlaceholderTextColor? in
+      self.__implementation.placeholderTextColor = { () -> ProcessedColor? in
         if let __unwrapped = newValue.value {
-          return { () -> PlaceholderTextColor in
+          return { () -> ProcessedColor in
             let __variant = bridge.std__variant_std__string__double_(__unwrapped)
             switch __variant.index() {
               case 0:
@@ -486,9 +486,9 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.selectionColor = { () -> PlaceholderTextColor? in
+      self.__implementation.selectionColor = { () -> ProcessedColor? in
         if let __unwrapped = newValue.value {
-          return { () -> PlaceholderTextColor in
+          return { () -> ProcessedColor in
             let __variant = bridge.std__variant_std__string__double_(__unwrapped)
             switch __variant.index() {
               case 0:

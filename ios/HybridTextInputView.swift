@@ -464,14 +464,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
     }
     // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
-    var placeholderTextColor: PlaceholderTextColor? {
+    var placeholderTextColor: ProcessedColor? {
         didSet {
             Task { @MainActor in
                 self.updatePlaceholderAttributedColor()
             }
         }
     }
-    var selectionColor: PlaceholderTextColor? {
+    var selectionColor: ProcessedColor? {
         didSet {
             Task { @MainActor in
                 self.updateSelectionTintColor()
