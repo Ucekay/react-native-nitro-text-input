@@ -373,14 +373,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 if self.autoFocus == true {
-                    // Ensure inputView reflects showSoftInputOnFocus before focusing
-                    let show = self.showSoftInputOnFocus ?? true
-                    if show {
-                        self.textField.inputView = nil
-                    } else {
-                        self.textField.inputView = UIView()
-                    }
-                    _ = self.textField.becomeFirstResponder()
+                    self.performFocus()
                 } else {
                     self.textField.resignFirstResponder()
                 }
@@ -641,9 +634,20 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             self.performFocus()
         }
     }
-    func blur() {}
-    func clear() {}
-    func isFocused() {}
+    func blur() {
+        textField.resignFirstResponder()
+    }
+    func clear() {
+        // Minimal clear: empty text and move caret to start
+        textField.attributedText = NSAttributedString()
+        if let start = textField.beginningOfDocument as UITextPosition?,
+           let range = textField.textRange(from: start, to: start) {
+            textField.selectedTextRange = range
+        }
+    }
+    func isFocused() -> Bool {
+        return textField.isFirstResponder
+    }
 
     private func updateAutoCorrect() {
         if let value = autoCorrect {
