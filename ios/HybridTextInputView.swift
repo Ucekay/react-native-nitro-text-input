@@ -453,7 +453,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 if #available(iOS 12.0, *) {
                     if let rules = self.passwordRules, rules.isEmpty == false {
                         self.textField.passwordRules = UITextInputPasswordRules(
-                            passwordRulesDescriptor: rules
+                            descriptor: rules
                         )
                     } else {
                         self.textField.passwordRules = nil
