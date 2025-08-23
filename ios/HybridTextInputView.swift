@@ -439,6 +439,15 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 textField.placeholder = self.placeholder
+                self.updatePlaceholderAttributedColor()
+            }
+        }
+    }
+    // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
+    var placeholderTextColor: PlaceholderTextColor? {
+        didSet {
+            Task { @MainActor in
+                self.updatePlaceholderAttributedColor()
             }
         }
     }
@@ -747,6 +756,71 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
     }
 
+    private func updatePlaceholderAttributedColor() {
+        // Only for single-line (UITextField). For multiline we'd overlay a UILabel.
+        let color: UIColor? = {
+            guard let value = self.placeholderTextColor else { return nil }
+            // Accept either numeric (AARRGGBB) or stringified object from processColor
+            if case let .second(doubleValue) = value {
+                let v = UInt32(clamping: Int64(doubleValue))
+                let a = CGFloat((v >> 24) & 0xFF) / 255.0
+                let r = CGFloat((v >> 16) & 0xFF) / 255.0
+                let g = CGFloat((v >> 8) & 0xFF) / 255.0
+                let b = CGFloat(v & 0xFF) / 255.0
+                return UIColor(red: r, green: g, blue: b, alpha: a)
+            }
+            var parsedDict: [String: Any]? = nil
+            if case let .first(json) = value,
+                let data = json.data(using: .utf8),
+                let dict = try? JSONSerialization.jsonObject(with: data)
+                    as? [String: Any]
+            {
+                parsedDict = dict
+            }
+            if let dict = parsedDict {
+                if let semantic = dict["semantic"] as? [String],
+                    let name = semantic.first
+                {
+                    // Try named color first, fallback to system semantic mapping if needed
+                    return UIColor(named: name) ?? UIColor.value(forKey: name)
+                        as? UIColor
+                }
+                if let dynamic = dict["dynamic"] as? [String: Any] {
+                    // Resolve light/dark now for current trait; provide dynamic provider to adapt
+                    let lightAny = dynamic["light"]
+                    let darkAny = dynamic["dark"]
+                    let light =
+                        HybridTextInputView.resolveColor(any: lightAny)
+                        ?? UIColor.placeholderText
+                    let dark =
+                        HybridTextInputView.resolveColor(any: darkAny) ?? light
+                    if #available(iOS 13.0, *) {
+                        return UIColor { traits in
+                            traits.userInterfaceStyle == .dark ? dark : light
+                        }
+                    } else {
+                        return light
+                    }
+                }
+            }
+            return nil
+        }()
+
+        if let placeholderText = self.placeholder {
+            var attributes: [NSAttributedString.Key: Any] = [:]
+            if let color = color {
+                attributes[.foregroundColor] = color
+            }
+            self.textField.attributedPlaceholder = NSAttributedString(
+                string: placeholderText,
+                attributes: attributes
+            )
+        } else {
+            // Clear to let UIKit default apply
+            self.textField.attributedPlaceholder = nil
+        }
+    }
+
     // MARK: - Font Scaling (allowFontScaling, maxFontSizeMultiplier)
     @objc private func handleContentSizeCategoryDidChange() {
         self.applyFontScaling()
@@ -832,3 +906,44 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
 }
+
+extension HybridTextInputView {
+    static func resolveColor(any: Any?) -> UIColor? {
+        guard let value = any else { return nil }
+        if let doubleValue = value as? Double {
+            let v = UInt32(clamping: Int64(doubleValue))
+            let a = CGFloat((v >> 24) & 0xFF) / 255.0
+            let r = CGFloat((v >> 16) & 0xFF) / 255.0
+            let g = CGFloat((v >> 8) & 0xFF) / 255.0
+            let b = CGFloat(v & 0xFF) / 255.0
+            return UIColor(red: r, green: g, blue: b, alpha: a)
+        }
+        // Accept either a JSON string or a dictionary for OpaqueColor
+        var parsedDict: [String: Any]? = nil
+        if let dict = value as? [String: Any] {
+            parsedDict = dict
+        } else if let json = value as? String,
+                  let data = json.data(using: .utf8),
+                  let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            parsedDict = dict
+        }
+        if let dict = parsedDict {
+            if let semantic = dict["semantic"] as? [String], let name = semantic.first {
+                return UIColor(named: name) ?? UIColor.value(forKey: name) as? UIColor
+            }
+            if let dynamic = dict["dynamic"] as? [String: Any] {
+                let light = resolveColor(any: dynamic["light"]) ?? UIColor.placeholderText
+                let dark = resolveColor(any: dynamic["dark"]) ?? light
+                if #available(iOS 13.0, *) {
+                    return UIColor { traits in
+                        traits.userInterfaceStyle == .dark ? dark : light
+                    }
+                } else {
+                    return light
+                }
+            }
+        }
+        return nil
+    }
+}
+

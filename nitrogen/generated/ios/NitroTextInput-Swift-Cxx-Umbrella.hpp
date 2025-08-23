@@ -32,6 +32,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <memory>
 #include <optional>
 #include <string>
+#include <variant>
 
 // C++ helpers for Swift
 #include "NitroTextInput-Swift-Cxx-Bridge.hpp"

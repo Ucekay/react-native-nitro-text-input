@@ -1,4 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
+import { Platform } from 'react-native'
+import { DynamicColorIOS, PlatformColor } from 'react-native'
 
 import { StyleSheet, TextInput, View } from 'react-native'
 import { NitroTextInput } from 'react-native-nitro-text-input'
@@ -27,6 +29,14 @@ export default function App() {
         }
         onSubmitEditing={(text) => console.log(`Submitted: ${text}`)}
         placeholder="Nitro Text Input 🔥"
+        placeholderTextColor={
+          Platform.OS === 'ios'
+            ? DynamicColorIOS({
+                light: PlatformColor('systemBlueColor'),
+                dark: 'gray',
+              })
+            : '#00f'
+        }
         style={{ width: '100%' }}
       />
       <TextInput
@@ -34,6 +44,7 @@ export default function App() {
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
         maxLength={12}
+        placeholderTextColor={'red'}
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

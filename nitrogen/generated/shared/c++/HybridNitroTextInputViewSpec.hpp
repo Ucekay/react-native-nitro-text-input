@@ -31,6 +31,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <string>
 #include "EnterKeyHint.hpp"
 #include "KeyboardType.hpp"
+#include <variant>
 #include <functional>
 
 namespace margelo::nitro::nitrotextinput {
@@ -96,6 +97,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
+      virtual std::optional<std::variant<std::string, double>> getPlaceholderTextColor() = 0;
+      virtual void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) = 0;
       virtual std::optional<std::function<void()>> getOnFocused() = 0;
       virtual void setOnFocused(const std::optional<std::function<void()>>& onFocused) = 0;
       virtual std::optional<std::function<void()>> getOnBlurred() = 0;

@@ -1,7 +1,11 @@
 // biome-ignore lint/correctness/noUnusedImports: Needed for JSX runtime
 import React from 'react'
-import type { HostComponent, InputModeOptions } from 'react-native'
-import { Platform, StyleSheet } from 'react-native'
+import type {
+  HostComponent,
+  InputModeOptions,
+  TextInputProps,
+} from 'react-native'
+import { Platform, processColor, StyleSheet } from 'react-native'
 import { NativeNitroTextInput } from './native-nitro-text-input'
 
 type ReactProps<T> = T extends HostComponent<infer P> ? P : never
@@ -19,6 +23,7 @@ export interface NitroTextInputProps
     | 'onSelectionChanged'
     | 'onFocused'
     | 'onKeyPressed'
+    | 'placeholderTextColor'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
@@ -42,6 +47,7 @@ export interface NitroTextInputProps
   ) => void
   onFocus?: () => void
   onKeyPress?: (key: string) => void
+  placeholderTextColor?: TextInputProps['placeholderTextColor'] | undefined
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -62,6 +68,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     onPressOut,
     onFocus,
     onKeyPress,
+    placeholderTextColor,
     ...others
   } = props
 
@@ -118,6 +125,13 @@ export function NitroTextInput(props: NitroTextInputProps) {
   return (
     <NativeNitroTextInput
       {...others}
+      placeholderTextColor={(() => {
+        const processed = processColor(placeholderTextColor ?? undefined)
+        if (processed == null) return undefined
+        return typeof processed === 'number'
+          ? processed
+          : JSON.stringify(processed)
+      })()}
       keyboardType={getKeyboardTypeFromInputMode()}
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}
