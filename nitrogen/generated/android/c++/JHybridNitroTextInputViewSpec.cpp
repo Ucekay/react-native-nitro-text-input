@@ -142,6 +142,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* clearTextOnFocus */)>("setClearTextOnFocus");
     method(_javaPart, clearTextOnFocus.has_value() ? jni::JBoolean::valueOf(clearTextOnFocus.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getSelectTextOnFocus() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSelectTextOnFocus");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* selectTextOnFocus */)>("setSelectTextOnFocus");
+    method(_javaPart, selectTextOnFocus.has_value() ? jni::JBoolean::valueOf(selectTextOnFocus.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getContextMenuHidden() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getContextMenuHidden");
     auto __result = method(_javaPart);

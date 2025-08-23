@@ -371,6 +371,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             self.textField.clearTextOnFocus = self.clearTextOnFocus ?? false
         }
     }
+    var selectTextOnFocus: Bool? = false
     var contextMenuHidden: Bool? {
         didSet {
             Task {
@@ -959,7 +960,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     // MARK: - Focus/Blur events
     private func wireTextFieldEventCallbacks() {
         self.textField.onDidBeginEditing = { [weak self] in
-            self?.onFocused?()
+            guard let self = self else { return }
+            if self.selectTextOnFocus == true {
+                self.textField.selectAll(nil)
+            }
+            self.onFocused?()
         }
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
