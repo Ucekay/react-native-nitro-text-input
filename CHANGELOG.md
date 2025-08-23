@@ -1,3 +1,9 @@
+## [1.0.0-next.24](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.23...v1.0.0-next.24) (2025-08-23)
+
+### Bug Fixes
+
+* add react-native-nitro-modules patch and refactor NitroTextInput types ([#34](https://github.com/Ucekay/react-native-nitro-text-input/issues/34)) ([27f54a7](https://github.com/Ucekay/react-native-nitro-text-input/commit/27f54a73f41b3034fae96c7d147193a1d83ee386))
+
 ## [1.0.0-next.23](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.22...v1.0.0-next.23) (2025-08-23)
 
 ### Features
