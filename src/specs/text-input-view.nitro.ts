@@ -110,15 +110,6 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   clearButtonMode?: ClearButtonMode
   clearTextOnFocus?: boolean
   contextMenuHidden?: boolean
-  selectTextOnFocus?: boolean
-  showSoftInputOnFocus?: boolean
-  /**
-   * Provides an initial value that will change when the user starts typing. Useful for simple use-cases where you don’t want to deal with listening to events and updating the value prop to keep the controlled state in sync.
-   *
-   * 注意: NitroTextInput の `defaultValue` は「初期化時にのみ」反映されます。マウント後にこの props を更新しても、既に表示中のテキストは上書きされません。
-   * - 初回マウント時、フィールドが空の場合に初期値として適用されます。
-   * - ユーザー入力などでテキストが既に存在する場合は上書きしません。
-   */
   defaultValue?: string
   editable?: boolean
   enablesReturnKeyAutomatically?: boolean
@@ -129,9 +120,12 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   multiline?: boolean
   placeholder?: string
   placeholderTextColor?: ProcessedColor
+  returnKeyType?: ReturnKeyType
+  selection?: TextSelection
   selectionColor?: ProcessedColor
   secureTextEntry?: boolean
-  selection?: TextSelection
+  selectTextOnFocus?: boolean
+  showSoftInputOnFocus?: boolean
   onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
@@ -153,7 +147,6 @@ export interface NitroTextInputViewProps extends HybridViewProps {
     locationY: number,
     timestamp: number
   ) => void
-  returnKeyType?: ReturnKeyType
   /**
    * Called once when the initial height has been measured (pt).
    */
