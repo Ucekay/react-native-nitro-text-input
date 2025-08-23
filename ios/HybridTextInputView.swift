@@ -456,6 +456,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
+    var placeholderTextColor: ProcessedColor? {
+        didSet {
+            Task { @MainActor in
+                self.updatePlaceholderAttributedColor()
+            }
+        }
+    }
     var secureTextEntry: Bool? {
         didSet {
             Task { @MainActor in
@@ -463,11 +471,25 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
-    var placeholderTextColor: ProcessedColor? {
+    var selection: TextSelection? {
         didSet {
             Task { @MainActor in
-                self.updatePlaceholderAttributedColor()
+                guard let sel = self.selection else { return }
+                let startOffset = Int(sel.start)
+                let endOffset = Int(sel.end)
+                guard
+                    let start = self.textField.position(
+                        from: self.textField.beginningOfDocument,
+                        offset: startOffset
+                    ),
+                    let end = self.textField.position(
+                        from: self.textField.beginningOfDocument,
+                        offset: endOffset
+                    )
+                else { return }
+                if let range = self.textField.textRange(from: start, to: end) {
+                    self.textField.selectedTextRange = range
+                }
             }
         }
     }
@@ -478,25 +500,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var selection: TextSelection? {
-        didSet {
-            Task { @MainActor in
-                guard let sel = self.selection else { return }
-                let startOffset = Int(sel.start)
-                let endOffset = Int(sel.end)
-                guard let start = self.textField.position(
-                    from: self.textField.beginningOfDocument,
-                    offset: startOffset
-                ), let end = self.textField.position(
-                    from: self.textField.beginningOfDocument,
-                    offset: endOffset
-                ) else { return }
-                if let range = self.textField.textRange(from: start, to: end) {
-                    self.textField.selectedTextRange = range
-                }
-            }
-        }
-    }
+    var selectTextOnFocus: Bool? = false
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onFocused: (() -> Void)?
@@ -893,23 +897,39 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             let r = CGFloat((v >> 16) & 0xFF) / 255.0
             let g = CGFloat((v >> 8) & 0xFF) / 255.0
             let b = CGFloat(v & 0xFF) / 255.0
-            self.textField.tintColor = UIColor(red: r, green: g, blue: b, alpha: a)
+            self.textField.tintColor = UIColor(
+                red: r,
+                green: g,
+                blue: b,
+                alpha: a
+            )
             return
         }
         if case .first(let json) = value,
-           let data = json.data(using: .utf8),
-           let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+            let data = json.data(using: .utf8),
+            let dict = try? JSONSerialization.jsonObject(with: data)
+                as? [String: Any]
         {
-            if let semantic = dict["semantic"] as? [String], let name = semantic.first {
-                self.textField.tintColor = UIColor(named: name) ?? UIColor.value(forKey: name) as? UIColor
+            if let semantic = dict["semantic"] as? [String],
+                let name = semantic.first
+            {
+                self.textField.tintColor =
+                    UIColor(named: name) ?? UIColor.value(forKey: name)
+                    as? UIColor
                 return
             }
             if let dynamic = dict["dynamic"] as? [String: Any] {
-                let light = HybridTextInputView.resolveColor(any: dynamic["light"]) ?? self.textField.tintColor
-                let dark = HybridTextInputView.resolveColor(any: dynamic["dark"]) ?? light
+                let light =
+                    HybridTextInputView.resolveColor(any: dynamic["light"])
+                    ?? self.textField.tintColor
+                let dark =
+                    HybridTextInputView.resolveColor(any: dynamic["dark"])
+                    ?? light
                 if #available(iOS 13.0, *) {
                     self.textField.tintColor = UIColor { traits in
-                        traits.userInterfaceStyle == .dark ? (dark ?? light ?? UIColor.tintColor) : (light ?? UIColor.tintColor)
+                        traits.userInterfaceStyle == .dark
+                            ? (dark ?? light ?? UIColor.tintColor)
+                            : (light ?? UIColor.tintColor)
                     }
                 } else {
                     self.textField.tintColor = light
@@ -959,7 +979,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     // MARK: - Focus/Blur events
     private func wireTextFieldEventCallbacks() {
         self.textField.onDidBeginEditing = { [weak self] in
-            self?.onFocused?()
+            guard let self = self else { return }
+            if self.selectTextOnFocus == true {
+                // Defer selection to override iOS' tap-based caret placement
+                DispatchQueue.main.async { [weak self] in
+                    self?.textField.selectAll(nil)
+                }
+            }
+            self.onFocused?()
         }
         self.textField.onDidEndEditing = { [weak self] in
             guard let self = self else { return }

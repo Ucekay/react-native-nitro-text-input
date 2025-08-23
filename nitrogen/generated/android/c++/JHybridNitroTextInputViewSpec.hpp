@@ -65,6 +65,8 @@ namespace margelo::nitro::nitrotextinput {
     void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) override;
     std::optional<bool> getClearTextOnFocus() override;
     void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) override;
+    std::optional<bool> getSelectTextOnFocus() override;
+    void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) override;
     std::optional<bool> getContextMenuHidden() override;
     void setContextMenuHidden(std::optional<bool> contextMenuHidden) override;
     std::optional<std::string> getDefaultValue() override;

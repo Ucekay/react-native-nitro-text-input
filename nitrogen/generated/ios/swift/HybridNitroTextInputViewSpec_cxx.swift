@@ -242,6 +242,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var selectTextOnFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.selectTextOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.selectTextOnFocus = newValue.value
+    }
+  }
+  
   public final var contextMenuHidden: bridge.std__optional_bool_ {
     @inline(__always)
     get {

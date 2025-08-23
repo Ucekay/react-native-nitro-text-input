@@ -12,6 +12,7 @@
     "caretHidden": true,
     "clearButtonMode": true,
     "clearTextOnFocus": true,
+    "selectTextOnFocus": true,
     "contextMenuHidden": true,
     "defaultValue": true,
     "editable": true,
