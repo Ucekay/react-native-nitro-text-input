@@ -443,7 +443,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var placeholderColor: Double? {
+    var placeholderTextColor: Double? {
         didSet {
             Task { @MainActor in
                 self.updatePlaceholderAttributedColor()
@@ -758,7 +758,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     private func updatePlaceholderAttributedColor() {
         // Only for single-line (UITextField). For multiline we'd overlay a UILabel.
         let color: UIColor? = {
-            guard let argb = self.placeholderColor, argb.isFinite else { return nil }
+            guard let argb = self.placeholderTextColor, argb.isFinite else { return nil }
             let value = UInt32(argb)
             let a = CGFloat((value >> 24) & 0xFF) / 255.0
             let r = CGFloat((value >> 16) & 0xFF) / 255.0

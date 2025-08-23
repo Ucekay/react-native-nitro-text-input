@@ -222,14 +222,14 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* placeholder */)>("setPlaceholder");
     method(_javaPart, placeholder.has_value() ? jni::make_jstring(placeholder.value()) : nullptr);
   }
-  std::optional<double> JHybridNitroTextInputViewSpec::getPlaceholderColor() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPlaceholderColor");
+  std::optional<double> JHybridNitroTextInputViewSpec::getPlaceholderTextColor() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPlaceholderTextColor");
     auto __result = method(_javaPart);
     return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
   }
-  void JHybridNitroTextInputViewSpec::setPlaceholderColor(std::optional<double> placeholderColor) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* placeholderColor */)>("setPlaceholderColor");
-    method(_javaPart, placeholderColor.has_value() ? jni::JDouble::valueOf(placeholderColor.value()) : nullptr);
+  void JHybridNitroTextInputViewSpec::setPlaceholderTextColor(std::optional<double> placeholderTextColor) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* placeholderTextColor */)>("setPlaceholderTextColor");
+    method(_javaPart, placeholderTextColor.has_value() ? jni::JDouble::valueOf(placeholderTextColor.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");

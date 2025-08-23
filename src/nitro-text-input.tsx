@@ -1,7 +1,7 @@
 // biome-ignore lint/correctness/noUnusedImports: Needed for JSX runtime
 import React from 'react'
 import type { HostComponent, InputModeOptions } from 'react-native'
-import { Platform, StyleSheet } from 'react-native'
+import { Platform, processColor, StyleSheet } from 'react-native'
 import { NativeNitroTextInput } from './native-nitro-text-input'
 
 type ReactProps<T> = T extends HostComponent<infer P> ? P : never
@@ -26,7 +26,6 @@ export interface NitroTextInputProps
   onEndEditing?: (text: string) => void
   onSubmitEditing?: (text: string) => void
   onSelectionChange?: (selection: { start: number; end: number }) => void
-  placeholderTextColor?: string | number
   onPressIn?: (
     pageX: number,
     pageY: number,
@@ -120,10 +119,10 @@ export function NitroTextInput(props: NitroTextInputProps) {
   return (
     <NativeNitroTextInput
       {...others}
-      placeholderColor={
-        // Map to processed color like RN does
-        (require('react-native').processColor(placeholderTextColor) as any)
-      }
+      placeholderTextColor={(() => {
+        const processed = processColor(placeholderTextColor ?? undefined) as unknown
+        return typeof processed === 'number' ? (processed as number) : undefined
+      })()}
       keyboardType={getKeyboardTypeFromInputMode()}
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}

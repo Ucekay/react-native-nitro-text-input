@@ -424,11 +424,11 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
-  public final var placeholderColor: bridge.std__optional_double_ {
+  public final var placeholderTextColor: bridge.std__optional_double_ {
     @inline(__always)
     get {
       return { () -> bridge.std__optional_double_ in
-        if let __unwrappedValue = self.__implementation.placeholderColor {
+        if let __unwrappedValue = self.__implementation.placeholderTextColor {
           return bridge.create_std__optional_double_(__unwrappedValue)
         } else {
           return .init()
@@ -437,7 +437,7 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.placeholderColor = newValue.value
+      self.__implementation.placeholderTextColor = newValue.value
     }
   }
   
