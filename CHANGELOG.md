@@ -1,3 +1,9 @@
+## [1.0.0-next.30](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.29...v1.0.0-next.30) (2025-08-23)
+
+### Features
+
+* add smartInsertDelete feature for iOS text input ([#40](https://github.com/Ucekay/react-native-nitro-text-input/issues/40)) ([1930913](https://github.com/Ucekay/react-native-nitro-text-input/commit/193091357e79cb9417c04f49e30e6d74bc0b24fa))
+
 ## [1.0.0-next.29](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.28...v1.0.0-next.29) (2025-08-23)
 
 ### Features
