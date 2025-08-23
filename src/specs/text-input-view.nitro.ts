@@ -86,6 +86,8 @@ export type KeyboardType =
   | 'web-search'
   | 'ascii-capable-number-pad'
 
+export type KeyboardAppearance = 'default' | 'light' | 'dark'
+
 export type MaxFontMultiplier = number | null | undefined
 
 // Placeholder color is either a processed AARRGGBB number or
@@ -116,6 +118,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   enablesReturnKeyAutomatically?: boolean
   enterKeyHint?: EnterKeyHint
   keyboardType?: KeyboardType
+  keyboardAppearance?: KeyboardAppearance
   maxFontSizeMultiplier?: MaxFontMultiplier
   maxLength?: number
   multiline?: boolean

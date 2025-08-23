@@ -25,6 +25,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var enablesReturnKeyAutomatically: Bool? { get set }
   var enterKeyHint: EnterKeyHint? { get set }
   var keyboardType: KeyboardType? { get set }
+  var keyboardAppearance: KeyboardAppearance? { get set }
   var maxFontSizeMultiplier: Double? { get set }
   var maxLength: Double? { get set }
   var multiline: Bool? { get set }

@@ -18,6 +18,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 
@@ -31,6 +33,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "ClearButtonMode.hpp"
 #include "EnterKeyHint.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
+#include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
 #include <functional>
 #include <memory>
@@ -105,6 +108,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_KeyboardType_ = std::optional<KeyboardType>;
   inline std::optional<KeyboardType> create_std__optional_KeyboardType_(const KeyboardType& value) {
     return std::optional<KeyboardType>(value);
+  }
+  
+  // pragma MARK: std::optional<KeyboardAppearance>
+  /**
+   * Specialized version of `std::optional<KeyboardAppearance>`.
+   */
+  using std__optional_KeyboardAppearance_ = std::optional<KeyboardAppearance>;
+  inline std::optional<KeyboardAppearance> create_std__optional_KeyboardAppearance_(const KeyboardAppearance& value) {
+    return std::optional<KeyboardAppearance>(value);
   }
   
   // pragma MARK: std::optional<double>

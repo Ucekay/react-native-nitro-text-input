@@ -23,6 +23,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -31,6 +33,7 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 #include <string>
 #include "EnterKeyHint.hpp"
 #include "KeyboardType.hpp"
+#include "KeyboardAppearance.hpp"
 #include <variant>
 #include <functional>
 
@@ -89,6 +92,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) = 0;
       virtual std::optional<KeyboardType> getKeyboardType() = 0;
       virtual void setKeyboardType(std::optional<KeyboardType> keyboardType) = 0;
+      virtual std::optional<KeyboardAppearance> getKeyboardAppearance() = 0;
+      virtual void setKeyboardAppearance(std::optional<KeyboardAppearance> keyboardAppearance) = 0;
       virtual std::optional<double> getMaxFontSizeMultiplier() = 0;
       virtual void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) = 0;
       virtual std::optional<double> getMaxLength() = 0;

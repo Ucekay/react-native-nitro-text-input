@@ -126,6 +126,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var keyboardAppearance: KeyboardAppearance?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var maxFontSizeMultiplier: Double?
   
   @get:DoNotStrip

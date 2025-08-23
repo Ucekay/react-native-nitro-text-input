@@ -350,6 +350,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var keyboardAppearance: bridge.std__optional_KeyboardAppearance_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_KeyboardAppearance_ in
+        if let __unwrappedValue = self.__implementation.keyboardAppearance {
+          return bridge.create_std__optional_KeyboardAppearance_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.keyboardAppearance = newValue.value
+    }
+  }
+  
   public final var maxFontSizeMultiplier: bridge.std__optional_double_ {
     @inline(__always)
     get {

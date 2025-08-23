@@ -425,6 +425,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var keyboardAppearance: KeyboardAppearance? {
+        didSet {
+            Task { @MainActor in
+                self.updateKeyboardAppearance()
+            }
+        }
+    }
     var maxLength: Double? {
         didSet {
             if let value = self.maxLength, value.isFinite {
@@ -754,6 +761,21 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 self.textField.keyboardType = .numberPad
             }
         }
+    }
+
+    private func updateKeyboardAppearance() {
+        let appearance: UIKeyboardAppearance
+        switch self.keyboardAppearance {
+        case .light?:
+            appearance = .light
+        case .dark?:
+            appearance = .dark
+        case .default?, nil:
+            fallthrough
+        default:
+            appearance = .default
+        }
+        self.textField.keyboardAppearance = appearance
     }
 
     private func updatePlaceholderAttributedColor() {

@@ -20,6 +20,7 @@ export default function App() {
         defaultValue=""
         editable
         enablesReturnKeyAutomatically
+        keyboardAppearance="default"
         maxLength={12}
         onChangeText={(text) => console.log(text)}
         onFocus={() => console.log('focused')}

@@ -36,6 +36,8 @@
 #include <optional>
 #include "KeyboardType.hpp"
 #include <optional>
+#include "KeyboardAppearance.hpp"
+#include <optional>
 #include <optional>
 #include <optional>
 #include <optional>
@@ -108,6 +110,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> enablesReturnKeyAutomatically;
     CachedProp<std::optional<EnterKeyHint>> enterKeyHint;
     CachedProp<std::optional<KeyboardType>> keyboardType;
+    CachedProp<std::optional<KeyboardAppearance>> keyboardAppearance;
     CachedProp<std::optional<double>> maxFontSizeMultiplier;
     CachedProp<std::optional<double>> maxLength;
     CachedProp<std::optional<bool>> multiline;
