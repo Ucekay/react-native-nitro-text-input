@@ -450,6 +450,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var secureTextEntry: Bool? {
+        didSet {
+            Task { @MainActor in
+                self.textField.isSecureTextEntry = self.secureTextEntry ?? false
+            }
+        }
+    }
     // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
     var placeholderTextColor: PlaceholderTextColor? {
         didSet {
@@ -783,7 +790,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         let color: UIColor? = {
             guard let value = self.placeholderTextColor else { return nil }
             // Accept either numeric (AARRGGBB) or stringified object from processColor
-            if case let .second(doubleValue) = value {
+            if case .second(let doubleValue) = value {
                 let v = UInt32(clamping: Int64(doubleValue))
                 let a = CGFloat((v >> 24) & 0xFF) / 255.0
                 let r = CGFloat((v >> 16) & 0xFF) / 255.0
@@ -792,7 +799,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 return UIColor(red: r, green: g, blue: b, alpha: a)
             }
             var parsedDict: [String: Any]? = nil
-            if case let .first(json) = value,
+            if case .first(let json) = value,
                 let data = json.data(using: .utf8),
                 let dict = try? JSONSerialization.jsonObject(with: data)
                     as? [String: Any]
@@ -945,16 +952,23 @@ extension HybridTextInputView {
         if let dict = value as? [String: Any] {
             parsedDict = dict
         } else if let json = value as? String,
-                  let data = json.data(using: .utf8),
-                  let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            let data = json.data(using: .utf8),
+            let dict = try? JSONSerialization.jsonObject(with: data)
+                as? [String: Any]
+        {
             parsedDict = dict
         }
         if let dict = parsedDict {
-            if let semantic = dict["semantic"] as? [String], let name = semantic.first {
-                return UIColor(named: name) ?? UIColor.value(forKey: name) as? UIColor
+            if let semantic = dict["semantic"] as? [String],
+                let name = semantic.first
+            {
+                return UIColor(named: name) ?? UIColor.value(forKey: name)
+                    as? UIColor
             }
             if let dynamic = dict["dynamic"] as? [String: Any] {
-                let light = resolveColor(any: dynamic["light"]) ?? UIColor.placeholderText
+                let light =
+                    resolveColor(any: dynamic["light"])
+                    ?? UIColor.placeholderText
                 let dark = resolveColor(any: dynamic["dark"]) ?? light
                 if #available(iOS 13.0, *) {
                     return UIColor { traits in
@@ -968,4 +982,3 @@ extension HybridTextInputView {
         return nil
     }
 }
-

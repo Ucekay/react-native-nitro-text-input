@@ -112,6 +112,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setPlaceholderTextColor(props.placeholderTextColor.value);
     // TODO: Set isDirty = false
   }
+  if (props.secureTextEntry.isDirty) {
+    view->setSecureTextEntry(props.secureTextEntry.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onFocused.isDirty) {
     view->setOnFocused(props.onFocused.value);
     // TODO: Set isDirty = false

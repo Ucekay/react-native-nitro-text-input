@@ -30,6 +30,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var multiline: Bool? { get set }
   var placeholder: String? { get set }
   var placeholderTextColor: PlaceholderTextColor? { get set }
+  var secureTextEntry: Bool? { get set }
   var onFocused: (() -> Void)? { get set }
   var onBlurred: (() -> Void)? { get set }
   var onTextChanged: ((_ text: String) -> Void)? { get set }

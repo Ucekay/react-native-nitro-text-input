@@ -466,6 +466,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var secureTextEntry: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.secureTextEntry {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.secureTextEntry = newValue.value
+    }
+  }
+  
   public final var onFocused: bridge.std__optional_std__function_void____ {
     @inline(__always)
     get {

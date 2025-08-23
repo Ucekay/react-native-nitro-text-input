@@ -1,8 +1,12 @@
 import { StatusBar } from 'expo-status-bar'
-import { Platform } from 'react-native'
-import { DynamicColorIOS, PlatformColor } from 'react-native'
-
-import { StyleSheet, TextInput, View } from 'react-native'
+import {
+  DynamicColorIOS,
+  Platform,
+  PlatformColor,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native'
 import { NitroTextInput } from 'react-native-nitro-text-input'
 
 export default function App() {
@@ -38,6 +42,7 @@ export default function App() {
               })
             : '#00f'
         }
+        secureTextEntry={false}
         style={{ width: '100%' }}
       />
       <TextInput
