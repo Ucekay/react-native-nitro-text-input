@@ -38,8 +38,6 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("editable", &HybridNitroTextInputViewSpec::setEditable);
       prototype.registerHybridGetter("enablesReturnKeyAutomatically", &HybridNitroTextInputViewSpec::getEnablesReturnKeyAutomatically);
       prototype.registerHybridSetter("enablesReturnKeyAutomatically", &HybridNitroTextInputViewSpec::setEnablesReturnKeyAutomatically);
-      prototype.registerHybridGetter("enterKeyHint", &HybridNitroTextInputViewSpec::getEnterKeyHint);
-      prototype.registerHybridSetter("enterKeyHint", &HybridNitroTextInputViewSpec::setEnterKeyHint);
       prototype.registerHybridGetter("keyboardType", &HybridNitroTextInputViewSpec::getKeyboardType);
       prototype.registerHybridSetter("keyboardType", &HybridNitroTextInputViewSpec::setKeyboardType);
       prototype.registerHybridGetter("keyboardAppearance", &HybridNitroTextInputViewSpec::getKeyboardAppearance);
@@ -72,6 +70,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("onTouchBegan", &HybridNitroTextInputViewSpec::setOnTouchBegan);
       prototype.registerHybridGetter("onTouchEnded", &HybridNitroTextInputViewSpec::getOnTouchEnded);
       prototype.registerHybridSetter("onTouchEnded", &HybridNitroTextInputViewSpec::setOnTouchEnded);
+      prototype.registerHybridGetter("returnKeyType", &HybridNitroTextInputViewSpec::getReturnKeyType);
+      prototype.registerHybridSetter("returnKeyType", &HybridNitroTextInputViewSpec::setReturnKeyType);
       prototype.registerHybridGetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::getOnInitialHeightMeasured);
       prototype.registerHybridSetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::setOnInitialHeightMeasured);
     });

@@ -19,23 +19,23 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
-// Forward declaration of `EnterKeyHint` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
 #include <string>
-#include "EnterKeyHint.hpp"
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include <variant>
 #include <functional>
+#include "ReturnKeyType.hpp"
 
 namespace margelo::nitro::nitrotextinput {
 
@@ -88,8 +88,6 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setEditable(std::optional<bool> editable) = 0;
       virtual std::optional<bool> getEnablesReturnKeyAutomatically() = 0;
       virtual void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) = 0;
-      virtual std::optional<EnterKeyHint> getEnterKeyHint() = 0;
-      virtual void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) = 0;
       virtual std::optional<KeyboardType> getKeyboardType() = 0;
       virtual void setKeyboardType(std::optional<KeyboardType> keyboardType) = 0;
       virtual std::optional<KeyboardAppearance> getKeyboardAppearance() = 0;
@@ -122,6 +120,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) = 0;
       virtual std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() = 0;
       virtual void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) = 0;
+      virtual std::optional<ReturnKeyType> getReturnKeyType() = 0;
+      virtual void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;
       virtual void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) = 0;
 

@@ -316,23 +316,6 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
-  public final var enterKeyHint: bridge.std__optional_EnterKeyHint_ {
-    @inline(__always)
-    get {
-      return { () -> bridge.std__optional_EnterKeyHint_ in
-        if let __unwrappedValue = self.__implementation.enterKeyHint {
-          return bridge.create_std__optional_EnterKeyHint_(__unwrappedValue)
-        } else {
-          return .init()
-        }
-      }()
-    }
-    @inline(__always)
-    set {
-      self.__implementation.enterKeyHint = newValue.value
-    }
-  }
-  
   public final var keyboardType: bridge.std__optional_KeyboardType_ {
     @inline(__always)
     get {
@@ -759,6 +742,23 @@ open class HybridNitroTextInputViewSpec_cxx {
           return nil
         }
       }()
+    }
+  }
+  
+  public final var returnKeyType: bridge.std__optional_ReturnKeyType_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_ReturnKeyType_ in
+        if let __unwrappedValue = self.__implementation.returnKeyType {
+          return bridge.create_std__optional_ReturnKeyType_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.returnKeyType = newValue.value
     }
   }
   

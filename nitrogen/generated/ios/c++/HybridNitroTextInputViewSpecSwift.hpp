@@ -18,23 +18,23 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
-// Forward declaration of `EnterKeyHint` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
 #include <string>
-#include "EnterKeyHint.hpp"
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include <variant>
 #include <functional>
+#include "ReturnKeyType.hpp"
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
 
@@ -157,13 +157,6 @@ namespace margelo::nitro::nitrotextinput {
     inline void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) noexcept override {
       _swiftPart.setEnablesReturnKeyAutomatically(enablesReturnKeyAutomatically);
     }
-    inline std::optional<EnterKeyHint> getEnterKeyHint() noexcept override {
-      auto __result = _swiftPart.getEnterKeyHint();
-      return __result;
-    }
-    inline void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) noexcept override {
-      _swiftPart.setEnterKeyHint(enterKeyHint);
-    }
     inline std::optional<KeyboardType> getKeyboardType() noexcept override {
       auto __result = _swiftPart.getKeyboardType();
       return __result;
@@ -275,6 +268,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) noexcept override {
       _swiftPart.setOnTouchEnded(onTouchEnded);
+    }
+    inline std::optional<ReturnKeyType> getReturnKeyType() noexcept override {
+      auto __result = _swiftPart.getReturnKeyType();
+      return __result;
+    }
+    inline void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) noexcept override {
+      _swiftPart.setReturnKeyType(returnKeyType);
     }
     inline std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() noexcept override {
       auto __result = _swiftPart.getOnInitialHeightMeasured();

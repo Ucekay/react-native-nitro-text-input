@@ -114,12 +114,6 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var enterKeyHint: EnterKeyHint?
-  
-  @get:DoNotStrip
-  @get:Keep
-  @set:DoNotStrip
-  @set:Keep
   abstract var keyboardType: KeyboardType?
   
   @get:DoNotStrip
@@ -283,6 +277,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
     set(value) {
       onTouchEnded = value?.let { it }
     }
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var returnKeyType: ReturnKeyType?
   
   abstract var onInitialHeightMeasured: ((height: Double) -> Unit)?
   

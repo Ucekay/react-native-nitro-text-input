@@ -23,7 +23,6 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var defaultValue: String? { get set }
   var editable: Bool? { get set }
   var enablesReturnKeyAutomatically: Bool? { get set }
-  var enterKeyHint: EnterKeyHint? { get set }
   var keyboardType: KeyboardType? { get set }
   var keyboardAppearance: KeyboardAppearance? { get set }
   var maxFontSizeMultiplier: Double? { get set }
@@ -40,6 +39,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var onKeyPressed: ((_ key: String) -> Void)? { get set }
   var onTouchBegan: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onTouchEnded: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
+  var returnKeyType: ReturnKeyType? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
 
   // Methods

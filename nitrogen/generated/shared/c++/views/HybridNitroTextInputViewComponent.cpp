@@ -145,16 +145,6 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.enablesReturnKeyAutomatically: ") + exc.what());
       }
     }()),
-    enterKeyHint([&]() -> CachedProp<std::optional<EnterKeyHint>> {
-      try {
-        const react::RawValue* rawValue = rawProps.at("enterKeyHint", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.enterKeyHint;
-        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<EnterKeyHint>>::fromRawValue(*runtime, value, sourceProps.enterKeyHint);
-      } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.enterKeyHint: ") + exc.what());
-      }
-    }()),
     keyboardType([&]() -> CachedProp<std::optional<KeyboardType>> {
       try {
         const react::RawValue* rawValue = rawProps.at("keyboardType", nullptr, nullptr);
@@ -315,6 +305,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onTouchEnded: ") + exc.what());
       }
     }()),
+    returnKeyType([&]() -> CachedProp<std::optional<ReturnKeyType>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("returnKeyType", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.returnKeyType;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<ReturnKeyType>>::fromRawValue(*runtime, value, sourceProps.returnKeyType);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.returnKeyType: ") + exc.what());
+      }
+    }()),
     onInitialHeightMeasured([&]() -> CachedProp<std::optional<std::function<void(double /* height */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onInitialHeightMeasured", nullptr, nullptr);
@@ -350,7 +350,6 @@ namespace margelo::nitro::nitrotextinput::views {
     defaultValue(other.defaultValue),
     editable(other.editable),
     enablesReturnKeyAutomatically(other.enablesReturnKeyAutomatically),
-    enterKeyHint(other.enterKeyHint),
     keyboardType(other.keyboardType),
     keyboardAppearance(other.keyboardAppearance),
     maxFontSizeMultiplier(other.maxFontSizeMultiplier),
@@ -367,6 +366,7 @@ namespace margelo::nitro::nitrotextinput::views {
     onKeyPressed(other.onKeyPressed),
     onTouchBegan(other.onTouchBegan),
     onTouchEnded(other.onTouchEnded),
+    returnKeyType(other.returnKeyType),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
@@ -384,7 +384,6 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("defaultValue"): return true;
       case hashString("editable"): return true;
       case hashString("enablesReturnKeyAutomatically"): return true;
-      case hashString("enterKeyHint"): return true;
       case hashString("keyboardType"): return true;
       case hashString("keyboardAppearance"): return true;
       case hashString("maxFontSizeMultiplier"): return true;
@@ -401,6 +400,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("onKeyPressed"): return true;
       case hashString("onTouchBegan"): return true;
       case hashString("onTouchEnded"): return true;
+      case hashString("returnKeyType"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;
       default: return false;

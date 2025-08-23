@@ -73,8 +73,6 @@ namespace margelo::nitro::nitrotextinput {
     void setEditable(std::optional<bool> editable) override;
     std::optional<bool> getEnablesReturnKeyAutomatically() override;
     void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) override;
-    std::optional<EnterKeyHint> getEnterKeyHint() override;
-    void setEnterKeyHint(std::optional<EnterKeyHint> enterKeyHint) override;
     std::optional<KeyboardType> getKeyboardType() override;
     void setKeyboardType(std::optional<KeyboardType> keyboardType) override;
     std::optional<KeyboardAppearance> getKeyboardAppearance() override;
@@ -107,6 +105,8 @@ namespace margelo::nitro::nitrotextinput {
     void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) override;
     std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() override;
     void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) override;
+    std::optional<ReturnKeyType> getReturnKeyType() override;
+    void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) override;
     std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() override;
     void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) override;
 

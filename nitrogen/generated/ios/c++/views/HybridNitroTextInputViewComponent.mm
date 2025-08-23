@@ -131,11 +131,6 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setEnablesReturnKeyAutomatically(newViewProps.enablesReturnKeyAutomatically.value);
     newViewProps.enablesReturnKeyAutomatically.isDirty = false;
   }
-  // enterKeyHint: optional
-  if (newViewProps.enterKeyHint.isDirty) {
-    swiftPart.setEnterKeyHint(newViewProps.enterKeyHint.value);
-    newViewProps.enterKeyHint.isDirty = false;
-  }
   // keyboardType: optional
   if (newViewProps.keyboardType.isDirty) {
     swiftPart.setKeyboardType(newViewProps.keyboardType.value);
@@ -215,6 +210,11 @@ using namespace margelo::nitro::nitrotextinput::views;
   if (newViewProps.onTouchEnded.isDirty) {
     swiftPart.setOnTouchEnded(newViewProps.onTouchEnded.value);
     newViewProps.onTouchEnded.isDirty = false;
+  }
+  // returnKeyType: optional
+  if (newViewProps.returnKeyType.isDirty) {
+    swiftPart.setReturnKeyType(newViewProps.returnKeyType.value);
+    newViewProps.returnKeyType.isDirty = false;
   }
   // onInitialHeightMeasured: optional
   if (newViewProps.onInitialHeightMeasured.isDirty) {
