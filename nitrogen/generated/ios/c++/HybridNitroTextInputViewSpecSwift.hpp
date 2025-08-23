@@ -26,6 +26,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -37,6 +39,7 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include <variant>
 #include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
+#include "SubmitBehavior.hpp"
 #include <functional>
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
@@ -264,6 +267,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setSmartInsertDelete(std::optional<bool> smartInsertDelete) noexcept override {
       _swiftPart.setSmartInsertDelete(smartInsertDelete);
+    }
+    inline std::optional<SubmitBehavior> getSubmitBehavior() noexcept override {
+      auto __result = _swiftPart.getSubmitBehavior();
+      return __result;
+    }
+    inline void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) noexcept override {
+      _swiftPart.setSubmitBehavior(submitBehavior);
     }
     inline std::optional<std::function<void()>> getOnFocused() noexcept override {
       auto __result = _swiftPart.getOnFocused();

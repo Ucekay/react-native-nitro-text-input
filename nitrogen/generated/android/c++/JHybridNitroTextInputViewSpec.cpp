@@ -21,6 +21,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -40,6 +42,8 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include "JReturnKeyType.hpp"
 #include "TextSelection.hpp"
 #include "JTextSelection.hpp"
+#include "SubmitBehavior.hpp"
+#include "JSubmitBehavior.hpp"
 #include <functional>
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
@@ -312,6 +316,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setSmartInsertDelete(std::optional<bool> smartInsertDelete) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* smartInsertDelete */)>("setSmartInsertDelete");
     method(_javaPart, smartInsertDelete.has_value() ? jni::JBoolean::valueOf(smartInsertDelete.value()) : nullptr);
+  }
+  std::optional<SubmitBehavior> JHybridNitroTextInputViewSpec::getSubmitBehavior() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JSubmitBehavior>()>("getSubmitBehavior");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JSubmitBehavior> /* submitBehavior */)>("setSubmitBehavior");
+    method(_javaPart, submitBehavior.has_value() ? JSubmitBehavior::fromCpp(submitBehavior.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");

@@ -14,6 +14,7 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     var onKeyPressed: ((_ key: String) -> Void)?
     var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)?
     var onEditingSubmitted: ((_ text: String) -> Void)?
+    var submitBehavior: String? // 'submit' | 'blurAndSubmit' | 'newline'
     private var textWasPasted: Bool = false
     var onTouchBegan:
         (
@@ -155,8 +156,13 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        onEditingSubmitted?(self.text ?? "")
-        return true
+        let behavior = submitBehavior
+        let shouldSubmit = behavior == "submit" || behavior == "blurAndSubmit"
+        if shouldSubmit {
+            onEditingSubmitted?(self.text ?? "")
+        }
+        // Returning true triggers default handling (resign) so only resign when blurAndSubmit
+        return behavior == "blurAndSubmit"
     }
 
     override func deleteBackward() {
@@ -399,6 +405,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             Task { @MainActor in
                 self.setDefaultValue()
             }
+        }
+    }
+    var submitBehavior: String? {
+        didSet {
+            self.textField.submitBehavior = self.submitBehavior
         }
     }
     var editable: Bool? {

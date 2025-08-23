@@ -56,6 +56,8 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include "SubmitBehavior.hpp"
+#include <optional>
 #include <functional>
 #include <optional>
 #include <functional>
@@ -133,6 +135,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> selectTextOnFocus;
     CachedProp<std::optional<bool>> showSoftInputOnFocus;
     CachedProp<std::optional<bool>> smartInsertDelete;
+    CachedProp<std::optional<SubmitBehavior>> submitBehavior;
     CachedProp<std::optional<std::function<void()>>> onFocused;
     CachedProp<std::optional<std::function<void()>>> onBlurred;
     CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> onTextChanged;

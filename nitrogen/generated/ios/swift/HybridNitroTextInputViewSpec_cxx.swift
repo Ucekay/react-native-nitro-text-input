@@ -633,6 +633,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var submitBehavior: bridge.std__optional_SubmitBehavior_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_SubmitBehavior_ in
+        if let __unwrappedValue = self.__implementation.submitBehavior {
+          return bridge.create_std__optional_SubmitBehavior_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.submitBehavior = newValue.value
+    }
+  }
+  
   public final var onFocused: bridge.std__optional_std__function_void____ {
     @inline(__always)
     get {

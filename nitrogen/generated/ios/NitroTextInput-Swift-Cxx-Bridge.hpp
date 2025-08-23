@@ -22,6 +22,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
@@ -37,6 +39,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
 #include "ReturnKeyType.hpp"
+#include "SubmitBehavior.hpp"
 #include "TextSelection.hpp"
 #include <functional>
 #include <memory>
@@ -176,6 +179,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_TextSelection_ = std::optional<TextSelection>;
   inline std::optional<TextSelection> create_std__optional_TextSelection_(const TextSelection& value) {
     return std::optional<TextSelection>(value);
+  }
+  
+  // pragma MARK: std::optional<SubmitBehavior>
+  /**
+   * Specialized version of `std::optional<SubmitBehavior>`.
+   */
+  using std__optional_SubmitBehavior_ = std::optional<SubmitBehavior>;
+  inline std::optional<SubmitBehavior> create_std__optional_SubmitBehavior_(const SubmitBehavior& value) {
+    return std::optional<SubmitBehavior>(value);
   }
   
   // pragma MARK: std::function<void()>

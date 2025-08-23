@@ -144,6 +144,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setSmartInsertDelete(props.smartInsertDelete.value);
     // TODO: Set isDirty = false
   }
+  if (props.submitBehavior.isDirty) {
+    view->setSubmitBehavior(props.submitBehavior.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onFocused.isDirty) {
     view->setOnFocused(props.onFocused.value);
     // TODO: Set isDirty = false
