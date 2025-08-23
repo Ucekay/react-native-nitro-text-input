@@ -84,10 +84,6 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setEnablesReturnKeyAutomatically(props.enablesReturnKeyAutomatically.value);
     // TODO: Set isDirty = false
   }
-  if (props.enterKeyHint.isDirty) {
-    view->setEnterKeyHint(props.enterKeyHint.value);
-    // TODO: Set isDirty = false
-  }
   if (props.keyboardType.isDirty) {
     view->setKeyboardType(props.keyboardType.value);
     // TODO: Set isDirty = false
@@ -150,6 +146,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
   }
   if (props.onTouchEnded.isDirty) {
     view->setOnTouchEnded(props.onTouchEnded.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.returnKeyType.isDirty) {
+    view->setReturnKeyType(props.returnKeyType.value);
     // TODO: Set isDirty = false
   }
   if (props.onInitialHeightMeasured.isDirty) {

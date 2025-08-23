@@ -409,11 +409,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var enterKeyHint: EnterKeyHint? {
+    var returnKeyType: ReturnKeyType? {
         didSet {
             Task {
                 @MainActor in
-                self.updateEnterKeyHint()
+                self.updateReturnKeyType()
             }
         }
     }
@@ -691,8 +691,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         self.hasAppliedDefaultValue = true
     }
 
-    private func updateEnterKeyHint() {
-        guard let hint = self.enterKeyHint else {
+    private func updateReturnKeyType() {
+        guard let hint = self.returnKeyType else {
             self.textField.returnKeyType = .default
             return
         }

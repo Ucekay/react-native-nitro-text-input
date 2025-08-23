@@ -14,23 +14,23 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
-// Forward declaration of `EnterKeyHint` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class EnterKeyHint; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
-#include "EnterKeyHint.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
+#include "ReturnKeyType.hpp"
 #include <functional>
 #include <memory>
 #include <optional>

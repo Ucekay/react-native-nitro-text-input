@@ -16,7 +16,6 @@
     "defaultValue": true,
     "editable": true,
     "enablesReturnKeyAutomatically": true,
-    "enterKeyHint": true,
     "keyboardType": true,
     "keyboardAppearance": true,
     "maxFontSizeMultiplier": true,
@@ -33,6 +32,7 @@
     "onKeyPressed": true,
     "onTouchBegan": true,
     "onTouchEnded": true,
+    "returnKeyType": true,
     "onInitialHeightMeasured": true,
     "hybridRef": true
   }

@@ -59,7 +59,7 @@ export type ClearButtonMode =
   | 'unless-editing'
   | 'always'
 
-export type EnterKeyHint =
+export type ReturnKeyType =
   | 'go'
   | 'google'
   | 'join'
@@ -116,7 +116,6 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   defaultValue?: string
   editable?: boolean
   enablesReturnKeyAutomatically?: boolean
-  enterKeyHint?: EnterKeyHint
   keyboardType?: KeyboardType
   keyboardAppearance?: KeyboardAppearance
   maxFontSizeMultiplier?: MaxFontMultiplier
@@ -128,11 +127,8 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
   onEditingEnded?: (text: string) => void
-  // Called when user submits via Return key
   onEditingSubmitted?: (text: string) => void
-  // Called when selection/caret position changes
   onSelectionChanged?: (start: number, end: number) => void
-  // Called when a key is pressed (best-effort for UITextField)
   onKeyPressed?: (key: string) => void
   onTouchBegan?: (
     pageX: number,
@@ -141,7 +137,6 @@ export interface NitroTextInputViewProps extends HybridViewProps {
     locationY: number,
     timestamp: number
   ) => void
-  /** Called on touch-up or when the touch is canceled/terminated. */
   onTouchEnded?: (
     pageX: number,
     pageY: number,
@@ -149,6 +144,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
     locationY: number,
     timestamp: number
   ) => void
+  returnKeyType?: ReturnKeyType
   /**
    * Called once when the initial height has been measured (pt).
    */

@@ -24,6 +24,7 @@ export interface NitroTextInputProps
     | 'onFocused'
     | 'onKeyPressed'
     | 'placeholderTextColor'
+    | 'returnKeyType'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
@@ -48,6 +49,19 @@ export interface NitroTextInputProps
   onFocus?: () => void
   onKeyPress?: (key: string) => void
   placeholderTextColor?: TextInputProps['placeholderTextColor'] | undefined
+  enterKeyHint?: 'done' | 'next' | 'search' | 'send' | 'go' | 'enter'
+  returnKeyType?:
+    | 'go'
+    | 'google'
+    | 'join'
+    | 'next'
+    | 'route'
+    | 'search'
+    | 'send'
+    | 'yahoo'
+    | 'done'
+    | 'emergency-call'
+    | 'continue'
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -69,6 +83,8 @@ export function NitroTextInput(props: NitroTextInputProps) {
     onFocus,
     onKeyPress,
     placeholderTextColor,
+    enterKeyHint,
+    returnKeyType,
     ...others
   } = props
 
@@ -122,6 +138,32 @@ export function NitroTextInput(props: NitroTextInputProps) {
     setMeasuredInitialHeight(height)
   }
 
+  const mapEnterKeyHintToReturnKeyType = (
+    hint: NitroTextInputProps['enterKeyHint']
+  ): NitroTextInputProps['returnKeyType'] | undefined => {
+    switch (hint) {
+      case 'done':
+        return 'done'
+      case 'next':
+        return 'next'
+      case 'search':
+        return 'search'
+      case 'send':
+        return 'send'
+      case 'go':
+        return 'go'
+      case 'enter':
+        return 'done'
+      default:
+        return undefined
+    }
+  }
+
+  const resolvedReturnKeyType =
+    Platform.OS === 'ios' && enterKeyHint != null
+      ? mapEnterKeyHintToReturnKeyType(enterKeyHint)
+      : returnKeyType
+
   return (
     <NativeNitroTextInput
       {...others}
@@ -132,6 +174,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
           ? processed
           : JSON.stringify(processed)
       })()}
+      returnKeyType={resolvedReturnKeyType}
       keyboardType={getKeyboardTypeFromInputMode()}
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}

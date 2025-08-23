@@ -32,8 +32,6 @@
 #include <optional>
 #include <optional>
 #include <optional>
-#include "EnterKeyHint.hpp"
-#include <optional>
 #include "KeyboardType.hpp"
 #include <optional>
 #include "KeyboardAppearance.hpp"
@@ -67,6 +65,8 @@
 #include <functional>
 #include <optional>
 #include <functional>
+#include <optional>
+#include "ReturnKeyType.hpp"
 #include <optional>
 #include <functional>
 #include <optional>
@@ -108,7 +108,6 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<std::string>> defaultValue;
     CachedProp<std::optional<bool>> editable;
     CachedProp<std::optional<bool>> enablesReturnKeyAutomatically;
-    CachedProp<std::optional<EnterKeyHint>> enterKeyHint;
     CachedProp<std::optional<KeyboardType>> keyboardType;
     CachedProp<std::optional<KeyboardAppearance>> keyboardAppearance;
     CachedProp<std::optional<double>> maxFontSizeMultiplier;
@@ -125,6 +124,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<std::function<void(const std::string& /* key */)>>> onKeyPressed;
     CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchBegan;
     CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchEnded;
+    CachedProp<std::optional<ReturnKeyType>> returnKeyType;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> hybridRef;
 
