@@ -119,7 +119,13 @@ export function NitroTextInput(props: NitroTextInputProps) {
   return (
     <NativeNitroTextInput
       {...others}
-      placeholderTextColor={processColor(placeholderTextColor ?? undefined) as any}
+      placeholderTextColor={(() => {
+        const processed = processColor(placeholderTextColor ?? undefined) as any
+        if (processed == null) return undefined
+        return typeof processed === 'number'
+          ? (processed as number)
+          : JSON.stringify(processed)
+      })()}
       keyboardType={getKeyboardTypeFromInputMode()}
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}
