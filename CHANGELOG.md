@@ -1,3 +1,9 @@
+## [1.0.0-next.22](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.21...v1.0.0-next.22) (2025-08-23)
+
+### Features
+
+* add keyboardAppearance prop to TextInput ([#31](https://github.com/Ucekay/react-native-nitro-text-input/issues/31)) ([d1ace7b](https://github.com/Ucekay/react-native-nitro-text-input/commit/d1ace7b98a171f29737ac7fabd89eb80f814dc03))
+
 ## [1.0.0-next.21](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.20...v1.0.0-next.21) (2025-08-23)
 
 ### Features
