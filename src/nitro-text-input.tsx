@@ -2,16 +2,16 @@
 import React from 'react'
 import type { InputModeOptions, TextInputProps, ViewProps } from 'react-native'
 import { Platform, processColor, StyleSheet } from 'react-native'
-import { NativeNitroTextInput } from './native-nitro-text-input'
 import type { HybridView } from 'react-native-nitro-modules'
-import type {
-  NitroTextInputViewMethods,
-  NitroTextInputViewProps,
-} from './specs/text-input-view.nitro'
 import type {
   DefaultHybridViewProps,
   WrapFunctionsInObjects,
 } from 'react-native-nitro-modules/src'
+import { NativeNitroTextInput } from './native-nitro-text-input'
+import type {
+  NitroTextInputViewMethods,
+  NitroTextInputViewProps,
+} from './specs/text-input-view.nitro'
 
 type NativeTextInputProps = WrapFunctionsInObjects<
   DefaultHybridViewProps<
@@ -34,7 +34,7 @@ export interface NitroTextInputProps
     | 'onFocused'
     | 'onKeyPressed'
     | 'placeholderTextColor'
-    | 'returnKeyType'
+    | 'selectionColor'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
@@ -60,18 +60,7 @@ export interface NitroTextInputProps
   onKeyPress?: (key: string) => void
   placeholderTextColor?: TextInputProps['placeholderTextColor'] | undefined
   enterKeyHint?: 'done' | 'next' | 'search' | 'send' | 'go' | 'enter'
-  returnKeyType?:
-    | 'go'
-    | 'google'
-    | 'join'
-    | 'next'
-    | 'route'
-    | 'search'
-    | 'send'
-    | 'yahoo'
-    | 'done'
-    | 'emergency-call'
-    | 'continue'
+  selectionColor?: TextInputProps['selectionColor'] | undefined
 }
 
 export function NitroTextInput(props: NitroTextInputProps) {
@@ -95,6 +84,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     placeholderTextColor,
     enterKeyHint,
     returnKeyType,
+    selectionColor,
     ...others
   } = props
 
@@ -174,18 +164,24 @@ export function NitroTextInput(props: NitroTextInputProps) {
       ? mapEnterKeyHintToReturnKeyType(enterKeyHint)
       : returnKeyType
 
+  const toProcessedColor = (
+    color:
+      | TextInputProps['placeholderTextColor']
+      | TextInputProps['selectionColor']
+      | undefined
+  ): number | string | undefined => {
+    const processed = processColor(color ?? undefined)
+    if (processed == null) return undefined
+    return typeof processed === 'number' ? processed : JSON.stringify(processed)
+  }
+
   return (
     <NativeNitroTextInput
       {...others}
-      placeholderTextColor={(() => {
-        const processed = processColor(placeholderTextColor ?? undefined)
-        if (processed == null) return undefined
-        return typeof processed === 'number'
-          ? processed
-          : JSON.stringify(processed)
-      })()}
-      returnKeyType={resolvedReturnKeyType}
       keyboardType={getKeyboardTypeFromInputMode()}
+      placeholderTextColor={toProcessedColor(placeholderTextColor)}
+      returnKeyType={resolvedReturnKeyType}
+      selectionColor={toProcessedColor(selectionColor)}
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}
       onEditingEnded={{ f: onEndEditing }}
