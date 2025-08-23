@@ -40,6 +40,7 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
 #include "TextSelection.hpp"
+#include <NitroModules/Promise.hpp>
 #include <functional>
 #include <memory>
 #include <optional>

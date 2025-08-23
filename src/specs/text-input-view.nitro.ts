@@ -162,7 +162,12 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   onInitialHeightMeasured?: (height: number) => void
 }
 
-export interface NitroTextInputViewMethods extends HybridViewMethods {}
+export interface NitroTextInputViewMethods extends HybridViewMethods {
+  focus: () => void
+  blur: () => void
+  clear: () => void
+  isFocused: () => boolean
+}
 
 export type NitroTextInputView = HybridView<
   NitroTextInputViewProps,
