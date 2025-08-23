@@ -34,6 +34,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("selectTextOnFocus", &HybridNitroTextInputViewSpec::setSelectTextOnFocus);
       prototype.registerHybridGetter("contextMenuHidden", &HybridNitroTextInputViewSpec::getContextMenuHidden);
       prototype.registerHybridSetter("contextMenuHidden", &HybridNitroTextInputViewSpec::setContextMenuHidden);
+      prototype.registerHybridGetter("showSoftInputOnFocus", &HybridNitroTextInputViewSpec::getShowSoftInputOnFocus);
+      prototype.registerHybridSetter("showSoftInputOnFocus", &HybridNitroTextInputViewSpec::setShowSoftInputOnFocus);
       prototype.registerHybridGetter("defaultValue", &HybridNitroTextInputViewSpec::getDefaultValue);
       prototype.registerHybridSetter("defaultValue", &HybridNitroTextInputViewSpec::setDefaultValue);
       prototype.registerHybridGetter("editable", &HybridNitroTextInputViewSpec::getEditable);

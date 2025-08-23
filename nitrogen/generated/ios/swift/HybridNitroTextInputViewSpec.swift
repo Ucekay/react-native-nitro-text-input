@@ -21,6 +21,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var clearTextOnFocus: Bool? { get set }
   var selectTextOnFocus: Bool? { get set }
   var contextMenuHidden: Bool? { get set }
+  var showSoftInputOnFocus: Bool? { get set }
   var defaultValue: String? { get set }
   var editable: Bool? { get set }
   var enablesReturnKeyAutomatically: Bool? { get set }

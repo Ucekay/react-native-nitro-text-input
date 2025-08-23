@@ -146,6 +146,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setContextMenuHidden(std::optional<bool> contextMenuHidden) noexcept override {
       _swiftPart.setContextMenuHidden(contextMenuHidden);
     }
+    inline std::optional<bool> getShowSoftInputOnFocus() noexcept override {
+      auto __result = _swiftPart.getShowSoftInputOnFocus();
+      return __result;
+    }
+    inline void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) noexcept override {
+      _swiftPart.setShowSoftInputOnFocus(showSoftInputOnFocus);
+    }
     inline std::optional<std::string> getDefaultValue() noexcept override {
       auto __result = _swiftPart.getDefaultValue();
       return __result;

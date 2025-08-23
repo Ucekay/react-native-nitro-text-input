@@ -121,6 +121,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setContextMenuHidden(newViewProps.contextMenuHidden.value);
     newViewProps.contextMenuHidden.isDirty = false;
   }
+  // showSoftInputOnFocus: optional
+  if (newViewProps.showSoftInputOnFocus.isDirty) {
+    swiftPart.setShowSoftInputOnFocus(newViewProps.showSoftInputOnFocus.value);
+    newViewProps.showSoftInputOnFocus.isDirty = false;
+  }
   // defaultValue: optional
   if (newViewProps.defaultValue.isDirty) {
     swiftPart.setDefaultValue(newViewProps.defaultValue.value);

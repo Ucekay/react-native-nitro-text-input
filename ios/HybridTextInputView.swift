@@ -387,6 +387,21 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var showSoftInputOnFocus: Bool? = true {
+        didSet {
+            Task { @MainActor in
+                let show = self.showSoftInputOnFocus ?? true
+                if show {
+                    self.textField.inputView = nil
+                    if self.textField.isFirstResponder {
+                        self.textField.reloadInputViews()
+                    }
+                } else {
+                    self.textField.inputView = UIView()
+                }
+            }
+        }
+    }
     var defaultValue: String? {
         didSet {
             Task { @MainActor in

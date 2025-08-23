@@ -87,6 +87,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) = 0;
       virtual std::optional<bool> getContextMenuHidden() = 0;
       virtual void setContextMenuHidden(std::optional<bool> contextMenuHidden) = 0;
+      virtual std::optional<bool> getShowSoftInputOnFocus() = 0;
+      virtual void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) = 0;
       virtual std::optional<std::string> getDefaultValue() = 0;
       virtual void setDefaultValue(const std::optional<std::string>& defaultValue) = 0;
       virtual std::optional<bool> getEditable() = 0;
