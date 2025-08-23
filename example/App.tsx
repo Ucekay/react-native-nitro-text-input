@@ -42,7 +42,6 @@ export default function App() {
               })
             : '#00f'
         }
-        secureTextEntry={false}
         selectionColor={
           Platform.OS === 'ios'
             ? DynamicColorIOS({
@@ -51,6 +50,7 @@ export default function App() {
               })
             : '#0f0'
         }
+        secureTextEntry={false}
         selectTextOnFocus={false}
         showSoftInputOnFocus={true}
         spellCheck={true}
