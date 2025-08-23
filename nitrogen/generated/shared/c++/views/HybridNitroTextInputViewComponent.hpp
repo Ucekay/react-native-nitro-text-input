@@ -41,6 +41,8 @@
 #include <optional>
 #include <string>
 #include <optional>
+#include <string>
+#include <optional>
 #include "TextAlign.hpp"
 #include <optional>
 #include <string>
@@ -127,6 +129,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<double>> maxFontSizeMultiplier;
     CachedProp<std::optional<double>> maxLength;
     CachedProp<std::optional<bool>> multiline;
+    CachedProp<std::optional<std::string>> passwordRules;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<TextAlign>> textAlign;
     CachedProp<std::optional<std::variant<std::string, double>>> placeholderTextColor;

@@ -447,6 +447,21 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var passwordRules: String? {
+        didSet {
+            Task { @MainActor in
+                if #available(iOS 12.0, *) {
+                    if let rules = self.passwordRules, rules.isEmpty == false {
+                        self.textField.passwordRules = UITextInputPasswordRules(
+                            descriptor: rules
+                        )
+                    } else {
+                        self.textField.passwordRules = nil
+                    }
+                }
+            }
+        }
+    }
     var keyboardAppearance: KeyboardAppearance? {
         didSet {
             Task { @MainActor in

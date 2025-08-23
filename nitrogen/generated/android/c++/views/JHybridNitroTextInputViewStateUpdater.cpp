@@ -104,6 +104,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
   }
+  if (props.passwordRules.isDirty) {
+    view->setPasswordRules(props.passwordRules.value);
+    // TODO: Set isDirty = false
+  }
   if (props.placeholder.isDirty) {
     view->setPlaceholder(props.placeholder.value);
     // TODO: Set isDirty = false
