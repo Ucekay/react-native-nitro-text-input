@@ -1,3 +1,9 @@
+## [1.0.0-next.27](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.26...v1.0.0-next.27) (2025-08-23)
+
+### Features
+
+* add selectionColor property ([#37](https://github.com/Ucekay/react-native-nitro-text-input/issues/37)) ([ec79469](https://github.com/Ucekay/react-native-nitro-text-input/commit/ec79469f92dcfa8caca8413e7fb0aa44a304a61f))
+
 ## [1.0.0-next.26](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.25...v1.0.0-next.26) (2025-08-23)
 
 ### Features
