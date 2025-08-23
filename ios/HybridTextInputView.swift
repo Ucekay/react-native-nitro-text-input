@@ -308,23 +308,21 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             object: nil
         )
     }
-    override func focus() {
-        Task { @MainActor in
-            // Apply showSoftInputOnFocus before focusing
-            let show = self.showSoftInputOnFocus ?? true
-            if show {
-                self.textField.inputView = nil
-            } else {
-                self.textField.inputView = UIView()
-            }
-            _ = self.textField.becomeFirstResponder()
-            if self.clearTextOnFocus == true {
-                self.textField.attributedText = NSAttributedString()
-            }
-            if self.selectTextOnFocus == true {
-                DispatchQueue.main.async { [weak self] in
-                    self?.textField.selectAll(nil)
-                }
+    private func performFocus() {
+        // Apply showSoftInputOnFocus before focusing
+        let show = self.showSoftInputOnFocus ?? true
+        if show {
+            self.textField.inputView = nil
+        } else {
+            self.textField.inputView = UIView()
+        }
+        _ = self.textField.becomeFirstResponder()
+        if self.clearTextOnFocus == true {
+            self.textField.attributedText = NSAttributedString()
+        }
+        if self.selectTextOnFocus == true {
+            DispatchQueue.main.async { [weak self] in
+                self?.textField.selectAll(nil)
             }
         }
     }
@@ -639,7 +637,9 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         )?
 
     func focus() {
-
+        Task { @MainActor in
+            self.performFocus()
+        }
     }
     func blur() {}
     func clear() {}
