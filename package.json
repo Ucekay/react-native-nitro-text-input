@@ -121,6 +121,7 @@
 		"semi": false
 	},
 	"patchedDependencies": {
-		"react-native@0.81.0": "patches/react-native@0.81.0.patch"
+		"react-native@0.81.0": "patches/react-native@0.81.0.patch",
+		"react-native-nitro-modules@0.28.0": "patches/react-native-nitro-modules@0.28.0.patch"
 	}
 }

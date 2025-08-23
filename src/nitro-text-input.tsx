@@ -1,15 +1,25 @@
 // biome-ignore lint/correctness/noUnusedImports: Needed for JSX runtime
 import React from 'react'
-import type {
-  HostComponent,
-  InputModeOptions,
-  TextInputProps,
-} from 'react-native'
+import type { InputModeOptions, TextInputProps, ViewProps } from 'react-native'
 import { Platform, processColor, StyleSheet } from 'react-native'
 import { NativeNitroTextInput } from './native-nitro-text-input'
+import type { HybridView } from 'react-native-nitro-modules'
+import type {
+  NitroTextInputViewMethods,
+  NitroTextInputViewProps,
+} from './specs/text-input-view.nitro'
+import type {
+  DefaultHybridViewProps,
+  WrapFunctionsInObjects,
+} from 'react-native-nitro-modules/src'
 
-type ReactProps<T> = T extends HostComponent<infer P> ? P : never
-type NativeTextInputProps = ReactProps<typeof NativeNitroTextInput>
+type NativeTextInputProps = WrapFunctionsInObjects<
+  DefaultHybridViewProps<
+    HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
+  > &
+    NitroTextInputViewProps
+> &
+  ViewProps
 export interface NitroTextInputProps
   extends Omit<
     NativeTextInputProps,
