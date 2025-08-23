@@ -23,6 +23,7 @@
     "multiline": true,
     "placeholder": true,
     "placeholderTextColor": true,
+    "secureTextEntry": true,
     "onFocused": true,
     "onBlurred": true,
     "onTextChanged": true,

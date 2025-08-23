@@ -166,6 +166,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setPlaceholderTextColor(newViewProps.placeholderTextColor.value);
     newViewProps.placeholderTextColor.isDirty = false;
   }
+  // secureTextEntry: optional
+  if (newViewProps.secureTextEntry.isDirty) {
+    swiftPart.setSecureTextEntry(newViewProps.secureTextEntry.value);
+    newViewProps.secureTextEntry.isDirty = false;
+  }
   // onFocused: optional
   if (newViewProps.onFocused.isDirty) {
     swiftPart.setOnFocused(newViewProps.onFocused.value);

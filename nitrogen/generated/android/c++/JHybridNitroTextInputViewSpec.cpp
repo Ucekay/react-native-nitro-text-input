@@ -237,6 +237,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JPlaceholderTextColor> /* placeholderTextColor */)>("setPlaceholderTextColor");
     method(_javaPart, placeholderTextColor.has_value() ? JPlaceholderTextColor::fromCpp(placeholderTextColor.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getSecureTextEntry() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSecureTextEntry");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSecureTextEntry(std::optional<bool> secureTextEntry) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* secureTextEntry */)>("setSecureTextEntry");
+    method(_javaPart, secureTextEntry.has_value() ? jni::JBoolean::valueOf(secureTextEntry.value()) : nullptr);
+  }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");
     auto __result = method(_javaPart);

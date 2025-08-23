@@ -450,6 +450,25 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var secureTextEntry: Bool? {
+        didSet {
+            Task { @MainActor in
+                guard let secure = self.secureTextEntry else {
+                    self.textField.isSecureTextEntry = false
+                    return
+                }
+                if self.textField.isSecureTextEntry != secure {
+                    self.textField.isSecureTextEntry = secure
+                    // Work around UIKit artifact by resetting attributedText, like RN
+                    let original = self.textField.attributedText?.copy() as? NSAttributedString
+                    self.textField.attributedText = NSAttributedString()
+                    if let original = original {
+                        self.textField.attributedText = original
+                    }
+                }
+            }
+        }
+    }
     // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
     var placeholderTextColor: PlaceholderTextColor? {
         didSet {

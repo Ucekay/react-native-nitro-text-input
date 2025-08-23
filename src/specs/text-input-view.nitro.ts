@@ -123,6 +123,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   multiline?: boolean
   placeholder?: string
   placeholderTextColor?: PlaceholderTextColor
+  secureTextEntry?: boolean
   onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void
