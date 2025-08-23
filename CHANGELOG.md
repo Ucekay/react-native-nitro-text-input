@@ -1,3 +1,9 @@
+## [1.0.0-next.29](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.28...v1.0.0-next.29) (2025-08-23)
+
+### Features
+
+* add showSoftInputOnFocus property for iOS text input ([#39](https://github.com/Ucekay/react-native-nitro-text-input/issues/39)) ([7a1c6f3](https://github.com/Ucekay/react-native-nitro-text-input/commit/7a1c6f3610d865b750451142be0bca3fcf07df15))
+
 ## [1.0.0-next.28](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.27...v1.0.0-next.28) (2025-08-23)
 
 ### Features
