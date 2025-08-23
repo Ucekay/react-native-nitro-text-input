@@ -32,6 +32,8 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.clipsToBounds = false
+        self.layer.masksToBounds = false
         self.delegate = self
         NotificationCenter.default.addObserver(
             self,
@@ -44,6 +46,8 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        self.clipsToBounds = false
+        self.layer.masksToBounds = false
         self.delegate = self
         NotificationCenter.default.addObserver(
             self,
@@ -267,6 +271,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
     override init() {
         super.init()
+        self.textField.clipsToBounds = false
+        self.textField.layer.masksToBounds = false
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
