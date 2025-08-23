@@ -350,7 +350,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                     } else {
                         self.textField.inputView = UIView()
                     }
-                    self.textField.becomeFirstResponder()
+                    _ = self.textField.becomeFirstResponder()
                 } else {
                     self.textField.resignFirstResponder()
                 }
@@ -475,6 +475,21 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.textField.isSecureTextEntry = self.secureTextEntry ?? false
+            }
+        }
+    }
+    var smartInsertDelete: Bool? {
+        didSet {
+            Task { @MainActor in
+                if #available(iOS 13.0, *) {
+                    if let enabled = self.smartInsertDelete {
+                        self.textField.smartInsertDeleteType =
+                            enabled
+                            ? .yes : .no
+                    } else {
+                        self.textField.smartInsertDeleteType = .default
+                    }
+                }
             }
         }
     }

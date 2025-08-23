@@ -22,10 +22,10 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
-// Forward declaration of `TextSelection` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -35,9 +35,9 @@ namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include <variant>
+#include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
 #include <functional>
-#include "ReturnKeyType.hpp"
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
 
@@ -132,26 +132,12 @@ namespace margelo::nitro::nitrotextinput {
     inline void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) noexcept override {
       _swiftPart.setClearTextOnFocus(clearTextOnFocus);
     }
-    inline std::optional<bool> getSelectTextOnFocus() noexcept override {
-      auto __result = _swiftPart.getSelectTextOnFocus();
-      return __result;
-    }
-    inline void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) noexcept override {
-      _swiftPart.setSelectTextOnFocus(selectTextOnFocus);
-    }
     inline std::optional<bool> getContextMenuHidden() noexcept override {
       auto __result = _swiftPart.getContextMenuHidden();
       return __result;
     }
     inline void setContextMenuHidden(std::optional<bool> contextMenuHidden) noexcept override {
       _swiftPart.setContextMenuHidden(contextMenuHidden);
-    }
-    inline std::optional<bool> getShowSoftInputOnFocus() noexcept override {
-      auto __result = _swiftPart.getShowSoftInputOnFocus();
-      return __result;
-    }
-    inline void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) noexcept override {
-      _swiftPart.setShowSoftInputOnFocus(showSoftInputOnFocus);
     }
     inline std::optional<std::string> getDefaultValue() noexcept override {
       auto __result = _swiftPart.getDefaultValue();
@@ -223,6 +209,20 @@ namespace margelo::nitro::nitrotextinput {
     inline void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) noexcept override {
       _swiftPart.setPlaceholderTextColor(placeholderTextColor);
     }
+    inline std::optional<ReturnKeyType> getReturnKeyType() noexcept override {
+      auto __result = _swiftPart.getReturnKeyType();
+      return __result;
+    }
+    inline void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) noexcept override {
+      _swiftPart.setReturnKeyType(returnKeyType);
+    }
+    inline std::optional<TextSelection> getSelection() noexcept override {
+      auto __result = _swiftPart.getSelection();
+      return __result;
+    }
+    inline void setSelection(const std::optional<TextSelection>& selection) noexcept override {
+      _swiftPart.setSelection(selection);
+    }
     inline std::optional<std::variant<std::string, double>> getSelectionColor() noexcept override {
       auto __result = _swiftPart.getSelectionColor();
       return __result;
@@ -237,12 +237,26 @@ namespace margelo::nitro::nitrotextinput {
     inline void setSecureTextEntry(std::optional<bool> secureTextEntry) noexcept override {
       _swiftPart.setSecureTextEntry(secureTextEntry);
     }
-    inline std::optional<TextSelection> getSelection() noexcept override {
-      auto __result = _swiftPart.getSelection();
+    inline std::optional<bool> getSelectTextOnFocus() noexcept override {
+      auto __result = _swiftPart.getSelectTextOnFocus();
       return __result;
     }
-    inline void setSelection(const std::optional<TextSelection>& selection) noexcept override {
-      _swiftPart.setSelection(selection);
+    inline void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) noexcept override {
+      _swiftPart.setSelectTextOnFocus(selectTextOnFocus);
+    }
+    inline std::optional<bool> getShowSoftInputOnFocus() noexcept override {
+      auto __result = _swiftPart.getShowSoftInputOnFocus();
+      return __result;
+    }
+    inline void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) noexcept override {
+      _swiftPart.setShowSoftInputOnFocus(showSoftInputOnFocus);
+    }
+    inline std::optional<bool> getSmartInsertDelete() noexcept override {
+      auto __result = _swiftPart.getSmartInsertDelete();
+      return __result;
+    }
+    inline void setSmartInsertDelete(std::optional<bool> smartInsertDelete) noexcept override {
+      _swiftPart.setSmartInsertDelete(smartInsertDelete);
     }
     inline std::optional<std::function<void()>> getOnFocused() noexcept override {
       auto __result = _swiftPart.getOnFocused();
@@ -306,13 +320,6 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) noexcept override {
       _swiftPart.setOnTouchEnded(onTouchEnded);
-    }
-    inline std::optional<ReturnKeyType> getReturnKeyType() noexcept override {
-      auto __result = _swiftPart.getReturnKeyType();
-      return __result;
-    }
-    inline void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) noexcept override {
-      _swiftPart.setReturnKeyType(returnKeyType);
     }
     inline std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() noexcept override {
       auto __result = _swiftPart.getOnInitialHeightMeasured();

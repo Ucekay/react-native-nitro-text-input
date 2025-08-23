@@ -126,6 +126,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   secureTextEntry?: boolean
   selectTextOnFocus?: boolean
   showSoftInputOnFocus?: boolean
+  smartInsertDelete?: boolean
   onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void

@@ -19,9 +19,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var caretHidden: Bool? { get set }
   var clearButtonMode: ClearButtonMode? { get set }
   var clearTextOnFocus: Bool? { get set }
-  var selectTextOnFocus: Bool? { get set }
   var contextMenuHidden: Bool? { get set }
-  var showSoftInputOnFocus: Bool? { get set }
   var defaultValue: String? { get set }
   var editable: Bool? { get set }
   var enablesReturnKeyAutomatically: Bool? { get set }
@@ -32,9 +30,13 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var multiline: Bool? { get set }
   var placeholder: String? { get set }
   var placeholderTextColor: ProcessedColor? { get set }
+  var returnKeyType: ReturnKeyType? { get set }
+  var selection: TextSelection? { get set }
   var selectionColor: ProcessedColor? { get set }
   var secureTextEntry: Bool? { get set }
-  var selection: TextSelection? { get set }
+  var selectTextOnFocus: Bool? { get set }
+  var showSoftInputOnFocus: Bool? { get set }
+  var smartInsertDelete: Bool? { get set }
   var onFocused: (() -> Void)? { get set }
   var onBlurred: (() -> Void)? { get set }
   var onTextChanged: ((_ text: String) -> Void)? { get set }
@@ -44,7 +46,6 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var onKeyPressed: ((_ key: String) -> Void)? { get set }
   var onTouchBegan: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onTouchEnded: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
-  var returnKeyType: ReturnKeyType? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
 
   // Methods

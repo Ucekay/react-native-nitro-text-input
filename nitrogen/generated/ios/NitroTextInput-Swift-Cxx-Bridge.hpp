@@ -160,6 +160,15 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<std::variant<std::string, double>>(value);
   }
   
+  // pragma MARK: std::optional<ReturnKeyType>
+  /**
+   * Specialized version of `std::optional<ReturnKeyType>`.
+   */
+  using std__optional_ReturnKeyType_ = std::optional<ReturnKeyType>;
+  inline std::optional<ReturnKeyType> create_std__optional_ReturnKeyType_(const ReturnKeyType& value) {
+    return std::optional<ReturnKeyType>(value);
+  }
+  
   // pragma MARK: std::optional<TextSelection>
   /**
    * Specialized version of `std::optional<TextSelection>`.
@@ -300,15 +309,6 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   using std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______ = std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>;
   inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> create_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(const std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>& value) {
     return std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>(value);
-  }
-  
-  // pragma MARK: std::optional<ReturnKeyType>
-  /**
-   * Specialized version of `std::optional<ReturnKeyType>`.
-   */
-  using std__optional_ReturnKeyType_ = std::optional<ReturnKeyType>;
-  inline std::optional<ReturnKeyType> create_std__optional_ReturnKeyType_(const ReturnKeyType& value) {
-    return std::optional<ReturnKeyType>(value);
   }
   
   // pragma MARK: std::function<void(double /* height */)>

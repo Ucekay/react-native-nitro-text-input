@@ -65,12 +65,8 @@ namespace margelo::nitro::nitrotextinput {
     void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) override;
     std::optional<bool> getClearTextOnFocus() override;
     void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) override;
-    std::optional<bool> getSelectTextOnFocus() override;
-    void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) override;
     std::optional<bool> getContextMenuHidden() override;
     void setContextMenuHidden(std::optional<bool> contextMenuHidden) override;
-    std::optional<bool> getShowSoftInputOnFocus() override;
-    void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) override;
     std::optional<std::string> getDefaultValue() override;
     void setDefaultValue(const std::optional<std::string>& defaultValue) override;
     std::optional<bool> getEditable() override;
@@ -91,12 +87,20 @@ namespace margelo::nitro::nitrotextinput {
     void setPlaceholder(const std::optional<std::string>& placeholder) override;
     std::optional<std::variant<std::string, double>> getPlaceholderTextColor() override;
     void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) override;
+    std::optional<ReturnKeyType> getReturnKeyType() override;
+    void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) override;
+    std::optional<TextSelection> getSelection() override;
+    void setSelection(const std::optional<TextSelection>& selection) override;
     std::optional<std::variant<std::string, double>> getSelectionColor() override;
     void setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) override;
     std::optional<bool> getSecureTextEntry() override;
     void setSecureTextEntry(std::optional<bool> secureTextEntry) override;
-    std::optional<TextSelection> getSelection() override;
-    void setSelection(const std::optional<TextSelection>& selection) override;
+    std::optional<bool> getSelectTextOnFocus() override;
+    void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) override;
+    std::optional<bool> getShowSoftInputOnFocus() override;
+    void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) override;
+    std::optional<bool> getSmartInsertDelete() override;
+    void setSmartInsertDelete(std::optional<bool> smartInsertDelete) override;
     std::optional<std::function<void()>> getOnFocused() override;
     void setOnFocused(const std::optional<std::function<void()>>& onFocused) override;
     std::optional<std::function<void()>> getOnBlurred() override;
@@ -115,8 +119,6 @@ namespace margelo::nitro::nitrotextinput {
     void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) override;
     std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() override;
     void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) override;
-    std::optional<ReturnKeyType> getReturnKeyType() override;
-    void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) override;
     std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() override;
     void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) override;
 

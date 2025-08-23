@@ -17,10 +17,10 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
-// Forward declaration of `TextSelection` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -36,6 +36,8 @@ namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 #include "JKeyboardAppearance.hpp"
 #include <variant>
 #include "JProcessedColor.hpp"
+#include "ReturnKeyType.hpp"
+#include "JReturnKeyType.hpp"
 #include "TextSelection.hpp"
 #include "JTextSelection.hpp"
 #include <functional>
@@ -43,8 +45,6 @@ namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_double.hpp"
 #include "JFunc_void_double_double_double_double_double.hpp"
-#include "ReturnKeyType.hpp"
-#include "JReturnKeyType.hpp"
 #include "JFunc_void_double.hpp"
 
 namespace margelo::nitro::nitrotextinput {
@@ -142,15 +142,6 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* clearTextOnFocus */)>("setClearTextOnFocus");
     method(_javaPart, clearTextOnFocus.has_value() ? jni::JBoolean::valueOf(clearTextOnFocus.value()) : nullptr);
   }
-  std::optional<bool> JHybridNitroTextInputViewSpec::getSelectTextOnFocus() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSelectTextOnFocus");
-    auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
-  }
-  void JHybridNitroTextInputViewSpec::setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* selectTextOnFocus */)>("setSelectTextOnFocus");
-    method(_javaPart, selectTextOnFocus.has_value() ? jni::JBoolean::valueOf(selectTextOnFocus.value()) : nullptr);
-  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getContextMenuHidden() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getContextMenuHidden");
     auto __result = method(_javaPart);
@@ -159,15 +150,6 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setContextMenuHidden(std::optional<bool> contextMenuHidden) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* contextMenuHidden */)>("setContextMenuHidden");
     method(_javaPart, contextMenuHidden.has_value() ? jni::JBoolean::valueOf(contextMenuHidden.value()) : nullptr);
-  }
-  std::optional<bool> JHybridNitroTextInputViewSpec::getShowSoftInputOnFocus() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getShowSoftInputOnFocus");
-    auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
-  }
-  void JHybridNitroTextInputViewSpec::setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* showSoftInputOnFocus */)>("setShowSoftInputOnFocus");
-    method(_javaPart, showSoftInputOnFocus.has_value() ? jni::JBoolean::valueOf(showSoftInputOnFocus.value()) : nullptr);
   }
   std::optional<std::string> JHybridNitroTextInputViewSpec::getDefaultValue() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getDefaultValue");
@@ -259,6 +241,24 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JProcessedColor> /* placeholderTextColor */)>("setPlaceholderTextColor");
     method(_javaPart, placeholderTextColor.has_value() ? JProcessedColor::fromCpp(placeholderTextColor.value()) : nullptr);
   }
+  std::optional<ReturnKeyType> JHybridNitroTextInputViewSpec::getReturnKeyType() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JReturnKeyType>()>("getReturnKeyType");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JReturnKeyType> /* returnKeyType */)>("setReturnKeyType");
+    method(_javaPart, returnKeyType.has_value() ? JReturnKeyType::fromCpp(returnKeyType.value()) : nullptr);
+  }
+  std::optional<TextSelection> JHybridNitroTextInputViewSpec::getSelection() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextSelection>()>("getSelection");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSelection(const std::optional<TextSelection>& selection) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextSelection> /* selection */)>("setSelection");
+    method(_javaPart, selection.has_value() ? JTextSelection::fromCpp(selection.value()) : nullptr);
+  }
   std::optional<std::variant<std::string, double>> JHybridNitroTextInputViewSpec::getSelectionColor() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JProcessedColor>()>("getSelectionColor");
     auto __result = method(_javaPart);
@@ -277,14 +277,32 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* secureTextEntry */)>("setSecureTextEntry");
     method(_javaPart, secureTextEntry.has_value() ? jni::JBoolean::valueOf(secureTextEntry.value()) : nullptr);
   }
-  std::optional<TextSelection> JHybridNitroTextInputViewSpec::getSelection() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextSelection>()>("getSelection");
+  std::optional<bool> JHybridNitroTextInputViewSpec::getSelectTextOnFocus() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSelectTextOnFocus");
     auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
   }
-  void JHybridNitroTextInputViewSpec::setSelection(const std::optional<TextSelection>& selection) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextSelection> /* selection */)>("setSelection");
-    method(_javaPart, selection.has_value() ? JTextSelection::fromCpp(selection.value()) : nullptr);
+  void JHybridNitroTextInputViewSpec::setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* selectTextOnFocus */)>("setSelectTextOnFocus");
+    method(_javaPart, selectTextOnFocus.has_value() ? jni::JBoolean::valueOf(selectTextOnFocus.value()) : nullptr);
+  }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getShowSoftInputOnFocus() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getShowSoftInputOnFocus");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* showSoftInputOnFocus */)>("setShowSoftInputOnFocus");
+    method(_javaPart, showSoftInputOnFocus.has_value() ? jni::JBoolean::valueOf(showSoftInputOnFocus.value()) : nullptr);
+  }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getSmartInsertDelete() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSmartInsertDelete");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSmartInsertDelete(std::optional<bool> smartInsertDelete) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* smartInsertDelete */)>("setSmartInsertDelete");
+    method(_javaPart, smartInsertDelete.has_value() ? jni::JBoolean::valueOf(smartInsertDelete.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");
@@ -456,15 +474,6 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_double_double_double_double_double::javaobject> /* onTouchEnded */)>("setOnTouchEnded_cxx");
     method(_javaPart, onTouchEnded.has_value() ? JFunc_void_double_double_double_double_double_cxx::fromCpp(onTouchEnded.value()) : nullptr);
-  }
-  std::optional<ReturnKeyType> JHybridNitroTextInputViewSpec::getReturnKeyType() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JReturnKeyType>()>("getReturnKeyType");
-    auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
-  }
-  void JHybridNitroTextInputViewSpec::setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JReturnKeyType> /* returnKeyType */)>("setReturnKeyType");
-    method(_javaPart, returnKeyType.has_value() ? JReturnKeyType::fromCpp(returnKeyType.value()) : nullptr);
   }
   std::optional<std::function<void(double /* height */)>> JHybridNitroTextInputViewSpec::getOnInitialHeightMeasured() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_double::javaobject>()>("getOnInitialHeightMeasured_cxx");

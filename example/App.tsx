@@ -57,9 +57,9 @@ export default function App() {
       <TextInput
         autoFocus={false}
         clearButtonMode="always"
+        maxLength={12}
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
-        selectTextOnFocus
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />

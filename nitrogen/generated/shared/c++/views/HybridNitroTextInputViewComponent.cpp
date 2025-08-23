@@ -105,16 +105,6 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.clearTextOnFocus: ") + exc.what());
       }
     }()),
-    selectTextOnFocus([&]() -> CachedProp<std::optional<bool>> {
-      try {
-        const react::RawValue* rawValue = rawProps.at("selectTextOnFocus", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.selectTextOnFocus;
-        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.selectTextOnFocus);
-      } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.selectTextOnFocus: ") + exc.what());
-      }
-    }()),
     contextMenuHidden([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("contextMenuHidden", nullptr, nullptr);
@@ -123,16 +113,6 @@ namespace margelo::nitro::nitrotextinput::views {
         return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.contextMenuHidden);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroTextInputView.contextMenuHidden: ") + exc.what());
-      }
-    }()),
-    showSoftInputOnFocus([&]() -> CachedProp<std::optional<bool>> {
-      try {
-        const react::RawValue* rawValue = rawProps.at("showSoftInputOnFocus", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.showSoftInputOnFocus;
-        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.showSoftInputOnFocus);
-      } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.showSoftInputOnFocus: ") + exc.what());
       }
     }()),
     defaultValue([&]() -> CachedProp<std::optional<std::string>> {
@@ -235,6 +215,26 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.placeholderTextColor: ") + exc.what());
       }
     }()),
+    returnKeyType([&]() -> CachedProp<std::optional<ReturnKeyType>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("returnKeyType", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.returnKeyType;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<ReturnKeyType>>::fromRawValue(*runtime, value, sourceProps.returnKeyType);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.returnKeyType: ") + exc.what());
+      }
+    }()),
+    selection([&]() -> CachedProp<std::optional<TextSelection>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("selection", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.selection;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<TextSelection>>::fromRawValue(*runtime, value, sourceProps.selection);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.selection: ") + exc.what());
+      }
+    }()),
     selectionColor([&]() -> CachedProp<std::optional<std::variant<std::string, double>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("selectionColor", nullptr, nullptr);
@@ -255,14 +255,34 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.secureTextEntry: ") + exc.what());
       }
     }()),
-    selection([&]() -> CachedProp<std::optional<TextSelection>> {
+    selectTextOnFocus([&]() -> CachedProp<std::optional<bool>> {
       try {
-        const react::RawValue* rawValue = rawProps.at("selection", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.selection;
+        const react::RawValue* rawValue = rawProps.at("selectTextOnFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.selectTextOnFocus;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<TextSelection>>::fromRawValue(*runtime, value, sourceProps.selection);
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.selectTextOnFocus);
       } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.selection: ") + exc.what());
+        throw std::runtime_error(std::string("NitroTextInputView.selectTextOnFocus: ") + exc.what());
+      }
+    }()),
+    showSoftInputOnFocus([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("showSoftInputOnFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.showSoftInputOnFocus;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.showSoftInputOnFocus);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.showSoftInputOnFocus: ") + exc.what());
+      }
+    }()),
+    smartInsertDelete([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("smartInsertDelete", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.smartInsertDelete;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.smartInsertDelete);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.smartInsertDelete: ") + exc.what());
       }
     }()),
     onFocused([&]() -> CachedProp<std::optional<std::function<void()>>> {
@@ -355,16 +375,6 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onTouchEnded: ") + exc.what());
       }
     }()),
-    returnKeyType([&]() -> CachedProp<std::optional<ReturnKeyType>> {
-      try {
-        const react::RawValue* rawValue = rawProps.at("returnKeyType", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.returnKeyType;
-        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<ReturnKeyType>>::fromRawValue(*runtime, value, sourceProps.returnKeyType);
-      } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.returnKeyType: ") + exc.what());
-      }
-    }()),
     onInitialHeightMeasured([&]() -> CachedProp<std::optional<std::function<void(double /* height */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onInitialHeightMeasured", nullptr, nullptr);
@@ -396,9 +406,7 @@ namespace margelo::nitro::nitrotextinput::views {
     caretHidden(other.caretHidden),
     clearButtonMode(other.clearButtonMode),
     clearTextOnFocus(other.clearTextOnFocus),
-    selectTextOnFocus(other.selectTextOnFocus),
     contextMenuHidden(other.contextMenuHidden),
-    showSoftInputOnFocus(other.showSoftInputOnFocus),
     defaultValue(other.defaultValue),
     editable(other.editable),
     enablesReturnKeyAutomatically(other.enablesReturnKeyAutomatically),
@@ -409,9 +417,13 @@ namespace margelo::nitro::nitrotextinput::views {
     multiline(other.multiline),
     placeholder(other.placeholder),
     placeholderTextColor(other.placeholderTextColor),
+    returnKeyType(other.returnKeyType),
+    selection(other.selection),
     selectionColor(other.selectionColor),
     secureTextEntry(other.secureTextEntry),
-    selection(other.selection),
+    selectTextOnFocus(other.selectTextOnFocus),
+    showSoftInputOnFocus(other.showSoftInputOnFocus),
+    smartInsertDelete(other.smartInsertDelete),
     onFocused(other.onFocused),
     onBlurred(other.onBlurred),
     onTextChanged(other.onTextChanged),
@@ -421,7 +433,6 @@ namespace margelo::nitro::nitrotextinput::views {
     onKeyPressed(other.onKeyPressed),
     onTouchBegan(other.onTouchBegan),
     onTouchEnded(other.onTouchEnded),
-    returnKeyType(other.returnKeyType),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
@@ -435,9 +446,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("caretHidden"): return true;
       case hashString("clearButtonMode"): return true;
       case hashString("clearTextOnFocus"): return true;
-      case hashString("selectTextOnFocus"): return true;
       case hashString("contextMenuHidden"): return true;
-      case hashString("showSoftInputOnFocus"): return true;
       case hashString("defaultValue"): return true;
       case hashString("editable"): return true;
       case hashString("enablesReturnKeyAutomatically"): return true;
@@ -448,9 +457,13 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("multiline"): return true;
       case hashString("placeholder"): return true;
       case hashString("placeholderTextColor"): return true;
+      case hashString("returnKeyType"): return true;
+      case hashString("selection"): return true;
       case hashString("selectionColor"): return true;
       case hashString("secureTextEntry"): return true;
-      case hashString("selection"): return true;
+      case hashString("selectTextOnFocus"): return true;
+      case hashString("showSoftInputOnFocus"): return true;
+      case hashString("smartInsertDelete"): return true;
       case hashString("onFocused"): return true;
       case hashString("onBlurred"): return true;
       case hashString("onTextChanged"): return true;
@@ -460,7 +473,6 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("onKeyPressed"): return true;
       case hashString("onTouchBegan"): return true;
       case hashString("onTouchEnded"): return true;
-      case hashString("returnKeyType"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;
       default: return false;
