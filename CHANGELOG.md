@@ -1,3 +1,9 @@
+## [1.0.0-next.34](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.33...v1.0.0-next.34) (2025-08-23)
+
+### Features
+
+* add password rules support ([#44](https://github.com/Ucekay/react-native-nitro-text-input/issues/44)) ([1f8073b](https://github.com/Ucekay/react-native-nitro-text-input/commit/1f8073beb5ca0578c3c071e3c4a0d129c6138fb2))
+
 ## [1.0.0-next.33](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.32...v1.0.0-next.33) (2025-08-23)
 
 ### Features
