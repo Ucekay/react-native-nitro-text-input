@@ -918,20 +918,29 @@ extension HybridTextInputView {
             let b = CGFloat(v & 0xFF) / 255.0
             return UIColor(red: r, green: g, blue: b, alpha: a)
         }
+        // Accept either a JSON string or a dictionary for OpaqueColor
         var parsedDict: [String: Any]? = nil
-        if let json = value as? String,
-            let data = json.data(using: .utf8),
-            let dict = try? JSONSerialization.jsonObject(with: data)
-                as? [String: Any]
-        {
+        if let dict = value as? [String: Any] {
+            parsedDict = dict
+        } else if let json = value as? String,
+                  let data = json.data(using: .utf8),
+                  let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
             parsedDict = dict
         }
         if let dict = parsedDict {
-            if let semantic = dict["semantic"] as? [String],
-                let name = semantic.first
-            {
-                return UIColor(named: name) ?? UIColor.value(forKey: name)
-                    as? UIColor
+            if let semantic = dict["semantic"] as? [String], let name = semantic.first {
+                return UIColor(named: name) ?? UIColor.value(forKey: name) as? UIColor
+            }
+            if let dynamic = dict["dynamic"] as? [String: Any] {
+                let light = resolveColor(any: dynamic["light"]) ?? UIColor.placeholderText
+                let dark = resolveColor(any: dynamic["dark"]) ?? light
+                if #available(iOS 13.0, *) {
+                    return UIColor { traits in
+                        traits.userInterfaceStyle == .dark ? dark : light
+                    }
+                } else {
+                    return light
+                }
             }
         }
         return nil
