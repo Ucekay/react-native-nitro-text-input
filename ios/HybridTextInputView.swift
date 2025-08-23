@@ -472,6 +472,20 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var textAlign: TextAlign? {
+        didSet {
+            Task { @MainActor in
+                let alignment: NSTextAlignment
+                switch self.textAlign {
+                case .some(.center): alignment = .center
+                case .some(.right): alignment = .right
+                case .some(.left): alignment = .left
+                case .some(.natural), .none: alignment = .natural
+                }
+                self.textField.textAlignment = alignment
+            }
+        }
+    }
     // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
     var placeholderTextColor: ProcessedColor? {
         didSet {

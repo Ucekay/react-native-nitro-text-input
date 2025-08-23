@@ -161,6 +161,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setPlaceholder(newViewProps.placeholder.value);
     newViewProps.placeholder.isDirty = false;
   }
+  // textAlign: optional
+  if (newViewProps.textAlign.isDirty) {
+    swiftPart.setTextAlign(newViewProps.textAlign.value);
+    newViewProps.textAlign.isDirty = false;
+  }
   // placeholderTextColor: optional
   if (newViewProps.placeholderTextColor.isDirty) {
     swiftPart.setPlaceholderTextColor(newViewProps.placeholderTextColor.value);

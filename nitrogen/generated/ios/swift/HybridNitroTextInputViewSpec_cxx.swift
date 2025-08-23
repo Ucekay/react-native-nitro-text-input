@@ -424,6 +424,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var textAlign: bridge.std__optional_TextAlign_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_TextAlign_ in
+        if let __unwrappedValue = self.__implementation.textAlign {
+          return bridge.create_std__optional_TextAlign_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.textAlign = newValue.value
+    }
+  }
+  
   public final var placeholderTextColor: bridge.std__optional_std__variant_std__string__double__ {
     @inline(__always)
     get {
