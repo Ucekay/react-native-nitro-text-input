@@ -483,7 +483,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             Task { @MainActor in
                 if #available(iOS 13.0, *) {
                     if let enabled = self.smartInsertDelete {
-                        self.textField.smartInsertDeleteType = enabled
+                        self.textField.smartInsertDeleteType =
+                            enabled
                             ? .yes : .no
                     } else {
                         self.textField.smartInsertDeleteType = .default
