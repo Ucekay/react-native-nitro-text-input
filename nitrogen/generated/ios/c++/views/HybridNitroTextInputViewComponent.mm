@@ -206,6 +206,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setSmartInsertDelete(newViewProps.smartInsertDelete.value);
     newViewProps.smartInsertDelete.isDirty = false;
   }
+  // submitBehavior: optional
+  if (newViewProps.submitBehavior.isDirty) {
+    swiftPart.setSubmitBehavior(newViewProps.submitBehavior.value);
+    newViewProps.submitBehavior.isDirty = false;
+  }
   // onFocused: optional
   if (newViewProps.onFocused.isDirty) {
     swiftPart.setOnFocused(newViewProps.onFocused.value);

@@ -103,6 +103,8 @@ namespace margelo::nitro::nitrotextinput {
     void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) override;
     std::optional<bool> getSmartInsertDelete() override;
     void setSmartInsertDelete(std::optional<bool> smartInsertDelete) override;
+    std::optional<SubmitBehavior> getSubmitBehavior() override;
+    void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) override;
     std::optional<std::function<void()>> getOnFocused() override;
     void setOnFocused(const std::optional<std::function<void()>>& onFocused) override;
     std::optional<std::function<void()>> getOnBlurred() override;

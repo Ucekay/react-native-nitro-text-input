@@ -200,6 +200,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:Keep
   abstract var smartInsertDelete: Boolean?
   
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var submitBehavior: SubmitBehavior?
+  
   abstract var onFocused: (() -> Unit)?
   
   private var onFocused_cxx: Func_void?

@@ -31,6 +31,7 @@
     "selectTextOnFocus": true,
     "showSoftInputOnFocus": true,
     "smartInsertDelete": true,
+    "submitBehavior": true,
     "onFocused": true,
     "onBlurred": true,
     "onTextChanged": true,

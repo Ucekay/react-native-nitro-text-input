@@ -295,6 +295,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.smartInsertDelete: ") + exc.what());
       }
     }()),
+    submitBehavior([&]() -> CachedProp<std::optional<SubmitBehavior>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("submitBehavior", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.submitBehavior;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<SubmitBehavior>>::fromRawValue(*runtime, value, sourceProps.submitBehavior);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.submitBehavior: ") + exc.what());
+      }
+    }()),
     onFocused([&]() -> CachedProp<std::optional<std::function<void()>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onFocused", nullptr, nullptr);
@@ -435,6 +445,7 @@ namespace margelo::nitro::nitrotextinput::views {
     selectTextOnFocus(other.selectTextOnFocus),
     showSoftInputOnFocus(other.showSoftInputOnFocus),
     smartInsertDelete(other.smartInsertDelete),
+    submitBehavior(other.submitBehavior),
     onFocused(other.onFocused),
     onBlurred(other.onBlurred),
     onTextChanged(other.onTextChanged),
@@ -476,6 +487,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("selectTextOnFocus"): return true;
       case hashString("showSoftInputOnFocus"): return true;
       case hashString("smartInsertDelete"): return true;
+      case hashString("submitBehavior"): return true;
       case hashString("onFocused"): return true;
       case hashString("onBlurred"): return true;
       case hashString("onTextChanged"): return true;

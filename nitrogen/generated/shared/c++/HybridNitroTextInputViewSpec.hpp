@@ -27,6 +27,8 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -38,6 +40,7 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include <variant>
 #include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
+#include "SubmitBehavior.hpp"
 #include <functional>
 
 namespace margelo::nitro::nitrotextinput {
@@ -121,6 +124,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) = 0;
       virtual std::optional<bool> getSmartInsertDelete() = 0;
       virtual void setSmartInsertDelete(std::optional<bool> smartInsertDelete) = 0;
+      virtual std::optional<SubmitBehavior> getSubmitBehavior() = 0;
+      virtual void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) = 0;
       virtual std::optional<std::function<void()>> getOnFocused() = 0;
       virtual void setOnFocused(const std::optional<std::function<void()>>& onFocused) = 0;
       virtual std::optional<std::function<void()>> getOnBlurred() = 0;

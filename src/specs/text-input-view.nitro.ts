@@ -90,6 +90,8 @@ export type KeyboardAppearance = 'default' | 'light' | 'dark'
 
 export type MaxFontMultiplier = number | null | undefined
 
+export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline'
+
 // A processed color (AARRGGBB) or JSON-stringified OpaqueColor (semantic/dynamic)
 export type ProcessedColor = number | string | null | undefined
 
@@ -128,6 +130,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   selectTextOnFocus?: boolean
   showSoftInputOnFocus?: boolean
   smartInsertDelete?: boolean
+  submitBehavior?: SubmitBehavior
   onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void

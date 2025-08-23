@@ -68,6 +68,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("showSoftInputOnFocus", &HybridNitroTextInputViewSpec::setShowSoftInputOnFocus);
       prototype.registerHybridGetter("smartInsertDelete", &HybridNitroTextInputViewSpec::getSmartInsertDelete);
       prototype.registerHybridSetter("smartInsertDelete", &HybridNitroTextInputViewSpec::setSmartInsertDelete);
+      prototype.registerHybridGetter("submitBehavior", &HybridNitroTextInputViewSpec::getSubmitBehavior);
+      prototype.registerHybridSetter("submitBehavior", &HybridNitroTextInputViewSpec::setSubmitBehavior);
       prototype.registerHybridGetter("onFocused", &HybridNitroTextInputViewSpec::getOnFocused);
       prototype.registerHybridSetter("onFocused", &HybridNitroTextInputViewSpec::setOnFocused);
       prototype.registerHybridGetter("onBlurred", &HybridNitroTextInputViewSpec::getOnBlurred);

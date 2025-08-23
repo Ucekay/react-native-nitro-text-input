@@ -38,6 +38,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var selectTextOnFocus: Bool? { get set }
   var showSoftInputOnFocus: Bool? { get set }
   var smartInsertDelete: Bool? { get set }
+  var submitBehavior: SubmitBehavior? { get set }
   var onFocused: (() -> Void)? { get set }
   var onBlurred: (() -> Void)? { get set }
   var onTextChanged: ((_ text: String) -> Void)? { get set }
