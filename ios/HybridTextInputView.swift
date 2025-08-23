@@ -339,6 +339,17 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var spellCheck: Bool? {
+        didSet {
+            Task { @MainActor in
+                if let v = self.spellCheck {
+                    self.textField.spellCheckingType = v ? .yes : .no
+                } else {
+                    self.textField.spellCheckingType = .default
+                }
+            }
+        }
+    }
     var autoFocus: Bool? {
         didSet {
             Task { @MainActor in

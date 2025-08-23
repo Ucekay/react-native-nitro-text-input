@@ -255,6 +255,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.secureTextEntry: ") + exc.what());
       }
     }()),
+    spellCheck([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("spellCheck", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.spellCheck;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.spellCheck);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.spellCheck: ") + exc.what());
+      }
+    }()),
     selectTextOnFocus([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("selectTextOnFocus", nullptr, nullptr);
@@ -421,6 +431,7 @@ namespace margelo::nitro::nitrotextinput::views {
     selection(other.selection),
     selectionColor(other.selectionColor),
     secureTextEntry(other.secureTextEntry),
+    spellCheck(other.spellCheck),
     selectTextOnFocus(other.selectTextOnFocus),
     showSoftInputOnFocus(other.showSoftInputOnFocus),
     smartInsertDelete(other.smartInsertDelete),
@@ -461,6 +472,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("selection"): return true;
       case hashString("selectionColor"): return true;
       case hashString("secureTextEntry"): return true;
+      case hashString("spellCheck"): return true;
       case hashString("selectTextOnFocus"): return true;
       case hashString("showSoftInputOnFocus"): return true;
       case hashString("smartInsertDelete"): return true;

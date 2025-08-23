@@ -237,6 +237,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setSecureTextEntry(std::optional<bool> secureTextEntry) noexcept override {
       _swiftPart.setSecureTextEntry(secureTextEntry);
     }
+    inline std::optional<bool> getSpellCheck() noexcept override {
+      auto __result = _swiftPart.getSpellCheck();
+      return __result;
+    }
+    inline void setSpellCheck(std::optional<bool> spellCheck) noexcept override {
+      _swiftPart.setSpellCheck(spellCheck);
+    }
     inline std::optional<bool> getSelectTextOnFocus() noexcept override {
       auto __result = _swiftPart.getSelectTextOnFocus();
       return __result;

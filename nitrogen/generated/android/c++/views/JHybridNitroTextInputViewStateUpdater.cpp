@@ -128,6 +128,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setSecureTextEntry(props.secureTextEntry.value);
     // TODO: Set isDirty = false
   }
+  if (props.spellCheck.isDirty) {
+    view->setSpellCheck(props.spellCheck.value);
+    // TODO: Set isDirty = false
+  }
   if (props.selectTextOnFocus.isDirty) {
     view->setSelectTextOnFocus(props.selectTextOnFocus.value);
     // TODO: Set isDirty = false

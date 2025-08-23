@@ -186,6 +186,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setSecureTextEntry(newViewProps.secureTextEntry.value);
     newViewProps.secureTextEntry.isDirty = false;
   }
+  // spellCheck: optional
+  if (newViewProps.spellCheck.isDirty) {
+    swiftPart.setSpellCheck(newViewProps.spellCheck.value);
+    newViewProps.spellCheck.isDirty = false;
+  }
   // selectTextOnFocus: optional
   if (newViewProps.selectTextOnFocus.isDirty) {
     swiftPart.setSelectTextOnFocus(newViewProps.selectTextOnFocus.value);

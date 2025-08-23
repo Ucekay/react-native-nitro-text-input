@@ -55,6 +55,7 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include <optional>
 #include <functional>
 #include <optional>
 #include <functional>
@@ -128,6 +129,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<TextSelection>> selection;
     CachedProp<std::optional<std::variant<std::string, double>>> selectionColor;
     CachedProp<std::optional<bool>> secureTextEntry;
+    CachedProp<std::optional<bool>> spellCheck;
     CachedProp<std::optional<bool>> selectTextOnFocus;
     CachedProp<std::optional<bool>> showSoftInputOnFocus;
     CachedProp<std::optional<bool>> smartInsertDelete;

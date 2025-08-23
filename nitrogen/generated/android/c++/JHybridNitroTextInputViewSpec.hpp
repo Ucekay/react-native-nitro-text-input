@@ -95,6 +95,8 @@ namespace margelo::nitro::nitrotextinput {
     void setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) override;
     std::optional<bool> getSecureTextEntry() override;
     void setSecureTextEntry(std::optional<bool> secureTextEntry) override;
+    std::optional<bool> getSpellCheck() override;
+    void setSpellCheck(std::optional<bool> spellCheck) override;
     std::optional<bool> getSelectTextOnFocus() override;
     void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) override;
     std::optional<bool> getShowSoftInputOnFocus() override;

@@ -34,6 +34,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var selection: TextSelection? { get set }
   var selectionColor: ProcessedColor? { get set }
   var secureTextEntry: Bool? { get set }
+  var spellCheck: Bool? { get set }
   var selectTextOnFocus: Bool? { get set }
   var showSoftInputOnFocus: Bool? { get set }
   var smartInsertDelete: Bool? { get set }
