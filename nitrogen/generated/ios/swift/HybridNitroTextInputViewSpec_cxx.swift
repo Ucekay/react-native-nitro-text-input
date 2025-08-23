@@ -466,6 +466,48 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var selectionColor: bridge.std__optional_std__variant_std__string__double__ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__variant_std__string__double__ in
+        if let __unwrappedValue = self.__implementation.selectionColor {
+          return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
+            switch __unwrappedValue {
+              case .first(let __value):
+                return bridge.create_std__variant_std__string__double_(std.string(__value))
+              case .second(let __value):
+                return bridge.create_std__variant_std__string__double_(__value)
+            }
+          }().variant)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.selectionColor = { () -> PlaceholderTextColor? in
+        if let __unwrapped = newValue.value {
+          return { () -> PlaceholderTextColor in
+            let __variant = bridge.std__variant_std__string__double_(__unwrapped)
+            switch __variant.index() {
+              case 0:
+                let __actual = __variant.get_0()
+                return .first(String(__actual))
+              case 1:
+                let __actual = __variant.get_1()
+                return .second(__actual)
+              default:
+                fatalError("Variant can never have index \(__variant.index())!")
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var secureTextEntry: bridge.std__optional_bool_ {
     @inline(__always)
     get {

@@ -241,6 +241,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JPlaceholderTextColor> /* placeholderTextColor */)>("setPlaceholderTextColor");
     method(_javaPart, placeholderTextColor.has_value() ? JPlaceholderTextColor::fromCpp(placeholderTextColor.value()) : nullptr);
   }
+  std::optional<std::variant<std::string, double>> JHybridNitroTextInputViewSpec::getSelectionColor() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPlaceholderTextColor>()>("getSelectionColor");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JPlaceholderTextColor> /* selectionColor */)>("setSelectionColor");
+    method(_javaPart, selectionColor.has_value() ? JPlaceholderTextColor::fromCpp(selectionColor.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getSecureTextEntry() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSecureTextEntry");
     auto __result = method(_javaPart);

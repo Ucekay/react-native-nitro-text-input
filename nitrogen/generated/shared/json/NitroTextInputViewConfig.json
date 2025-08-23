@@ -23,6 +23,7 @@
     "multiline": true,
     "placeholder": true,
     "placeholderTextColor": true,
+    "selectionColor": true,
     "secureTextEntry": true,
     "selection": true,
     "onFocused": true,

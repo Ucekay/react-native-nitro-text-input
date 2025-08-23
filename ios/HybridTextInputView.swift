@@ -471,6 +471,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var selectionColor: PlaceholderTextColor? {
+        didSet {
+            Task { @MainActor in
+                self.updateSelectionTintColor()
+            }
+        }
+    }
     var selection: TextSelection? {
         didSet {
             Task { @MainActor in
@@ -872,6 +879,43 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         } else {
             // Clear to let UIKit default apply
             self.textField.attributedPlaceholder = nil
+        }
+    }
+
+    private func updateSelectionTintColor() {
+        guard let value = self.selectionColor else {
+            self.textField.tintColor = nil
+            return
+        }
+        if case .second(let doubleValue) = value {
+            let v = UInt32(clamping: Int64(doubleValue))
+            let a = CGFloat((v >> 24) & 0xFF) / 255.0
+            let r = CGFloat((v >> 16) & 0xFF) / 255.0
+            let g = CGFloat((v >> 8) & 0xFF) / 255.0
+            let b = CGFloat(v & 0xFF) / 255.0
+            self.textField.tintColor = UIColor(red: r, green: g, blue: b, alpha: a)
+            return
+        }
+        if case .first(let json) = value,
+           let data = json.data(using: .utf8),
+           let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        {
+            if let semantic = dict["semantic"] as? [String], let name = semantic.first {
+                self.textField.tintColor = UIColor(named: name) ?? UIColor.value(forKey: name) as? UIColor
+                return
+            }
+            if let dynamic = dict["dynamic"] as? [String: Any] {
+                let light = HybridTextInputView.resolveColor(any: dynamic["light"]) ?? self.textField.tintColor
+                let dark = HybridTextInputView.resolveColor(any: dynamic["dark"]) ?? light
+                if #available(iOS 13.0, *) {
+                    self.textField.tintColor = UIColor { traits in
+                        traits.userInterfaceStyle == .dark ? (dark ?? light ?? UIColor.tintColor) : (light ?? UIColor.tintColor)
+                    }
+                } else {
+                    self.textField.tintColor = light
+                }
+                return
+            }
         }
     }
 

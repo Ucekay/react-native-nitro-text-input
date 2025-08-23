@@ -156,6 +156,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var selectionColor: PlaceholderTextColor?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var secureTextEntry: Boolean?
   
   @get:DoNotStrip
