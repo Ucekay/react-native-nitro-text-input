@@ -453,7 +453,16 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var secureTextEntry: Bool? {
         didSet {
             Task { @MainActor in
-                self.textField.isSecureTextEntry = self.secureTextEntry ?? false
+                let secure = self.secureTextEntry ?? false
+                let wasFirstResponder = self.textField.isFirstResponder
+                let previousSelection = self.textField.selectedTextRange
+                self.textField.isSecureTextEntry = secure
+                if wasFirstResponder {
+                    _ = self.textField.becomeFirstResponder()
+                    if let sel = previousSelection {
+                        self.textField.selectedTextRange = sel
+                    }
+                }
             }
         }
     }
