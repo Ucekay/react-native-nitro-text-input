@@ -1,0 +1,22 @@
+diff --git a/src/views/getHostComponent.ts b/src/views/getHostComponent.ts
+index 92586c3167cb47b984e6ae13b29ebf62bb7bf012..f5052a6f6af33c984e5c976b005fdc733b36c318 100644
+--- a/src/views/getHostComponent.ts
++++ b/src/views/getHostComponent.ts
+@@ -18,7 +18,7 @@ export interface ViewConfig<Props> {
+ /**
+  * Represents all default props a Nitro HybridView has.
+  */
+-interface DefaultHybridViewProps<RefType> {
++export interface DefaultHybridViewProps<RefType> {
+   /**
+    * A `ref` to the {@linkcode HybridObject} this Hybrid View is rendering.
+    *
+@@ -42,7 +42,7 @@ interface DefaultHybridViewProps<RefType> {
+ // Due to a React limitation, functions cannot be passed to native directly
+ // because RN converts them to booleans (`true`). Nitro knows this and just
+ // wraps functions as objects - the original function is stored in `f`.
+-type WrapFunctionsInObjects<Props> = {
++export type WrapFunctionsInObjects<Props> = {
+   [K in keyof Props]: Props[K] extends Function
+     ? { f: Props[K] }
+     : Props[K] extends Function | undefined
