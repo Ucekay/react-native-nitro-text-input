@@ -1,3 +1,9 @@
+## [1.0.0-next.26](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.25...v1.0.0-next.26) (2025-08-23)
+
+### Features
+
+* add selection prop ([#36](https://github.com/Ucekay/react-native-nitro-text-input/issues/36)) ([6abdcab](https://github.com/Ucekay/react-native-nitro-text-input/commit/6abdcabc5c494dd1ec558ef93ab5604e3c7c06eb))
+
 ## [1.0.0-next.25](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.24...v1.0.0-next.25) (2025-08-23)
 
 ### Features
