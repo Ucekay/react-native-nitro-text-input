@@ -478,6 +478,20 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var smartInsertDelete: Bool? {
+        didSet {
+            Task { @MainActor in
+                if #available(iOS 13.0, *) {
+                    if let enabled = self.smartInsertDelete {
+                        self.textField.smartInsertDeleteType = enabled
+                            ? .yes : .no
+                    } else {
+                        self.textField.smartInsertDeleteType = .default
+                    }
+                }
+            }
+        }
+    }
     var selection: TextSelection? {
         didSet {
             Task { @MainActor in

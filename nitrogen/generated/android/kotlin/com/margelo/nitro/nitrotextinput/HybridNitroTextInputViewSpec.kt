@@ -90,19 +90,7 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var selectTextOnFocus: Boolean?
-  
-  @get:DoNotStrip
-  @get:Keep
-  @set:DoNotStrip
-  @set:Keep
   abstract var contextMenuHidden: Boolean?
-  
-  @get:DoNotStrip
-  @get:Keep
-  @set:DoNotStrip
-  @set:Keep
-  abstract var showSoftInputOnFocus: Boolean?
   
   @get:DoNotStrip
   @get:Keep
@@ -168,6 +156,18 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var returnKeyType: ReturnKeyType?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var selection: TextSelection?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var selectionColor: ProcessedColor?
   
   @get:DoNotStrip
@@ -180,7 +180,19 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var selection: TextSelection?
+  abstract var selectTextOnFocus: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var showSoftInputOnFocus: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var smartInsertDelete: Boolean?
   
   abstract var onFocused: (() -> Unit)?
   
@@ -307,12 +319,6 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
     set(value) {
       onTouchEnded = value?.let { it }
     }
-  
-  @get:DoNotStrip
-  @get:Keep
-  @set:DoNotStrip
-  @set:Keep
-  abstract var returnKeyType: ReturnKeyType?
   
   abstract var onInitialHeightMeasured: ((height: Double) -> Unit)?
   

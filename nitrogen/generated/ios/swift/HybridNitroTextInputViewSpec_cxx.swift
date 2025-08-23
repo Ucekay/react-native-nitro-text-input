@@ -242,23 +242,6 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
-  public final var selectTextOnFocus: bridge.std__optional_bool_ {
-    @inline(__always)
-    get {
-      return { () -> bridge.std__optional_bool_ in
-        if let __unwrappedValue = self.__implementation.selectTextOnFocus {
-          return bridge.create_std__optional_bool_(__unwrappedValue)
-        } else {
-          return .init()
-        }
-      }()
-    }
-    @inline(__always)
-    set {
-      self.__implementation.selectTextOnFocus = newValue.value
-    }
-  }
-  
   public final var contextMenuHidden: bridge.std__optional_bool_ {
     @inline(__always)
     get {
@@ -273,23 +256,6 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.contextMenuHidden = newValue.value
-    }
-  }
-  
-  public final var showSoftInputOnFocus: bridge.std__optional_bool_ {
-    @inline(__always)
-    get {
-      return { () -> bridge.std__optional_bool_ in
-        if let __unwrappedValue = self.__implementation.showSoftInputOnFocus {
-          return bridge.create_std__optional_bool_(__unwrappedValue)
-        } else {
-          return .init()
-        }
-      }()
-    }
-    @inline(__always)
-    set {
-      self.__implementation.showSoftInputOnFocus = newValue.value
     }
   }
   
@@ -500,6 +466,46 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var returnKeyType: bridge.std__optional_ReturnKeyType_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_ReturnKeyType_ in
+        if let __unwrappedValue = self.__implementation.returnKeyType {
+          return bridge.create_std__optional_ReturnKeyType_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.returnKeyType = newValue.value
+    }
+  }
+  
+  public final var selection: bridge.std__optional_TextSelection_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_TextSelection_ in
+        if let __unwrappedValue = self.__implementation.selection {
+          return bridge.create_std__optional_TextSelection_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.selection = { () -> TextSelection? in
+        if let __unwrapped = newValue.value {
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var selectionColor: bridge.std__optional_std__variant_std__string__double__ {
     @inline(__always)
     get {
@@ -559,12 +565,12 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
-  public final var selection: bridge.std__optional_TextSelection_ {
+  public final var selectTextOnFocus: bridge.std__optional_bool_ {
     @inline(__always)
     get {
-      return { () -> bridge.std__optional_TextSelection_ in
-        if let __unwrappedValue = self.__implementation.selection {
-          return bridge.create_std__optional_TextSelection_(__unwrappedValue)
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.selectTextOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
         } else {
           return .init()
         }
@@ -572,13 +578,41 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.selection = { () -> TextSelection? in
-        if let __unwrapped = newValue.value {
-          return __unwrapped
+      self.__implementation.selectTextOnFocus = newValue.value
+    }
+  }
+  
+  public final var showSoftInputOnFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.showSoftInputOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
         } else {
-          return nil
+          return .init()
         }
       }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.showSoftInputOnFocus = newValue.value
+    }
+  }
+  
+  public final var smartInsertDelete: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.smartInsertDelete {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.smartInsertDelete = newValue.value
     }
   }
   
@@ -858,23 +892,6 @@ open class HybridNitroTextInputViewSpec_cxx {
           return nil
         }
       }()
-    }
-  }
-  
-  public final var returnKeyType: bridge.std__optional_ReturnKeyType_ {
-    @inline(__always)
-    get {
-      return { () -> bridge.std__optional_ReturnKeyType_ in
-        if let __unwrappedValue = self.__implementation.returnKeyType {
-          return bridge.create_std__optional_ReturnKeyType_(__unwrappedValue)
-        } else {
-          return .init()
-        }
-      }()
-    }
-    @inline(__always)
-    set {
-      self.__implementation.returnKeyType = newValue.value
     }
   }
   

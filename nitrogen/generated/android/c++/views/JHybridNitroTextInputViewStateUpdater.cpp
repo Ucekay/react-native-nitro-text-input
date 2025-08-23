@@ -68,16 +68,8 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setClearTextOnFocus(props.clearTextOnFocus.value);
     // TODO: Set isDirty = false
   }
-  if (props.selectTextOnFocus.isDirty) {
-    view->setSelectTextOnFocus(props.selectTextOnFocus.value);
-    // TODO: Set isDirty = false
-  }
   if (props.contextMenuHidden.isDirty) {
     view->setContextMenuHidden(props.contextMenuHidden.value);
-    // TODO: Set isDirty = false
-  }
-  if (props.showSoftInputOnFocus.isDirty) {
-    view->setShowSoftInputOnFocus(props.showSoftInputOnFocus.value);
     // TODO: Set isDirty = false
   }
   if (props.defaultValue.isDirty) {
@@ -120,6 +112,14 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setPlaceholderTextColor(props.placeholderTextColor.value);
     // TODO: Set isDirty = false
   }
+  if (props.returnKeyType.isDirty) {
+    view->setReturnKeyType(props.returnKeyType.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.selection.isDirty) {
+    view->setSelection(props.selection.value);
+    // TODO: Set isDirty = false
+  }
   if (props.selectionColor.isDirty) {
     view->setSelectionColor(props.selectionColor.value);
     // TODO: Set isDirty = false
@@ -128,8 +128,16 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setSecureTextEntry(props.secureTextEntry.value);
     // TODO: Set isDirty = false
   }
-  if (props.selection.isDirty) {
-    view->setSelection(props.selection.value);
+  if (props.selectTextOnFocus.isDirty) {
+    view->setSelectTextOnFocus(props.selectTextOnFocus.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.showSoftInputOnFocus.isDirty) {
+    view->setShowSoftInputOnFocus(props.showSoftInputOnFocus.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.smartInsertDelete.isDirty) {
+    view->setSmartInsertDelete(props.smartInsertDelete.value);
     // TODO: Set isDirty = false
   }
   if (props.onFocused.isDirty) {
@@ -166,10 +174,6 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
   }
   if (props.onTouchEnded.isDirty) {
     view->setOnTouchEnded(props.onTouchEnded.value);
-    // TODO: Set isDirty = false
-  }
-  if (props.returnKeyType.isDirty) {
-    view->setReturnKeyType(props.returnKeyType.value);
     // TODO: Set isDirty = false
   }
   if (props.onInitialHeightMeasured.isDirty) {

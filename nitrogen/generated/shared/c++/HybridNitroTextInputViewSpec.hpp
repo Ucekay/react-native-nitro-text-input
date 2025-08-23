@@ -23,10 +23,10 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
-// Forward declaration of `TextSelection` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -36,9 +36,9 @@ namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include <variant>
+#include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
 #include <functional>
-#include "ReturnKeyType.hpp"
 
 namespace margelo::nitro::nitrotextinput {
 
@@ -83,12 +83,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) = 0;
       virtual std::optional<bool> getClearTextOnFocus() = 0;
       virtual void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) = 0;
-      virtual std::optional<bool> getSelectTextOnFocus() = 0;
-      virtual void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) = 0;
       virtual std::optional<bool> getContextMenuHidden() = 0;
       virtual void setContextMenuHidden(std::optional<bool> contextMenuHidden) = 0;
-      virtual std::optional<bool> getShowSoftInputOnFocus() = 0;
-      virtual void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) = 0;
       virtual std::optional<std::string> getDefaultValue() = 0;
       virtual void setDefaultValue(const std::optional<std::string>& defaultValue) = 0;
       virtual std::optional<bool> getEditable() = 0;
@@ -109,12 +105,20 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
       virtual std::optional<std::variant<std::string, double>> getPlaceholderTextColor() = 0;
       virtual void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) = 0;
+      virtual std::optional<ReturnKeyType> getReturnKeyType() = 0;
+      virtual void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) = 0;
+      virtual std::optional<TextSelection> getSelection() = 0;
+      virtual void setSelection(const std::optional<TextSelection>& selection) = 0;
       virtual std::optional<std::variant<std::string, double>> getSelectionColor() = 0;
       virtual void setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) = 0;
       virtual std::optional<bool> getSecureTextEntry() = 0;
       virtual void setSecureTextEntry(std::optional<bool> secureTextEntry) = 0;
-      virtual std::optional<TextSelection> getSelection() = 0;
-      virtual void setSelection(const std::optional<TextSelection>& selection) = 0;
+      virtual std::optional<bool> getSelectTextOnFocus() = 0;
+      virtual void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) = 0;
+      virtual std::optional<bool> getShowSoftInputOnFocus() = 0;
+      virtual void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) = 0;
+      virtual std::optional<bool> getSmartInsertDelete() = 0;
+      virtual void setSmartInsertDelete(std::optional<bool> smartInsertDelete) = 0;
       virtual std::optional<std::function<void()>> getOnFocused() = 0;
       virtual void setOnFocused(const std::optional<std::function<void()>>& onFocused) = 0;
       virtual std::optional<std::function<void()>> getOnBlurred() = 0;
@@ -133,8 +137,6 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) = 0;
       virtual std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() = 0;
       virtual void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) = 0;
-      virtual std::optional<ReturnKeyType> getReturnKeyType() = 0;
-      virtual void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;
       virtual void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) = 0;
 

@@ -111,20 +111,10 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setClearTextOnFocus(newViewProps.clearTextOnFocus.value);
     newViewProps.clearTextOnFocus.isDirty = false;
   }
-  // selectTextOnFocus: optional
-  if (newViewProps.selectTextOnFocus.isDirty) {
-    swiftPart.setSelectTextOnFocus(newViewProps.selectTextOnFocus.value);
-    newViewProps.selectTextOnFocus.isDirty = false;
-  }
   // contextMenuHidden: optional
   if (newViewProps.contextMenuHidden.isDirty) {
     swiftPart.setContextMenuHidden(newViewProps.contextMenuHidden.value);
     newViewProps.contextMenuHidden.isDirty = false;
-  }
-  // showSoftInputOnFocus: optional
-  if (newViewProps.showSoftInputOnFocus.isDirty) {
-    swiftPart.setShowSoftInputOnFocus(newViewProps.showSoftInputOnFocus.value);
-    newViewProps.showSoftInputOnFocus.isDirty = false;
   }
   // defaultValue: optional
   if (newViewProps.defaultValue.isDirty) {
@@ -176,6 +166,16 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setPlaceholderTextColor(newViewProps.placeholderTextColor.value);
     newViewProps.placeholderTextColor.isDirty = false;
   }
+  // returnKeyType: optional
+  if (newViewProps.returnKeyType.isDirty) {
+    swiftPart.setReturnKeyType(newViewProps.returnKeyType.value);
+    newViewProps.returnKeyType.isDirty = false;
+  }
+  // selection: optional
+  if (newViewProps.selection.isDirty) {
+    swiftPart.setSelection(newViewProps.selection.value);
+    newViewProps.selection.isDirty = false;
+  }
   // selectionColor: optional
   if (newViewProps.selectionColor.isDirty) {
     swiftPart.setSelectionColor(newViewProps.selectionColor.value);
@@ -186,10 +186,20 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setSecureTextEntry(newViewProps.secureTextEntry.value);
     newViewProps.secureTextEntry.isDirty = false;
   }
-  // selection: optional
-  if (newViewProps.selection.isDirty) {
-    swiftPart.setSelection(newViewProps.selection.value);
-    newViewProps.selection.isDirty = false;
+  // selectTextOnFocus: optional
+  if (newViewProps.selectTextOnFocus.isDirty) {
+    swiftPart.setSelectTextOnFocus(newViewProps.selectTextOnFocus.value);
+    newViewProps.selectTextOnFocus.isDirty = false;
+  }
+  // showSoftInputOnFocus: optional
+  if (newViewProps.showSoftInputOnFocus.isDirty) {
+    swiftPart.setShowSoftInputOnFocus(newViewProps.showSoftInputOnFocus.value);
+    newViewProps.showSoftInputOnFocus.isDirty = false;
+  }
+  // smartInsertDelete: optional
+  if (newViewProps.smartInsertDelete.isDirty) {
+    swiftPart.setSmartInsertDelete(newViewProps.smartInsertDelete.value);
+    newViewProps.smartInsertDelete.isDirty = false;
   }
   // onFocused: optional
   if (newViewProps.onFocused.isDirty) {
@@ -235,11 +245,6 @@ using namespace margelo::nitro::nitrotextinput::views;
   if (newViewProps.onTouchEnded.isDirty) {
     swiftPart.setOnTouchEnded(newViewProps.onTouchEnded.value);
     newViewProps.onTouchEnded.isDirty = false;
-  }
-  // returnKeyType: optional
-  if (newViewProps.returnKeyType.isDirty) {
-    swiftPart.setReturnKeyType(newViewProps.returnKeyType.value);
-    newViewProps.returnKeyType.isDirty = false;
   }
   // onInitialHeightMeasured: optional
   if (newViewProps.onInitialHeightMeasured.isDirty) {
