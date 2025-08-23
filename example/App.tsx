@@ -52,6 +52,7 @@ export default function App() {
         }
         selectTextOnFocus
         showSoftInputOnFocus={true}
+        spellCheck={true}
         style={{ width: '100%' }}
       />
       <TextInput
@@ -60,6 +61,7 @@ export default function App() {
         maxLength={12}
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically
+        spellCheck={false}
         style={{ width: '100%' }}
       />
       <StatusBar style="auto" />
