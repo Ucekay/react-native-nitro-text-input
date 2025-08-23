@@ -1,3 +1,9 @@
+## [1.0.0-next.28](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.27...v1.0.0-next.28) (2025-08-23)
+
+### Features
+
+* add selectTextOnFocus property ([#38](https://github.com/Ucekay/react-native-nitro-text-input/issues/38)) ([7bc3c91](https://github.com/Ucekay/react-native-nitro-text-input/commit/7bc3c918589dcb23ae3b45acaf0bb9f93dcd5a4a))
+
 ## [1.0.0-next.27](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.26...v1.0.0-next.27) (2025-08-23)
 
 ### Features
