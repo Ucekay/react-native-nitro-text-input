@@ -85,6 +85,7 @@ export function NitroTextInput(props: NitroTextInputProps) {
     enterKeyHint,
     returnKeyType,
     selectionColor,
+    showSoftInputOnFocus = true,
     ...others
   } = props
 
@@ -119,8 +120,8 @@ export function NitroTextInput(props: NitroTextInputProps) {
   }
 
   // Handle showSoftInputOnFocus for inputMode 'none'
-  // const shouldShowSoftInput =
-  //   props.inputMode === 'none' ? false : props.showSoftInputOnFocus
+  const shouldShowSoftInput =
+    props.inputMode === 'none' ? false : showSoftInputOnFocus
 
   const composedStyle = () => {
     if (!hasExplicitHeight && measuredInitialHeight != null) {
@@ -182,6 +183,8 @@ export function NitroTextInput(props: NitroTextInputProps) {
       placeholderTextColor={toProcessedColor(placeholderTextColor)}
       returnKeyType={resolvedReturnKeyType}
       selectionColor={toProcessedColor(selectionColor)}
+      showSoftInputOnFocus={shouldShowSoftInput}
+      // Event handlers
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}
       onEditingEnded={{ f: onEndEditing }}

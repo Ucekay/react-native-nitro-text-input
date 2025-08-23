@@ -29,6 +29,7 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include <optional>
 #include <string>
 #include <optional>
 #include <optional>
@@ -113,6 +114,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> clearTextOnFocus;
     CachedProp<std::optional<bool>> selectTextOnFocus;
     CachedProp<std::optional<bool>> contextMenuHidden;
+    CachedProp<std::optional<bool>> showSoftInputOnFocus;
     CachedProp<std::optional<std::string>> defaultValue;
     CachedProp<std::optional<bool>> editable;
     CachedProp<std::optional<bool>> enablesReturnKeyAutomatically;

@@ -276,6 +276,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var showSoftInputOnFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.showSoftInputOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.showSoftInputOnFocus = newValue.value
+    }
+  }
+  
   public final var defaultValue: bridge.std__optional_std__string_ {
     @inline(__always)
     get {

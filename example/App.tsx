@@ -16,7 +16,7 @@ export default function App() {
         allowFontScaling
         autoCapitalize="words"
         autoCorrect
-        autoFocus={true}
+        autoFocus={false}
         caretHidden={false}
         clearButtonMode="while-editing"
         clearTextOnFocus={false}
@@ -51,9 +51,11 @@ export default function App() {
             : '#0f0'
         }
         selectTextOnFocus
+        showSoftInputOnFocus={true}
         style={{ width: '100%' }}
       />
       <TextInput
+        autoFocus={false}
         clearButtonMode="always"
         placeholder="React Native Text Input"
         enablesReturnKeyAutomatically

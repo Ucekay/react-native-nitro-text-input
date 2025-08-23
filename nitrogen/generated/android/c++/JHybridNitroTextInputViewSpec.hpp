@@ -69,6 +69,8 @@ namespace margelo::nitro::nitrotextinput {
     void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) override;
     std::optional<bool> getContextMenuHidden() override;
     void setContextMenuHidden(std::optional<bool> contextMenuHidden) override;
+    std::optional<bool> getShowSoftInputOnFocus() override;
+    void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) override;
     std::optional<std::string> getDefaultValue() override;
     void setDefaultValue(const std::optional<std::string>& defaultValue) override;
     std::optional<bool> getEditable() override;

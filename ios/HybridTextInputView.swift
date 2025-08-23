@@ -343,6 +343,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 if self.autoFocus == true {
+                    // Ensure inputView reflects showSoftInputOnFocus before focusing
+                    let show = self.showSoftInputOnFocus ?? true
+                    if show {
+                        self.textField.inputView = nil
+                    } else {
+                        self.textField.inputView = UIView()
+                    }
                     self.textField.becomeFirstResponder()
                 } else {
                     self.textField.resignFirstResponder()
@@ -415,14 +422,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var returnKeyType: ReturnKeyType? {
-        didSet {
-            Task {
-                @MainActor in
-                self.updateReturnKeyType()
-            }
-        }
-    }
     var keyboardType: KeyboardType? {
         didSet {
             Task {
@@ -464,6 +463,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var returnKeyType: ReturnKeyType? {
+        didSet {
+            Task {
+                @MainActor in
+                self.updateReturnKeyType()
+            }
+        }
+    }
     var secureTextEntry: Bool? {
         didSet {
             Task { @MainActor in
@@ -501,6 +508,21 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
     }
     var selectTextOnFocus: Bool? = false
+    var showSoftInputOnFocus: Bool? = true {
+        didSet {
+            Task { @MainActor in
+                let show = self.showSoftInputOnFocus ?? true
+                if show {
+                    self.textField.inputView = nil
+                    if self.textField.isFirstResponder {
+                        self.textField.reloadInputViews()
+                    }
+                } else {
+                    self.textField.inputView = UIView()
+                }
+            }
+        }
+    }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onFocused: (() -> Void)?
