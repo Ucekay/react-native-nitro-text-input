@@ -277,6 +277,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* secureTextEntry */)>("setSecureTextEntry");
     method(_javaPart, secureTextEntry.has_value() ? jni::JBoolean::valueOf(secureTextEntry.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroTextInputViewSpec::getSpellCheck() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSpellCheck");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setSpellCheck(std::optional<bool> spellCheck) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* spellCheck */)>("setSpellCheck");
+    method(_javaPart, spellCheck.has_value() ? jni::JBoolean::valueOf(spellCheck.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getSelectTextOnFocus() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getSelectTextOnFocus");
     auto __result = method(_javaPart);

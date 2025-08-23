@@ -27,6 +27,7 @@
     "selection": true,
     "selectionColor": true,
     "secureTextEntry": true,
+    "spellCheck": true,
     "selectTextOnFocus": true,
     "showSoftInputOnFocus": true,
     "smartInsertDelete": true,

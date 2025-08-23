@@ -113,6 +113,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) = 0;
       virtual std::optional<bool> getSecureTextEntry() = 0;
       virtual void setSecureTextEntry(std::optional<bool> secureTextEntry) = 0;
+      virtual std::optional<bool> getSpellCheck() = 0;
+      virtual void setSpellCheck(std::optional<bool> spellCheck) = 0;
       virtual std::optional<bool> getSelectTextOnFocus() = 0;
       virtual void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) = 0;
       virtual std::optional<bool> getShowSoftInputOnFocus() = 0;
