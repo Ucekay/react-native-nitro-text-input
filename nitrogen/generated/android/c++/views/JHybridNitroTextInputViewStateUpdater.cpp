@@ -108,6 +108,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setPlaceholder(props.placeholder.value);
     // TODO: Set isDirty = false
   }
+  if (props.textAlign.isDirty) {
+    view->setTextAlign(props.textAlign.value);
+    // TODO: Set isDirty = false
+  }
   if (props.placeholderTextColor.isDirty) {
     view->setPlaceholderTextColor(props.placeholderTextColor.value);
     // TODO: Set isDirty = false

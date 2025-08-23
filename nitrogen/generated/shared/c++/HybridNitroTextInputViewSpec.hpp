@@ -23,6 +23,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
@@ -37,6 +39,7 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include <string>
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
+#include "TextAlign.hpp"
 #include <variant>
 #include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
@@ -106,6 +109,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setMultiline(std::optional<bool> multiline) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
+      virtual std::optional<TextAlign> getTextAlign() = 0;
+      virtual void setTextAlign(std::optional<TextAlign> textAlign) = 0;
       virtual std::optional<std::variant<std::string, double>> getPlaceholderTextColor() = 0;
       virtual void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) = 0;
       virtual std::optional<ReturnKeyType> getReturnKeyType() = 0;

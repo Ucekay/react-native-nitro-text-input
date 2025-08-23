@@ -29,6 +29,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var maxLength: Double? { get set }
   var multiline: Bool? { get set }
   var placeholder: String? { get set }
+  var textAlign: TextAlign? { get set }
   var placeholderTextColor: ProcessedColor? { get set }
   var returnKeyType: ReturnKeyType? { get set }
   var selection: TextSelection? { get set }

@@ -17,6 +17,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
@@ -36,6 +38,8 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include "JKeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include "JKeyboardAppearance.hpp"
+#include "TextAlign.hpp"
+#include "JTextAlign.hpp"
 #include <variant>
 #include "JProcessedColor.hpp"
 #include "ReturnKeyType.hpp"
@@ -235,6 +239,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setPlaceholder(const std::optional<std::string>& placeholder) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* placeholder */)>("setPlaceholder");
     method(_javaPart, placeholder.has_value() ? jni::make_jstring(placeholder.value()) : nullptr);
+  }
+  std::optional<TextAlign> JHybridNitroTextInputViewSpec::getTextAlign() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextAlign>()>("getTextAlign");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setTextAlign(std::optional<TextAlign> textAlign) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextAlign> /* textAlign */)>("setTextAlign");
+    method(_javaPart, textAlign.has_value() ? JTextAlign::fromCpp(textAlign.value()) : nullptr);
   }
   std::optional<std::variant<std::string, double>> JHybridNitroTextInputViewSpec::getPlaceholderTextColor() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JProcessedColor>()>("getPlaceholderTextColor");

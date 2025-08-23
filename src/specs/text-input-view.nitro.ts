@@ -92,6 +92,8 @@ export type MaxFontMultiplier = number | null | undefined
 
 export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline'
 
+export type TextAlign = 'left' | 'center' | 'right' | 'natural'
+
 // A processed color (AARRGGBB) or JSON-stringified OpaqueColor (semantic/dynamic)
 export type ProcessedColor = number | string | null | undefined
 
@@ -121,6 +123,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   maxLength?: number
   multiline?: boolean
   placeholder?: string
+  textAlign?: TextAlign
   placeholderTextColor?: ProcessedColor
   returnKeyType?: ReturnKeyType
   selection?: TextSelection

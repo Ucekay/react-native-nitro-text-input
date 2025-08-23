@@ -22,6 +22,8 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
@@ -36,6 +38,7 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include <string>
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
+#include "TextAlign.hpp"
 #include <variant>
 #include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
@@ -204,6 +207,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setPlaceholder(const std::optional<std::string>& placeholder) noexcept override {
       _swiftPart.setPlaceholder(placeholder);
+    }
+    inline std::optional<TextAlign> getTextAlign() noexcept override {
+      auto __result = _swiftPart.getTextAlign();
+      return __result;
+    }
+    inline void setTextAlign(std::optional<TextAlign> textAlign) noexcept override {
+      _swiftPart.setTextAlign(textAlign);
     }
     inline std::optional<std::variant<std::string, double>> getPlaceholderTextColor() noexcept override {
       auto __result = _swiftPart.getPlaceholderTextColor();
