@@ -52,6 +52,7 @@ export default function App() {
         }
         selectTextOnFocus
         showSoftInputOnFocus={true}
+        smartInsertDelete={true}
         style={{ width: '100%' }}
       />
       <TextInput
