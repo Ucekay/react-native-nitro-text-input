@@ -981,7 +981,10 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         self.textField.onDidBeginEditing = { [weak self] in
             guard let self = self else { return }
             if self.selectTextOnFocus == true {
-                self.textField.selectAll(nil)
+                // Defer selection to override iOS' tap-based caret placement
+                DispatchQueue.main.async { [weak self] in
+                    self?.textField.selectAll(nil)
+                }
             }
             self.onFocused?()
         }
