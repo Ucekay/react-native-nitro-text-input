@@ -350,7 +350,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                     } else {
                         self.textField.inputView = UIView()
                     }
-                    self.textField.becomeFirstResponder()
+                    _ = self.textField.becomeFirstResponder()
                 } else {
                     self.textField.resignFirstResponder()
                 }
