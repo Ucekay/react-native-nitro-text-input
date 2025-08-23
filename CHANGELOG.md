@@ -1,3 +1,9 @@
+## [1.0.0-next.33](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.32...v1.0.0-next.33) (2025-08-23)
+
+### Features
+
+* add textAlign prop ([#43](https://github.com/Ucekay/react-native-nitro-text-input/issues/43)) ([ef94dc5](https://github.com/Ucekay/react-native-nitro-text-input/commit/ef94dc5f5e8ba44413909cd61ed5bb22ecb58a17))
+
 ## [1.0.0-next.32](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.31...v1.0.0-next.32) (2025-08-23)
 
 ### Features
