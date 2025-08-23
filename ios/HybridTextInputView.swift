@@ -343,6 +343,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 if self.autoFocus == true {
+                    // Ensure inputView reflects showSoftInputOnFocus before focusing
+                    let show = self.showSoftInputOnFocus ?? true
+                    if show {
+                        self.textField.inputView = nil
+                    } else {
+                        self.textField.inputView = UIView()
+                    }
                     self.textField.becomeFirstResponder()
                 } else {
                     self.textField.resignFirstResponder()
