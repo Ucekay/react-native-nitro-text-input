@@ -1,3 +1,9 @@
+## [1.0.0-next.21](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.20...v1.0.0-next.21) (2025-08-23)
+
+### Features
+
+* add placeholderTextColor support for iOS TextInput ([#30](https://github.com/Ucekay/react-native-nitro-text-input/issues/30)) ([6bcfed7](https://github.com/Ucekay/react-native-nitro-text-input/commit/6bcfed79eca528ddf8f35cbef2cddab8d55c4d0d))
+
 ## [1.0.0-next.20](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.19...v1.0.0-next.20) (2025-08-22)
 
 ### Features
