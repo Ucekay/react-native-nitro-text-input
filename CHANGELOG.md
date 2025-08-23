@@ -1,3 +1,9 @@
+## [1.0.0-next.25](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.24...v1.0.0-next.25) (2025-08-23)
+
+### Features
+
+* add secureTextEntry support for iOS text input ([#35](https://github.com/Ucekay/react-native-nitro-text-input/issues/35)) ([b306bd0](https://github.com/Ucekay/react-native-nitro-text-input/commit/b306bd02954577028339151f84155dc8932961ec))
+
 ## [1.0.0-next.24](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.23...v1.0.0-next.24) (2025-08-23)
 
 ### Bug Fixes

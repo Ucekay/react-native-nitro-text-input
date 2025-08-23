@@ -1,6 +1,6 @@
 {
 	"name": "react-native-nitro-text-input",
-	"version": "1.0.0-next.24",
+	"version": "1.0.0-next.25",
 	"description": "nitro-text-input",
 	"main": "lib/index",
 	"module": "lib/index",
