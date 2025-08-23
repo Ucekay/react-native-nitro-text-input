@@ -1,3 +1,9 @@
+## [1.0.0-next.31](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.30...v1.0.0-next.31) (2025-08-23)
+
+### Features
+
+* add spellCheck support ([#41](https://github.com/Ucekay/react-native-nitro-text-input/issues/41)) ([48cfc63](https://github.com/Ucekay/react-native-nitro-text-input/commit/48cfc63e1bef7939c7d3afdee92f4026a02b9538))
+
 ## [1.0.0-next.30](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.29...v1.0.0-next.30) (2025-08-23)
 
 ### Features
