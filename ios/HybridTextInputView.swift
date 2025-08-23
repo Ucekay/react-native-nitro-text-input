@@ -465,6 +465,25 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var selection: TextSelection? {
+        didSet {
+            Task { @MainActor in
+                guard let sel = self.selection else { return }
+                let startOffset = Int(sel.start)
+                let endOffset = Int(sel.end)
+                guard let start = self.textField.position(
+                    from: self.textField.beginningOfDocument,
+                    offset: startOffset
+                ), let end = self.textField.position(
+                    from: self.textField.beginningOfDocument,
+                    offset: endOffset
+                ) else { return }
+                if let range = self.textField.textRange(from: start, to: end) {
+                    self.textField.selectedTextRange = range
+                }
+            }
+        }
+    }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onFocused: (() -> Void)?

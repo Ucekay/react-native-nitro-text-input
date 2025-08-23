@@ -96,6 +96,11 @@ export type PlaceholderTextColor = number | string | null | undefined
 
 // (kept simple per RN API shape)
 
+export interface TextSelection {
+  start: number
+  end: number
+}
+
 export interface NitroTextInputViewProps extends HybridViewProps {
   allowFontScaling?: boolean
   autoCapitalize?: AutoCapitalize
@@ -124,6 +129,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
   placeholder?: string
   placeholderTextColor?: PlaceholderTextColor
   secureTextEntry?: boolean
+  selection?: TextSelection
   onFocused?: () => void
   onBlurred?: () => void
   onTextChanged?: (text: string) => void

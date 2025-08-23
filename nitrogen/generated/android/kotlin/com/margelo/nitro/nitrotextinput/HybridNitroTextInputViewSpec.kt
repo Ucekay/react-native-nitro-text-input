@@ -158,6 +158,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:Keep
   abstract var secureTextEntry: Boolean?
   
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var selection: TextSelection?
+  
   abstract var onFocused: (() -> Unit)?
   
   private var onFocused_cxx: Func_void?

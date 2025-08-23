@@ -24,6 +24,7 @@
     "placeholder": true,
     "placeholderTextColor": true,
     "secureTextEntry": true,
+    "selection": true,
     "onFocused": true,
     "onBlurred": true,
     "onTextChanged": true,
