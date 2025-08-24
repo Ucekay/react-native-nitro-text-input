@@ -273,7 +273,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.defaultValue = { () -> String? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__string_(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__string_(newValue)
           return String(__unwrapped)
         } else {
           return nil
@@ -415,7 +416,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.passwordRules = { () -> String? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__string_(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__string_(newValue)
           return String(__unwrapped)
         } else {
           return nil
@@ -438,7 +440,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.placeholder = { () -> String? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__string_(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__string_(newValue)
           return String(__unwrapped)
         } else {
           return nil
@@ -485,7 +488,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.placeholderTextColor = { () -> ProcessedColor? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__variant_std__string__double__(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__variant_std__string__double__(newValue)
           return { () -> ProcessedColor in
             let __variant = bridge.std__variant_std__string__double_(__unwrapped)
             switch __variant.index() {
@@ -537,7 +541,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.selection = { () -> TextSelection? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_TextSelection_(newValue) {
+          let __unwrapped = bridge.get_std__optional_TextSelection_(newValue)
           return __unwrapped
         } else {
           return nil
@@ -567,7 +572,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.selectionColor = { () -> ProcessedColor? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__variant_std__string__double__(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__variant_std__string__double__(newValue)
           return { () -> ProcessedColor in
             let __variant = bridge.std__variant_std__string__double_(__unwrapped)
             switch __variant.index() {
@@ -707,7 +713,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onFocused = { () -> (() -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void____(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void____(newValue)
           return { () -> () -> Void in
             let __wrappedFunction = bridge.wrap_Func_void(__unwrapped)
             return { () -> Void in
@@ -738,7 +745,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onBlurred = { () -> (() -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void____(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void____(newValue)
           return { () -> () -> Void in
             let __wrappedFunction = bridge.wrap_Func_void(__unwrapped)
             return { () -> Void in
@@ -769,7 +777,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onTextChanged = { () -> ((_ text: String) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____text______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____text______(newValue)
           return { () -> (String) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
             return { (__text: String) -> Void in
@@ -800,7 +809,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onEditingEnded = { () -> ((_ text: String) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____text______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____text______(newValue)
           return { () -> (String) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
             return { (__text: String) -> Void in
@@ -831,7 +841,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onEditingSubmitted = { () -> ((_ text: String) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____text______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____text______(newValue)
           return { () -> (String) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
             return { (__text: String) -> Void in
@@ -862,7 +873,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onSelectionChanged = { () -> ((_ start: Double, _ end: Double) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_double____start_____double____end______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____start_____double____end______(newValue)
           return { () -> (Double, Double) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_double_double(__unwrapped)
             return { (__start: Double, __end: Double) -> Void in
@@ -893,7 +905,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onKeyPressed = { () -> ((_ key: String) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____key______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____key______(newValue)
           return { () -> (String) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
             return { (__key: String) -> Void in
@@ -924,7 +937,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onTouchBegan = { () -> ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue)
           return { () -> (Double, Double, Double, Double, Double) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_double_double_double_double_double(__unwrapped)
             return { (__pageX: Double, __pageY: Double, __locationX: Double, __locationY: Double, __timestamp: Double) -> Void in
@@ -955,7 +969,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onTouchEnded = { () -> ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue)
           return { () -> (Double, Double, Double, Double, Double) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_double_double_double_double_double(__unwrapped)
             return { (__pageX: Double, __pageY: Double, __locationX: Double, __locationY: Double, __timestamp: Double) -> Void in
@@ -986,7 +1001,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onInitialHeightMeasured = { () -> ((_ height: Double) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_double____height______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____height______(newValue)
           return { () -> (Double) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_double(__unwrapped)
             return { (__height: Double) -> Void in
