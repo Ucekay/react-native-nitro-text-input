@@ -1,3 +1,9 @@
+## [1.0.0-next.35](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.34...v1.0.0-next.35) (2025-08-24)
+
+### Features
+
+* add focus, blur, clear, and isFocused methods to NitroTextInput ([#45](https://github.com/Ucekay/react-native-nitro-text-input/issues/45)) ([b397201](https://github.com/Ucekay/react-native-nitro-text-input/commit/b397201c6ea8d86cae12013f952589203f8ff8fc))
+
 ## [1.0.0-next.34](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.33...v1.0.0-next.34) (2025-08-23)
 
 ### Features
