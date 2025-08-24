@@ -635,14 +635,26 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
     }
     func blur() {
-        textField.resignFirstResponder()
+        Task { @MainActor in
+            self.textField.resignFirstResponder()
+        }
     }
     func clear() {
-        // Minimal clear: empty text and move caret to start
-        textField.attributedText = NSAttributedString()
-        if let start = textField.beginningOfDocument as UITextPosition?,
-           let range = textField.textRange(from: start, to: start) {
-            textField.selectedTextRange = range
+        Task { @MainActor in
+            // Ensure text field is in a valid state
+            guard self.textField.superview != nil else { return }
+
+            // Clear text and reset selection
+            self.textField.text = ""
+
+            // Reset selection to the beginning
+            let start = self.textField.beginningOfDocument
+            if let range = self.textField.textRange(from: start, to: start) {
+                self.textField.selectedTextRange = range
+            }
+
+            // Trigger text changed event
+            self.textField.onTextChanged?("")
         }
     }
     func isFocused() -> Bool {
