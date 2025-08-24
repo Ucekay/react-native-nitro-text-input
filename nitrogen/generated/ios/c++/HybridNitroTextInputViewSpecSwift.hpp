@@ -365,7 +365,32 @@ namespace margelo::nitro::nitrotextinput {
 
   public:
     // Methods
-    
+    inline void focus() override {
+      auto __result = _swiftPart.focus();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void blur() override {
+      auto __result = _swiftPart.blur();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void clear() override {
+      auto __result = _swiftPart.clear();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline bool isFocused() override {
+      auto __result = _swiftPart.isFocused();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
 
   private:
     NitroTextInput::HybridNitroTextInputViewSpec_cxx _swiftPart;

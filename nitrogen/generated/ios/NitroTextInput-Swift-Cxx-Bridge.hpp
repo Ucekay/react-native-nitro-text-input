@@ -44,8 +44,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
 #include "TextSelection.hpp"
-#include <NitroModules/Promise.hpp>
-#include <NitroModules/PromiseHolder.hpp>
+#include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
 #include <memory>
@@ -369,85 +368,6 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return std::optional<std::function<void(double /* height */)>>(value);
   }
   
-  // pragma MARK: std::function<std::shared_ptr<Promise<bool>>()>
-  /**
-   * Specialized version of `std::function<std::shared_ptr<Promise<bool>>()>`.
-   */
-  using Func_std__shared_ptr_Promise_bool__ = std::function<std::shared_ptr<Promise<bool>>()>;
-  /**
-   * Wrapper class for a `std::function<std::shared_ptr<Promise<bool>>()>`, this can be used from Swift.
-   */
-  class Func_std__shared_ptr_Promise_bool___Wrapper final {
-  public:
-    explicit Func_std__shared_ptr_Promise_bool___Wrapper(std::function<std::shared_ptr<Promise<bool>>()>&& func): _function(std::make_unique<std::function<std::shared_ptr<Promise<bool>>()>>(std::move(func))) {}
-    inline std::shared_ptr<Promise<bool>> call() const {
-      auto __result = _function->operator()();
-      return __result;
-    }
-  private:
-    std::unique_ptr<std::function<std::shared_ptr<Promise<bool>>()>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_std__shared_ptr_Promise_bool__ create_Func_std__shared_ptr_Promise_bool__(void* _Nonnull swiftClosureWrapper);
-  inline Func_std__shared_ptr_Promise_bool___Wrapper wrap_Func_std__shared_ptr_Promise_bool__(Func_std__shared_ptr_Promise_bool__ value) {
-    return Func_std__shared_ptr_Promise_bool___Wrapper(std::move(value));
-  }
-  
-  // pragma MARK: std::shared_ptr<Promise<bool>>
-  /**
-   * Specialized version of `std::shared_ptr<Promise<bool>>`.
-   */
-  using std__shared_ptr_Promise_bool__ = std::shared_ptr<Promise<bool>>;
-  inline std::shared_ptr<Promise<bool>> create_std__shared_ptr_Promise_bool__() {
-    return Promise<bool>::create();
-  }
-  inline PromiseHolder<bool> wrap_std__shared_ptr_Promise_bool__(std::shared_ptr<Promise<bool>> promise) {
-    return PromiseHolder<bool>(std::move(promise));
-  }
-  
-  // pragma MARK: std::function<void(bool /* result */)>
-  /**
-   * Specialized version of `std::function<void(bool)>`.
-   */
-  using Func_void_bool = std::function<void(bool /* result */)>;
-  /**
-   * Wrapper class for a `std::function<void(bool / * result * /)>`, this can be used from Swift.
-   */
-  class Func_void_bool_Wrapper final {
-  public:
-    explicit Func_void_bool_Wrapper(std::function<void(bool /* result */)>&& func): _function(std::make_unique<std::function<void(bool /* result */)>>(std::move(func))) {}
-    inline void call(bool result) const {
-      _function->operator()(result);
-    }
-  private:
-    std::unique_ptr<std::function<void(bool /* result */)>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_void_bool create_Func_void_bool(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_bool_Wrapper wrap_Func_void_bool(Func_void_bool value) {
-    return Func_void_bool_Wrapper(std::move(value));
-  }
-  
-  // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
-  /**
-   * Specialized version of `std::function<void(const std::exception_ptr&)>`.
-   */
-  using Func_void_std__exception_ptr = std::function<void(const std::exception_ptr& /* error */)>;
-  /**
-   * Wrapper class for a `std::function<void(const std::exception_ptr& / * error * /)>`, this can be used from Swift.
-   */
-  class Func_void_std__exception_ptr_Wrapper final {
-  public:
-    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_unique<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
-    inline void call(std::exception_ptr error) const {
-      _function->operator()(error);
-    }
-  private:
-    std::unique_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) {
-    return Func_void_std__exception_ptr_Wrapper(std::move(value));
-  }
-  
   // pragma MARK: std::shared_ptr<HybridNitroTextInputViewSpec>
   /**
    * Specialized version of `std::shared_ptr<HybridNitroTextInputViewSpec>`.
@@ -459,5 +379,23 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   // pragma MARK: std::weak_ptr<HybridNitroTextInputViewSpec>
   using std__weak_ptr_HybridNitroTextInputViewSpec_ = std::weak_ptr<HybridNitroTextInputViewSpec>;
   inline std__weak_ptr_HybridNitroTextInputViewSpec_ weakify_std__shared_ptr_HybridNitroTextInputViewSpec_(const std::shared_ptr<HybridNitroTextInputViewSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
+    return Result<void>::withError(error);
+  }
+  
+  // pragma MARK: Result<bool>
+  using Result_bool_ = Result<bool>;
+  inline Result_bool_ create_Result_bool_(bool value) {
+    return Result<bool>::withValue(std::move(value));
+  }
+  inline Result_bool_ create_Result_bool_(const std::exception_ptr& error) {
+    return Result<bool>::withError(error);
+  }
 
 } // namespace margelo::nitro::nitrotextinput::bridge::swift

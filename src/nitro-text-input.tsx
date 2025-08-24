@@ -11,6 +11,7 @@ import { NativeNitroTextInput } from './native-nitro-text-input'
 import type {
   NitroTextInputViewMethods,
   NitroTextInputViewProps,
+  ReturnKeyType,
 } from './specs/text-input-view.nitro'
 
 type NativeTextInputProps = WrapFunctionsInObjects<
@@ -20,7 +21,8 @@ type NativeTextInputProps = WrapFunctionsInObjects<
     NitroTextInputViewProps
 > &
   ViewProps
-export interface NitroTextInputProps
+// Base props interface (without ref)
+export interface NitroTextInputBaseProps
   extends Omit<
     NativeTextInputProps,
     | 'onInitialHeightMeasured'
@@ -35,6 +37,7 @@ export interface NitroTextInputProps
     | 'onKeyPressed'
     | 'placeholderTextColor'
     | 'selectionColor'
+    | 'hybridRef'
   > {
   inputMode?: InputModeOptions
   onBlur?: () => void
@@ -61,9 +64,12 @@ export interface NitroTextInputProps
   placeholderTextColor?: TextInputProps['placeholderTextColor'] | undefined
   enterKeyHint?: 'done' | 'next' | 'search' | 'send' | 'go' | 'enter'
   selectionColor?: TextInputProps['selectionColor'] | undefined
+  ref?: React.RefObject<NitroTextInputViewMethods | null>
 }
 
-export function NitroTextInput(props: NitroTextInputProps) {
+export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
+  const { ref: propsRef, ...props } = inputProps
+
   const [measuredInitialHeight, setMeasuredInitialHeight] = React.useState<
     number | undefined
   >(undefined)
@@ -140,8 +146,8 @@ export function NitroTextInput(props: NitroTextInputProps) {
   }
 
   const mapEnterKeyHintToReturnKeyType = (
-    hint: NitroTextInputProps['enterKeyHint']
-  ): NitroTextInputProps['returnKeyType'] | undefined => {
+    hint: TextInputProps['enterKeyHint']
+  ): ReturnKeyType | undefined => {
     switch (hint) {
       case 'done':
         return 'done'
@@ -160,10 +166,30 @@ export function NitroTextInput(props: NitroTextInputProps) {
     }
   }
 
+  const filterUnsupportedReturnKeyType = (
+    keyType: ReturnKeyType | undefined
+  ): ReturnKeyType | undefined => {
+    const supportedKeys: ReturnKeyType[] = [
+      'go',
+      'google',
+      'join',
+      'next',
+      'route',
+      'search',
+      'send',
+      'yahoo',
+      'done',
+      'emergency-call',
+    ]
+    return keyType && supportedKeys.includes(keyType as ReturnKeyType)
+      ? (keyType as ReturnKeyType)
+      : undefined
+  }
+
   const resolvedReturnKeyType =
-    Platform.OS === 'ios' && enterKeyHint != null
+    enterKeyHint != null
       ? mapEnterKeyHintToReturnKeyType(enterKeyHint)
-      : returnKeyType
+      : filterUnsupportedReturnKeyType(returnKeyType)
 
   const toProcessedColor = (
     color:
@@ -184,6 +210,14 @@ export function NitroTextInput(props: NitroTextInputProps) {
       returnKeyType={resolvedReturnKeyType}
       selectionColor={toProcessedColor(selectionColor)}
       showSoftInputOnFocus={shouldShowSoftInput}
+      // Hybrid ref for method access
+      hybridRef={{
+        f: (view) => {
+          if (propsRef) {
+            propsRef.current = view
+          }
+        },
+      }}
       // Event handlers
       onBlurred={{ f: onBlur }}
       onTextChanged={{ f: onChangeText }}

@@ -359,7 +359,21 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
     }
 
   // Methods
+  @DoNotStrip
+  @Keep
+  abstract fun focus(): Unit
   
+  @DoNotStrip
+  @Keep
+  abstract fun blur(): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun clear(): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun isFocused(): Boolean
 
   private external fun initHybrid(): HybridData
 

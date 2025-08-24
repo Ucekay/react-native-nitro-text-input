@@ -1001,6 +1001,51 @@ open class HybridNitroTextInputViewSpec_cxx {
   }
 
   // Methods
+  @inline(__always)
+  public final func focus() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.focus()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func blur() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.blur()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func clear() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.clear()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func isFocused() -> bridge.Result_bool_ {
+    do {
+      let __result = try self.__implementation.isFocused()
+      let __resultCpp = __result
+      return bridge.create_Result_bool_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_bool_(__exceptionPtr)
+    }
+  }
+  
   public final func getView() -> UnsafeMutableRawPointer {
     return Unmanaged.passRetained(__implementation.view).toOpaque()
   }

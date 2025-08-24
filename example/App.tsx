@@ -1,15 +1,47 @@
 import { StatusBar } from 'expo-status-bar'
+import { useRef, useState } from 'react'
 import {
+  Button,
   DynamicColorIOS,
   Platform,
   PlatformColor,
   StyleSheet,
+  Text,
   TextInput,
   View,
 } from 'react-native'
-import { NitroTextInput } from 'react-native-nitro-text-input'
+import { HybridRef } from 'react-native-nitro-modules'
+import {
+  NitroTextInput,
+  type NitroTextInputViewMethods,
+} from 'react-native-nitro-text-input'
+import { NitroTextInputViewProps } from '../lib/specs/text-input-view.nitro'
 
 export default function App() {
+  const ref =
+    useRef<HybridRef<NitroTextInputViewProps, NitroTextInputViewMethods>>(null)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const checkFocusStatus = () => {
+    const focused = ref.current?.isFocused() ?? false
+    setIsFocused(focused)
+    console.log('Focus status:', focused)
+  }
+
+  const handleFocus = () => {
+    ref.current?.focus()
+    checkFocusStatus()
+  }
+
+  const handleBlur = () => {
+    ref.current?.blur()
+    checkFocusStatus()
+  }
+
+  const handleClear = () => {
+    ref.current?.clear()
+  }
+
   return (
     <View style={styles.container}>
       <NitroTextInput
@@ -25,9 +57,15 @@ export default function App() {
         enablesReturnKeyAutomatically
         keyboardAppearance="default"
         maxLength={12}
-        onBlur={() => console.log('blurred')}
+        onBlur={() => {
+          console.log('blurred')
+          checkFocusStatus()
+        }}
         onChangeText={(text) => console.log(text)}
-        onFocus={() => console.log('focused')}
+        onFocus={() => {
+          console.log('focused')
+          checkFocusStatus()
+        }}
         onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
         onSelectionChange={({ start, end }) =>
           console.log(`Selection changed: ${start} - ${end}`)
@@ -57,7 +95,20 @@ export default function App() {
         submitBehavior="blurAndSubmit"
         textAlign="center"
         style={{ width: '100%' }}
+        ref={ref}
       />
+
+      <Text style={styles.statusText}>
+        Focus Status: {isFocused ? '✅ Focused' : '❌ Not Focused'}
+      </Text>
+
+      <View style={styles.buttonContainer}>
+        <Button title="Focus" onPress={handleFocus} />
+        <Button title="Blur" onPress={handleBlur} />
+        <Button title="Clear" onPress={handleClear} />
+        <Button title="Check Focus" onPress={checkFocusStatus} />
+      </View>
+
       <TextInput
         autoFocus={false}
         clearButtonMode="always"
@@ -78,6 +129,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 32,
+    gap: 20,
+    padding: 20,
+  },
+  statusText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
 })
