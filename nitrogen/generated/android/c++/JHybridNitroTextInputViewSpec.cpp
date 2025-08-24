@@ -540,6 +540,22 @@ namespace margelo::nitro::nitrotextinput {
   }
 
   // Methods
-  
+  void JHybridNitroTextInputViewSpec::focus() {
+    static const auto method = javaClassStatic()->getMethod<void()>("focus");
+    method(_javaPart);
+  }
+  void JHybridNitroTextInputViewSpec::blur() {
+    static const auto method = javaClassStatic()->getMethod<void()>("blur");
+    method(_javaPart);
+  }
+  void JHybridNitroTextInputViewSpec::clear() {
+    static const auto method = javaClassStatic()->getMethod<void()>("clear");
+    method(_javaPart);
+  }
+  bool JHybridNitroTextInputViewSpec::isFocused() {
+    static const auto method = javaClassStatic()->getMethod<jboolean()>("isFocused");
+    auto __result = method(_javaPart);
+    return static_cast<bool>(__result);
+  }
 
 } // namespace margelo::nitro::nitrotextinput

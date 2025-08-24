@@ -53,7 +53,10 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
 
   // Methods
-  
+  func focus() throws -> Void
+  func blur() throws -> Void
+  func clear() throws -> Void
+  func isFocused() throws -> Bool
 }
 
 /// See ``HybridNitroTextInputViewSpec``

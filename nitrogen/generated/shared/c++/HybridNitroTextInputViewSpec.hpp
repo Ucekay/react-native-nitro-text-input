@@ -156,7 +156,10 @@ namespace margelo::nitro::nitrotextinput {
 
     public:
       // Methods
-      
+      virtual void focus() = 0;
+      virtual void blur() = 0;
+      virtual void clear() = 0;
+      virtual bool isFocused() = 0;
 
     protected:
       // Hybrid Setup

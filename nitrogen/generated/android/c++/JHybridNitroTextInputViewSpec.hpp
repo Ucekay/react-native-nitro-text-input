@@ -132,7 +132,10 @@ namespace margelo::nitro::nitrotextinput {
 
   public:
     // Methods
-    
+    void focus() override;
+    void blur() override;
+    void clear() override;
+    bool isFocused() override;
 
   private:
     friend HybridBase;

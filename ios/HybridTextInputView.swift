@@ -308,6 +308,24 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             object: nil
         )
     }
+    private func performFocus() {
+        // Apply showSoftInputOnFocus before focusing
+        let show = self.showSoftInputOnFocus ?? true
+        if show {
+            self.textField.inputView = nil
+        } else {
+            self.textField.inputView = UIView()
+        }
+        _ = self.textField.becomeFirstResponder()
+        if self.clearTextOnFocus == true {
+            self.textField.attributedText = NSAttributedString()
+        }
+        if self.selectTextOnFocus == true {
+            DispatchQueue.main.async { [weak self] in
+                self?.textField.selectAll(nil)
+            }
+        }
+    }
 
     deinit {
         NotificationCenter.default.removeObserver(
@@ -355,14 +373,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 if self.autoFocus == true {
-                    // Ensure inputView reflects showSoftInputOnFocus before focusing
-                    let show = self.showSoftInputOnFocus ?? true
-                    if show {
-                        self.textField.inputView = nil
-                    } else {
-                        self.textField.inputView = UIView()
-                    }
-                    _ = self.textField.becomeFirstResponder()
+                    self.performFocus()
                 } else {
                     self.textField.resignFirstResponder()
                 }
@@ -501,7 +512,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    // Accept numeric AARRGGBB (Double) or JSON stringified OpaqueColor (String)
     var placeholderTextColor: ProcessedColor? {
         didSet {
             Task { @MainActor in
@@ -597,13 +607,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
-    var onFocused: (() -> Void)?
     var onBlurred: (() -> Void)?
     var onEditingEnded: ((_ text: String) -> Void)?
     var onEditingSubmitted: ((_ text: String) -> Void)?
+    var onFocused: (() -> Void)?
     var onKeyPressed: ((String) -> Void)?
-    var onTextChanged: ((_ text: String) -> Void)?
     var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)?
+    var onTextChanged: ((_ text: String) -> Void)?
     var onTouchBegan:
         (
             (
@@ -618,6 +628,38 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 _ locationY: Double, _ timestamp: Double
             ) -> Void
         )?
+
+    func focus() {
+        Task { @MainActor in
+            self.performFocus()
+        }
+    }
+    func blur() {
+        Task { @MainActor in
+            self.textField.resignFirstResponder()
+        }
+    }
+    func clear() {
+        Task { @MainActor in
+            // Ensure text field is in a valid state
+            guard self.textField.superview != nil else { return }
+
+            // Clear text and reset selection
+            self.textField.text = ""
+
+            // Reset selection to the beginning
+            let start = self.textField.beginningOfDocument
+            if let range = self.textField.textRange(from: start, to: start) {
+                self.textField.selectedTextRange = range
+            }
+
+            // Trigger text changed event
+            self.textField.onTextChanged?("")
+        }
+    }
+    func isFocused() -> Bool {
+        return textField.isFirstResponder
+    }
 
     private func updateAutoCorrect() {
         if let value = autoCorrect {

@@ -1,4 +1,5 @@
 {
+	"language_servers": ["biome"],
 	"languages": {
 		"JavaScript": {
 			"code_actions_on_format": {
