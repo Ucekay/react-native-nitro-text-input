@@ -41,6 +41,7 @@ namespace margelo::nitro::nitrotextinput {
     [[maybe_unused]]
     static jni::alias_ref<JReturnKeyType> fromCpp(ReturnKeyType value) {
       static const auto clazz = javaClassStatic();
+      static const auto fieldDEFAULT = clazz->getStaticField<JReturnKeyType>("DEFAULT");
       static const auto fieldGO = clazz->getStaticField<JReturnKeyType>("GO");
       static const auto fieldGOOGLE = clazz->getStaticField<JReturnKeyType>("GOOGLE");
       static const auto fieldJOIN = clazz->getStaticField<JReturnKeyType>("JOIN");
@@ -54,6 +55,8 @@ namespace margelo::nitro::nitrotextinput {
       static const auto fieldCONTINUE = clazz->getStaticField<JReturnKeyType>("CONTINUE");
       
       switch (value) {
+        case ReturnKeyType::DEFAULT:
+          return clazz->getStaticFieldValue(fieldDEFAULT);
         case ReturnKeyType::GO:
           return clazz->getStaticFieldValue(fieldGO);
         case ReturnKeyType::GOOGLE:

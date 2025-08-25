@@ -1,5 +1,5 @@
 import React from "react";
-import type { InputModeOptions, TextInputProps, ViewProps } from "react-native";
+import type { InputModeOptions, ReturnKeyTypeAndroid, TextInputProps, ViewProps } from "react-native";
 import { Platform, processColor, StyleSheet } from "react-native";
 import type { HybridView } from "react-native-nitro-modules";
 import type {
@@ -17,7 +17,7 @@ type NativeTextInputProps = WrapFunctionsInObjects<
 	DefaultHybridViewProps<
 		HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
 	> &
-		NitroTextInputViewProps
+	NitroTextInputViewProps
 > &
 	ViewProps;
 // Base props interface (without ref)
@@ -35,9 +35,11 @@ export interface NitroTextInputBaseProps
 		| "onFocused"
 		| "onKeyPressed"
 		| "placeholderTextColor"
+		| "returnKeyType"
 		| "selectionColor"
 		| "hybridRef"
 	> {
+	enterKeyHint?: "done" | "next" | "search" | "send" | "go" | "enter";
 	inputMode?: InputModeOptions;
 	onBlur?: () => void;
 	onChangeText?: (text: string) => void;
@@ -61,9 +63,9 @@ export interface NitroTextInputBaseProps
 	onFocus?: () => void;
 	onKeyPress?: (key: string) => void;
 	placeholderTextColor?: TextInputProps["placeholderTextColor"] | undefined;
-	enterKeyHint?: "done" | "next" | "search" | "send" | "go" | "enter";
-	selectionColor?: TextInputProps["selectionColor"] | undefined;
 	ref?: React.RefObject<NitroTextInputViewMethods | null>;
+	returnKeyType?: Exclude<TextInputProps["returnKeyType"], ReturnKeyTypeAndroid>;
+	selectionColor?: TextInputProps["selectionColor"] | undefined;
 }
 
 export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
@@ -165,30 +167,10 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 		}
 	};
 
-	const filterUnsupportedReturnKeyType = (
-		keyType: ReturnKeyType | undefined,
-	): ReturnKeyType | undefined => {
-		const supportedKeys: ReturnKeyType[] = [
-			"go",
-			"google",
-			"join",
-			"next",
-			"route",
-			"search",
-			"send",
-			"yahoo",
-			"done",
-			"emergency-call",
-		];
-		return keyType && supportedKeys.includes(keyType as ReturnKeyType)
-			? (keyType as ReturnKeyType)
-			: undefined;
-	};
-
 	const resolvedReturnKeyType =
 		enterKeyHint != null
 			? mapEnterKeyHintToReturnKeyType(enterKeyHint)
-			: filterUnsupportedReturnKeyType(returnKeyType);
+			: returnKeyType;
 
 	const toProcessedColor = (
 		color:

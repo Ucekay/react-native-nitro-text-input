@@ -16,15 +16,16 @@ import com.facebook.proguard.annotations.DoNotStrip
 @DoNotStrip
 @Keep
 enum class ReturnKeyType(@DoNotStrip @Keep val value: Int) {
-  GO(0),
-  GOOGLE(1),
-  JOIN(2),
-  NEXT(3),
-  ROUTE(4),
-  SEARCH(5),
-  SEND(6),
-  YAHOO(7),
-  DONE(8),
-  EMERGENCY_CALL(9),
-  CONTINUE(10);
+  DEFAULT(0),
+  GO(1),
+  GOOGLE(2),
+  JOIN(3),
+  NEXT(4),
+  ROUTE(5),
+  SEARCH(6),
+  SEND(7),
+  YAHOO(8),
+  DONE(9),
+  EMERGENCY_CALL(10),
+  CONTINUE(11);
 }
