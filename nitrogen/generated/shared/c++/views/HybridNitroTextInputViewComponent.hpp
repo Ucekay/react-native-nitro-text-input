@@ -23,7 +23,66 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include <optional>
+#include "ClearButtonMode.hpp"
+#include <optional>
+#include <optional>
+#include <optional>
 #include <string>
+#include <optional>
+#include <optional>
+#include <optional>
+#include "KeyboardType.hpp"
+#include <optional>
+#include "KeyboardAppearance.hpp"
+#include <optional>
+#include <optional>
+#include <optional>
+#include <optional>
+#include <string>
+#include <optional>
+#include <string>
+#include <optional>
+#include "TextAlign.hpp"
+#include <optional>
+#include <string>
+#include <variant>
+#include <optional>
+#include "ReturnKeyType.hpp"
+#include <optional>
+#include "TextSelection.hpp"
+#include <optional>
+#include <string>
+#include <variant>
+#include <optional>
+#include <optional>
+#include <optional>
+#include <optional>
+#include <optional>
+#include <optional>
+#include "SubmitBehavior.hpp"
+#include <optional>
+#include <functional>
+#include <optional>
+#include <functional>
+#include <optional>
+#include <string>
+#include <functional>
+#include <optional>
+#include <string>
+#include <functional>
+#include <optional>
+#include <string>
+#include <functional>
+#include <optional>
+#include <functional>
+#include <optional>
+#include <string>
+#include <functional>
+#include <optional>
+#include <functional>
+#include <optional>
+#include <functional>
 #include <optional>
 #include <functional>
 #include <optional>
@@ -56,9 +115,43 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> allowFontScaling;
     CachedProp<std::optional<AutoCapitalize>> autoCapitalize;
     CachedProp<std::optional<AutoComplete>> autoComplete;
+    CachedProp<std::optional<AutoComplete>> autoComplete;
     CachedProp<std::optional<bool>> autoCorrect;
+    CachedProp<std::optional<bool>> autoFocus;
+    CachedProp<std::optional<bool>> caretHidden;
+    CachedProp<std::optional<ClearButtonMode>> clearButtonMode;
+    CachedProp<std::optional<bool>> clearTextOnFocus;
+    CachedProp<std::optional<bool>> contextMenuHidden;
+    CachedProp<std::optional<std::string>> defaultValue;
+    CachedProp<std::optional<bool>> editable;
+    CachedProp<std::optional<bool>> enablesReturnKeyAutomatically;
+    CachedProp<std::optional<KeyboardType>> keyboardType;
+    CachedProp<std::optional<KeyboardAppearance>> keyboardAppearance;
+    CachedProp<std::optional<double>> maxFontSizeMultiplier;
+    CachedProp<std::optional<double>> maxLength;
     CachedProp<std::optional<bool>> multiline;
+    CachedProp<std::optional<std::string>> passwordRules;
     CachedProp<std::optional<std::string>> placeholder;
+    CachedProp<std::optional<TextAlign>> textAlign;
+    CachedProp<std::optional<std::variant<std::string, double>>> placeholderTextColor;
+    CachedProp<std::optional<ReturnKeyType>> returnKeyType;
+    CachedProp<std::optional<TextSelection>> selection;
+    CachedProp<std::optional<std::variant<std::string, double>>> selectionColor;
+    CachedProp<std::optional<bool>> secureTextEntry;
+    CachedProp<std::optional<bool>> spellCheck;
+    CachedProp<std::optional<bool>> selectTextOnFocus;
+    CachedProp<std::optional<bool>> showSoftInputOnFocus;
+    CachedProp<std::optional<bool>> smartInsertDelete;
+    CachedProp<std::optional<SubmitBehavior>> submitBehavior;
+    CachedProp<std::optional<std::function<void()>>> onFocused;
+    CachedProp<std::optional<std::function<void()>>> onBlurred;
+    CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> onTextChanged;
+    CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> onEditingEnded;
+    CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> onEditingSubmitted;
+    CachedProp<std::optional<std::function<void(double /* start */, double /* end */)>>> onSelectionChanged;
+    CachedProp<std::optional<std::function<void(const std::string& /* key */)>>> onKeyPressed;
+    CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchBegan;
+    CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchEnded;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> hybridRef;
 

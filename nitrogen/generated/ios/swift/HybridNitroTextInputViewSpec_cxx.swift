@@ -174,6 +174,217 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var autoFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.autoFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.autoFocus = newValue.value
+    }
+  }
+  
+  public final var caretHidden: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.caretHidden {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.caretHidden = newValue.value
+    }
+  }
+  
+  public final var clearButtonMode: bridge.std__optional_ClearButtonMode_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_ClearButtonMode_ in
+        if let __unwrappedValue = self.__implementation.clearButtonMode {
+          return bridge.create_std__optional_ClearButtonMode_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.clearButtonMode = newValue.value
+    }
+  }
+  
+  public final var clearTextOnFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.clearTextOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.clearTextOnFocus = newValue.value
+    }
+  }
+  
+  public final var contextMenuHidden: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.contextMenuHidden {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.contextMenuHidden = newValue.value
+    }
+  }
+  
+  public final var defaultValue: bridge.std__optional_std__string_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__string_ in
+        if let __unwrappedValue = self.__implementation.defaultValue {
+          return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.defaultValue = { () -> String? in
+        if bridge.has_value_std__optional_std__string_(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__string_(newValue)
+          return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var editable: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.editable {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.editable = newValue.value
+    }
+  }
+  
+  public final var enablesReturnKeyAutomatically: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.enablesReturnKeyAutomatically {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.enablesReturnKeyAutomatically = newValue.value
+    }
+  }
+  
+  public final var keyboardType: bridge.std__optional_KeyboardType_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_KeyboardType_ in
+        if let __unwrappedValue = self.__implementation.keyboardType {
+          return bridge.create_std__optional_KeyboardType_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.keyboardType = newValue.value
+    }
+  }
+  
+  public final var keyboardAppearance: bridge.std__optional_KeyboardAppearance_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_KeyboardAppearance_ in
+        if let __unwrappedValue = self.__implementation.keyboardAppearance {
+          return bridge.create_std__optional_KeyboardAppearance_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.keyboardAppearance = newValue.value
+    }
+  }
+  
+  public final var maxFontSizeMultiplier: bridge.std__optional_double_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_double_ in
+        if let __unwrappedValue = self.__implementation.maxFontSizeMultiplier {
+          return bridge.create_std__optional_double_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.maxFontSizeMultiplier = newValue.value
+    }
+  }
+  
+  public final var maxLength: bridge.std__optional_double_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_double_ in
+        if let __unwrappedValue = self.__implementation.maxLength {
+          return bridge.create_std__optional_double_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.maxLength = newValue.value
+    }
+  }
+  
   public final var multiline: bridge.std__optional_bool_ {
     @inline(__always)
     get {
@@ -191,6 +402,30 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
+  public final var passwordRules: bridge.std__optional_std__string_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__string_ in
+        if let __unwrappedValue = self.__implementation.passwordRules {
+          return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.passwordRules = { () -> String? in
+        if bridge.has_value_std__optional_std__string_(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__string_(newValue)
+          return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var placeholder: bridge.std__optional_std__string_ {
     @inline(__always)
     get {
@@ -205,8 +440,543 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.placeholder = { () -> String? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__string_(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__string_(newValue)
           return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var textAlign: bridge.std__optional_TextAlign_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_TextAlign_ in
+        if let __unwrappedValue = self.__implementation.textAlign {
+          return bridge.create_std__optional_TextAlign_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.textAlign = newValue.value
+    }
+  }
+  
+  public final var placeholderTextColor: bridge.std__optional_std__variant_std__string__double__ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__variant_std__string__double__ in
+        if let __unwrappedValue = self.__implementation.placeholderTextColor {
+          return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
+            switch __unwrappedValue {
+              case .first(let __value):
+                return bridge.create_std__variant_std__string__double_(std.string(__value))
+              case .second(let __value):
+                return bridge.create_std__variant_std__string__double_(__value)
+            }
+          }().variant)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.placeholderTextColor = { () -> ProcessedColor? in
+        if bridge.has_value_std__optional_std__variant_std__string__double__(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__variant_std__string__double__(newValue)
+          return { () -> ProcessedColor in
+            let __variant = bridge.std__variant_std__string__double_(__unwrapped)
+            switch __variant.index() {
+              case 0:
+                let __actual = __variant.get_0()
+                return .first(String(__actual))
+              case 1:
+                let __actual = __variant.get_1()
+                return .second(__actual)
+              default:
+                fatalError("Variant can never have index \(__variant.index())!")
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var returnKeyType: bridge.std__optional_ReturnKeyType_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_ReturnKeyType_ in
+        if let __unwrappedValue = self.__implementation.returnKeyType {
+          return bridge.create_std__optional_ReturnKeyType_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.returnKeyType = newValue.value
+    }
+  }
+  
+  public final var selection: bridge.std__optional_TextSelection_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_TextSelection_ in
+        if let __unwrappedValue = self.__implementation.selection {
+          return bridge.create_std__optional_TextSelection_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.selection = { () -> TextSelection? in
+        if bridge.has_value_std__optional_TextSelection_(newValue) {
+          let __unwrapped = bridge.get_std__optional_TextSelection_(newValue)
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var selectionColor: bridge.std__optional_std__variant_std__string__double__ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__variant_std__string__double__ in
+        if let __unwrappedValue = self.__implementation.selectionColor {
+          return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
+            switch __unwrappedValue {
+              case .first(let __value):
+                return bridge.create_std__variant_std__string__double_(std.string(__value))
+              case .second(let __value):
+                return bridge.create_std__variant_std__string__double_(__value)
+            }
+          }().variant)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.selectionColor = { () -> ProcessedColor? in
+        if bridge.has_value_std__optional_std__variant_std__string__double__(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__variant_std__string__double__(newValue)
+          return { () -> ProcessedColor in
+            let __variant = bridge.std__variant_std__string__double_(__unwrapped)
+            switch __variant.index() {
+              case 0:
+                let __actual = __variant.get_0()
+                return .first(String(__actual))
+              case 1:
+                let __actual = __variant.get_1()
+                return .second(__actual)
+              default:
+                fatalError("Variant can never have index \(__variant.index())!")
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var secureTextEntry: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.secureTextEntry {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.secureTextEntry = newValue.value
+    }
+  }
+  
+  public final var spellCheck: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.spellCheck {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.spellCheck = newValue.value
+    }
+  }
+  
+  public final var selectTextOnFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.selectTextOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.selectTextOnFocus = newValue.value
+    }
+  }
+  
+  public final var showSoftInputOnFocus: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.showSoftInputOnFocus {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.showSoftInputOnFocus = newValue.value
+    }
+  }
+  
+  public final var smartInsertDelete: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.smartInsertDelete {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.smartInsertDelete = newValue.value
+    }
+  }
+  
+  public final var submitBehavior: bridge.std__optional_SubmitBehavior_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_SubmitBehavior_ in
+        if let __unwrappedValue = self.__implementation.submitBehavior {
+          return bridge.create_std__optional_SubmitBehavior_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.submitBehavior = newValue.value
+    }
+  }
+  
+  public final var onFocused: bridge.std__optional_std__function_void____ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void____ in
+        if let __unwrappedValue = self.__implementation.onFocused {
+          return bridge.create_std__optional_std__function_void____({ () -> bridge.Func_void in
+            let __closureWrapper = Func_void(__unwrappedValue)
+            return bridge.create_Func_void(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onFocused = { () -> (() -> Void)? in
+        if bridge.has_value_std__optional_std__function_void____(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void____(newValue)
+          return { () -> () -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void(__unwrapped)
+            return { () -> Void in
+              __wrappedFunction.call()
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onBlurred: bridge.std__optional_std__function_void____ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void____ in
+        if let __unwrappedValue = self.__implementation.onBlurred {
+          return bridge.create_std__optional_std__function_void____({ () -> bridge.Func_void in
+            let __closureWrapper = Func_void(__unwrappedValue)
+            return bridge.create_Func_void(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onBlurred = { () -> (() -> Void)? in
+        if bridge.has_value_std__optional_std__function_void____(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void____(newValue)
+          return { () -> () -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void(__unwrapped)
+            return { () -> Void in
+              __wrappedFunction.call()
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onTextChanged: bridge.std__optional_std__function_void_const_std__string_____text______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____text______ in
+        if let __unwrappedValue = self.__implementation.onTextChanged {
+          return bridge.create_std__optional_std__function_void_const_std__string_____text______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onTextChanged = { () -> ((_ text: String) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____text______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____text______(newValue)
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__text: String) -> Void in
+              __wrappedFunction.call(std.string(__text))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onEditingEnded: bridge.std__optional_std__function_void_const_std__string_____text______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____text______ in
+        if let __unwrappedValue = self.__implementation.onEditingEnded {
+          return bridge.create_std__optional_std__function_void_const_std__string_____text______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onEditingEnded = { () -> ((_ text: String) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____text______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____text______(newValue)
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__text: String) -> Void in
+              __wrappedFunction.call(std.string(__text))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onEditingSubmitted: bridge.std__optional_std__function_void_const_std__string_____text______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____text______ in
+        if let __unwrappedValue = self.__implementation.onEditingSubmitted {
+          return bridge.create_std__optional_std__function_void_const_std__string_____text______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onEditingSubmitted = { () -> ((_ text: String) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____text______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____text______(newValue)
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__text: String) -> Void in
+              __wrappedFunction.call(std.string(__text))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onSelectionChanged: bridge.std__optional_std__function_void_double____start_____double____end______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_double____start_____double____end______ in
+        if let __unwrappedValue = self.__implementation.onSelectionChanged {
+          return bridge.create_std__optional_std__function_void_double____start_____double____end______({ () -> bridge.Func_void_double_double in
+            let __closureWrapper = Func_void_double_double(__unwrappedValue)
+            return bridge.create_Func_void_double_double(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onSelectionChanged = { () -> ((_ start: Double, _ end: Double) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_double____start_____double____end______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____start_____double____end______(newValue)
+          return { () -> (Double, Double) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_double_double(__unwrapped)
+            return { (__start: Double, __end: Double) -> Void in
+              __wrappedFunction.call(__start, __end)
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onKeyPressed: bridge.std__optional_std__function_void_const_std__string_____key______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____key______ in
+        if let __unwrappedValue = self.__implementation.onKeyPressed {
+          return bridge.create_std__optional_std__function_void_const_std__string_____key______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onKeyPressed = { () -> ((_ key: String) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____key______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____key______(newValue)
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__key: String) -> Void in
+              __wrappedFunction.call(std.string(__key))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onTouchBegan: bridge.std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______ in
+        if let __unwrappedValue = self.__implementation.onTouchBegan {
+          return bridge.create_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______({ () -> bridge.Func_void_double_double_double_double_double in
+            let __closureWrapper = Func_void_double_double_double_double_double(__unwrappedValue)
+            return bridge.create_Func_void_double_double_double_double_double(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onTouchBegan = { () -> ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue)
+          return { () -> (Double, Double, Double, Double, Double) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_double_double_double_double_double(__unwrapped)
+            return { (__pageX: Double, __pageY: Double, __locationX: Double, __locationY: Double, __timestamp: Double) -> Void in
+              __wrappedFunction.call(__pageX, __pageY, __locationX, __locationY, __timestamp)
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var onTouchEnded: bridge.std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______ in
+        if let __unwrappedValue = self.__implementation.onTouchEnded {
+          return bridge.create_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______({ () -> bridge.Func_void_double_double_double_double_double in
+            let __closureWrapper = Func_void_double_double_double_double_double(__unwrappedValue)
+            return bridge.create_Func_void_double_double_double_double_double(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onTouchEnded = { () -> ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(newValue)
+          return { () -> (Double, Double, Double, Double, Double) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_double_double_double_double_double(__unwrapped)
+            return { (__pageX: Double, __pageY: Double, __locationX: Double, __locationY: Double, __timestamp: Double) -> Void in
+              __wrappedFunction.call(__pageX, __pageY, __locationX, __locationY, __timestamp)
+            }
+          }()
         } else {
           return nil
         }
@@ -231,7 +1001,8 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.onInitialHeightMeasured = { () -> ((_ height: Double) -> Void)? in
-        if let __unwrapped = newValue.value {
+        if bridge.has_value_std__optional_std__function_void_double____height______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_double____height______(newValue)
           return { () -> (Double) -> Void in
             let __wrappedFunction = bridge.wrap_Func_void_double(__unwrapped)
             return { (__height: Double) -> Void in
@@ -246,6 +1017,51 @@ open class HybridNitroTextInputViewSpec_cxx {
   }
 
   // Methods
+  @inline(__always)
+  public final func focus() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.focus()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func blur() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.blur()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func clear() -> bridge.Result_void_ {
+    do {
+      try self.__implementation.clear()
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func isFocused() -> bridge.Result_bool_ {
+    do {
+      let __result = try self.__implementation.isFocused()
+      let __resultCpp = __result
+      return bridge.create_Result_bool_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_bool_(__exceptionPtr)
+    }
+  }
+  
   public final func getView() -> UnsafeMutableRawPointer {
     return Unmanaged.passRetained(__implementation.view).toOpaque()
   }

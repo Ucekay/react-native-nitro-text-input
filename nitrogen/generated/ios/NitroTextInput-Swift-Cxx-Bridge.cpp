@@ -13,8 +13,40 @@
 
 namespace margelo::nitro::nitrotextinput::bridge::swift {
 
+  // pragma MARK: std::function<void()>
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper) noexcept {
+    auto swiftClosure = NitroTextInput::Func_void::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)]() mutable -> void {
+      swiftClosure.call();
+    };
+  }
+  
+  // pragma MARK: std::function<void(const std::string& /* text */)>
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) noexcept {
+    auto swiftClosure = NitroTextInput::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& text) mutable -> void {
+      swiftClosure.call(text);
+    };
+  }
+  
+  // pragma MARK: std::function<void(double /* start */, double /* end */)>
+  Func_void_double_double create_Func_void_double_double(void* _Nonnull swiftClosureWrapper) noexcept {
+    auto swiftClosure = NitroTextInput::Func_void_double_double::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](double start, double end) mutable -> void {
+      swiftClosure.call(start, end);
+    };
+  }
+  
+  // pragma MARK: std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>
+  Func_void_double_double_double_double_double create_Func_void_double_double_double_double_double(void* _Nonnull swiftClosureWrapper) noexcept {
+    auto swiftClosure = NitroTextInput::Func_void_double_double_double_double_double::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](double pageX, double pageY, double locationX, double locationY, double timestamp) mutable -> void {
+      swiftClosure.call(pageX, pageY, locationX, locationY, timestamp);
+    };
+  }
+  
   // pragma MARK: std::function<void(double /* height */)>
-  Func_void_double create_Func_void_double(void* _Nonnull swiftClosureWrapper) {
+  Func_void_double create_Func_void_double(void* _Nonnull swiftClosureWrapper) noexcept {
     auto swiftClosure = NitroTextInput::Func_void_double::fromUnsafe(swiftClosureWrapper);
     return [swiftClosure = std::move(swiftClosure)](double height) mutable -> void {
       swiftClosure.call(height);
@@ -22,11 +54,11 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   }
   
   // pragma MARK: std::shared_ptr<HybridNitroTextInputViewSpec>
-  std::shared_ptr<HybridNitroTextInputViewSpec> create_std__shared_ptr_HybridNitroTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) {
+  std::shared_ptr<HybridNitroTextInputViewSpec> create_std__shared_ptr_HybridNitroTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) noexcept {
     NitroTextInput::HybridNitroTextInputViewSpec_cxx swiftPart = NitroTextInput::HybridNitroTextInputViewSpec_cxx::fromUnsafe(swiftUnsafePointer);
     return std::make_shared<margelo::nitro::nitrotextinput::HybridNitroTextInputViewSpecSwift>(swiftPart);
   }
-  void* _Nonnull get_std__shared_ptr_HybridNitroTextInputViewSpec_(std__shared_ptr_HybridNitroTextInputViewSpec_ cppType) {
+  void* _Nonnull get_std__shared_ptr_HybridNitroTextInputViewSpec_(std__shared_ptr_HybridNitroTextInputViewSpec_ cppType) noexcept {
     std::shared_ptr<margelo::nitro::nitrotextinput::HybridNitroTextInputViewSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::nitrotextinput::HybridNitroTextInputViewSpecSwift>(cppType);
     #ifdef NITRO_DEBUG
     if (swiftWrapper == nullptr) [[unlikely]] {

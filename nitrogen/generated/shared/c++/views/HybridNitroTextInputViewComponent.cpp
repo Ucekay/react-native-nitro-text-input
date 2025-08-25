@@ -65,6 +65,126 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.autoCorrect: ") + exc.what());
       }
     }()),
+    autoFocus([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("autoFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.autoFocus;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.autoFocus);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.autoFocus: ") + exc.what());
+      }
+    }()),
+    caretHidden([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("caretHidden", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.caretHidden;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.caretHidden);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.caretHidden: ") + exc.what());
+      }
+    }()),
+    clearButtonMode([&]() -> CachedProp<std::optional<ClearButtonMode>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("clearButtonMode", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.clearButtonMode;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<ClearButtonMode>>::fromRawValue(*runtime, value, sourceProps.clearButtonMode);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.clearButtonMode: ") + exc.what());
+      }
+    }()),
+    clearTextOnFocus([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("clearTextOnFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.clearTextOnFocus;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.clearTextOnFocus);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.clearTextOnFocus: ") + exc.what());
+      }
+    }()),
+    contextMenuHidden([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("contextMenuHidden", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.contextMenuHidden;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.contextMenuHidden);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.contextMenuHidden: ") + exc.what());
+      }
+    }()),
+    defaultValue([&]() -> CachedProp<std::optional<std::string>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("defaultValue", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.defaultValue;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.defaultValue);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.defaultValue: ") + exc.what());
+      }
+    }()),
+    editable([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("editable", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.editable;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.editable);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.editable: ") + exc.what());
+      }
+    }()),
+    enablesReturnKeyAutomatically([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("enablesReturnKeyAutomatically", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.enablesReturnKeyAutomatically;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.enablesReturnKeyAutomatically);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.enablesReturnKeyAutomatically: ") + exc.what());
+      }
+    }()),
+    keyboardType([&]() -> CachedProp<std::optional<KeyboardType>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("keyboardType", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.keyboardType;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<KeyboardType>>::fromRawValue(*runtime, value, sourceProps.keyboardType);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.keyboardType: ") + exc.what());
+      }
+    }()),
+    keyboardAppearance([&]() -> CachedProp<std::optional<KeyboardAppearance>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("keyboardAppearance", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.keyboardAppearance;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<KeyboardAppearance>>::fromRawValue(*runtime, value, sourceProps.keyboardAppearance);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.keyboardAppearance: ") + exc.what());
+      }
+    }()),
+    maxFontSizeMultiplier([&]() -> CachedProp<std::optional<double>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("maxFontSizeMultiplier", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.maxFontSizeMultiplier;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<double>>::fromRawValue(*runtime, value, sourceProps.maxFontSizeMultiplier);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.maxFontSizeMultiplier: ") + exc.what());
+      }
+    }()),
+    maxLength([&]() -> CachedProp<std::optional<double>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("maxLength", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.maxLength;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<double>>::fromRawValue(*runtime, value, sourceProps.maxLength);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.maxLength: ") + exc.what());
+      }
+    }()),
     multiline([&]() -> CachedProp<std::optional<bool>> {
       try {
         const react::RawValue* rawValue = rawProps.at("multiline", nullptr, nullptr);
@@ -75,6 +195,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.multiline: ") + exc.what());
       }
     }()),
+    passwordRules([&]() -> CachedProp<std::optional<std::string>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("passwordRules", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.passwordRules;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.passwordRules);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.passwordRules: ") + exc.what());
+      }
+    }()),
     placeholder([&]() -> CachedProp<std::optional<std::string>> {
       try {
         const react::RawValue* rawValue = rawProps.at("placeholder", nullptr, nullptr);
@@ -83,6 +213,206 @@ namespace margelo::nitro::nitrotextinput::views {
         return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.placeholder);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroTextInputView.placeholder: ") + exc.what());
+      }
+    }()),
+    textAlign([&]() -> CachedProp<std::optional<TextAlign>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("textAlign", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.textAlign;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<TextAlign>>::fromRawValue(*runtime, value, sourceProps.textAlign);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.textAlign: ") + exc.what());
+      }
+    }()),
+    placeholderTextColor([&]() -> CachedProp<std::optional<std::variant<std::string, double>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("placeholderTextColor", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.placeholderTextColor;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::variant<std::string, double>>>::fromRawValue(*runtime, value, sourceProps.placeholderTextColor);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.placeholderTextColor: ") + exc.what());
+      }
+    }()),
+    returnKeyType([&]() -> CachedProp<std::optional<ReturnKeyType>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("returnKeyType", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.returnKeyType;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<ReturnKeyType>>::fromRawValue(*runtime, value, sourceProps.returnKeyType);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.returnKeyType: ") + exc.what());
+      }
+    }()),
+    selection([&]() -> CachedProp<std::optional<TextSelection>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("selection", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.selection;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<TextSelection>>::fromRawValue(*runtime, value, sourceProps.selection);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.selection: ") + exc.what());
+      }
+    }()),
+    selectionColor([&]() -> CachedProp<std::optional<std::variant<std::string, double>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("selectionColor", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.selectionColor;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::variant<std::string, double>>>::fromRawValue(*runtime, value, sourceProps.selectionColor);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.selectionColor: ") + exc.what());
+      }
+    }()),
+    secureTextEntry([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("secureTextEntry", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.secureTextEntry;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.secureTextEntry);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.secureTextEntry: ") + exc.what());
+      }
+    }()),
+    spellCheck([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("spellCheck", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.spellCheck;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.spellCheck);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.spellCheck: ") + exc.what());
+      }
+    }()),
+    selectTextOnFocus([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("selectTextOnFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.selectTextOnFocus;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.selectTextOnFocus);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.selectTextOnFocus: ") + exc.what());
+      }
+    }()),
+    showSoftInputOnFocus([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("showSoftInputOnFocus", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.showSoftInputOnFocus;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.showSoftInputOnFocus);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.showSoftInputOnFocus: ") + exc.what());
+      }
+    }()),
+    smartInsertDelete([&]() -> CachedProp<std::optional<bool>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("smartInsertDelete", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.smartInsertDelete;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<bool>>::fromRawValue(*runtime, value, sourceProps.smartInsertDelete);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.smartInsertDelete: ") + exc.what());
+      }
+    }()),
+    submitBehavior([&]() -> CachedProp<std::optional<SubmitBehavior>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("submitBehavior", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.submitBehavior;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<SubmitBehavior>>::fromRawValue(*runtime, value, sourceProps.submitBehavior);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.submitBehavior: ") + exc.what());
+      }
+    }()),
+    onFocused([&]() -> CachedProp<std::optional<std::function<void()>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onFocused", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onFocused;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void()>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onFocused);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onFocused: ") + exc.what());
+      }
+    }()),
+    onBlurred([&]() -> CachedProp<std::optional<std::function<void()>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onBlurred", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onBlurred;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void()>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onBlurred);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onBlurred: ") + exc.what());
+      }
+    }()),
+    onTextChanged([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onTextChanged", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onTextChanged;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(const std::string& /* text */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTextChanged);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onTextChanged: ") + exc.what());
+      }
+    }()),
+    onEditingEnded([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onEditingEnded", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onEditingEnded;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(const std::string& /* text */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onEditingEnded);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onEditingEnded: ") + exc.what());
+      }
+    }()),
+    onEditingSubmitted([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onEditingSubmitted", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onEditingSubmitted;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(const std::string& /* text */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onEditingSubmitted);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onEditingSubmitted: ") + exc.what());
+      }
+    }()),
+    onSelectionChanged([&]() -> CachedProp<std::optional<std::function<void(double /* start */, double /* end */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onSelectionChanged", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onSelectionChanged;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(double /* start */, double /* end */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onSelectionChanged);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onSelectionChanged: ") + exc.what());
+      }
+    }()),
+    onKeyPressed([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* key */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onKeyPressed", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onKeyPressed;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(const std::string& /* key */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onKeyPressed);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onKeyPressed: ") + exc.what());
+      }
+    }()),
+    onTouchBegan([&]() -> CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onTouchBegan", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onTouchBegan;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTouchBegan);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onTouchBegan: ") + exc.what());
+      }
+    }()),
+    onTouchEnded([&]() -> CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onTouchEnded", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onTouchEnded;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onTouchEnded);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.onTouchEnded: ") + exc.what());
       }
     }()),
     onInitialHeightMeasured([&]() -> CachedProp<std::optional<std::function<void(double /* height */)>>> {
@@ -112,8 +442,41 @@ namespace margelo::nitro::nitrotextinput::views {
     autoCapitalize(other.autoCapitalize),
     autoComplete(other.autoComplete),
     autoCorrect(other.autoCorrect),
+    autoFocus(other.autoFocus),
+    caretHidden(other.caretHidden),
+    clearButtonMode(other.clearButtonMode),
+    clearTextOnFocus(other.clearTextOnFocus),
+    contextMenuHidden(other.contextMenuHidden),
+    defaultValue(other.defaultValue),
+    editable(other.editable),
+    enablesReturnKeyAutomatically(other.enablesReturnKeyAutomatically),
+    keyboardType(other.keyboardType),
+    keyboardAppearance(other.keyboardAppearance),
+    maxFontSizeMultiplier(other.maxFontSizeMultiplier),
+    maxLength(other.maxLength),
     multiline(other.multiline),
+    passwordRules(other.passwordRules),
     placeholder(other.placeholder),
+    textAlign(other.textAlign),
+    placeholderTextColor(other.placeholderTextColor),
+    returnKeyType(other.returnKeyType),
+    selection(other.selection),
+    selectionColor(other.selectionColor),
+    secureTextEntry(other.secureTextEntry),
+    spellCheck(other.spellCheck),
+    selectTextOnFocus(other.selectTextOnFocus),
+    showSoftInputOnFocus(other.showSoftInputOnFocus),
+    smartInsertDelete(other.smartInsertDelete),
+    submitBehavior(other.submitBehavior),
+    onFocused(other.onFocused),
+    onBlurred(other.onBlurred),
+    onTextChanged(other.onTextChanged),
+    onEditingEnded(other.onEditingEnded),
+    onEditingSubmitted(other.onEditingSubmitted),
+    onSelectionChanged(other.onSelectionChanged),
+    onKeyPressed(other.onKeyPressed),
+    onTouchBegan(other.onTouchBegan),
+    onTouchEnded(other.onTouchEnded),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
     hybridRef(other.hybridRef) { }
 
@@ -123,8 +486,41 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("autoCapitalize"): return true;
       case hashString("autoComplete"): return true;
       case hashString("autoCorrect"): return true;
+      case hashString("autoFocus"): return true;
+      case hashString("caretHidden"): return true;
+      case hashString("clearButtonMode"): return true;
+      case hashString("clearTextOnFocus"): return true;
+      case hashString("contextMenuHidden"): return true;
+      case hashString("defaultValue"): return true;
+      case hashString("editable"): return true;
+      case hashString("enablesReturnKeyAutomatically"): return true;
+      case hashString("keyboardType"): return true;
+      case hashString("keyboardAppearance"): return true;
+      case hashString("maxFontSizeMultiplier"): return true;
+      case hashString("maxLength"): return true;
       case hashString("multiline"): return true;
+      case hashString("passwordRules"): return true;
       case hashString("placeholder"): return true;
+      case hashString("textAlign"): return true;
+      case hashString("placeholderTextColor"): return true;
+      case hashString("returnKeyType"): return true;
+      case hashString("selection"): return true;
+      case hashString("selectionColor"): return true;
+      case hashString("secureTextEntry"): return true;
+      case hashString("spellCheck"): return true;
+      case hashString("selectTextOnFocus"): return true;
+      case hashString("showSoftInputOnFocus"): return true;
+      case hashString("smartInsertDelete"): return true;
+      case hashString("submitBehavior"): return true;
+      case hashString("onFocused"): return true;
+      case hashString("onBlurred"): return true;
+      case hashString("onTextChanged"): return true;
+      case hashString("onEditingEnded"): return true;
+      case hashString("onEditingSubmitted"): return true;
+      case hashString("onSelectionChanged"): return true;
+      case hashString("onKeyPressed"): return true;
+      case hashString("onTouchBegan"): return true;
+      case hashString("onTouchEnded"): return true;
       case hashString("onInitialHeightMeasured"): return true;
       case hashString("hybridRef"): return true;
       default: return false;

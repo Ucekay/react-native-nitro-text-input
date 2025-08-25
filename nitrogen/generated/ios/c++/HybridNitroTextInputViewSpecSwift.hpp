@@ -16,11 +16,33 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include <string>
+#include "KeyboardType.hpp"
+#include "KeyboardAppearance.hpp"
+#include "TextAlign.hpp"
+#include <variant>
+#include "ReturnKeyType.hpp"
+#include "TextSelection.hpp"
+#include "SubmitBehavior.hpp"
 #include <functional>
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
@@ -88,6 +110,90 @@ namespace margelo::nitro::nitrotextinput {
     inline void setAutoCorrect(std::optional<bool> autoCorrect) noexcept override {
       _swiftPart.setAutoCorrect(autoCorrect);
     }
+    inline std::optional<bool> getAutoFocus() noexcept override {
+      auto __result = _swiftPart.getAutoFocus();
+      return __result;
+    }
+    inline void setAutoFocus(std::optional<bool> autoFocus) noexcept override {
+      _swiftPart.setAutoFocus(autoFocus);
+    }
+    inline std::optional<bool> getCaretHidden() noexcept override {
+      auto __result = _swiftPart.getCaretHidden();
+      return __result;
+    }
+    inline void setCaretHidden(std::optional<bool> caretHidden) noexcept override {
+      _swiftPart.setCaretHidden(caretHidden);
+    }
+    inline std::optional<ClearButtonMode> getClearButtonMode() noexcept override {
+      auto __result = _swiftPart.getClearButtonMode();
+      return __result;
+    }
+    inline void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) noexcept override {
+      _swiftPart.setClearButtonMode(clearButtonMode);
+    }
+    inline std::optional<bool> getClearTextOnFocus() noexcept override {
+      auto __result = _swiftPart.getClearTextOnFocus();
+      return __result;
+    }
+    inline void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) noexcept override {
+      _swiftPart.setClearTextOnFocus(clearTextOnFocus);
+    }
+    inline std::optional<bool> getContextMenuHidden() noexcept override {
+      auto __result = _swiftPart.getContextMenuHidden();
+      return __result;
+    }
+    inline void setContextMenuHidden(std::optional<bool> contextMenuHidden) noexcept override {
+      _swiftPart.setContextMenuHidden(contextMenuHidden);
+    }
+    inline std::optional<std::string> getDefaultValue() noexcept override {
+      auto __result = _swiftPart.getDefaultValue();
+      return __result;
+    }
+    inline void setDefaultValue(const std::optional<std::string>& defaultValue) noexcept override {
+      _swiftPart.setDefaultValue(defaultValue);
+    }
+    inline std::optional<bool> getEditable() noexcept override {
+      auto __result = _swiftPart.getEditable();
+      return __result;
+    }
+    inline void setEditable(std::optional<bool> editable) noexcept override {
+      _swiftPart.setEditable(editable);
+    }
+    inline std::optional<bool> getEnablesReturnKeyAutomatically() noexcept override {
+      auto __result = _swiftPart.getEnablesReturnKeyAutomatically();
+      return __result;
+    }
+    inline void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) noexcept override {
+      _swiftPart.setEnablesReturnKeyAutomatically(enablesReturnKeyAutomatically);
+    }
+    inline std::optional<KeyboardType> getKeyboardType() noexcept override {
+      auto __result = _swiftPart.getKeyboardType();
+      return __result;
+    }
+    inline void setKeyboardType(std::optional<KeyboardType> keyboardType) noexcept override {
+      _swiftPart.setKeyboardType(keyboardType);
+    }
+    inline std::optional<KeyboardAppearance> getKeyboardAppearance() noexcept override {
+      auto __result = _swiftPart.getKeyboardAppearance();
+      return __result;
+    }
+    inline void setKeyboardAppearance(std::optional<KeyboardAppearance> keyboardAppearance) noexcept override {
+      _swiftPart.setKeyboardAppearance(keyboardAppearance);
+    }
+    inline std::optional<double> getMaxFontSizeMultiplier() noexcept override {
+      auto __result = _swiftPart.getMaxFontSizeMultiplier();
+      return __result;
+    }
+    inline void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) noexcept override {
+      _swiftPart.setMaxFontSizeMultiplier(maxFontSizeMultiplier);
+    }
+    inline std::optional<double> getMaxLength() noexcept override {
+      auto __result = _swiftPart.getMaxLength();
+      return __result;
+    }
+    inline void setMaxLength(std::optional<double> maxLength) noexcept override {
+      _swiftPart.setMaxLength(maxLength);
+    }
     inline std::optional<bool> getMultiline() noexcept override {
       auto __result = _swiftPart.getMultiline();
       return __result;
@@ -95,12 +201,159 @@ namespace margelo::nitro::nitrotextinput {
     inline void setMultiline(std::optional<bool> multiline) noexcept override {
       _swiftPart.setMultiline(multiline);
     }
+    inline std::optional<std::string> getPasswordRules() noexcept override {
+      auto __result = _swiftPart.getPasswordRules();
+      return __result;
+    }
+    inline void setPasswordRules(const std::optional<std::string>& passwordRules) noexcept override {
+      _swiftPart.setPasswordRules(passwordRules);
+    }
     inline std::optional<std::string> getPlaceholder() noexcept override {
       auto __result = _swiftPart.getPlaceholder();
       return __result;
     }
     inline void setPlaceholder(const std::optional<std::string>& placeholder) noexcept override {
       _swiftPart.setPlaceholder(placeholder);
+    }
+    inline std::optional<TextAlign> getTextAlign() noexcept override {
+      auto __result = _swiftPart.getTextAlign();
+      return __result;
+    }
+    inline void setTextAlign(std::optional<TextAlign> textAlign) noexcept override {
+      _swiftPart.setTextAlign(textAlign);
+    }
+    inline std::optional<std::variant<std::string, double>> getPlaceholderTextColor() noexcept override {
+      auto __result = _swiftPart.getPlaceholderTextColor();
+      return __result;
+    }
+    inline void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) noexcept override {
+      _swiftPart.setPlaceholderTextColor(placeholderTextColor);
+    }
+    inline std::optional<ReturnKeyType> getReturnKeyType() noexcept override {
+      auto __result = _swiftPart.getReturnKeyType();
+      return __result;
+    }
+    inline void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) noexcept override {
+      _swiftPart.setReturnKeyType(returnKeyType);
+    }
+    inline std::optional<TextSelection> getSelection() noexcept override {
+      auto __result = _swiftPart.getSelection();
+      return __result;
+    }
+    inline void setSelection(const std::optional<TextSelection>& selection) noexcept override {
+      _swiftPart.setSelection(selection);
+    }
+    inline std::optional<std::variant<std::string, double>> getSelectionColor() noexcept override {
+      auto __result = _swiftPart.getSelectionColor();
+      return __result;
+    }
+    inline void setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) noexcept override {
+      _swiftPart.setSelectionColor(selectionColor);
+    }
+    inline std::optional<bool> getSecureTextEntry() noexcept override {
+      auto __result = _swiftPart.getSecureTextEntry();
+      return __result;
+    }
+    inline void setSecureTextEntry(std::optional<bool> secureTextEntry) noexcept override {
+      _swiftPart.setSecureTextEntry(secureTextEntry);
+    }
+    inline std::optional<bool> getSpellCheck() noexcept override {
+      auto __result = _swiftPart.getSpellCheck();
+      return __result;
+    }
+    inline void setSpellCheck(std::optional<bool> spellCheck) noexcept override {
+      _swiftPart.setSpellCheck(spellCheck);
+    }
+    inline std::optional<bool> getSelectTextOnFocus() noexcept override {
+      auto __result = _swiftPart.getSelectTextOnFocus();
+      return __result;
+    }
+    inline void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) noexcept override {
+      _swiftPart.setSelectTextOnFocus(selectTextOnFocus);
+    }
+    inline std::optional<bool> getShowSoftInputOnFocus() noexcept override {
+      auto __result = _swiftPart.getShowSoftInputOnFocus();
+      return __result;
+    }
+    inline void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) noexcept override {
+      _swiftPart.setShowSoftInputOnFocus(showSoftInputOnFocus);
+    }
+    inline std::optional<bool> getSmartInsertDelete() noexcept override {
+      auto __result = _swiftPart.getSmartInsertDelete();
+      return __result;
+    }
+    inline void setSmartInsertDelete(std::optional<bool> smartInsertDelete) noexcept override {
+      _swiftPart.setSmartInsertDelete(smartInsertDelete);
+    }
+    inline std::optional<SubmitBehavior> getSubmitBehavior() noexcept override {
+      auto __result = _swiftPart.getSubmitBehavior();
+      return __result;
+    }
+    inline void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) noexcept override {
+      _swiftPart.setSubmitBehavior(submitBehavior);
+    }
+    inline std::optional<std::function<void()>> getOnFocused() noexcept override {
+      auto __result = _swiftPart.getOnFocused();
+      return __result;
+    }
+    inline void setOnFocused(const std::optional<std::function<void()>>& onFocused) noexcept override {
+      _swiftPart.setOnFocused(onFocused);
+    }
+    inline std::optional<std::function<void()>> getOnBlurred() noexcept override {
+      auto __result = _swiftPart.getOnBlurred();
+      return __result;
+    }
+    inline void setOnBlurred(const std::optional<std::function<void()>>& onBlurred) noexcept override {
+      _swiftPart.setOnBlurred(onBlurred);
+    }
+    inline std::optional<std::function<void(const std::string& /* text */)>> getOnTextChanged() noexcept override {
+      auto __result = _swiftPart.getOnTextChanged();
+      return __result;
+    }
+    inline void setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) noexcept override {
+      _swiftPart.setOnTextChanged(onTextChanged);
+    }
+    inline std::optional<std::function<void(const std::string& /* text */)>> getOnEditingEnded() noexcept override {
+      auto __result = _swiftPart.getOnEditingEnded();
+      return __result;
+    }
+    inline void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) noexcept override {
+      _swiftPart.setOnEditingEnded(onEditingEnded);
+    }
+    inline std::optional<std::function<void(const std::string& /* text */)>> getOnEditingSubmitted() noexcept override {
+      auto __result = _swiftPart.getOnEditingSubmitted();
+      return __result;
+    }
+    inline void setOnEditingSubmitted(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingSubmitted) noexcept override {
+      _swiftPart.setOnEditingSubmitted(onEditingSubmitted);
+    }
+    inline std::optional<std::function<void(double /* start */, double /* end */)>> getOnSelectionChanged() noexcept override {
+      auto __result = _swiftPart.getOnSelectionChanged();
+      return __result;
+    }
+    inline void setOnSelectionChanged(const std::optional<std::function<void(double /* start */, double /* end */)>>& onSelectionChanged) noexcept override {
+      _swiftPart.setOnSelectionChanged(onSelectionChanged);
+    }
+    inline std::optional<std::function<void(const std::string& /* key */)>> getOnKeyPressed() noexcept override {
+      auto __result = _swiftPart.getOnKeyPressed();
+      return __result;
+    }
+    inline void setOnKeyPressed(const std::optional<std::function<void(const std::string& /* key */)>>& onKeyPressed) noexcept override {
+      _swiftPart.setOnKeyPressed(onKeyPressed);
+    }
+    inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchBegan() noexcept override {
+      auto __result = _swiftPart.getOnTouchBegan();
+      return __result;
+    }
+    inline void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) noexcept override {
+      _swiftPart.setOnTouchBegan(onTouchBegan);
+    }
+    inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() noexcept override {
+      auto __result = _swiftPart.getOnTouchEnded();
+      return __result;
+    }
+    inline void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) noexcept override {
+      _swiftPart.setOnTouchEnded(onTouchEnded);
     }
     inline std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() noexcept override {
       auto __result = _swiftPart.getOnInitialHeightMeasured();
@@ -112,7 +365,32 @@ namespace margelo::nitro::nitrotextinput {
 
   public:
     // Methods
-    
+    inline void focus() override {
+      auto __result = _swiftPart.focus();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void blur() override {
+      auto __result = _swiftPart.blur();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline void clear() override {
+      auto __result = _swiftPart.clear();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+    }
+    inline bool isFocused() override {
+      auto __result = _swiftPart.isFocused();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
 
   private:
     NitroTextInput::HybridNitroTextInputViewSpec_cxx _swiftPart;

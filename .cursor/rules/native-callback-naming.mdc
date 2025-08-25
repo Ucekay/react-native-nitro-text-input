@@ -1,0 +1,45 @@
+---
+alwaysApply: true
+description: 'Native component callback naming — avoid reusing existing names; choose original but semantically similar names.'
+---
+
+# Native Component の Callback 命名ポリシー
+
+- **目的**: 既存の callback 名との衝突を避けつつ、意味は保つ。
+
+- **原則**:
+  - 既存の callback 名と完全一致する名称は使用しない。
+  - 同義/近義の表現でオリジナルな名称を採用する。
+  - iOS/Android/TypeScript/Bridge 層でイベント名を一貫させる。
+
+- **候補の考え方**:
+  - ニュアンス差分を明示: `onPress` → `onPressPrimary`, `onPressAction`
+  - 前置/後置のバリエーション: `onPressIn` → `didPressIn`, `onTouchDown`
+  - 動詞バリエーション: `onChange` → `onValueChange`, `onTextDidChange`
+  - 時制の明確化: `onFocus` → `willFocus`, `didFocus`
+
+- **禁止例**:
+  - 既存: `onSubmitEditing` → 新規にも同名 `onSubmitEditing`（NG）
+
+- **推奨例**:
+  - 既存: `onSubmitEditing` → 新規: `onEditingSubmitted`, `didSubmitEditing`
+
+- **実装時のチェック手順**:
+  1. ワークスペース全体で既存名を検索し、衝突がないか確認する。
+  2. TS/Swift/Kotlin/C++/ObjC++ のブリッジで同じイベント名を貫通させる。
+  3. 生成物の更新が必要な場合は `bun run nitro-codegen` を実行する。
+
+- **命名スタイル**:
+  - 先頭はイベント接頭辞（`on`/`will`/`did` など）。
+  - 単語はキャメルケース。
+  - 発火タイミングを明確化（`In`/`Out`/`Begin`/`End`/`Will`/`Did`）。
+
+- **メモ**:
+  - React Native コアのイベント名と衝突しないことを確認する。
+  - 外部 API 互換が不要なら既存名の再利用は避ける。
+
+参考ファイル:
+
+- [src/specs/text-input-view.nitro.ts](mdc:src/specs/text-input-view.nitro.ts)
+- [ios/HybridTextInputView.swift](mdc:ios/HybridTextInputView.swift)
+- [android/src/main/java/com/margelo/nitro/nitrotextinput/HybridTextInputView.kt](mdc:android/src/main/java/com/margelo/nitro/nitrotextinput/HybridTextInputView.kt)

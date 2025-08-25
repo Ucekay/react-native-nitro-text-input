@@ -66,13 +66,283 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var autoFocus: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var caretHidden: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var clearButtonMode: ClearButtonMode?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var clearTextOnFocus: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var contextMenuHidden: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var defaultValue: String?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var editable: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var enablesReturnKeyAutomatically: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var keyboardType: KeyboardType?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var keyboardAppearance: KeyboardAppearance?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var maxFontSizeMultiplier: Double?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var maxLength: Double?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var multiline: Boolean?
   
   @get:DoNotStrip
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var passwordRules: String?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var placeholder: String?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var textAlign: TextAlign?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var placeholderTextColor: ProcessedColor?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var returnKeyType: ReturnKeyType?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var selection: TextSelection?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var selectionColor: ProcessedColor?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var secureTextEntry: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var spellCheck: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var selectTextOnFocus: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var showSoftInputOnFocus: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var smartInsertDelete: Boolean?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var submitBehavior: SubmitBehavior?
+  
+  abstract var onFocused: (() -> Unit)?
+  
+  private var onFocused_cxx: Func_void?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onFocused?.let { Func_void_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onFocused = value?.let { it }
+    }
+  
+  abstract var onBlurred: (() -> Unit)?
+  
+  private var onBlurred_cxx: Func_void?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onBlurred?.let { Func_void_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onBlurred = value?.let { it }
+    }
+  
+  abstract var onTextChanged: ((text: String) -> Unit)?
+  
+  private var onTextChanged_cxx: Func_void_std__string?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onTextChanged?.let { Func_void_std__string_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onTextChanged = value?.let { it }
+    }
+  
+  abstract var onEditingEnded: ((text: String) -> Unit)?
+  
+  private var onEditingEnded_cxx: Func_void_std__string?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onEditingEnded?.let { Func_void_std__string_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onEditingEnded = value?.let { it }
+    }
+  
+  abstract var onEditingSubmitted: ((text: String) -> Unit)?
+  
+  private var onEditingSubmitted_cxx: Func_void_std__string?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onEditingSubmitted?.let { Func_void_std__string_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onEditingSubmitted = value?.let { it }
+    }
+  
+  abstract var onSelectionChanged: ((start: Double, end: Double) -> Unit)?
+  
+  private var onSelectionChanged_cxx: Func_void_double_double?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onSelectionChanged?.let { Func_void_double_double_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onSelectionChanged = value?.let { it }
+    }
+  
+  abstract var onKeyPressed: ((key: String) -> Unit)?
+  
+  private var onKeyPressed_cxx: Func_void_std__string?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onKeyPressed?.let { Func_void_std__string_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onKeyPressed = value?.let { it }
+    }
+  
+  abstract var onTouchBegan: ((pageX: Double, pageY: Double, locationX: Double, locationY: Double, timestamp: Double) -> Unit)?
+  
+  private var onTouchBegan_cxx: Func_void_double_double_double_double_double?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onTouchBegan?.let { Func_void_double_double_double_double_double_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onTouchBegan = value?.let { it }
+    }
+  
+  abstract var onTouchEnded: ((pageX: Double, pageY: Double, locationX: Double, locationY: Double, timestamp: Double) -> Unit)?
+  
+  private var onTouchEnded_cxx: Func_void_double_double_double_double_double?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onTouchEnded?.let { Func_void_double_double_double_double_double_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onTouchEnded = value?.let { it }
+    }
   
   abstract var onInitialHeightMeasured: ((height: Double) -> Unit)?
   
@@ -89,7 +359,21 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
     }
 
   // Methods
+  @DoNotStrip
+  @Keep
+  abstract fun focus(): Unit
   
+  @DoNotStrip
+  @Keep
+  abstract fun blur(): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun clear(): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun isFocused(): Boolean
 
   private external fun initHybrid(): HybridData
 

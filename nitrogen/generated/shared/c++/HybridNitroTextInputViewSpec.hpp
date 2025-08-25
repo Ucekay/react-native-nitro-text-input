@@ -17,11 +17,33 @@
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include <string>
+#include "KeyboardType.hpp"
+#include "KeyboardAppearance.hpp"
+#include "TextAlign.hpp"
+#include <variant>
+#include "ReturnKeyType.hpp"
+#include "TextSelection.hpp"
+#include "SubmitBehavior.hpp"
 #include <functional>
 
 namespace margelo::nitro::nitrotextinput {
@@ -57,18 +79,89 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) = 0;
       virtual std::optional<AutoComplete> getAutoComplete() = 0;
       virtual void setAutoComplete(std::optional<AutoComplete> autoComplete) = 0;
+      virtual std::optional<AutoComplete> getAutoComplete() = 0;
+      virtual void setAutoComplete(std::optional<AutoComplete> autoComplete) = 0;
       virtual std::optional<bool> getAutoCorrect() = 0;
       virtual void setAutoCorrect(std::optional<bool> autoCorrect) = 0;
+      virtual std::optional<bool> getAutoFocus() = 0;
+      virtual void setAutoFocus(std::optional<bool> autoFocus) = 0;
+      virtual std::optional<bool> getCaretHidden() = 0;
+      virtual void setCaretHidden(std::optional<bool> caretHidden) = 0;
+      virtual std::optional<ClearButtonMode> getClearButtonMode() = 0;
+      virtual void setClearButtonMode(std::optional<ClearButtonMode> clearButtonMode) = 0;
+      virtual std::optional<bool> getClearTextOnFocus() = 0;
+      virtual void setClearTextOnFocus(std::optional<bool> clearTextOnFocus) = 0;
+      virtual std::optional<bool> getContextMenuHidden() = 0;
+      virtual void setContextMenuHidden(std::optional<bool> contextMenuHidden) = 0;
+      virtual std::optional<std::string> getDefaultValue() = 0;
+      virtual void setDefaultValue(const std::optional<std::string>& defaultValue) = 0;
+      virtual std::optional<bool> getEditable() = 0;
+      virtual void setEditable(std::optional<bool> editable) = 0;
+      virtual std::optional<bool> getEnablesReturnKeyAutomatically() = 0;
+      virtual void setEnablesReturnKeyAutomatically(std::optional<bool> enablesReturnKeyAutomatically) = 0;
+      virtual std::optional<KeyboardType> getKeyboardType() = 0;
+      virtual void setKeyboardType(std::optional<KeyboardType> keyboardType) = 0;
+      virtual std::optional<KeyboardAppearance> getKeyboardAppearance() = 0;
+      virtual void setKeyboardAppearance(std::optional<KeyboardAppearance> keyboardAppearance) = 0;
+      virtual std::optional<double> getMaxFontSizeMultiplier() = 0;
+      virtual void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) = 0;
+      virtual std::optional<double> getMaxLength() = 0;
+      virtual void setMaxLength(std::optional<double> maxLength) = 0;
       virtual std::optional<bool> getMultiline() = 0;
       virtual void setMultiline(std::optional<bool> multiline) = 0;
+      virtual std::optional<std::string> getPasswordRules() = 0;
+      virtual void setPasswordRules(const std::optional<std::string>& passwordRules) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
+      virtual std::optional<TextAlign> getTextAlign() = 0;
+      virtual void setTextAlign(std::optional<TextAlign> textAlign) = 0;
+      virtual std::optional<std::variant<std::string, double>> getPlaceholderTextColor() = 0;
+      virtual void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) = 0;
+      virtual std::optional<ReturnKeyType> getReturnKeyType() = 0;
+      virtual void setReturnKeyType(std::optional<ReturnKeyType> returnKeyType) = 0;
+      virtual std::optional<TextSelection> getSelection() = 0;
+      virtual void setSelection(const std::optional<TextSelection>& selection) = 0;
+      virtual std::optional<std::variant<std::string, double>> getSelectionColor() = 0;
+      virtual void setSelectionColor(const std::optional<std::variant<std::string, double>>& selectionColor) = 0;
+      virtual std::optional<bool> getSecureTextEntry() = 0;
+      virtual void setSecureTextEntry(std::optional<bool> secureTextEntry) = 0;
+      virtual std::optional<bool> getSpellCheck() = 0;
+      virtual void setSpellCheck(std::optional<bool> spellCheck) = 0;
+      virtual std::optional<bool> getSelectTextOnFocus() = 0;
+      virtual void setSelectTextOnFocus(std::optional<bool> selectTextOnFocus) = 0;
+      virtual std::optional<bool> getShowSoftInputOnFocus() = 0;
+      virtual void setShowSoftInputOnFocus(std::optional<bool> showSoftInputOnFocus) = 0;
+      virtual std::optional<bool> getSmartInsertDelete() = 0;
+      virtual void setSmartInsertDelete(std::optional<bool> smartInsertDelete) = 0;
+      virtual std::optional<SubmitBehavior> getSubmitBehavior() = 0;
+      virtual void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) = 0;
+      virtual std::optional<std::function<void()>> getOnFocused() = 0;
+      virtual void setOnFocused(const std::optional<std::function<void()>>& onFocused) = 0;
+      virtual std::optional<std::function<void()>> getOnBlurred() = 0;
+      virtual void setOnBlurred(const std::optional<std::function<void()>>& onBlurred) = 0;
+      virtual std::optional<std::function<void(const std::string& /* text */)>> getOnTextChanged() = 0;
+      virtual void setOnTextChanged(const std::optional<std::function<void(const std::string& /* text */)>>& onTextChanged) = 0;
+      virtual std::optional<std::function<void(const std::string& /* text */)>> getOnEditingEnded() = 0;
+      virtual void setOnEditingEnded(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingEnded) = 0;
+      virtual std::optional<std::function<void(const std::string& /* text */)>> getOnEditingSubmitted() = 0;
+      virtual void setOnEditingSubmitted(const std::optional<std::function<void(const std::string& /* text */)>>& onEditingSubmitted) = 0;
+      virtual std::optional<std::function<void(double /* start */, double /* end */)>> getOnSelectionChanged() = 0;
+      virtual void setOnSelectionChanged(const std::optional<std::function<void(double /* start */, double /* end */)>>& onSelectionChanged) = 0;
+      virtual std::optional<std::function<void(const std::string& /* key */)>> getOnKeyPressed() = 0;
+      virtual void setOnKeyPressed(const std::optional<std::function<void(const std::string& /* key */)>>& onKeyPressed) = 0;
+      virtual std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchBegan() = 0;
+      virtual void setOnTouchBegan(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchBegan) = 0;
+      virtual std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> getOnTouchEnded() = 0;
+      virtual void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;
       virtual void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) = 0;
 
     public:
       // Methods
-      
+      virtual void focus() = 0;
+      virtual void blur() = 0;
+      virtual void clear() = 0;
+      virtual bool isFocused() = 0;
 
     protected:
       // Hybrid Setup

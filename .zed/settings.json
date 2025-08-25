@@ -1,4 +1,6 @@
 {
+  "hard_tabs": true,
+  "language_servers": ["!eslint", "..."],
   "languages": {
     "JavaScript": {
       "code_actions_on_format": {

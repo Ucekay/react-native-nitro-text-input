@@ -12,17 +12,41 @@
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
+#include "KeyboardAppearance.hpp"
+#include "KeyboardType.hpp"
+#include "ReturnKeyType.hpp"
+#include "SubmitBehavior.hpp"
+#include "TextAlign.hpp"
+#include "TextSelection.hpp"
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <functional>
 #include <memory>
 #include <optional>
 #include <string>
+#include <variant>
 
 // C++ helpers for Swift
 #include "NitroTextInput-Swift-Cxx-Bridge.hpp"

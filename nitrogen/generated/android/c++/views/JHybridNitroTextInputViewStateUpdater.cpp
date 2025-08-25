@@ -52,12 +52,144 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setAutoCorrect(props.autoCorrect.value);
     // TODO: Set isDirty = false
   }
+  if (props.autoFocus.isDirty) {
+    view->setAutoFocus(props.autoFocus.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.caretHidden.isDirty) {
+    view->setCaretHidden(props.caretHidden.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.clearButtonMode.isDirty) {
+    view->setClearButtonMode(props.clearButtonMode.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.clearTextOnFocus.isDirty) {
+    view->setClearTextOnFocus(props.clearTextOnFocus.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.contextMenuHidden.isDirty) {
+    view->setContextMenuHidden(props.contextMenuHidden.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.defaultValue.isDirty) {
+    view->setDefaultValue(props.defaultValue.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.editable.isDirty) {
+    view->setEditable(props.editable.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.enablesReturnKeyAutomatically.isDirty) {
+    view->setEnablesReturnKeyAutomatically(props.enablesReturnKeyAutomatically.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.keyboardType.isDirty) {
+    view->setKeyboardType(props.keyboardType.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.keyboardAppearance.isDirty) {
+    view->setKeyboardAppearance(props.keyboardAppearance.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.maxFontSizeMultiplier.isDirty) {
+    view->setMaxFontSizeMultiplier(props.maxFontSizeMultiplier.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.maxLength.isDirty) {
+    view->setMaxLength(props.maxLength.value);
+    // TODO: Set isDirty = false
+  }
   if (props.multiline.isDirty) {
     view->setMultiline(props.multiline.value);
     // TODO: Set isDirty = false
   }
+  if (props.passwordRules.isDirty) {
+    view->setPasswordRules(props.passwordRules.value);
+    // TODO: Set isDirty = false
+  }
   if (props.placeholder.isDirty) {
     view->setPlaceholder(props.placeholder.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.textAlign.isDirty) {
+    view->setTextAlign(props.textAlign.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.placeholderTextColor.isDirty) {
+    view->setPlaceholderTextColor(props.placeholderTextColor.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.returnKeyType.isDirty) {
+    view->setReturnKeyType(props.returnKeyType.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.selection.isDirty) {
+    view->setSelection(props.selection.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.selectionColor.isDirty) {
+    view->setSelectionColor(props.selectionColor.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.secureTextEntry.isDirty) {
+    view->setSecureTextEntry(props.secureTextEntry.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.spellCheck.isDirty) {
+    view->setSpellCheck(props.spellCheck.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.selectTextOnFocus.isDirty) {
+    view->setSelectTextOnFocus(props.selectTextOnFocus.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.showSoftInputOnFocus.isDirty) {
+    view->setShowSoftInputOnFocus(props.showSoftInputOnFocus.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.smartInsertDelete.isDirty) {
+    view->setSmartInsertDelete(props.smartInsertDelete.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.submitBehavior.isDirty) {
+    view->setSubmitBehavior(props.submitBehavior.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onFocused.isDirty) {
+    view->setOnFocused(props.onFocused.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onBlurred.isDirty) {
+    view->setOnBlurred(props.onBlurred.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onTextChanged.isDirty) {
+    view->setOnTextChanged(props.onTextChanged.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onEditingEnded.isDirty) {
+    view->setOnEditingEnded(props.onEditingEnded.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onEditingSubmitted.isDirty) {
+    view->setOnEditingSubmitted(props.onEditingSubmitted.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onSelectionChanged.isDirty) {
+    view->setOnSelectionChanged(props.onSelectionChanged.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onKeyPressed.isDirty) {
+    view->setOnKeyPressed(props.onKeyPressed.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onTouchBegan.isDirty) {
+    view->setOnTouchBegan(props.onTouchBegan.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.onTouchEnded.isDirty) {
+    view->setOnTouchEnded(props.onTouchEnded.value);
     // TODO: Set isDirty = false
   }
   if (props.onInitialHeightMeasured.isDirty) {

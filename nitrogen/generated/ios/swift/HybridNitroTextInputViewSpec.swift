@@ -15,12 +15,48 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var autoCapitalize: AutoCapitalize? { get set }
   var autoComplete: AutoComplete? { get set }
   var autoCorrect: Bool? { get set }
+  var autoFocus: Bool? { get set }
+  var caretHidden: Bool? { get set }
+  var clearButtonMode: ClearButtonMode? { get set }
+  var clearTextOnFocus: Bool? { get set }
+  var contextMenuHidden: Bool? { get set }
+  var defaultValue: String? { get set }
+  var editable: Bool? { get set }
+  var enablesReturnKeyAutomatically: Bool? { get set }
+  var keyboardType: KeyboardType? { get set }
+  var keyboardAppearance: KeyboardAppearance? { get set }
+  var maxFontSizeMultiplier: Double? { get set }
+  var maxLength: Double? { get set }
   var multiline: Bool? { get set }
+  var passwordRules: String? { get set }
   var placeholder: String? { get set }
+  var textAlign: TextAlign? { get set }
+  var placeholderTextColor: ProcessedColor? { get set }
+  var returnKeyType: ReturnKeyType? { get set }
+  var selection: TextSelection? { get set }
+  var selectionColor: ProcessedColor? { get set }
+  var secureTextEntry: Bool? { get set }
+  var spellCheck: Bool? { get set }
+  var selectTextOnFocus: Bool? { get set }
+  var showSoftInputOnFocus: Bool? { get set }
+  var smartInsertDelete: Bool? { get set }
+  var submitBehavior: SubmitBehavior? { get set }
+  var onFocused: (() -> Void)? { get set }
+  var onBlurred: (() -> Void)? { get set }
+  var onTextChanged: ((_ text: String) -> Void)? { get set }
+  var onEditingEnded: ((_ text: String) -> Void)? { get set }
+  var onEditingSubmitted: ((_ text: String) -> Void)? { get set }
+  var onSelectionChanged: ((_ start: Double, _ end: Double) -> Void)? { get set }
+  var onKeyPressed: ((_ key: String) -> Void)? { get set }
+  var onTouchBegan: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
+  var onTouchEnded: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
 
   // Methods
-  
+  func focus() throws -> Void
+  func blur() throws -> Void
+  func clear() throws -> Void
+  func isFocused() throws -> Bool
 }
 
 /// See ``HybridNitroTextInputViewSpec``

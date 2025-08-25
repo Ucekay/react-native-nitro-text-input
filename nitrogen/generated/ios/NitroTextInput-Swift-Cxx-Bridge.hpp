@@ -12,8 +12,22 @@
 namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 // Forward declaration of `AutoComplete` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
+// Forward declaration of `ClearButtonMode` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
+// Forward declaration of `KeyboardAppearance` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
+// Forward declaration of `KeyboardType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `ReturnKeyType` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
+// Forward declaration of `SubmitBehavior` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextSelection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
@@ -22,11 +36,21 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
+#include "ClearButtonMode.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
+#include "KeyboardAppearance.hpp"
+#include "KeyboardType.hpp"
+#include "ReturnKeyType.hpp"
+#include "SubmitBehavior.hpp"
+#include "TextAlign.hpp"
+#include "TextSelection.hpp"
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <functional>
 #include <memory>
 #include <optional>
 #include <string>
+#include <variant>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -39,8 +63,14 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
    * Specialized version of `std::optional<bool>`.
    */
   using std__optional_bool_ = std::optional<bool>;
-  inline std::optional<bool> create_std__optional_bool_(const bool& value) {
+  inline std::optional<bool> create_std__optional_bool_(const bool& value) noexcept {
     return std::optional<bool>(value);
+  }
+  inline bool has_value_std__optional_bool_(const std::optional<bool>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline bool get_std__optional_bool_(const std::optional<bool>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::optional<AutoCapitalize>
@@ -48,8 +78,14 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
    * Specialized version of `std::optional<AutoCapitalize>`.
    */
   using std__optional_AutoCapitalize_ = std::optional<AutoCapitalize>;
-  inline std::optional<AutoCapitalize> create_std__optional_AutoCapitalize_(const AutoCapitalize& value) {
+  inline std::optional<AutoCapitalize> create_std__optional_AutoCapitalize_(const AutoCapitalize& value) noexcept {
     return std::optional<AutoCapitalize>(value);
+  }
+  inline bool has_value_std__optional_AutoCapitalize_(const std::optional<AutoCapitalize>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline AutoCapitalize get_std__optional_AutoCapitalize_(const std::optional<AutoCapitalize>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::optional<AutoComplete>
@@ -57,8 +93,29 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
    * Specialized version of `std::optional<AutoComplete>`.
    */
   using std__optional_AutoComplete_ = std::optional<AutoComplete>;
-  inline std::optional<AutoComplete> create_std__optional_AutoComplete_(const AutoComplete& value) {
+  inline std::optional<AutoComplete> create_std__optional_AutoComplete_(const AutoComplete& value) noexcept {
     return std::optional<AutoComplete>(value);
+  }
+  inline bool has_value_std__optional_AutoComplete_(const std::optional<AutoComplete>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline AutoComplete get_std__optional_AutoComplete_(const std::optional<AutoComplete>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<ClearButtonMode>
+  /**
+   * Specialized version of `std::optional<ClearButtonMode>`.
+   */
+  using std__optional_ClearButtonMode_ = std::optional<ClearButtonMode>;
+  inline std::optional<ClearButtonMode> create_std__optional_ClearButtonMode_(const ClearButtonMode& value) noexcept {
+    return std::optional<ClearButtonMode>(value);
+  }
+  inline bool has_value_std__optional_ClearButtonMode_(const std::optional<ClearButtonMode>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline ClearButtonMode get_std__optional_ClearButtonMode_(const std::optional<ClearButtonMode>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::optional<std::string>
@@ -66,8 +123,326 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
    * Specialized version of `std::optional<std::string>`.
    */
   using std__optional_std__string_ = std::optional<std::string>;
-  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
+  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) noexcept {
     return std::optional<std::string>(value);
+  }
+  inline bool has_value_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::string get_std__optional_std__string_(const std::optional<std::string>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<KeyboardType>
+  /**
+   * Specialized version of `std::optional<KeyboardType>`.
+   */
+  using std__optional_KeyboardType_ = std::optional<KeyboardType>;
+  inline std::optional<KeyboardType> create_std__optional_KeyboardType_(const KeyboardType& value) noexcept {
+    return std::optional<KeyboardType>(value);
+  }
+  inline bool has_value_std__optional_KeyboardType_(const std::optional<KeyboardType>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline KeyboardType get_std__optional_KeyboardType_(const std::optional<KeyboardType>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<KeyboardAppearance>
+  /**
+   * Specialized version of `std::optional<KeyboardAppearance>`.
+   */
+  using std__optional_KeyboardAppearance_ = std::optional<KeyboardAppearance>;
+  inline std::optional<KeyboardAppearance> create_std__optional_KeyboardAppearance_(const KeyboardAppearance& value) noexcept {
+    return std::optional<KeyboardAppearance>(value);
+  }
+  inline bool has_value_std__optional_KeyboardAppearance_(const std::optional<KeyboardAppearance>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline KeyboardAppearance get_std__optional_KeyboardAppearance_(const std::optional<KeyboardAppearance>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<double>
+  /**
+   * Specialized version of `std::optional<double>`.
+   */
+  using std__optional_double_ = std::optional<double>;
+  inline std::optional<double> create_std__optional_double_(const double& value) noexcept {
+    return std::optional<double>(value);
+  }
+  inline bool has_value_std__optional_double_(const std::optional<double>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline double get_std__optional_double_(const std::optional<double>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextAlign>
+  /**
+   * Specialized version of `std::optional<TextAlign>`.
+   */
+  using std__optional_TextAlign_ = std::optional<TextAlign>;
+  inline std::optional<TextAlign> create_std__optional_TextAlign_(const TextAlign& value) noexcept {
+    return std::optional<TextAlign>(value);
+  }
+  inline bool has_value_std__optional_TextAlign_(const std::optional<TextAlign>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextAlign get_std__optional_TextAlign_(const std::optional<TextAlign>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::variant<std::string, double>
+  /**
+   * Wrapper struct for `std::variant<std::string, double>`.
+   * std::variant cannot be used in Swift because of a Swift bug.
+   * Not even specializing it works. So we create a wrapper struct.
+   */
+  struct std__variant_std__string__double_ {
+    std::variant<std::string, double> variant;
+    std__variant_std__string__double_(std::variant<std::string, double> variant): variant(variant) { }
+    operator std::variant<std::string, double>() const noexcept {
+      return variant;
+    }
+    inline size_t index() const noexcept {
+      return variant.index();
+    }
+    inline std::string get_0() const noexcept {
+      return std::get<0>(variant);
+    }
+    inline double get_1() const noexcept {
+      return std::get<1>(variant);
+    }
+  };
+  inline std__variant_std__string__double_ create_std__variant_std__string__double_(const std::string& value) noexcept {
+    return std__variant_std__string__double_(value);
+  }
+  inline std__variant_std__string__double_ create_std__variant_std__string__double_(double value) noexcept {
+    return std__variant_std__string__double_(value);
+  }
+  
+  // pragma MARK: std::optional<std::variant<std::string, double>>
+  /**
+   * Specialized version of `std::optional<std::variant<std::string, double>>`.
+   */
+  using std__optional_std__variant_std__string__double__ = std::optional<std::variant<std::string, double>>;
+  inline std::optional<std::variant<std::string, double>> create_std__optional_std__variant_std__string__double__(const std::variant<std::string, double>& value) noexcept {
+    return std::optional<std::variant<std::string, double>>(value);
+  }
+  inline bool has_value_std__optional_std__variant_std__string__double__(const std::optional<std::variant<std::string, double>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::variant<std::string, double> get_std__optional_std__variant_std__string__double__(const std::optional<std::variant<std::string, double>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<ReturnKeyType>
+  /**
+   * Specialized version of `std::optional<ReturnKeyType>`.
+   */
+  using std__optional_ReturnKeyType_ = std::optional<ReturnKeyType>;
+  inline std::optional<ReturnKeyType> create_std__optional_ReturnKeyType_(const ReturnKeyType& value) noexcept {
+    return std::optional<ReturnKeyType>(value);
+  }
+  inline bool has_value_std__optional_ReturnKeyType_(const std::optional<ReturnKeyType>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline ReturnKeyType get_std__optional_ReturnKeyType_(const std::optional<ReturnKeyType>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextSelection>
+  /**
+   * Specialized version of `std::optional<TextSelection>`.
+   */
+  using std__optional_TextSelection_ = std::optional<TextSelection>;
+  inline std::optional<TextSelection> create_std__optional_TextSelection_(const TextSelection& value) noexcept {
+    return std::optional<TextSelection>(value);
+  }
+  inline bool has_value_std__optional_TextSelection_(const std::optional<TextSelection>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextSelection get_std__optional_TextSelection_(const std::optional<TextSelection>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<SubmitBehavior>
+  /**
+   * Specialized version of `std::optional<SubmitBehavior>`.
+   */
+  using std__optional_SubmitBehavior_ = std::optional<SubmitBehavior>;
+  inline std::optional<SubmitBehavior> create_std__optional_SubmitBehavior_(const SubmitBehavior& value) noexcept {
+    return std::optional<SubmitBehavior>(value);
+  }
+  inline bool has_value_std__optional_SubmitBehavior_(const std::optional<SubmitBehavior>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline SubmitBehavior get_std__optional_SubmitBehavior_(const std::optional<SubmitBehavior>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::function<void()>
+  /**
+   * Specialized version of `std::function<void()>`.
+   */
+  using Func_void = std::function<void()>;
+  /**
+   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
+   */
+  class Func_void_Wrapper final {
+  public:
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_unique<std::function<void()>>(std::move(func))) {}
+    inline void call() const noexcept {
+      _function->operator()();
+    }
+  private:
+    std::unique_ptr<std::function<void()>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_Wrapper wrap_Func_void(Func_void value) noexcept {
+    return Func_void_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void()>>
+  /**
+   * Specialized version of `std::optional<std::function<void()>>`.
+   */
+  using std__optional_std__function_void____ = std::optional<std::function<void()>>;
+  inline std::optional<std::function<void()>> create_std__optional_std__function_void____(const std::function<void()>& value) noexcept {
+    return std::optional<std::function<void()>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void____(const std::optional<std::function<void()>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void()> get_std__optional_std__function_void____(const std::optional<std::function<void()>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::function<void(const std::string& /* text */)>
+  /**
+   * Specialized version of `std::function<void(const std::string&)>`.
+   */
+  using Func_void_std__string = std::function<void(const std::string& /* text */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::string& / * text * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__string_Wrapper final {
+  public:
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* text */)>&& func): _function(std::make_unique<std::function<void(const std::string& /* text */)>>(std::move(func))) {}
+    inline void call(std::string text) const noexcept {
+      _function->operator()(text);
+    }
+  private:
+    std::unique_ptr<std::function<void(const std::string& /* text */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) noexcept {
+    return Func_void_std__string_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(const std::string& /* text */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const std::string& / * text * /)>>`.
+   */
+  using std__optional_std__function_void_const_std__string_____text______ = std::optional<std::function<void(const std::string& /* text */)>>;
+  inline std::optional<std::function<void(const std::string& /* text */)>> create_std__optional_std__function_void_const_std__string_____text______(const std::function<void(const std::string& /* text */)>& value) noexcept {
+    return std::optional<std::function<void(const std::string& /* text */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_const_std__string_____text______(const std::optional<std::function<void(const std::string& /* text */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(const std::string& /* text */)> get_std__optional_std__function_void_const_std__string_____text______(const std::optional<std::function<void(const std::string& /* text */)>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::function<void(double /* start */, double /* end */)>
+  /**
+   * Specialized version of `std::function<void(double, double)>`.
+   */
+  using Func_void_double_double = std::function<void(double /* start */, double /* end */)>;
+  /**
+   * Wrapper class for a `std::function<void(double / * start * /, double / * end * /)>`, this can be used from Swift.
+   */
+  class Func_void_double_double_Wrapper final {
+  public:
+    explicit Func_void_double_double_Wrapper(std::function<void(double /* start */, double /* end */)>&& func): _function(std::make_unique<std::function<void(double /* start */, double /* end */)>>(std::move(func))) {}
+    inline void call(double start, double end) const noexcept {
+      _function->operator()(start, end);
+    }
+  private:
+    std::unique_ptr<std::function<void(double /* start */, double /* end */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_double_double create_Func_void_double_double(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_double_double_Wrapper wrap_Func_void_double_double(Func_void_double_double value) noexcept {
+    return Func_void_double_double_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(double /* start */, double /* end */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(double / * start * /, double / * end * /)>>`.
+   */
+  using std__optional_std__function_void_double____start_____double____end______ = std::optional<std::function<void(double /* start */, double /* end */)>>;
+  inline std::optional<std::function<void(double /* start */, double /* end */)>> create_std__optional_std__function_void_double____start_____double____end______(const std::function<void(double /* start */, double /* end */)>& value) noexcept {
+    return std::optional<std::function<void(double /* start */, double /* end */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_double____start_____double____end______(const std::optional<std::function<void(double /* start */, double /* end */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(double /* start */, double /* end */)> get_std__optional_std__function_void_double____start_____double____end______(const std::optional<std::function<void(double /* start */, double /* end */)>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<std::function<void(const std::string& /* key */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const std::string& / * key * /)>>`.
+   */
+  using std__optional_std__function_void_const_std__string_____key______ = std::optional<std::function<void(const std::string& /* key */)>>;
+  inline std::optional<std::function<void(const std::string& /* key */)>> create_std__optional_std__function_void_const_std__string_____key______(const std::function<void(const std::string& /* key */)>& value) noexcept {
+    return std::optional<std::function<void(const std::string& /* key */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_const_std__string_____key______(const std::optional<std::function<void(const std::string& /* key */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(const std::string& /* key */)> get_std__optional_std__function_void_const_std__string_____key______(const std::optional<std::function<void(const std::string& /* key */)>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>
+  /**
+   * Specialized version of `std::function<void(double, double, double, double, double)>`.
+   */
+  using Func_void_double_double_double_double_double = std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>;
+  /**
+   * Wrapper class for a `std::function<void(double / * pageX * /, double / * pageY * /, double / * locationX * /, double / * locationY * /, double / * timestamp * /)>`, this can be used from Swift.
+   */
+  class Func_void_double_double_double_double_double_Wrapper final {
+  public:
+    explicit Func_void_double_double_double_double_double_Wrapper(std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>&& func): _function(std::make_unique<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>(std::move(func))) {}
+    inline void call(double pageX, double pageY, double locationX, double locationY, double timestamp) const noexcept {
+      _function->operator()(pageX, pageY, locationX, locationY, timestamp);
+    }
+  private:
+    std::unique_ptr<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_double_double_double_double_double create_Func_void_double_double_double_double_double(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_double_double_double_double_double_Wrapper wrap_Func_void_double_double_double_double_double(Func_void_double_double_double_double_double value) noexcept {
+    return Func_void_double_double_double_double_double_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(double / * pageX * /, double / * pageY * /, double / * locationX * /, double / * locationY * /, double / * timestamp * /)>>`.
+   */
+  using std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______ = std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>;
+  inline std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>> create_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(const std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>& value) noexcept {
+    return std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)> get_std__optional_std__function_void_double____pageX_____double____pageY_____double____locationX_____double____locationY_____double____timestamp______(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::function<void(double /* height */)>
@@ -81,14 +456,14 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   class Func_void_double_Wrapper final {
   public:
     explicit Func_void_double_Wrapper(std::function<void(double /* height */)>&& func): _function(std::make_unique<std::function<void(double /* height */)>>(std::move(func))) {}
-    inline void call(double height) const {
+    inline void call(double height) const noexcept {
       _function->operator()(height);
     }
   private:
     std::unique_ptr<std::function<void(double /* height */)>> _function;
   } SWIFT_NONCOPYABLE;
-  Func_void_double create_Func_void_double(void* _Nonnull swiftClosureWrapper);
-  inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) {
+  Func_void_double create_Func_void_double(void* _Nonnull swiftClosureWrapper) noexcept;
+  inline Func_void_double_Wrapper wrap_Func_void_double(Func_void_double value) noexcept {
     return Func_void_double_Wrapper(std::move(value));
   }
   
@@ -97,8 +472,14 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
    * Specialized version of `std::optional<std::function<void(double / * height * /)>>`.
    */
   using std__optional_std__function_void_double____height______ = std::optional<std::function<void(double /* height */)>>;
-  inline std::optional<std::function<void(double /* height */)>> create_std__optional_std__function_void_double____height______(const std::function<void(double /* height */)>& value) {
+  inline std::optional<std::function<void(double /* height */)>> create_std__optional_std__function_void_double____height______(const std::function<void(double /* height */)>& value) noexcept {
     return std::optional<std::function<void(double /* height */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_double____height______(const std::optional<std::function<void(double /* height */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(double /* height */)> get_std__optional_std__function_void_double____height______(const std::optional<std::function<void(double /* height */)>>& optional) noexcept {
+    return *optional;
   }
   
   // pragma MARK: std::shared_ptr<HybridNitroTextInputViewSpec>
@@ -106,11 +487,29 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
    * Specialized version of `std::shared_ptr<HybridNitroTextInputViewSpec>`.
    */
   using std__shared_ptr_HybridNitroTextInputViewSpec_ = std::shared_ptr<HybridNitroTextInputViewSpec>;
-  std::shared_ptr<HybridNitroTextInputViewSpec> create_std__shared_ptr_HybridNitroTextInputViewSpec_(void* _Nonnull swiftUnsafePointer);
-  void* _Nonnull get_std__shared_ptr_HybridNitroTextInputViewSpec_(std__shared_ptr_HybridNitroTextInputViewSpec_ cppType);
+  std::shared_ptr<HybridNitroTextInputViewSpec> create_std__shared_ptr_HybridNitroTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) noexcept;
+  void* _Nonnull get_std__shared_ptr_HybridNitroTextInputViewSpec_(std__shared_ptr_HybridNitroTextInputViewSpec_ cppType) noexcept;
   
   // pragma MARK: std::weak_ptr<HybridNitroTextInputViewSpec>
   using std__weak_ptr_HybridNitroTextInputViewSpec_ = std::weak_ptr<HybridNitroTextInputViewSpec>;
-  inline std__weak_ptr_HybridNitroTextInputViewSpec_ weakify_std__shared_ptr_HybridNitroTextInputViewSpec_(const std::shared_ptr<HybridNitroTextInputViewSpec>& strong) { return strong; }
+  inline std__weak_ptr_HybridNitroTextInputViewSpec_ weakify_std__shared_ptr_HybridNitroTextInputViewSpec_(const std::shared_ptr<HybridNitroTextInputViewSpec>& strong) noexcept { return strong; }
+  
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() noexcept {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) noexcept {
+    return Result<void>::withError(error);
+  }
+  
+  // pragma MARK: Result<bool>
+  using Result_bool_ = Result<bool>;
+  inline Result_bool_ create_Result_bool_(bool value) noexcept {
+    return Result<bool>::withValue(std::move(value));
+  }
+  inline Result_bool_ create_Result_bool_(const std::exception_ptr& error) noexcept {
+    return Result<bool>::withError(error);
+  }
 
 } // namespace margelo::nitro::nitrotextinput::bridge::swift
