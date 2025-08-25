@@ -1,3 +1,9 @@
+## [1.0.0-next.36](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.35...v1.0.0-next.36) (2025-08-25)
+
+### Features
+
+* add default return key type support to NitroTextInput ([#46](https://github.com/Ucekay/react-native-nitro-text-input/issues/46)) ([669ab71](https://github.com/Ucekay/react-native-nitro-text-input/commit/669ab7110093f0e36138ad6fa4bd343c22128e7d))
+
 ## [1.0.0-next.35](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.34...v1.0.0-next.35) (2025-08-24)
 
 ### Features
