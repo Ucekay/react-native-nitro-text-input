@@ -1,3 +1,9 @@
+## [1.0.0-next.37](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.36...v1.0.0-next.37) (2025-08-25)
+
+### Bug Fixes
+
+* refactor text field maxLength logic and code formatting ([#50](https://github.com/Ucekay/react-native-nitro-text-input/issues/50)) ([fd358c9](https://github.com/Ucekay/react-native-nitro-text-input/commit/fd358c964ec90fdc5622342630a61a2207419515))
+
 ## [1.0.0-beta.2](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2025-08-25)
 
 ### Features
