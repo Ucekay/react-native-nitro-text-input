@@ -1,13 +1,8 @@
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
 	Button,
-	DynamicColorIOS,
-	Platform,
-	PlatformColor,
 	StyleSheet,
-	Text,
-	TextInput,
 	View,
 } from "react-native";
 import {
@@ -17,22 +12,13 @@ import {
 
 export default function App() {
 	const ref = useRef<NitroTextInputRef>(null);
-	const [isFocused, setIsFocused] = useState(false);
-
-	const checkFocusStatus = () => {
-		const focused = ref.current?.isFocused() ?? false;
-		setIsFocused(focused);
-		console.log("Focus status:", focused);
-	};
 
 	const handleFocus = () => {
 		ref.current?.focus();
-		checkFocusStatus();
 	};
 
 	const handleBlur = () => {
 		ref.current?.blur();
-		checkFocusStatus();
 	};
 
 	const handleClear = () => {
@@ -56,36 +42,18 @@ export default function App() {
 				maxLength={12}
 				onBlur={() => {
 					console.log("blurred");
-					checkFocusStatus();
 				}}
 				onChangeText={(text) => console.log(text)}
 				onFocus={() => {
 					console.log("focused");
-					checkFocusStatus();
 				}}
 				onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
 				onSelectionChange={({ start, end }) =>
 					console.log(`Selection changed: ${start} - ${end}`)
 				}
 				onSubmitEditing={(text) => console.log(`Submitted: ${text}`)}
-				placeholder="Nitro Text Input 🔥"
-				placeholderTextColor={
-					Platform.OS === "ios"
-						? DynamicColorIOS({
-								light: PlatformColor("systemBlueColor"),
-								dark: "gray",
-							})
-						: "#00f"
-				}
-				selectionColor={
-					Platform.OS === "ios"
-						? DynamicColorIOS({
-								light: PlatformColor("systemGreenColor"),
-								dark: "green",
-							})
-						: "#0f0"
-				}
-				secureTextEntry={false}
+				placeholder="Type here..."
+				secureTextEntry={true}
 				selectTextOnFocus={false}
 				showSoftInputOnFocus={true}
 				spellCheck={true}
@@ -95,26 +63,11 @@ export default function App() {
 				ref={ref}
 			/>
 
-			<Text style={styles.statusText}>
-				Focus Status: {isFocused ? "✅ Focused" : "❌ Not Focused"}
-			</Text>
-
 			<View style={styles.buttonContainer}>
 				<Button title="Focus" onPress={handleFocus} />
 				<Button title="Blur" onPress={handleBlur} />
 				<Button title="Clear" onPress={handleClear} />
-				<Button title="Check Focus" onPress={checkFocusStatus} />
 			</View>
-
-			<TextInput
-				autoFocus={false}
-				clearButtonMode="always"
-				maxLength={12}
-				placeholder="React Native Text Input"
-				enablesReturnKeyAutomatically
-				spellCheck={false}
-				style={{ width: "100%" }}
-			/>
 			<StatusBar style="auto" />
 		</View>
 	);
