@@ -1,10 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useRef } from "react";
-import {
-	Button,
-	StyleSheet,
-	View,
-} from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import {
 	NitroTextInput,
 	type NitroTextInputRef,
@@ -53,7 +49,7 @@ export default function App() {
 				}
 				onSubmitEditing={(text) => console.log(`Submitted: ${text}`)}
 				placeholder="Type here..."
-				secureTextEntry={true}
+				secureTextEntry={false}
 				selectTextOnFocus={false}
 				showSoftInputOnFocus={true}
 				spellCheck={true}
