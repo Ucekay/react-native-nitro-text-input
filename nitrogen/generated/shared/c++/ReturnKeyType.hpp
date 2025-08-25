@@ -29,17 +29,18 @@ namespace margelo::nitro::nitrotextinput {
    * An enum which can be represented as a JavaScript union (ReturnKeyType).
    */
   enum class ReturnKeyType {
-    GO      SWIFT_NAME(go) = 0,
-    GOOGLE      SWIFT_NAME(google) = 1,
-    JOIN      SWIFT_NAME(join) = 2,
-    NEXT      SWIFT_NAME(next) = 3,
-    ROUTE      SWIFT_NAME(route) = 4,
-    SEARCH      SWIFT_NAME(search) = 5,
-    SEND      SWIFT_NAME(send) = 6,
-    YAHOO      SWIFT_NAME(yahoo) = 7,
-    DONE      SWIFT_NAME(done) = 8,
-    EMERGENCY_CALL      SWIFT_NAME(emergencyCall) = 9,
-    CONTINUE      SWIFT_NAME(continue) = 10,
+    DEFAULT      SWIFT_NAME(default) = 0,
+    GO      SWIFT_NAME(go) = 1,
+    GOOGLE      SWIFT_NAME(google) = 2,
+    JOIN      SWIFT_NAME(join) = 3,
+    NEXT      SWIFT_NAME(next) = 4,
+    ROUTE      SWIFT_NAME(route) = 5,
+    SEARCH      SWIFT_NAME(search) = 6,
+    SEND      SWIFT_NAME(send) = 7,
+    YAHOO      SWIFT_NAME(yahoo) = 8,
+    DONE      SWIFT_NAME(done) = 9,
+    EMERGENCY_CALL      SWIFT_NAME(emergencyCall) = 10,
+    CONTINUE      SWIFT_NAME(continue) = 11,
   } CLOSED_ENUM;
 
 } // namespace margelo::nitro::nitrotextinput
@@ -52,6 +53,7 @@ namespace margelo::nitro {
     static inline margelo::nitro::nitrotextinput::ReturnKeyType fromJSI(jsi::Runtime& runtime, const jsi::Value& arg) {
       std::string unionValue = JSIConverter<std::string>::fromJSI(runtime, arg);
       switch (hashString(unionValue.c_str(), unionValue.size())) {
+        case hashString("default"): return margelo::nitro::nitrotextinput::ReturnKeyType::DEFAULT;
         case hashString("go"): return margelo::nitro::nitrotextinput::ReturnKeyType::GO;
         case hashString("google"): return margelo::nitro::nitrotextinput::ReturnKeyType::GOOGLE;
         case hashString("join"): return margelo::nitro::nitrotextinput::ReturnKeyType::JOIN;
@@ -69,6 +71,7 @@ namespace margelo::nitro {
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, margelo::nitro::nitrotextinput::ReturnKeyType arg) {
       switch (arg) {
+        case margelo::nitro::nitrotextinput::ReturnKeyType::DEFAULT: return JSIConverter<std::string>::toJSI(runtime, "default");
         case margelo::nitro::nitrotextinput::ReturnKeyType::GO: return JSIConverter<std::string>::toJSI(runtime, "go");
         case margelo::nitro::nitrotextinput::ReturnKeyType::GOOGLE: return JSIConverter<std::string>::toJSI(runtime, "google");
         case margelo::nitro::nitrotextinput::ReturnKeyType::JOIN: return JSIConverter<std::string>::toJSI(runtime, "join");
@@ -91,6 +94,7 @@ namespace margelo::nitro {
       }
       std::string unionValue = JSIConverter<std::string>::fromJSI(runtime, value);
       switch (hashString(unionValue.c_str(), unionValue.size())) {
+        case hashString("default"):
         case hashString("go"):
         case hashString("google"):
         case hashString("join"):

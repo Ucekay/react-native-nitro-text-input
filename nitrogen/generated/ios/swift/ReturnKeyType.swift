@@ -17,6 +17,8 @@ public extension ReturnKeyType {
    */
   init?(fromString string: String) {
     switch string {
+      case "default":
+        self = .default
       case "go":
         self = .go
       case "google":
@@ -49,6 +51,8 @@ public extension ReturnKeyType {
    */
   var stringValue: String {
     switch self {
+      case .default:
+        return "default"
       case .go:
         return "go"
       case .google:

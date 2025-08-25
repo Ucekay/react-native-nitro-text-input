@@ -60,6 +60,7 @@ export type ClearButtonMode =
 	| "always";
 
 export type ReturnKeyType =
+	| "default"
 	| "go"
 	| "google"
 	| "join"

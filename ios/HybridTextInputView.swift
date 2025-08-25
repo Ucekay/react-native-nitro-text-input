@@ -871,11 +871,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     private func updateReturnKeyType() {
-        guard let hint = self.returnKeyType else {
+        guard let type = self.returnKeyType else {
             self.textField.returnKeyType = .default
             return
         }
-        switch hint {
+        switch type {
+        case .default:
+            self.textField.returnKeyType = .default
         case .go:
             self.textField.returnKeyType = .go
         case .google:
