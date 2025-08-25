@@ -1,128 +1,128 @@
 {
-	"name": "react-native-nitro-text-input",
-	"version": "1.0.0-beta.1",
-	"description": "nitro-text-input",
-	"main": "lib/index",
-	"module": "lib/index",
-	"types": "lib/index.d.ts",
-	"react-native": "src/index",
-	"source": "src/index",
-	"files": [
-		"src",
-		"react-native.config.js",
-		"lib",
-		"nitrogen",
-		"android/build.gradle",
-		"android/gradle.properties",
-		"android/fix-prefab.gradle",
-		"android/CMakeLists.txt",
-		"android/src",
-		"ios/**/*.h",
-		"ios/**/*.m",
-		"ios/**/*.mm",
-		"ios/**/*.cpp",
-		"ios/**/*.swift",
-		"app.plugin.js",
-		"nitro.json",
-		"*.podspec",
-		"README.md"
-	],
-	"scripts": {
-		"postinstall": "tsc || exit 0;",
-		"typecheck": "tsc --noEmit",
-		"clean": "rm -rf android/build node_modules/**/android/build lib",
-		"lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
-		"lint-ci": "eslint \"**/*.{js,ts,tsx}\" -f @jamesacarr/github-actions",
-		"typescript": "tsc",
-		"specs": "typescript && nitro-codegen --logLevel=\"debug\"",
-		"prepare": "husky",
-		"release": "semantic-release"
-	},
-	"keywords": [
-		"react-native",
-		"nitro"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Ucekay/react-native-nitro-text-input.git"
-	},
-	"author": "Marc Rousavy <me@mrousavy.com> (https://github.com/mrousavy)",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Ucekay/react-native-nitro-text-input/issues"
-	},
-	"homepage": "https://github.com/Ucekay/react-native-nitro-text-input#readme",
-	"private": false,
-	"publishConfig": {
-		"registry": "https://registry.npmjs.org/",
-		"access": "public"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.2.0",
-		"@commitlint/cli": "^19.8.1",
-		"@commitlint/config-conventional": "^19.8.1",
-		"@react-native/eslint-config": "0.81.0",
-		"@semantic-release/changelog": "^6.0.3",
-		"@semantic-release/git": "^10.0.1",
-		"@semantic-release/github": "^11.0.4",
-		"@semantic-release/npm": "^12.0.2",
-		"@types/jest": "^29.5.14",
-		"@types/react": "^19.1.11",
-		"conventional-changelog-conventionalcommits": "^9.1.0",
-		"eslint": "^8.57.1",
-		"eslint-config-prettier": "^9.1.2",
-		"eslint-plugin-prettier": "^5.5.4",
-		"husky": "^9.1.7",
-		"nitro-codegen": "^0.28.1",
-		"prettier": "^3.6.2",
-		"react": "19.1.0",
-		"react-native": "0.81.0",
-		"react-native-nitro-modules": "^0.28.1",
-		"semantic-release": "^24.2.7",
-		"typescript": "^5.9.2"
-	},
-	"peerDependencies": {
-		"react": "*",
-		"react-native": "*",
-		"react-native-nitro-modules": "*"
-	},
-	"eslintConfig": {
-		"root": true,
-		"extends": [
-			"@react-native",
-			"prettier"
-		],
-		"plugins": [
-			"prettier"
-		],
-		"rules": {
-			"prettier/prettier": [
-				"warn",
-				{
-					"quoteProps": "consistent",
-					"singleQuote": true,
-					"tabWidth": 2,
-					"trailingComma": "es5",
-					"useTabs": false
-				}
-			]
-		}
-	},
-	"eslintIgnore": [
-		"node_modules/",
-		"lib/"
-	],
-	"prettier": {
-		"quoteProps": "consistent",
-		"singleQuote": true,
-		"tabWidth": 2,
-		"trailingComma": "es5",
-		"useTabs": false,
-		"semi": false
-	},
-	"patchedDependencies": {
-		"react-native@0.81.0": "patches/react-native@0.81.0.patch",
-		"react-native-nitro-modules@0.28.0": "patches/react-native-nitro-modules@0.28.0.patch",
-		"react-native-nitro-modules@0.28.1": "patches/react-native-nitro-modules@0.28.1.patch"
-	}
+  "name": "react-native-nitro-text-input",
+  "version": "1.0.0-next.36",
+  "description": "nitro-text-input",
+  "main": "lib/index",
+  "module": "lib/index",
+  "types": "lib/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "react-native.config.js",
+    "lib",
+    "nitrogen",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/fix-prefab.gradle",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios/**/*.h",
+    "ios/**/*.m",
+    "ios/**/*.mm",
+    "ios/**/*.cpp",
+    "ios/**/*.swift",
+    "app.plugin.js",
+    "nitro.json",
+    "*.podspec",
+    "README.md"
+  ],
+  "scripts": {
+    "postinstall": "tsc || exit 0;",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf android/build node_modules/**/android/build lib",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
+    "lint-ci": "eslint \"**/*.{js,ts,tsx}\" -f @jamesacarr/github-actions",
+    "typescript": "tsc",
+    "specs": "typescript && nitro-codegen --logLevel=\"debug\"",
+    "prepare": "husky",
+    "release": "semantic-release"
+  },
+  "keywords": [
+    "react-native",
+    "nitro"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ucekay/react-native-nitro-text-input.git"
+  },
+  "author": "Marc Rousavy <me@mrousavy.com> (https://github.com/mrousavy)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ucekay/react-native-nitro-text-input/issues"
+  },
+  "homepage": "https://github.com/Ucekay/react-native-nitro-text-input#readme",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@react-native/eslint-config": "0.81.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.4",
+    "@semantic-release/npm": "^12.0.2",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.1.11",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "nitro-codegen": "^0.28.1",
+    "prettier": "^3.6.2",
+    "react": "19.1.0",
+    "react-native": "0.81.0",
+    "react-native-nitro-modules": "^0.28.1",
+    "semantic-release": "^24.2.7",
+    "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": "*"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "warn",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false,
+    "semi": false
+  },
+  "patchedDependencies": {
+    "react-native@0.81.0": "patches/react-native@0.81.0.patch",
+    "react-native-nitro-modules@0.28.0": "patches/react-native-nitro-modules@0.28.0.patch",
+    "react-native-nitro-modules@0.28.1": "patches/react-native-nitro-modules@0.28.1.patch"
+  }
 }
