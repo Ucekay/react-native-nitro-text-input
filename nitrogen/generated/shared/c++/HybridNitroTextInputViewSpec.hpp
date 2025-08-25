@@ -79,8 +79,6 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setAutoCapitalize(std::optional<AutoCapitalize> autoCapitalize) = 0;
       virtual std::optional<AutoComplete> getAutoComplete() = 0;
       virtual void setAutoComplete(std::optional<AutoComplete> autoComplete) = 0;
-      virtual std::optional<AutoComplete> getAutoComplete() = 0;
-      virtual void setAutoComplete(std::optional<AutoComplete> autoComplete) = 0;
       virtual std::optional<bool> getAutoCorrect() = 0;
       virtual void setAutoCorrect(std::optional<bool> autoCorrect) = 0;
       virtual std::optional<bool> getAutoFocus() = 0;
