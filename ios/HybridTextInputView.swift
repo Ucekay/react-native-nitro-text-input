@@ -102,44 +102,63 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         if self.markedTextRange != nil { return true }
         guard let maxLen = self.maxLength else { return true }
 
-        let current =
-            (self.attributedText?.string ?? self.text ?? "") as NSString
-        let allowedLength = maxLen - current.length + range.length
+        let current = self.attributedText?.string ?? self.text ?? ""
+        let allowedLength = maxLen - current.count + range.length
         if allowedLength <= 0 {
             // Always allow deletions
             return string.isEmpty
         }
 
-        let incoming = string as NSString
-        if incoming.length > allowedLength {
+        let incoming = string
+        if incoming.count > allowedLength {
             var cutIndex = allowedLength
             if allowedLength > 0 {
-                let composed = incoming.rangeOfComposedCharacterSequence(
-                    at: allowedLength - 1
+                let idx = incoming.index(
+                    incoming.startIndex,
+                    offsetBy: allowedLength - 1
                 )
-                if composed.location + composed.length > allowedLength {
-                    cutIndex = composed.location
+                let composed = incoming.rangeOfComposedCharacterSequence(
+                    at: idx
+                )
+                let composedEnd = incoming.distance(
+                    from: incoming.startIndex,
+                    to: composed.upperBound
+                )
+                if composedEnd > allowedLength {
+                    cutIndex = incoming.distance(
+                        from: incoming.startIndex,
+                        to: composed.lowerBound
+                    )
                 }
             }
-            let limited = incoming.substring(to: max(0, cutIndex))
-            let newText = current.replacingCharacters(in: range, with: limited)
-            self.text = newText
-            // Keep caret right after the actually inserted (trimmed) text.
-            // Defer to next runloop to avoid UIKit overriding it after we return false.
-            let targetOffset = min(
-                (newText as NSString).length,
-                range.location + (limited as NSString).length
+            let limitedEnd = incoming.index(
+                incoming.startIndex,
+                offsetBy: max(0, cutIndex)
             )
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                if let start = self.position(
-                    from: self.beginningOfDocument,
-                    offset: targetOffset
-                ) {
-                    self.selectedTextRange = self.textRange(
-                        from: start,
-                        to: start
-                    )
+            let limited = String(incoming[..<limitedEnd])
+            // Now replace the characters in the current string in the given range
+            if let stringRange = Range(range, in: current) {
+                let newText = current.replacingCharacters(
+                    in: stringRange,
+                    with: limited
+                )
+                self.text = newText
+                // Keep caret right after the actually inserted (trimmed) text.
+                let targetOffset = min(
+                    newText.count,
+                    range.location + limited.count
+                )
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    if let start = self.position(
+                        from: self.beginningOfDocument,
+                        offset: targetOffset
+                    ) {
+                        self.selectedTextRange = self.textRange(
+                            from: start,
+                            to: start
+                        )
+                    }
                 }
             }
             return false
@@ -230,19 +249,33 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         guard let maxLen = self.maxLength else { return }
         // Do not enforce while composing
         if self.markedTextRange != nil { return }
-        let current =
-            (self.attributedText?.string ?? self.text ?? "") as NSString
-        if current.length > maxLen {
+        let current = self.attributedText?.string ?? self.text ?? ""
+        if current.count > maxLen {
             var cutIndex = maxLen
             if maxLen > 0 {
-                let composed = current.rangeOfComposedCharacterSequence(
-                    at: maxLen - 1
+                // Convert to String.Index
+                let idx = current.index(
+                    current.startIndex,
+                    offsetBy: maxLen - 1
                 )
-                if composed.location + composed.length > maxLen {
-                    cutIndex = composed.location
+                let composed = current.rangeOfComposedCharacterSequence(at: idx)
+                let composedEnd = current.distance(
+                    from: current.startIndex,
+                    to: composed.upperBound
+                )
+                if composedEnd > maxLen {
+                    cutIndex = current.distance(
+                        from: current.startIndex,
+                        to: composed.lowerBound
+                    )
                 }
             }
-            let limited = current.substring(to: max(0, cutIndex))
+            // Safely get String.Index for cutIndex
+            let endIdx = current.index(
+                current.startIndex,
+                offsetBy: max(0, cutIndex)
+            )
+            let limited = String(current[..<endIdx])
             self.text = limited
         }
         // Notify text changed after any trimming
