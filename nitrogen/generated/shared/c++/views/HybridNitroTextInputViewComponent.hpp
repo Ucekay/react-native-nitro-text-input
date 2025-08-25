@@ -115,6 +115,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> allowFontScaling;
     CachedProp<std::optional<AutoCapitalize>> autoCapitalize;
     CachedProp<std::optional<AutoComplete>> autoComplete;
+    CachedProp<std::optional<AutoComplete>> autoComplete;
     CachedProp<std::optional<bool>> autoCorrect;
     CachedProp<std::optional<bool>> autoFocus;
     CachedProp<std::optional<bool>> caretHidden;

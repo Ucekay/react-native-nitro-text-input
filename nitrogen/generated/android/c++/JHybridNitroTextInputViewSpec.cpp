@@ -105,6 +105,15 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JAutoComplete> /* autoComplete */)>("setAutoComplete");
     method(_javaPart, autoComplete.has_value() ? JAutoComplete::fromCpp(autoComplete.value()) : nullptr);
   }
+  std::optional<AutoComplete> JHybridNitroTextInputViewSpec::getAutoComplete() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JAutoComplete>()>("getAutoComplete");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setAutoComplete(std::optional<AutoComplete> autoComplete) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JAutoComplete> /* autoComplete */)>("setAutoComplete");
+    method(_javaPart, autoComplete.has_value() ? JAutoComplete::fromCpp(autoComplete.value()) : nullptr);
+  }
   std::optional<bool> JHybridNitroTextInputViewSpec::getAutoCorrect() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getAutoCorrect");
     auto __result = method(_javaPart);
