@@ -55,7 +55,7 @@ export default function App() {
 				spellCheck={true}
 				submitBehavior="blurAndSubmit"
 				textAlign="center"
-				style={{ width: "100%" }}
+				style={styles.textInput}
 				ref={ref}
 			/>
 
@@ -77,6 +77,19 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		gap: 20,
 		padding: 20,
+	},
+	textInput: {
+		width: "100%",
+		// Text styling properties that will be mapped to TextAttributes
+		fontSize: 18,
+		fontWeight: "bold",
+		color: "#333",
+		textAlign: "center",
+		letterSpacing: 1,
+		lineHeight: 24,
+		textDecorationLine: "underline",
+		textDecorationColor: "#007AFF",
+		textDecorationStyle: "solid",
 	},
 	statusText: {
 		fontSize: 18,

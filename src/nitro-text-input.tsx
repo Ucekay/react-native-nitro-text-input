@@ -1,25 +1,15 @@
 import React from "react";
 import type { InputModeOptions, ReturnKeyTypeAndroid, TextInputProps, ViewProps } from "react-native";
 import { Platform, processColor, StyleSheet } from "react-native";
-import type { HybridView } from "react-native-nitro-modules";
-import type {
-	DefaultHybridViewProps,
-	WrapFunctionsInObjects,
-} from "react-native-nitro-modules/src";
 import { NativeNitroTextInput } from "./native-nitro-text-input";
 import type {
 	NitroTextInputViewMethods,
 	NitroTextInputViewProps,
 	ReturnKeyType,
 } from "./specs/text-input-view.nitro";
+import { mapStyleToTextAttributes } from "./style-mapping";
 
-type NativeTextInputProps = WrapFunctionsInObjects<
-	DefaultHybridViewProps<
-		HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
-	> &
-	NitroTextInputViewProps
-> &
-	ViewProps;
+type NativeTextInputProps = NitroTextInputViewProps & ViewProps;
 // Base props interface (without ref)
 export interface NitroTextInputBaseProps
 	extends Omit<
@@ -99,6 +89,9 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	const flattenedStyle = StyleSheet.flatten(style) ?? {};
 
 	const hasExplicitHeight = flattenedStyle?.height != null;
+
+	// Map style to TextAttributes
+	const textAttributes = mapStyleToTextAttributes(flattenedStyle);
 
 	// Map inputMode to keyboardType
 	const getKeyboardTypeFromInputMode = () => {
@@ -193,6 +186,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			returnKeyType={resolvedReturnKeyType}
 			selectionColor={toProcessedColor(selectionColor)}
 			showSoftInputOnFocus={shouldShowSoftInput}
+			textAttributes={textAttributes}
 			// Hybrid ref for method access
 			hybridRef={{
 				f: (view) => {

@@ -119,7 +119,7 @@ type TextDecorationStyle = "solid" | "double" | "dotted" | "dashed";
 
 // type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
 // type WritingDirection = "auto" | "ltr" | "rtl";
-interface TextAttributes {
+export interface TextAttributes {
 	color?: ProcessedColor;
 	// fontFamily?: string;
 	fontSize?: number;
