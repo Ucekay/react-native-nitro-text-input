@@ -1,6 +1,6 @@
 // Metro config that avoids external escape dependency
 const { getDefaultConfig } = require("expo/metro-config");
-const path = require("path");
+const path = require("node:path");
 const pak = require("../package.json");
 
 const root = path.resolve(__dirname, "..");

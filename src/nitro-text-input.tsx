@@ -1,5 +1,10 @@
 import React from "react";
-import type { InputModeOptions, ReturnKeyTypeAndroid, TextInputProps, ViewProps } from "react-native";
+import type {
+	InputModeOptions,
+	ReturnKeyTypeAndroid,
+	TextInputProps,
+	ViewProps,
+} from "react-native";
 import { Platform, processColor, StyleSheet } from "react-native";
 import { NativeNitroTextInput } from "./native-nitro-text-input";
 import type {
@@ -54,7 +59,10 @@ export interface NitroTextInputBaseProps
 	onKeyPress?: (key: string) => void;
 	placeholderTextColor?: TextInputProps["placeholderTextColor"] | undefined;
 	ref?: React.RefObject<NitroTextInputViewMethods | null>;
-	returnKeyType?: Exclude<TextInputProps["returnKeyType"], ReturnKeyTypeAndroid>;
+	returnKeyType?: Exclude<
+		TextInputProps["returnKeyType"],
+		ReturnKeyTypeAndroid
+	>;
 	selectionColor?: TextInputProps["selectionColor"] | undefined;
 }
 

@@ -5,7 +5,9 @@ import type { TextAttributes } from "./specs/text-input-view.nitro";
 /**
  * Maps React Native text style properties to TextAttributes format
  */
-export function mapStyleToTextAttributes(style: TextStyle | undefined): TextAttributes | undefined {
+export function mapStyleToTextAttributes(
+	style: TextStyle | undefined,
+): TextAttributes | undefined {
 	if (!style) return undefined;
 
 	const textAttributes: TextAttributes = {};
@@ -14,9 +16,8 @@ export function mapStyleToTextAttributes(style: TextStyle | undefined): TextAttr
 	if (style.color !== undefined) {
 		const processed = processColor(style.color);
 		if (processed != null) {
-			textAttributes.color = typeof processed === "number" 
-				? processed 
-				: JSON.stringify(processed);
+			textAttributes.color =
+				typeof processed === "number" ? processed : JSON.stringify(processed);
 		}
 	}
 
@@ -49,20 +50,20 @@ export function mapStyleToTextAttributes(style: TextStyle | undefined): TextAttr
 	if (style.textAlign !== undefined) {
 		// Map React Native textAlign to TextAttributes textAlign
 		switch (style.textAlign) {
-			case 'auto':
-				textAttributes.textAlign = 'auto';
+			case "auto":
+				textAttributes.textAlign = "auto";
 				break;
-			case 'left':
-				textAttributes.textAlign = 'left';
+			case "left":
+				textAttributes.textAlign = "left";
 				break;
-			case 'right':
-				textAttributes.textAlign = 'right';
+			case "right":
+				textAttributes.textAlign = "right";
 				break;
-			case 'center':
-				textAttributes.textAlign = 'center';
+			case "center":
+				textAttributes.textAlign = "center";
 				break;
-			case 'justify':
-				textAttributes.textAlign = 'justify';
+			case "justify":
+				textAttributes.textAlign = "justify";
 				break;
 		}
 	}
@@ -71,9 +72,8 @@ export function mapStyleToTextAttributes(style: TextStyle | undefined): TextAttr
 	if (style.textDecorationColor !== undefined) {
 		const processed = processColor(style.textDecorationColor);
 		if (processed != null) {
-			textAttributes.textDecorationColor = typeof processed === "number" 
-				? processed 
-				: JSON.stringify(processed);
+			textAttributes.textDecorationColor =
+				typeof processed === "number" ? processed : JSON.stringify(processed);
 		}
 	}
 

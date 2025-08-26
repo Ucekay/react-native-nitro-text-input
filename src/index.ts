@@ -1,10 +1,10 @@
 export { NitroTextInput } from "./nitro-text-input";
-export { mapStyleToTextAttributes } from "./style-mapping";
 export type {
 	NitroTextInputViewMethods,
 	NitroTextInputViewProps,
 	TextAttributes,
 } from "./specs/text-input-view.nitro";
+export { mapStyleToTextAttributes } from "./style-mapping";
 
 import type { HybridRef } from "react-native-nitro-modules";
 import type {
