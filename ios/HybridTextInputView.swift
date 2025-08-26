@@ -33,6 +33,10 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     // Reference to parent view for text decoration re-application
     weak var parentView: HybridTextInputView?
+    
+    // Padding properties for vertical padding support
+    var topPadding: CGFloat = 0
+    var bottomPadding: CGFloat = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -314,6 +318,22 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             name: UITextField.textDidChangeNotification,
             object: self
         )
+    }
+    
+    // Override text rect methods to support vertical padding
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: UIEdgeInsets(top: topPadding, left: 0, bottom: bottomPadding, right: 0))
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: UIEdgeInsets(top: topPadding, left: 0, bottom: bottomPadding, right: 0))
+    }
+    
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.placeholderRect(forBounds: bounds)
+        return rect.inset(by: UIEdgeInsets(top: topPadding, left: 0, bottom: bottomPadding, right: 0))
     }
 }
 
@@ -654,6 +674,161 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.applyTextAttributes()
+            }
+        }
+    }
+
+    // MARK: - Layout Style Properties
+    var width: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var height: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var minWidth: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var maxWidth: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var minHeight: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var maxHeight: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    
+    // MARK: - Margin Properties
+    var margin: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var marginTop: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var marginRight: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var marginBottom: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var marginLeft: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    
+    // MARK: - Padding Properties
+    var padding: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var paddingTop: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var paddingRight: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var paddingBottom: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var paddingLeft: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    
+    // MARK: - Position Properties
+    var position: Position? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var top: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var right: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var bottom: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
+            }
+        }
+    }
+    var left: Double? {
+        didSet {
+            Task { @MainActor in
+                self.applyLayoutStyles()
             }
         }
     }
@@ -1896,6 +2071,159 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             radius: shadowRadius,
             color: attrs.textShadowColor
         )
+    }
+    
+    // MARK: - Layout Styles Application
+    private func applyLayoutStyles() {
+        // Apply size constraints
+        applyWidthHeight()
+        
+        // Apply padding as content insets
+        applyPadding()
+        
+        // Apply margin as frame adjustments
+        applyMargin()
+        
+        // Apply position properties
+        applyPosition()
+    }
+    
+    private func applyWidthHeight() {
+        // Remove existing constraints if they exist
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Apply width constraints
+        if let width = self.width, width > 0 {
+            textField.widthAnchor.constraint(equalToConstant: CGFloat(width)).isActive = true
+        }
+        
+        if let minWidth = self.minWidth, minWidth > 0 {
+            textField.widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(minWidth)).isActive = true
+        }
+        
+        if let maxWidth = self.maxWidth, maxWidth > 0 {
+            textField.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat(maxWidth)).isActive = true
+        }
+        
+        // Apply height constraints
+        if let height = self.height, height > 0 {
+            textField.heightAnchor.constraint(equalToConstant: CGFloat(height)).isActive = true
+        }
+        
+        if let minHeight = self.minHeight, minHeight > 0 {
+            textField.heightAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(minHeight)).isActive = true
+        }
+        
+        if let maxHeight = self.maxHeight, maxHeight > 0 {
+            textField.heightAnchor.constraint(lessThanOrEqualToConstant: CGFloat(maxHeight)).isActive = true
+        }
+    }
+    
+    private func applyPadding() {
+        // For UITextField, we can use leftView and rightView to simulate padding
+        let leftPadding = self.paddingLeft ?? self.padding ?? 0
+        let rightPadding = self.paddingRight ?? self.padding ?? 0
+        let topPadding = self.paddingTop ?? self.padding ?? 0
+        let bottomPadding = self.paddingBottom ?? self.padding ?? 0
+        
+        // Apply horizontal padding using leftView and rightView
+        if leftPadding > 0 {
+            let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat(leftPadding), height: 0))
+            textField.leftView = leftPaddingView
+            textField.leftViewMode = .always
+        } else {
+            textField.leftView = nil
+        }
+        
+        if rightPadding > 0 {
+            let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat(rightPadding), height: 0))
+            textField.rightView = rightPaddingView
+            textField.rightViewMode = .always
+        } else {
+            textField.rightView = nil
+        }
+        
+        // Apply vertical padding using our custom text rect overrides
+        textField.topPadding = CGFloat(topPadding)
+        textField.bottomPadding = CGFloat(bottomPadding)
+        
+        // Force layout update
+        textField.setNeedsDisplay()
+    }
+    
+    private func applyMargin() {
+        // Margins affect the frame positioning relative to superview
+        // In React Native, margins are handled by the layout system
+        // For a Nitro module, we can adjust the frame directly
+        
+        guard let superview = textField.superview else { return }
+        
+        let marginTop = self.marginTop ?? self.margin ?? 0
+        let marginLeft = self.marginLeft ?? self.margin ?? 0
+        let marginBottom = self.marginBottom ?? self.margin ?? 0
+        let marginRight = self.marginRight ?? self.margin ?? 0
+        
+        // Adjust frame based on margins
+        var frame = textField.frame
+        frame.origin.x += CGFloat(marginLeft)
+        frame.origin.y += CGFloat(marginTop)
+        frame.size.width -= CGFloat(marginLeft + marginRight)
+        frame.size.height -= CGFloat(marginTop + marginBottom)
+        
+        textField.frame = frame
+    }
+    
+    private func applyPosition() {
+        guard let position = self.position else { return }
+        
+        switch position {
+        case .absolute:
+            // For absolute positioning, we need to position relative to superview
+            if let superview = textField.superview {
+                textField.translatesAutoresizingMaskIntoConstraints = true
+                
+                var frame = textField.frame
+                
+                if let top = self.top {
+                    frame.origin.y = CGFloat(top)
+                }
+                
+                if let left = self.left {
+                    frame.origin.x = CGFloat(left)
+                }
+                
+                if let right = self.right {
+                    frame.origin.x = superview.bounds.width - frame.width - CGFloat(right)
+                }
+                
+                if let bottom = self.bottom {
+                    frame.origin.y = superview.bounds.height - frame.height - CGFloat(bottom)
+                }
+                
+                textField.frame = frame
+            }
+        case .relative:
+            // Relative positioning adjusts from the normal position
+            var transform = CGAffineTransform.identity
+            
+            if let top = self.top {
+                transform = transform.translatedBy(x: 0, y: CGFloat(top))
+            }
+            
+            if let left = self.left {
+                transform = transform.translatedBy(x: CGFloat(left), y: 0)
+            }
+            
+            if let right = self.right {
+                transform = transform.translatedBy(x: -CGFloat(right), y: 0)
+            }
+            
+            if let bottom = self.bottom {
+                transform = transform.translatedBy(x: 0, y: -CGFloat(bottom))
+            }
+            
+            textField.transform = transform
+        }
     }
 }
 

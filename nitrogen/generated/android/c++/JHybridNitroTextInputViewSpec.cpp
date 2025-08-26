@@ -25,6 +25,8 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 // Forward declaration of `TextAlign` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `Position` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class Position; }
 // Forward declaration of `TextAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 // Forward declaration of `FontVariant` to properly resolve imports.
@@ -72,6 +74,8 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 #include "JFunc_void_double_double.hpp"
 #include "JFunc_void_double_double_double_double_double.hpp"
 #include "JFunc_void_double.hpp"
+#include "Position.hpp"
+#include "JPosition.hpp"
 #include "TextAttributes.hpp"
 #include "JTextAttributes.hpp"
 #include "JVariant_String_Double.hpp"
@@ -575,6 +579,195 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_double::javaobject> /* onInitialHeightMeasured */)>("setOnInitialHeightMeasured_cxx");
     method(_javaPart, onInitialHeightMeasured.has_value() ? JFunc_void_double_cxx::fromCpp(onInitialHeightMeasured.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getWidth() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getWidth");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setWidth(std::optional<double> width) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* width */)>("setWidth");
+    method(_javaPart, width.has_value() ? jni::JDouble::valueOf(width.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getHeight() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getHeight");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setHeight(std::optional<double> height) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* height */)>("setHeight");
+    method(_javaPart, height.has_value() ? jni::JDouble::valueOf(height.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMinWidth() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMinWidth");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMinWidth(std::optional<double> minWidth) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* minWidth */)>("setMinWidth");
+    method(_javaPart, minWidth.has_value() ? jni::JDouble::valueOf(minWidth.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMaxWidth() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMaxWidth");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMaxWidth(std::optional<double> maxWidth) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* maxWidth */)>("setMaxWidth");
+    method(_javaPart, maxWidth.has_value() ? jni::JDouble::valueOf(maxWidth.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMinHeight() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMinHeight");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMinHeight(std::optional<double> minHeight) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* minHeight */)>("setMinHeight");
+    method(_javaPart, minHeight.has_value() ? jni::JDouble::valueOf(minHeight.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMaxHeight() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMaxHeight");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMaxHeight(std::optional<double> maxHeight) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* maxHeight */)>("setMaxHeight");
+    method(_javaPart, maxHeight.has_value() ? jni::JDouble::valueOf(maxHeight.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMargin() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMargin");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMargin(std::optional<double> margin) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* margin */)>("setMargin");
+    method(_javaPart, margin.has_value() ? jni::JDouble::valueOf(margin.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMarginTop() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMarginTop");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMarginTop(std::optional<double> marginTop) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* marginTop */)>("setMarginTop");
+    method(_javaPart, marginTop.has_value() ? jni::JDouble::valueOf(marginTop.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMarginRight() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMarginRight");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMarginRight(std::optional<double> marginRight) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* marginRight */)>("setMarginRight");
+    method(_javaPart, marginRight.has_value() ? jni::JDouble::valueOf(marginRight.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMarginBottom() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMarginBottom");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMarginBottom(std::optional<double> marginBottom) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* marginBottom */)>("setMarginBottom");
+    method(_javaPart, marginBottom.has_value() ? jni::JDouble::valueOf(marginBottom.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getMarginLeft() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getMarginLeft");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setMarginLeft(std::optional<double> marginLeft) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* marginLeft */)>("setMarginLeft");
+    method(_javaPart, marginLeft.has_value() ? jni::JDouble::valueOf(marginLeft.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getPadding() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPadding");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPadding(std::optional<double> padding) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* padding */)>("setPadding");
+    method(_javaPart, padding.has_value() ? jni::JDouble::valueOf(padding.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getPaddingTop() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPaddingTop");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPaddingTop(std::optional<double> paddingTop) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* paddingTop */)>("setPaddingTop");
+    method(_javaPart, paddingTop.has_value() ? jni::JDouble::valueOf(paddingTop.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getPaddingRight() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPaddingRight");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPaddingRight(std::optional<double> paddingRight) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* paddingRight */)>("setPaddingRight");
+    method(_javaPart, paddingRight.has_value() ? jni::JDouble::valueOf(paddingRight.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getPaddingBottom() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPaddingBottom");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPaddingBottom(std::optional<double> paddingBottom) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* paddingBottom */)>("setPaddingBottom");
+    method(_javaPart, paddingBottom.has_value() ? jni::JDouble::valueOf(paddingBottom.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getPaddingLeft() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getPaddingLeft");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPaddingLeft(std::optional<double> paddingLeft) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* paddingLeft */)>("setPaddingLeft");
+    method(_javaPart, paddingLeft.has_value() ? jni::JDouble::valueOf(paddingLeft.value()) : nullptr);
+  }
+  std::optional<Position> JHybridNitroTextInputViewSpec::getPosition() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPosition>()>("getPosition");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setPosition(std::optional<Position> position) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JPosition> /* position */)>("setPosition");
+    method(_javaPart, position.has_value() ? JPosition::fromCpp(position.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getTop() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getTop");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setTop(std::optional<double> top) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* top */)>("setTop");
+    method(_javaPart, top.has_value() ? jni::JDouble::valueOf(top.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getRight() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getRight");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setRight(std::optional<double> right) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* right */)>("setRight");
+    method(_javaPart, right.has_value() ? jni::JDouble::valueOf(right.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getBottom() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getBottom");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setBottom(std::optional<double> bottom) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* bottom */)>("setBottom");
+    method(_javaPart, bottom.has_value() ? jni::JDouble::valueOf(bottom.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroTextInputViewSpec::getLeft() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getLeft");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setLeft(std::optional<double> left) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* left */)>("setLeft");
+    method(_javaPart, left.has_value() ? jni::JDouble::valueOf(left.value()) : nullptr);
   }
   std::optional<TextAttributes> JHybridNitroTextInputViewSpec::getTextAttributes() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextAttributes>()>("getTextAttributes");

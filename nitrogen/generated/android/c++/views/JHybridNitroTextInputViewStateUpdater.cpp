@@ -196,6 +196,90 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setOnInitialHeightMeasured(props.onInitialHeightMeasured.value);
     // TODO: Set isDirty = false
   }
+  if (props.width.isDirty) {
+    view->setWidth(props.width.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.height.isDirty) {
+    view->setHeight(props.height.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.minWidth.isDirty) {
+    view->setMinWidth(props.minWidth.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.maxWidth.isDirty) {
+    view->setMaxWidth(props.maxWidth.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.minHeight.isDirty) {
+    view->setMinHeight(props.minHeight.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.maxHeight.isDirty) {
+    view->setMaxHeight(props.maxHeight.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.margin.isDirty) {
+    view->setMargin(props.margin.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.marginTop.isDirty) {
+    view->setMarginTop(props.marginTop.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.marginRight.isDirty) {
+    view->setMarginRight(props.marginRight.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.marginBottom.isDirty) {
+    view->setMarginBottom(props.marginBottom.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.marginLeft.isDirty) {
+    view->setMarginLeft(props.marginLeft.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.padding.isDirty) {
+    view->setPadding(props.padding.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.paddingTop.isDirty) {
+    view->setPaddingTop(props.paddingTop.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.paddingRight.isDirty) {
+    view->setPaddingRight(props.paddingRight.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.paddingBottom.isDirty) {
+    view->setPaddingBottom(props.paddingBottom.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.paddingLeft.isDirty) {
+    view->setPaddingLeft(props.paddingLeft.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.position.isDirty) {
+    view->setPosition(props.position.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.top.isDirty) {
+    view->setTop(props.top.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.right.isDirty) {
+    view->setRight(props.right.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.bottom.isDirty) {
+    view->setBottom(props.bottom.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.left.isDirty) {
+    view->setLeft(props.left.value);
+    // TODO: Set isDirty = false
+  }
   if (props.textAttributes.isDirty) {
     view->setTextAttributes(props.textAttributes.value);
     // TODO: Set isDirty = false

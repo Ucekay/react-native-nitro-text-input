@@ -271,6 +271,111 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setOnInitialHeightMeasured(newViewProps.onInitialHeightMeasured.value);
     newViewProps.onInitialHeightMeasured.isDirty = false;
   }
+  // width: optional
+  if (newViewProps.width.isDirty) {
+    swiftPart.setWidth(newViewProps.width.value);
+    newViewProps.width.isDirty = false;
+  }
+  // height: optional
+  if (newViewProps.height.isDirty) {
+    swiftPart.setHeight(newViewProps.height.value);
+    newViewProps.height.isDirty = false;
+  }
+  // minWidth: optional
+  if (newViewProps.minWidth.isDirty) {
+    swiftPart.setMinWidth(newViewProps.minWidth.value);
+    newViewProps.minWidth.isDirty = false;
+  }
+  // maxWidth: optional
+  if (newViewProps.maxWidth.isDirty) {
+    swiftPart.setMaxWidth(newViewProps.maxWidth.value);
+    newViewProps.maxWidth.isDirty = false;
+  }
+  // minHeight: optional
+  if (newViewProps.minHeight.isDirty) {
+    swiftPart.setMinHeight(newViewProps.minHeight.value);
+    newViewProps.minHeight.isDirty = false;
+  }
+  // maxHeight: optional
+  if (newViewProps.maxHeight.isDirty) {
+    swiftPart.setMaxHeight(newViewProps.maxHeight.value);
+    newViewProps.maxHeight.isDirty = false;
+  }
+  // margin: optional
+  if (newViewProps.margin.isDirty) {
+    swiftPart.setMargin(newViewProps.margin.value);
+    newViewProps.margin.isDirty = false;
+  }
+  // marginTop: optional
+  if (newViewProps.marginTop.isDirty) {
+    swiftPart.setMarginTop(newViewProps.marginTop.value);
+    newViewProps.marginTop.isDirty = false;
+  }
+  // marginRight: optional
+  if (newViewProps.marginRight.isDirty) {
+    swiftPart.setMarginRight(newViewProps.marginRight.value);
+    newViewProps.marginRight.isDirty = false;
+  }
+  // marginBottom: optional
+  if (newViewProps.marginBottom.isDirty) {
+    swiftPart.setMarginBottom(newViewProps.marginBottom.value);
+    newViewProps.marginBottom.isDirty = false;
+  }
+  // marginLeft: optional
+  if (newViewProps.marginLeft.isDirty) {
+    swiftPart.setMarginLeft(newViewProps.marginLeft.value);
+    newViewProps.marginLeft.isDirty = false;
+  }
+  // padding: optional
+  if (newViewProps.padding.isDirty) {
+    swiftPart.setPadding(newViewProps.padding.value);
+    newViewProps.padding.isDirty = false;
+  }
+  // paddingTop: optional
+  if (newViewProps.paddingTop.isDirty) {
+    swiftPart.setPaddingTop(newViewProps.paddingTop.value);
+    newViewProps.paddingTop.isDirty = false;
+  }
+  // paddingRight: optional
+  if (newViewProps.paddingRight.isDirty) {
+    swiftPart.setPaddingRight(newViewProps.paddingRight.value);
+    newViewProps.paddingRight.isDirty = false;
+  }
+  // paddingBottom: optional
+  if (newViewProps.paddingBottom.isDirty) {
+    swiftPart.setPaddingBottom(newViewProps.paddingBottom.value);
+    newViewProps.paddingBottom.isDirty = false;
+  }
+  // paddingLeft: optional
+  if (newViewProps.paddingLeft.isDirty) {
+    swiftPart.setPaddingLeft(newViewProps.paddingLeft.value);
+    newViewProps.paddingLeft.isDirty = false;
+  }
+  // position: optional
+  if (newViewProps.position.isDirty) {
+    swiftPart.setPosition(newViewProps.position.value);
+    newViewProps.position.isDirty = false;
+  }
+  // top: optional
+  if (newViewProps.top.isDirty) {
+    swiftPart.setTop(newViewProps.top.value);
+    newViewProps.top.isDirty = false;
+  }
+  // right: optional
+  if (newViewProps.right.isDirty) {
+    swiftPart.setRight(newViewProps.right.value);
+    newViewProps.right.isDirty = false;
+  }
+  // bottom: optional
+  if (newViewProps.bottom.isDirty) {
+    swiftPart.setBottom(newViewProps.bottom.value);
+    newViewProps.bottom.isDirty = false;
+  }
+  // left: optional
+  if (newViewProps.left.isDirty) {
+    swiftPart.setLeft(newViewProps.left.value);
+    newViewProps.left.isDirty = false;
+  }
   // textAttributes: optional
   if (newViewProps.textAttributes.isDirty) {
     swiftPart.setTextAttributes(newViewProps.textAttributes.value);

@@ -31,6 +31,8 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 // Forward declaration of `TextAlign` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `Position` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class Position; }
 // Forward declaration of `TextAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 
@@ -47,6 +49,7 @@ namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
 #include <functional>
+#include "Position.hpp"
 #include "TextAttributes.hpp"
 
 namespace margelo::nitro::nitrotextinput {
@@ -156,6 +159,48 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;
       virtual void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) = 0;
+      virtual std::optional<double> getWidth() = 0;
+      virtual void setWidth(std::optional<double> width) = 0;
+      virtual std::optional<double> getHeight() = 0;
+      virtual void setHeight(std::optional<double> height) = 0;
+      virtual std::optional<double> getMinWidth() = 0;
+      virtual void setMinWidth(std::optional<double> minWidth) = 0;
+      virtual std::optional<double> getMaxWidth() = 0;
+      virtual void setMaxWidth(std::optional<double> maxWidth) = 0;
+      virtual std::optional<double> getMinHeight() = 0;
+      virtual void setMinHeight(std::optional<double> minHeight) = 0;
+      virtual std::optional<double> getMaxHeight() = 0;
+      virtual void setMaxHeight(std::optional<double> maxHeight) = 0;
+      virtual std::optional<double> getMargin() = 0;
+      virtual void setMargin(std::optional<double> margin) = 0;
+      virtual std::optional<double> getMarginTop() = 0;
+      virtual void setMarginTop(std::optional<double> marginTop) = 0;
+      virtual std::optional<double> getMarginRight() = 0;
+      virtual void setMarginRight(std::optional<double> marginRight) = 0;
+      virtual std::optional<double> getMarginBottom() = 0;
+      virtual void setMarginBottom(std::optional<double> marginBottom) = 0;
+      virtual std::optional<double> getMarginLeft() = 0;
+      virtual void setMarginLeft(std::optional<double> marginLeft) = 0;
+      virtual std::optional<double> getPadding() = 0;
+      virtual void setPadding(std::optional<double> padding) = 0;
+      virtual std::optional<double> getPaddingTop() = 0;
+      virtual void setPaddingTop(std::optional<double> paddingTop) = 0;
+      virtual std::optional<double> getPaddingRight() = 0;
+      virtual void setPaddingRight(std::optional<double> paddingRight) = 0;
+      virtual std::optional<double> getPaddingBottom() = 0;
+      virtual void setPaddingBottom(std::optional<double> paddingBottom) = 0;
+      virtual std::optional<double> getPaddingLeft() = 0;
+      virtual void setPaddingLeft(std::optional<double> paddingLeft) = 0;
+      virtual std::optional<Position> getPosition() = 0;
+      virtual void setPosition(std::optional<Position> position) = 0;
+      virtual std::optional<double> getTop() = 0;
+      virtual void setTop(std::optional<double> top) = 0;
+      virtual std::optional<double> getRight() = 0;
+      virtual void setRight(std::optional<double> right) = 0;
+      virtual std::optional<double> getBottom() = 0;
+      virtual void setBottom(std::optional<double> bottom) = 0;
+      virtual std::optional<double> getLeft() = 0;
+      virtual void setLeft(std::optional<double> left) = 0;
       virtual std::optional<TextAttributes> getTextAttributes() = 0;
       virtual void setTextAttributes(const std::optional<TextAttributes>& textAttributes) = 0;
 
