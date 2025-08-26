@@ -23,7 +23,6 @@
     "multiline": true,
     "passwordRules": true,
     "placeholder": true,
-    "textAlign": true,
     "placeholderTextColor": true,
     "returnKeyType": true,
     "selection": true,
@@ -34,6 +33,7 @@
     "showSoftInputOnFocus": true,
     "smartInsertDelete": true,
     "submitBehavior": true,
+    "textAlign": true,
     "onFocused": true,
     "onBlurred": true,
     "onTextChanged": true,
@@ -44,6 +44,7 @@
     "onTouchBegan": true,
     "onTouchEnded": true,
     "onInitialHeightMeasured": true,
+    "textAttributes": true,
     "hybridRef": true
   }
 }

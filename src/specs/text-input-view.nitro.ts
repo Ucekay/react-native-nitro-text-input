@@ -105,6 +105,41 @@ export interface TextSelection {
 	end: number;
 }
 
+type FontStyle = string;
+type FontWeight =
+	| string
+	| number
+
+
+type TextAlignAttributes = "auto" | "left" | "right" | "center" | "justify";
+
+type TextDecorationLine = "none" | "underline" | "line-through" | "underline line-through";
+
+type TextDecorationStyle = "solid" | "double" | "dotted" | "dashed";
+
+// type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
+// type WritingDirection = "auto" | "ltr" | "rtl";
+interface TextAttributes {
+	color?: ProcessedColor;
+	// fontFamily?: string;
+	fontSize?: number;
+	fontStyle?: FontStyle;
+	fontWeight?: FontWeight;
+	// fontVariant?: string[];
+	letterSpacing?: number;
+	lineHeight?: number;
+	textAlign?: TextAlignAttributes;
+	textDecorationColor?: ProcessedColor;
+	textDecorationLine?: TextDecorationLine;
+	textDecorationStyle?: TextDecorationStyle;
+	// textShadowColor?: ProcessedColor;
+	// textShadowOffset?: { width: number; height: number };
+	// textShadowRadius?: number;
+	// textTransform?: TextTransform;
+	// writingDirection?: WritingDirection;
+	// useSelect
+}
+
 export interface NitroTextInputViewProps extends HybridViewProps {
 	allowFontScaling?: boolean;
 	autoCapitalize?: AutoCapitalize;
@@ -125,7 +160,6 @@ export interface NitroTextInputViewProps extends HybridViewProps {
 	multiline?: boolean;
 	passwordRules?: string | null;
 	placeholder?: string;
-	textAlign?: TextAlign;
 	placeholderTextColor?: ProcessedColor;
 	returnKeyType?: ReturnKeyType;
 	selection?: TextSelection;
@@ -136,6 +170,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
 	showSoftInputOnFocus?: boolean;
 	smartInsertDelete?: boolean;
 	submitBehavior?: SubmitBehavior;
+	textAlign?: TextAlign;
 	onFocused?: () => void;
 	onBlurred?: () => void;
 	onTextChanged?: (text: string) => void;
@@ -161,6 +196,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
 	 * Called once when the initial height has been measured (pt).
 	 */
 	onInitialHeightMeasured?: (height: number) => void;
+	textAttributes?: TextAttributes;
 }
 
 export interface NitroTextInputViewMethods extends HybridViewMethods {

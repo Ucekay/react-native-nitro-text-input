@@ -30,7 +30,6 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var multiline: Bool? { get set }
   var passwordRules: String? { get set }
   var placeholder: String? { get set }
-  var textAlign: TextAlign? { get set }
   var placeholderTextColor: ProcessedColor? { get set }
   var returnKeyType: ReturnKeyType? { get set }
   var selection: TextSelection? { get set }
@@ -41,6 +40,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var showSoftInputOnFocus: Bool? { get set }
   var smartInsertDelete: Bool? { get set }
   var submitBehavior: SubmitBehavior? { get set }
+  var textAlign: TextAlign? { get set }
   var onFocused: (() -> Void)? { get set }
   var onBlurred: (() -> Void)? { get set }
   var onTextChanged: ((_ text: String) -> Void)? { get set }
@@ -51,6 +51,7 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var onTouchBegan: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onTouchEnded: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
+  var textAttributes: TextAttributes? { get set }
 
   // Methods
   func focus() throws -> Void
