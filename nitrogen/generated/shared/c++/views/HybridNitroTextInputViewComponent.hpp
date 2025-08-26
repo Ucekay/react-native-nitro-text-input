@@ -43,8 +43,6 @@
 #include <optional>
 #include <string>
 #include <optional>
-#include "TextAlign.hpp"
-#include <optional>
 #include <string>
 #include <variant>
 #include <optional>
@@ -62,6 +60,8 @@
 #include <optional>
 #include "SubmitBehavior.hpp"
 #include <optional>
+#include "TextAlign.hpp"
+#include <optional>
 #include <functional>
 #include <optional>
 #include <functional>
@@ -85,6 +85,8 @@
 #include <functional>
 #include <optional>
 #include <functional>
+#include <optional>
+#include "TextAttributes.hpp"
 #include <optional>
 #include <memory>
 #include "HybridNitroTextInputViewSpec.hpp"
@@ -131,7 +133,6 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> multiline;
     CachedProp<std::optional<std::string>> passwordRules;
     CachedProp<std::optional<std::string>> placeholder;
-    CachedProp<std::optional<TextAlign>> textAlign;
     CachedProp<std::optional<std::variant<std::string, double>>> placeholderTextColor;
     CachedProp<std::optional<ReturnKeyType>> returnKeyType;
     CachedProp<std::optional<TextSelection>> selection;
@@ -142,6 +143,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<bool>> showSoftInputOnFocus;
     CachedProp<std::optional<bool>> smartInsertDelete;
     CachedProp<std::optional<SubmitBehavior>> submitBehavior;
+    CachedProp<std::optional<TextAlign>> textAlign;
     CachedProp<std::optional<std::function<void()>>> onFocused;
     CachedProp<std::optional<std::function<void()>>> onBlurred;
     CachedProp<std::optional<std::function<void(const std::string& /* text */)>>> onTextChanged;
@@ -152,6 +154,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchBegan;
     CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchEnded;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
+    CachedProp<std::optional<TextAttributes>> textAttributes;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> hybridRef;
 
   private:

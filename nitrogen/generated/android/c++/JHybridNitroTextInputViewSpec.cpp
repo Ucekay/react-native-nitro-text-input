@@ -17,14 +17,22 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
-// Forward declaration of `TextAlign` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
+// Forward declaration of `TextAlignAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
+// Forward declaration of `TextDecorationLine` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
+// Forward declaration of `TextDecorationStyle` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -38,8 +46,6 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include "JKeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
 #include "JKeyboardAppearance.hpp"
-#include "TextAlign.hpp"
-#include "JTextAlign.hpp"
 #include <variant>
 #include "JProcessedColor.hpp"
 #include "ReturnKeyType.hpp"
@@ -48,12 +54,23 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include "JTextSelection.hpp"
 #include "SubmitBehavior.hpp"
 #include "JSubmitBehavior.hpp"
+#include "TextAlign.hpp"
+#include "JTextAlign.hpp"
 #include <functional>
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_double.hpp"
 #include "JFunc_void_double_double_double_double_double.hpp"
 #include "JFunc_void_double.hpp"
+#include "TextAttributes.hpp"
+#include "JTextAttributes.hpp"
+#include "JVariant_String_Double.hpp"
+#include "TextAlignAttributes.hpp"
+#include "JTextAlignAttributes.hpp"
+#include "TextDecorationLine.hpp"
+#include "JTextDecorationLine.hpp"
+#include "TextDecorationStyle.hpp"
+#include "JTextDecorationStyle.hpp"
 
 namespace margelo::nitro::nitrotextinput {
 
@@ -249,15 +266,6 @@ namespace margelo::nitro::nitrotextinput {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* placeholder */)>("setPlaceholder");
     method(_javaPart, placeholder.has_value() ? jni::make_jstring(placeholder.value()) : nullptr);
   }
-  std::optional<TextAlign> JHybridNitroTextInputViewSpec::getTextAlign() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextAlign>()>("getTextAlign");
-    auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
-  }
-  void JHybridNitroTextInputViewSpec::setTextAlign(std::optional<TextAlign> textAlign) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextAlign> /* textAlign */)>("setTextAlign");
-    method(_javaPart, textAlign.has_value() ? JTextAlign::fromCpp(textAlign.value()) : nullptr);
-  }
   std::optional<std::variant<std::string, double>> JHybridNitroTextInputViewSpec::getPlaceholderTextColor() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JProcessedColor>()>("getPlaceholderTextColor");
     auto __result = method(_javaPart);
@@ -347,6 +355,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JSubmitBehavior> /* submitBehavior */)>("setSubmitBehavior");
     method(_javaPart, submitBehavior.has_value() ? JSubmitBehavior::fromCpp(submitBehavior.value()) : nullptr);
+  }
+  std::optional<TextAlign> JHybridNitroTextInputViewSpec::getTextAlign() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextAlign>()>("getTextAlign");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setTextAlign(std::optional<TextAlign> textAlign) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextAlign> /* textAlign */)>("setTextAlign");
+    method(_javaPart, textAlign.has_value() ? JTextAlign::fromCpp(textAlign.value()) : nullptr);
   }
   std::optional<std::function<void()>> JHybridNitroTextInputViewSpec::getOnFocused() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void::javaobject>()>("getOnFocused_cxx");
@@ -537,6 +554,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroTextInputViewSpec::setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_double::javaobject> /* onInitialHeightMeasured */)>("setOnInitialHeightMeasured_cxx");
     method(_javaPart, onInitialHeightMeasured.has_value() ? JFunc_void_double_cxx::fromCpp(onInitialHeightMeasured.value()) : nullptr);
+  }
+  std::optional<TextAttributes> JHybridNitroTextInputViewSpec::getTextAttributes() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JTextAttributes>()>("getTextAttributes");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toCpp()) : std::nullopt;
+  }
+  void JHybridNitroTextInputViewSpec::setTextAttributes(const std::optional<TextAttributes>& textAttributes) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JTextAttributes> /* textAttributes */)>("setTextAttributes");
+    method(_javaPart, textAttributes.has_value() ? JTextAttributes::fromCpp(textAttributes.value()) : nullptr);
   }
 
   // Methods

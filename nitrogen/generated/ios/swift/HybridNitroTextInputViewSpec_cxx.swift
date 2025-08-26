@@ -450,23 +450,6 @@ open class HybridNitroTextInputViewSpec_cxx {
     }
   }
   
-  public final var textAlign: bridge.std__optional_TextAlign_ {
-    @inline(__always)
-    get {
-      return { () -> bridge.std__optional_TextAlign_ in
-        if let __unwrappedValue = self.__implementation.textAlign {
-          return bridge.create_std__optional_TextAlign_(__unwrappedValue)
-        } else {
-          return .init()
-        }
-      }()
-    }
-    @inline(__always)
-    set {
-      self.__implementation.textAlign = newValue.value
-    }
-  }
-  
   public final var placeholderTextColor: bridge.std__optional_std__variant_std__string__double__ {
     @inline(__always)
     get {
@@ -693,6 +676,23 @@ open class HybridNitroTextInputViewSpec_cxx {
     @inline(__always)
     set {
       self.__implementation.submitBehavior = newValue.value
+    }
+  }
+  
+  public final var textAlign: bridge.std__optional_TextAlign_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_TextAlign_ in
+        if let __unwrappedValue = self.__implementation.textAlign {
+          return bridge.create_std__optional_TextAlign_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.textAlign = newValue.value
     }
   }
   
@@ -1009,6 +1009,30 @@ open class HybridNitroTextInputViewSpec_cxx {
               __wrappedFunction.call(__height)
             }
           }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var textAttributes: bridge.std__optional_TextAttributes_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_TextAttributes_ in
+        if let __unwrappedValue = self.__implementation.textAttributes {
+          return bridge.create_std__optional_TextAttributes_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.textAttributes = { () -> TextAttributes? in
+        if bridge.has_value_std__optional_TextAttributes_(newValue) {
+          let __unwrapped = bridge.get_std__optional_TextAttributes_(newValue)
+          return __unwrapped
         } else {
           return nil
         }

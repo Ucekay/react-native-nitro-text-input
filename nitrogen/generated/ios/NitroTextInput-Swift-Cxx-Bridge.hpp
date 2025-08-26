@@ -24,8 +24,16 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlignAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextAlign` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
+// Forward declaration of `TextDecorationLine` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
+// Forward declaration of `TextDecorationStyle` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
@@ -43,6 +51,10 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "ReturnKeyType.hpp"
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
+#include "TextAlignAttributes.hpp"
+#include "TextAttributes.hpp"
+#include "TextDecorationLine.hpp"
+#include "TextDecorationStyle.hpp"
 #include "TextSelection.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
@@ -178,21 +190,6 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return *optional;
   }
   
-  // pragma MARK: std::optional<TextAlign>
-  /**
-   * Specialized version of `std::optional<TextAlign>`.
-   */
-  using std__optional_TextAlign_ = std::optional<TextAlign>;
-  inline std::optional<TextAlign> create_std__optional_TextAlign_(const TextAlign& value) noexcept {
-    return std::optional<TextAlign>(value);
-  }
-  inline bool has_value_std__optional_TextAlign_(const std::optional<TextAlign>& optional) noexcept {
-    return optional.has_value();
-  }
-  inline TextAlign get_std__optional_TextAlign_(const std::optional<TextAlign>& optional) noexcept {
-    return *optional;
-  }
-  
   // pragma MARK: std::variant<std::string, double>
   /**
    * Wrapper struct for `std::variant<std::string, double>`.
@@ -279,6 +276,21 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return optional.has_value();
   }
   inline SubmitBehavior get_std__optional_SubmitBehavior_(const std::optional<SubmitBehavior>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextAlign>
+  /**
+   * Specialized version of `std::optional<TextAlign>`.
+   */
+  using std__optional_TextAlign_ = std::optional<TextAlign>;
+  inline std::optional<TextAlign> create_std__optional_TextAlign_(const TextAlign& value) noexcept {
+    return std::optional<TextAlign>(value);
+  }
+  inline bool has_value_std__optional_TextAlign_(const std::optional<TextAlign>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextAlign get_std__optional_TextAlign_(const std::optional<TextAlign>& optional) noexcept {
     return *optional;
   }
   
@@ -479,6 +491,66 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return optional.has_value();
   }
   inline std::function<void(double /* height */)> get_std__optional_std__function_void_double____height______(const std::optional<std::function<void(double /* height */)>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextAlignAttributes>
+  /**
+   * Specialized version of `std::optional<TextAlignAttributes>`.
+   */
+  using std__optional_TextAlignAttributes_ = std::optional<TextAlignAttributes>;
+  inline std::optional<TextAlignAttributes> create_std__optional_TextAlignAttributes_(const TextAlignAttributes& value) noexcept {
+    return std::optional<TextAlignAttributes>(value);
+  }
+  inline bool has_value_std__optional_TextAlignAttributes_(const std::optional<TextAlignAttributes>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextAlignAttributes get_std__optional_TextAlignAttributes_(const std::optional<TextAlignAttributes>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextDecorationLine>
+  /**
+   * Specialized version of `std::optional<TextDecorationLine>`.
+   */
+  using std__optional_TextDecorationLine_ = std::optional<TextDecorationLine>;
+  inline std::optional<TextDecorationLine> create_std__optional_TextDecorationLine_(const TextDecorationLine& value) noexcept {
+    return std::optional<TextDecorationLine>(value);
+  }
+  inline bool has_value_std__optional_TextDecorationLine_(const std::optional<TextDecorationLine>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextDecorationLine get_std__optional_TextDecorationLine_(const std::optional<TextDecorationLine>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextDecorationStyle>
+  /**
+   * Specialized version of `std::optional<TextDecorationStyle>`.
+   */
+  using std__optional_TextDecorationStyle_ = std::optional<TextDecorationStyle>;
+  inline std::optional<TextDecorationStyle> create_std__optional_TextDecorationStyle_(const TextDecorationStyle& value) noexcept {
+    return std::optional<TextDecorationStyle>(value);
+  }
+  inline bool has_value_std__optional_TextDecorationStyle_(const std::optional<TextDecorationStyle>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextDecorationStyle get_std__optional_TextDecorationStyle_(const std::optional<TextDecorationStyle>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextAttributes>
+  /**
+   * Specialized version of `std::optional<TextAttributes>`.
+   */
+  using std__optional_TextAttributes_ = std::optional<TextAttributes>;
+  inline std::optional<TextAttributes> create_std__optional_TextAttributes_(const TextAttributes& value) noexcept {
+    return std::optional<TextAttributes>(value);
+  }
+  inline bool has_value_std__optional_TextAttributes_(const std::optional<TextAttributes>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextAttributes get_std__optional_TextAttributes_(const std::optional<TextAttributes>& optional) noexcept {
     return *optional;
   }
   

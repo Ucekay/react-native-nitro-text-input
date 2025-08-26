@@ -24,8 +24,16 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlignAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextAlign` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
+// Forward declaration of `TextDecorationLine` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
+// Forward declaration of `TextDecorationStyle` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 
@@ -39,6 +47,10 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include "ReturnKeyType.hpp"
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
+#include "TextAlignAttributes.hpp"
+#include "TextAttributes.hpp"
+#include "TextDecorationLine.hpp"
+#include "TextDecorationStyle.hpp"
 #include "TextSelection.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
