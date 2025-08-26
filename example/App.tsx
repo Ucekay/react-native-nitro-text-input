@@ -8,12 +8,6 @@ import {
 
 export default function App() {
 	const ref = useRef<NitroTextInputRef>(null);
-	const [writingDirection, setWritingDirection] = useState<
-		"auto" | "ltr" | "rtl"
-	>("auto");
-	const [userSelect, setUserSelect] = useState<
-		"auto" | "text" | "none" | "contain" | "all"
-	>("auto");
 
 	const handleFocus = () => {
 		ref.current?.focus();
