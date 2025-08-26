@@ -14,6 +14,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `FontVariant` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
@@ -36,6 +38,14 @@ namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
 namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `TextShadowOffset` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextShadowOffset; }
+// Forward declaration of `TextTransform` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextTransform; }
+// Forward declaration of `UserSelect` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
+// Forward declaration of `WritingDirection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
@@ -45,6 +55,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
+#include "FontVariant.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
@@ -56,6 +67,10 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "TextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
 #include "TextSelection.hpp"
+#include "TextShadowOffset.hpp"
+#include "TextTransform.hpp"
+#include "UserSelect.hpp"
+#include "WritingDirection.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
@@ -63,6 +78,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include <optional>
 #include <string>
 #include <variant>
+#include <vector>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -494,6 +510,32 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return *optional;
   }
   
+  // pragma MARK: std::vector<FontVariant>
+  /**
+   * Specialized version of `std::vector<FontVariant>`.
+   */
+  using std__vector_FontVariant_ = std::vector<FontVariant>;
+  inline std::vector<FontVariant> create_std__vector_FontVariant_(size_t size) noexcept {
+    std::vector<FontVariant> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::optional<std::vector<FontVariant>>
+  /**
+   * Specialized version of `std::optional<std::vector<FontVariant>>`.
+   */
+  using std__optional_std__vector_FontVariant__ = std::optional<std::vector<FontVariant>>;
+  inline std::optional<std::vector<FontVariant>> create_std__optional_std__vector_FontVariant__(const std::vector<FontVariant>& value) noexcept {
+    return std::optional<std::vector<FontVariant>>(value);
+  }
+  inline bool has_value_std__optional_std__vector_FontVariant__(const std::optional<std::vector<FontVariant>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::vector<FontVariant> get_std__optional_std__vector_FontVariant__(const std::optional<std::vector<FontVariant>>& optional) noexcept {
+    return *optional;
+  }
+  
   // pragma MARK: std::optional<TextAlignAttributes>
   /**
    * Specialized version of `std::optional<TextAlignAttributes>`.
@@ -536,6 +578,66 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return optional.has_value();
   }
   inline TextDecorationStyle get_std__optional_TextDecorationStyle_(const std::optional<TextDecorationStyle>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextShadowOffset>
+  /**
+   * Specialized version of `std::optional<TextShadowOffset>`.
+   */
+  using std__optional_TextShadowOffset_ = std::optional<TextShadowOffset>;
+  inline std::optional<TextShadowOffset> create_std__optional_TextShadowOffset_(const TextShadowOffset& value) noexcept {
+    return std::optional<TextShadowOffset>(value);
+  }
+  inline bool has_value_std__optional_TextShadowOffset_(const std::optional<TextShadowOffset>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextShadowOffset get_std__optional_TextShadowOffset_(const std::optional<TextShadowOffset>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<TextTransform>
+  /**
+   * Specialized version of `std::optional<TextTransform>`.
+   */
+  using std__optional_TextTransform_ = std::optional<TextTransform>;
+  inline std::optional<TextTransform> create_std__optional_TextTransform_(const TextTransform& value) noexcept {
+    return std::optional<TextTransform>(value);
+  }
+  inline bool has_value_std__optional_TextTransform_(const std::optional<TextTransform>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline TextTransform get_std__optional_TextTransform_(const std::optional<TextTransform>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<WritingDirection>
+  /**
+   * Specialized version of `std::optional<WritingDirection>`.
+   */
+  using std__optional_WritingDirection_ = std::optional<WritingDirection>;
+  inline std::optional<WritingDirection> create_std__optional_WritingDirection_(const WritingDirection& value) noexcept {
+    return std::optional<WritingDirection>(value);
+  }
+  inline bool has_value_std__optional_WritingDirection_(const std::optional<WritingDirection>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline WritingDirection get_std__optional_WritingDirection_(const std::optional<WritingDirection>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<UserSelect>
+  /**
+   * Specialized version of `std::optional<UserSelect>`.
+   */
+  using std__optional_UserSelect_ = std::optional<UserSelect>;
+  inline std::optional<UserSelect> create_std__optional_UserSelect_(const UserSelect& value) noexcept {
+    return std::optional<UserSelect>(value);
+  }
+  inline bool has_value_std__optional_UserSelect_(const std::optional<UserSelect>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline UserSelect get_std__optional_UserSelect_(const std::optional<UserSelect>& optional) noexcept {
     return *optional;
   }
   

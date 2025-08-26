@@ -11,6 +11,7 @@ import type {
 	NitroTextInputViewMethods,
 	NitroTextInputViewProps,
 	ReturnKeyType,
+	TextAttributes,
 } from "./specs/text-input-view.nitro";
 
 type NativeTextInputProps = WrapFunctionsInObjects<
@@ -37,6 +38,7 @@ export interface NitroTextInputBaseProps
 		| "placeholderTextColor"
 		| "returnKeyType"
 		| "selectionColor"
+		| "style"
 		| "hybridRef"
 	> {
 	enterKeyHint?: "done" | "next" | "search" | "send" | "go" | "enter";
@@ -66,6 +68,7 @@ export interface NitroTextInputBaseProps
 	ref?: React.RefObject<NitroTextInputViewMethods | null>;
 	returnKeyType?: Exclude<TextInputProps["returnKeyType"], ReturnKeyTypeAndroid>;
 	selectionColor?: TextInputProps["selectionColor"] | undefined;
+	style?: TextInputProps["style"];
 }
 
 export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
@@ -100,6 +103,167 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 
 	const hasExplicitHeight = flattenedStyle?.height != null;
 
+	// Extract text attributes from style
+	const extractTextAttributes = (styleObj: any): TextAttributes | undefined => {
+		if (!styleObj) return undefined;
+
+		const textAttributes: TextAttributes = {};
+		let hasTextAttributes = false;
+
+		// Text decoration line
+		if (styleObj.textDecorationLine) {
+			textAttributes.textDecorationLine = styleObj.textDecorationLine;
+			hasTextAttributes = true;
+		}
+
+		// Text decoration style
+		if (styleObj.textDecorationStyle) {
+			textAttributes.textDecorationStyle = styleObj.textDecorationStyle;
+			hasTextAttributes = true;
+		}
+
+		// Text decoration color
+		if (styleObj.textDecorationColor) {
+			const processed = processColor(styleObj.textDecorationColor);
+			if (processed != null) {
+				textAttributes.textDecorationColor = typeof processed === "number"
+					? processed
+					: JSON.stringify(processed);
+				hasTextAttributes = true;
+			}
+		}
+
+		// Font properties
+		if (styleObj.fontSize && typeof styleObj.fontSize === 'number') {
+			textAttributes.fontSize = styleObj.fontSize;
+			hasTextAttributes = true;
+		}
+
+		if (styleObj.fontWeight) {
+			textAttributes.fontWeight = styleObj.fontWeight;
+			hasTextAttributes = true;
+		}
+
+		if (styleObj.fontStyle) {
+			textAttributes.fontStyle = styleObj.fontStyle;
+			hasTextAttributes = true;
+		}
+
+		if (styleObj.letterSpacing && typeof styleObj.letterSpacing === 'number') {
+			textAttributes.letterSpacing = styleObj.letterSpacing;
+			hasTextAttributes = true;
+		}
+
+		if (styleObj.lineHeight && typeof styleObj.lineHeight === 'number') {
+			textAttributes.lineHeight = styleObj.lineHeight;
+			hasTextAttributes = true;
+		}
+
+		// Text align
+		if (styleObj.textAlign) {
+			// Map React Native textAlign values to TextAlignAttributes
+			const mapTextAlign = (align: string): "auto" | "left" | "right" | "center" | "justify" => {
+				switch (align) {
+					case "left":
+						return "left";
+					case "right":
+						return "right";
+					case "center":
+						return "center";
+					case "justify":
+						return "justify";
+					case "auto":
+					default:
+						return "auto";
+				}
+			};
+			textAttributes.textAlign = mapTextAlign(styleObj.textAlign);
+			hasTextAttributes = true;
+		}
+
+		// Font variant
+		if (styleObj.fontVariant && Array.isArray(styleObj.fontVariant)) {
+			textAttributes.fontVariant = styleObj.fontVariant;
+			hasTextAttributes = true;
+		}
+
+		// Text color
+		if (styleObj.color) {
+			const processed = processColor(styleObj.color);
+			if (processed != null) {
+				textAttributes.color = typeof processed === "number"
+					? processed
+					: JSON.stringify(processed);
+				hasTextAttributes = true;
+			}
+		}
+
+		// Text shadow properties
+		if (styleObj.textShadowColor) {
+			const processed = processColor(styleObj.textShadowColor);
+			if (processed != null) {
+				textAttributes.textShadowColor = typeof processed === "number"
+					? processed
+					: JSON.stringify(processed);
+				hasTextAttributes = true;
+			}
+		}
+
+		if (styleObj.textShadowOffset && typeof styleObj.textShadowOffset === 'object') {
+			textAttributes.textShadowOffset = styleObj.textShadowOffset;
+			hasTextAttributes = true;
+		}
+
+		if (styleObj.textShadowRadius && typeof styleObj.textShadowRadius === 'number') {
+			textAttributes.textShadowRadius = styleObj.textShadowRadius;
+			hasTextAttributes = true;
+		}
+
+		// Writing direction
+		if (styleObj.writingDirection) {
+			textAttributes.writingDirection = styleObj.writingDirection;
+			hasTextAttributes = true;
+		}
+
+		// User select
+		if (styleObj.userSelect) {
+			textAttributes.userSelect = styleObj.userSelect;
+			hasTextAttributes = true;
+		}
+
+		return hasTextAttributes ? textAttributes : undefined;
+	};
+
+	// Remove text attributes from style to avoid duplication
+	const removeTextAttributesFromStyle = (styleObj: any) => {
+		if (!styleObj) return styleObj;
+
+		const {
+			textDecorationLine,
+			textDecorationStyle,
+			textDecorationColor,
+			fontSize,
+			fontWeight,
+			fontStyle,
+			fontVariant,
+			letterSpacing,
+			lineHeight,
+			textAlign,
+			color,
+			textShadowColor,
+			textShadowOffset,
+			textShadowRadius,
+			writingDirection,
+			userSelect,
+			...filteredStyle
+		} = styleObj;
+
+		return filteredStyle;
+	};
+
+	const textAttributes = extractTextAttributes(flattenedStyle);
+	const filteredStyle = removeTextAttributesFromStyle(flattenedStyle);
+
 	// Map inputMode to keyboardType
 	const getKeyboardTypeFromInputMode = () => {
 		if (!inputMode) return keyboardType;
@@ -133,13 +297,13 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	const composedStyle = () => {
 		if (!hasExplicitHeight && measuredInitialHeight != null) {
 			return [
-				// Preserve original user-provided style(s)
-				style,
+				// Preserve original user-provided style(s) but without text attributes
+				filteredStyle,
 				// Apply measured height only when height isn't explicitly set
 				{ height: measuredInitialHeight, width: "100%" as const },
 			];
 		}
-		return [style, { width: "100%" as const }];
+		return [filteredStyle, { width: "100%" as const }];
 	};
 
 	const handleInitialHeightMeasured = (height: number) => {
@@ -193,6 +357,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			returnKeyType={resolvedReturnKeyType}
 			selectionColor={toProcessedColor(selectionColor)}
 			showSoftInputOnFocus={shouldShowSoftInput}
+			textAttributes={textAttributes}
 			// Hybrid ref for method access
 			hybridRef={{
 				f: (view) => {

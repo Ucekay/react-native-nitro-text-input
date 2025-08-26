@@ -18,7 +18,7 @@ public extension TextAttributes {
   /**
    * Create a new instance of `TextAttributes`.
    */
-  init(color: ProcessedColor?, fontSize: Double?, fontStyle: String?, fontWeight: Variant_String_Double?, letterSpacing: Double?, lineHeight: Double?, textAlign: TextAlignAttributes?, textDecorationColor: ProcessedColor?, textDecorationLine: TextDecorationLine?, textDecorationStyle: TextDecorationStyle?) {
+  init(color: ProcessedColor?, fontSize: Double?, fontStyle: String?, fontWeight: Variant_String_Double?, fontVariant: [FontVariant]?, letterSpacing: Double?, lineHeight: Double?, textAlign: TextAlignAttributes?, textDecorationColor: ProcessedColor?, textDecorationLine: TextDecorationLine?, textDecorationStyle: TextDecorationStyle?, textShadowColor: ProcessedColor?, textShadowOffset: TextShadowOffset?, textShadowRadius: Double?, textTransform: TextTransform?, writingDirection: WritingDirection?, userSelect: UserSelect?) {
     self.init({ () -> bridge.std__optional_std__variant_std__string__double__ in
       if let __unwrappedValue = color {
         return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
@@ -54,6 +54,18 @@ public extension TextAttributes {
               return bridge.create_std__variant_std__string__double_(__value)
           }
         }().variant)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_std__vector_FontVariant__ in
+      if let __unwrappedValue = fontVariant {
+        return bridge.create_std__optional_std__vector_FontVariant__({ () -> bridge.std__vector_FontVariant_ in
+          var __vector = bridge.create_std__vector_FontVariant_(__unwrappedValue.count)
+          for __item in __unwrappedValue {
+            __vector.push_back(__item)
+          }
+          return __vector
+        }())
       } else {
         return .init()
       }
@@ -97,6 +109,49 @@ public extension TextAttributes {
     }(), { () -> bridge.std__optional_TextDecorationStyle_ in
       if let __unwrappedValue = textDecorationStyle {
         return bridge.create_std__optional_TextDecorationStyle_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_std__variant_std__string__double__ in
+      if let __unwrappedValue = textShadowColor {
+        return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
+          switch __unwrappedValue {
+            case .first(let __value):
+              return bridge.create_std__variant_std__string__double_(std.string(__value))
+            case .second(let __value):
+              return bridge.create_std__variant_std__string__double_(__value)
+          }
+        }().variant)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_TextShadowOffset_ in
+      if let __unwrappedValue = textShadowOffset {
+        return bridge.create_std__optional_TextShadowOffset_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_double_ in
+      if let __unwrappedValue = textShadowRadius {
+        return bridge.create_std__optional_double_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_TextTransform_ in
+      if let __unwrappedValue = textTransform {
+        return bridge.create_std__optional_TextTransform_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_WritingDirection_ in
+      if let __unwrappedValue = writingDirection {
+        return bridge.create_std__optional_WritingDirection_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_UserSelect_ in
+      if let __unwrappedValue = userSelect {
+        return bridge.create_std__optional_UserSelect_(__unwrappedValue)
       } else {
         return .init()
       }
@@ -230,6 +285,36 @@ public extension TextAttributes {
     }
   }
   
+  var fontVariant: [FontVariant]? {
+    @inline(__always)
+    get {
+      return { () -> [FontVariant]? in
+        if bridge.has_value_std__optional_std__vector_FontVariant__(self.__fontVariant) {
+          let __unwrapped = bridge.get_std__optional_std__vector_FontVariant__(self.__fontVariant)
+          return __unwrapped.map({ __item in __item })
+        } else {
+          return nil
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__fontVariant = { () -> bridge.std__optional_std__vector_FontVariant__ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_std__vector_FontVariant__({ () -> bridge.std__vector_FontVariant_ in
+            var __vector = bridge.create_std__vector_FontVariant_(__unwrappedValue.count)
+            for __item in __unwrappedValue {
+              __vector.push_back(__item)
+            }
+            return __vector
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
   var letterSpacing: Double? {
     @inline(__always)
     get {
@@ -351,6 +436,141 @@ public extension TextAttributes {
       self.__textDecorationStyle = { () -> bridge.std__optional_TextDecorationStyle_ in
         if let __unwrappedValue = newValue {
           return bridge.create_std__optional_TextDecorationStyle_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var textShadowColor: ProcessedColor? {
+    @inline(__always)
+    get {
+      return { () -> ProcessedColor? in
+        if bridge.has_value_std__optional_std__variant_std__string__double__(self.__textShadowColor) {
+          let __unwrapped = bridge.get_std__optional_std__variant_std__string__double__(self.__textShadowColor)
+          return { () -> ProcessedColor in
+            let __variant = bridge.std__variant_std__string__double_(__unwrapped)
+            switch __variant.index() {
+              case 0:
+                let __actual = __variant.get_0()
+                return .first(String(__actual))
+              case 1:
+                let __actual = __variant.get_1()
+                return .second(__actual)
+              default:
+                fatalError("Variant can never have index \(__variant.index())!")
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__textShadowColor = { () -> bridge.std__optional_std__variant_std__string__double__ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
+            switch __unwrappedValue {
+              case .first(let __value):
+                return bridge.create_std__variant_std__string__double_(std.string(__value))
+              case .second(let __value):
+                return bridge.create_std__variant_std__string__double_(__value)
+            }
+          }().variant)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var textShadowOffset: TextShadowOffset? {
+    @inline(__always)
+    get {
+      return { () -> TextShadowOffset? in
+        if bridge.has_value_std__optional_TextShadowOffset_(self.__textShadowOffset) {
+          let __unwrapped = bridge.get_std__optional_TextShadowOffset_(self.__textShadowOffset)
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__textShadowOffset = { () -> bridge.std__optional_TextShadowOffset_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_TextShadowOffset_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var textShadowRadius: Double? {
+    @inline(__always)
+    get {
+      return self.__textShadowRadius.value
+    }
+    @inline(__always)
+    set {
+      self.__textShadowRadius = { () -> bridge.std__optional_double_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_double_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var textTransform: TextTransform? {
+    @inline(__always)
+    get {
+      return self.__textTransform.value
+    }
+    @inline(__always)
+    set {
+      self.__textTransform = { () -> bridge.std__optional_TextTransform_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_TextTransform_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var writingDirection: WritingDirection? {
+    @inline(__always)
+    get {
+      return self.__writingDirection.value
+    }
+    @inline(__always)
+    set {
+      self.__writingDirection = { () -> bridge.std__optional_WritingDirection_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_WritingDirection_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var userSelect: UserSelect? {
+    @inline(__always)
+    get {
+      return self.__userSelect.value
+    }
+    @inline(__always)
+    set {
+      self.__userSelect = { () -> bridge.std__optional_UserSelect_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_UserSelect_(__unwrappedValue)
         } else {
           return .init()
         }

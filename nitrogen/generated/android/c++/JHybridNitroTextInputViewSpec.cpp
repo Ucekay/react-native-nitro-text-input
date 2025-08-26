@@ -27,12 +27,22 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `TextAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
+// Forward declaration of `FontVariant` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
 // Forward declaration of `TextAlignAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextDecorationLine` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
 // Forward declaration of `TextDecorationStyle` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
+// Forward declaration of `TextShadowOffset` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextShadowOffset; }
+// Forward declaration of `TextTransform` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextTransform; }
+// Forward declaration of `WritingDirection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
+// Forward declaration of `UserSelect` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -65,12 +75,23 @@ namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 #include "TextAttributes.hpp"
 #include "JTextAttributes.hpp"
 #include "JVariant_String_Double.hpp"
+#include "FontVariant.hpp"
+#include <vector>
+#include "JFontVariant.hpp"
 #include "TextAlignAttributes.hpp"
 #include "JTextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"
 #include "JTextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
 #include "JTextDecorationStyle.hpp"
+#include "TextShadowOffset.hpp"
+#include "JTextShadowOffset.hpp"
+#include "TextTransform.hpp"
+#include "JTextTransform.hpp"
+#include "WritingDirection.hpp"
+#include "JWritingDirection.hpp"
+#include "UserSelect.hpp"
+#include "JUserSelect.hpp"
 
 namespace margelo::nitro::nitrotextinput {
 

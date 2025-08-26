@@ -10,17 +10,28 @@
 #include <fbjni/fbjni.h>
 #include "TextAttributes.hpp"
 
+#include "FontVariant.hpp"
+#include "JFontVariant.hpp"
 #include "JProcessedColor.hpp"
 #include "JTextAlignAttributes.hpp"
 #include "JTextDecorationLine.hpp"
 #include "JTextDecorationStyle.hpp"
+#include "JTextShadowOffset.hpp"
+#include "JTextTransform.hpp"
+#include "JUserSelect.hpp"
 #include "JVariant_String_Double.hpp"
+#include "JWritingDirection.hpp"
 #include "TextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
+#include "TextShadowOffset.hpp"
+#include "TextTransform.hpp"
+#include "UserSelect.hpp"
+#include "WritingDirection.hpp"
 #include <optional>
 #include <string>
 #include <variant>
+#include <vector>
 
 namespace margelo::nitro::nitrotextinput {
 
@@ -49,6 +60,8 @@ namespace margelo::nitro::nitrotextinput {
       jni::local_ref<jni::JString> fontStyle = this->getFieldValue(fieldFontStyle);
       static const auto fieldFontWeight = clazz->getField<JVariant_String_Double>("fontWeight");
       jni::local_ref<JVariant_String_Double> fontWeight = this->getFieldValue(fieldFontWeight);
+      static const auto fieldFontVariant = clazz->getField<jni::JArrayClass<JFontVariant>>("fontVariant");
+      jni::local_ref<jni::JArrayClass<JFontVariant>> fontVariant = this->getFieldValue(fieldFontVariant);
       static const auto fieldLetterSpacing = clazz->getField<jni::JDouble>("letterSpacing");
       jni::local_ref<jni::JDouble> letterSpacing = this->getFieldValue(fieldLetterSpacing);
       static const auto fieldLineHeight = clazz->getField<jni::JDouble>("lineHeight");
@@ -61,17 +74,45 @@ namespace margelo::nitro::nitrotextinput {
       jni::local_ref<JTextDecorationLine> textDecorationLine = this->getFieldValue(fieldTextDecorationLine);
       static const auto fieldTextDecorationStyle = clazz->getField<JTextDecorationStyle>("textDecorationStyle");
       jni::local_ref<JTextDecorationStyle> textDecorationStyle = this->getFieldValue(fieldTextDecorationStyle);
+      static const auto fieldTextShadowColor = clazz->getField<JProcessedColor>("textShadowColor");
+      jni::local_ref<JProcessedColor> textShadowColor = this->getFieldValue(fieldTextShadowColor);
+      static const auto fieldTextShadowOffset = clazz->getField<JTextShadowOffset>("textShadowOffset");
+      jni::local_ref<JTextShadowOffset> textShadowOffset = this->getFieldValue(fieldTextShadowOffset);
+      static const auto fieldTextShadowRadius = clazz->getField<jni::JDouble>("textShadowRadius");
+      jni::local_ref<jni::JDouble> textShadowRadius = this->getFieldValue(fieldTextShadowRadius);
+      static const auto fieldTextTransform = clazz->getField<JTextTransform>("textTransform");
+      jni::local_ref<JTextTransform> textTransform = this->getFieldValue(fieldTextTransform);
+      static const auto fieldWritingDirection = clazz->getField<JWritingDirection>("writingDirection");
+      jni::local_ref<JWritingDirection> writingDirection = this->getFieldValue(fieldWritingDirection);
+      static const auto fieldUserSelect = clazz->getField<JUserSelect>("userSelect");
+      jni::local_ref<JUserSelect> userSelect = this->getFieldValue(fieldUserSelect);
       return TextAttributes(
         color != nullptr ? std::make_optional(color->toCpp()) : std::nullopt,
         fontSize != nullptr ? std::make_optional(fontSize->value()) : std::nullopt,
         fontStyle != nullptr ? std::make_optional(fontStyle->toStdString()) : std::nullopt,
         fontWeight != nullptr ? std::make_optional(fontWeight->toCpp()) : std::nullopt,
+        fontVariant != nullptr ? std::make_optional([&]() {
+          size_t __size = fontVariant->size();
+          std::vector<FontVariant> __vector;
+          __vector.reserve(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            auto __element = fontVariant->getElement(__i);
+            __vector.push_back(__element->toCpp());
+          }
+          return __vector;
+        }()) : std::nullopt,
         letterSpacing != nullptr ? std::make_optional(letterSpacing->value()) : std::nullopt,
         lineHeight != nullptr ? std::make_optional(lineHeight->value()) : std::nullopt,
         textAlign != nullptr ? std::make_optional(textAlign->toCpp()) : std::nullopt,
         textDecorationColor != nullptr ? std::make_optional(textDecorationColor->toCpp()) : std::nullopt,
         textDecorationLine != nullptr ? std::make_optional(textDecorationLine->toCpp()) : std::nullopt,
-        textDecorationStyle != nullptr ? std::make_optional(textDecorationStyle->toCpp()) : std::nullopt
+        textDecorationStyle != nullptr ? std::make_optional(textDecorationStyle->toCpp()) : std::nullopt,
+        textShadowColor != nullptr ? std::make_optional(textShadowColor->toCpp()) : std::nullopt,
+        textShadowOffset != nullptr ? std::make_optional(textShadowOffset->toCpp()) : std::nullopt,
+        textShadowRadius != nullptr ? std::make_optional(textShadowRadius->value()) : std::nullopt,
+        textTransform != nullptr ? std::make_optional(textTransform->toCpp()) : std::nullopt,
+        writingDirection != nullptr ? std::make_optional(writingDirection->toCpp()) : std::nullopt,
+        userSelect != nullptr ? std::make_optional(userSelect->toCpp()) : std::nullopt
       );
     }
 
@@ -86,12 +127,27 @@ namespace margelo::nitro::nitrotextinput {
         value.fontSize.has_value() ? jni::JDouble::valueOf(value.fontSize.value()) : nullptr,
         value.fontStyle.has_value() ? jni::make_jstring(value.fontStyle.value()) : nullptr,
         value.fontWeight.has_value() ? JVariant_String_Double::fromCpp(value.fontWeight.value()) : nullptr,
+        value.fontVariant.has_value() ? [&]() {
+          size_t __size = value.fontVariant.value().size();
+          jni::local_ref<jni::JArrayClass<JFontVariant>> __array = jni::JArrayClass<JFontVariant>::newArray(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            const auto& __element = value.fontVariant.value()[__i];
+            __array->setElement(__i, *JFontVariant::fromCpp(__element));
+          }
+          return __array;
+        }() : nullptr,
         value.letterSpacing.has_value() ? jni::JDouble::valueOf(value.letterSpacing.value()) : nullptr,
         value.lineHeight.has_value() ? jni::JDouble::valueOf(value.lineHeight.value()) : nullptr,
         value.textAlign.has_value() ? JTextAlignAttributes::fromCpp(value.textAlign.value()) : nullptr,
         value.textDecorationColor.has_value() ? JProcessedColor::fromCpp(value.textDecorationColor.value()) : nullptr,
         value.textDecorationLine.has_value() ? JTextDecorationLine::fromCpp(value.textDecorationLine.value()) : nullptr,
-        value.textDecorationStyle.has_value() ? JTextDecorationStyle::fromCpp(value.textDecorationStyle.value()) : nullptr
+        value.textDecorationStyle.has_value() ? JTextDecorationStyle::fromCpp(value.textDecorationStyle.value()) : nullptr,
+        value.textShadowColor.has_value() ? JProcessedColor::fromCpp(value.textShadowColor.value()) : nullptr,
+        value.textShadowOffset.has_value() ? JTextShadowOffset::fromCpp(value.textShadowOffset.value()) : nullptr,
+        value.textShadowRadius.has_value() ? jni::JDouble::valueOf(value.textShadowRadius.value()) : nullptr,
+        value.textTransform.has_value() ? JTextTransform::fromCpp(value.textTransform.value()) : nullptr,
+        value.writingDirection.has_value() ? JWritingDirection::fromCpp(value.writingDirection.value()) : nullptr,
+        value.userSelect.has_value() ? JUserSelect::fromCpp(value.userSelect.value()) : nullptr
       );
     }
   };

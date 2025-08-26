@@ -35,6 +35,9 @@ data class TextAttributes
     val fontWeight: Variant_String_Double?,
     @DoNotStrip
     @Keep
+    val fontVariant: Array<FontVariant>?,
+    @DoNotStrip
+    @Keep
     val letterSpacing: Double?,
     @DoNotStrip
     @Keep
@@ -50,7 +53,25 @@ data class TextAttributes
     val textDecorationLine: TextDecorationLine?,
     @DoNotStrip
     @Keep
-    val textDecorationStyle: TextDecorationStyle?
+    val textDecorationStyle: TextDecorationStyle?,
+    @DoNotStrip
+    @Keep
+    val textShadowColor: ProcessedColor?,
+    @DoNotStrip
+    @Keep
+    val textShadowOffset: TextShadowOffset?,
+    @DoNotStrip
+    @Keep
+    val textShadowRadius: Double?,
+    @DoNotStrip
+    @Keep
+    val textTransform: TextTransform?,
+    @DoNotStrip
+    @Keep
+    val writingDirection: WritingDirection?,
+    @DoNotStrip
+    @Keep
+    val userSelect: UserSelect?
   ) {
   /* main constructor */
 }

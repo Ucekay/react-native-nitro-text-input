@@ -14,6 +14,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `FontVariant` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
@@ -36,11 +38,20 @@ namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
 namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `TextShadowOffset` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextShadowOffset; }
+// Forward declaration of `TextTransform` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextTransform; }
+// Forward declaration of `UserSelect` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
+// Forward declaration of `WritingDirection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
+#include "FontVariant.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
@@ -52,6 +63,10 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include "TextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
 #include "TextSelection.hpp"
+#include "TextShadowOffset.hpp"
+#include "TextTransform.hpp"
+#include "UserSelect.hpp"
+#include "WritingDirection.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
@@ -59,6 +74,7 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include <optional>
 #include <string>
 #include <variant>
+#include <vector>
 
 // C++ helpers for Swift
 #include "NitroTextInput-Swift-Cxx-Bridge.hpp"

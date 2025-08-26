@@ -1,4 +1,5 @@
 // TODO: Export specs that extend HybridObject<...> here
+import type { FontVariant } from "react-native";
 import type {
 	HybridView,
 	HybridViewMethods,
@@ -117,27 +118,36 @@ type TextDecorationLine = "none" | "underline" | "line-through" | "underline lin
 
 type TextDecorationStyle = "solid" | "double" | "dotted" | "dashed";
 
-// type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
-// type WritingDirection = "auto" | "ltr" | "rtl";
-interface TextAttributes {
+type TextShadowOffset = {
+	width: number;
+	height: number;
+};
+
+type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
+
+type WritingDirection = "auto" | "ltr" | "rtl";
+
+type UserSelect = "auto" | "text" | "none" | "contain" | "all";
+
+export interface TextAttributes {
 	color?: ProcessedColor;
 	// fontFamily?: string;
 	fontSize?: number;
 	fontStyle?: FontStyle;
 	fontWeight?: FontWeight;
-	// fontVariant?: string[];
+	fontVariant?: FontVariant[];
 	letterSpacing?: number;
 	lineHeight?: number;
 	textAlign?: TextAlignAttributes;
 	textDecorationColor?: ProcessedColor;
 	textDecorationLine?: TextDecorationLine;
 	textDecorationStyle?: TextDecorationStyle;
-	// textShadowColor?: ProcessedColor;
-	// textShadowOffset?: { width: number; height: number };
-	// textShadowRadius?: number;
-	// textTransform?: TextTransform;
-	// writingDirection?: WritingDirection;
-	// useSelect
+	textShadowColor?: ProcessedColor;
+	textShadowOffset?: TextShadowOffset;
+	textShadowRadius?: number;
+	textTransform?: TextTransform;
+	writingDirection?: WritingDirection;
+	userSelect?: UserSelect;
 }
 
 export interface NitroTextInputViewProps extends HybridViewProps {
