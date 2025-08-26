@@ -6,7 +6,11 @@ import type {
 	ViewProps,
 } from "react-native";
 import { Platform, processColor, StyleSheet } from "react-native";
-import type { HybridViewProps } from "react-native-nitro-modules";
+import type { HybridView } from "react-native-nitro-modules";
+import type {
+	DefaultHybridViewProps,
+	WrapFunctionsInObjects,
+} from "react-native-nitro-modules/src";
 import { NativeNitroTextInput } from "./native-nitro-text-input";
 import type {
 	NitroTextInputViewMethods,
@@ -15,8 +19,12 @@ import type {
 	TextAttributes,
 } from "./specs/text-input-view.nitro";
 
-type NativeTextInputProps = HybridViewProps &
-	NitroTextInputViewProps &
+type NativeTextInputProps = WrapFunctionsInObjects<
+	DefaultHybridViewProps<
+		HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
+	> &
+		NitroTextInputViewProps
+> &
 	ViewProps;
 // Base props interface (without ref)
 export interface NitroTextInputBaseProps
