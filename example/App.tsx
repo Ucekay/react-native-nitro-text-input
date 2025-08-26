@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { useRef } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { useRef, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 import {
 	NitroTextInput,
 	type NitroTextInputRef,
@@ -8,6 +8,12 @@ import {
 
 export default function App() {
 	const ref = useRef<NitroTextInputRef>(null);
+	const [writingDirection, setWritingDirection] = useState<
+		"auto" | "ltr" | "rtl"
+	>("auto");
+	const [userSelect, setUserSelect] = useState<
+		"auto" | "text" | "none" | "contain" | "all"
+	>("auto");
 
 	const handleFocus = () => {
 		ref.current?.focus();
@@ -23,6 +29,7 @@ export default function App() {
 
 	return (
 		<View style={styles.container}>
+
 			<NitroTextInput
 				allowFontScaling
 				autoCapitalize="none"
@@ -35,7 +42,7 @@ export default function App() {
 				editable
 				enablesReturnKeyAutomatically
 				keyboardAppearance="default"
-				maxLength={12}
+				maxLength={50}
 				onBlur={() => {
 					console.log("blurred");
 				}}
@@ -55,7 +62,18 @@ export default function App() {
 				spellCheck={true}
 				submitBehavior="blurAndSubmit"
 				textAlign="center"
-				style={{ width: "100%" }}
+				style={{
+					width: "100%",
+					color: "red",
+					fontWeight: "600",
+					fontSize: 21,
+					textDecorationLine: "underline",
+					textDecorationStyle: "dashed",
+					fontStyle: "italic",
+					textShadowColor: "#00000080",
+					textShadowOffset: { width: 0, height: 1 },
+					textShadowRadius: 1,
+				}}
 				ref={ref}
 			/>
 
@@ -63,6 +81,7 @@ export default function App() {
 				<Button title="Focus" onPress={handleFocus} />
 				<Button title="Blur" onPress={handleBlur} />
 				<Button title="Clear" onPress={handleClear} />
+
 			</View>
 			<StatusBar style="auto" />
 		</View>
