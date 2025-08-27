@@ -13,7 +13,9 @@ class CustomTextView: UITextView, UITextViewDelegate {
     var onEditingSubmitted: ((_ text: String) -> Void)?
     var onContentSizeChanged: ((_ width: Double, _ height: Double) -> Void)?
     var submitBehavior: SubmitBehavior?
+    var numberOfLines: Int?
     private var textWasPasted: Bool = false
+    private var isMarkedTextValid: Bool = false
     var onTouchBegan:
         (
             (
@@ -31,6 +33,30 @@ class CustomTextView: UITextView, UITextViewDelegate {
 
     // Reference to parent view for text decoration re-application
     weak var parentView: HybridMultiLineTextInputView?
+
+    /// 行数制限プロパティ
+    var maxNumberOfLines: Int?
+
+    /// 現在の行数（折返し対応、日本語も対応）
+    var actualNumberOfLines: Int {
+        guard let layoutManager = self.layoutManager as NSLayoutManager?,
+            let textContainer = self.textContainer as NSTextContainer?
+        else {
+            return self.text?.components(separatedBy: "\n").count ?? 1
+        }
+        layoutManager.ensureLayout(for: textContainer)
+        var lineCount = 0
+        let glyphRange = layoutManager.glyphRange(for: textContainer)
+        layoutManager.enumerateLineFragments(forGlyphRange: glyphRange) {
+            _,
+            _,
+            _,
+            _,
+            _ in
+            lineCount += 1
+        }
+        return lineCount
+    }
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -84,10 +110,32 @@ class CustomTextView: UITextView, UITextViewDelegate {
         shouldChangeTextIn range: NSRange,
         replacementText text: String
     ) -> Bool {
-        // Handle key press events
-        if self.textWasPasted == false {
+        let isComposing = self.markedTextRange != nil
+
+        // Handle key press events first (before IME processing)
+        if !self.textWasPasted && !isComposing {
             if text == "\n" {
                 onKeyPressed?("Enter")
+
+                // Check line limit for newline before allowing
+                if let maxLines = numberOfLines, maxLines > 0 {
+                    let current = textView.text ?? ""
+                    let newText = (current as NSString).replacingCharacters(
+                        in: range,
+                        with: text
+                    )
+                    let currentLines = numberOfLinesInText(
+                        newText,
+                        textView: textView
+                    )
+
+                    if currentLines > maxLines {
+                        // At line limit, submit instead of adding newline
+                        onEditingSubmitted?(current)
+                        textView.returnKeyType = .done
+                        return false
+                    }
+                }
 
                 // Handle submit behavior for multi-line
                 if let behavior = submitBehavior {
@@ -111,73 +159,113 @@ class CustomTextView: UITextView, UITextViewDelegate {
             }
         }
 
-        // Allow IME composition to proceed without truncation
-        if self.markedTextRange != nil { return true }
-        guard let maxLen = self.maxLength else { return true }
-
-        let current = self.text ?? ""
-        let allowedLength = maxLen - current.count + range.length
-        if allowedLength <= 0 {
-            // Always allow deletions
-            return text.isEmpty
+        // For Japanese IME, allow marked text to proceed without restrictions
+        if isComposing {
+            self.isMarkedTextValid = true
+            return true
         }
 
-        let incoming = text
-        if incoming.count > allowedLength {
-            var cutIndex = allowedLength
-            if allowedLength > 0 {
-                let idx = incoming.index(
-                    incoming.startIndex,
-                    offsetBy: allowedLength - 1
-                )
-                let composed = incoming.rangeOfComposedCharacterSequence(
-                    at: idx
-                )
-                let composedEnd = incoming.distance(
-                    from: incoming.startIndex,
-                    to: composed.upperBound
-                )
-                if composedEnd > allowedLength {
-                    cutIndex = incoming.distance(
-                        from: incoming.startIndex,
-                        to: composed.lowerBound
+        // Get current text and proposed new text
+        let current = self.text ?? ""
+        let newText = (current as NSString).replacingCharacters(
+            in: range,
+            with: text
+        )
+
+        // Check line limits (only when not composing)
+        if let maxLines = numberOfLines, maxLines > 0 {
+            let currentLines = numberOfLinesInText(newText, textView: textView)
+            if currentLines > maxLines {
+                // For non-newline text that exceeds line limit, try to fit what we can
+                if text != "\n" {
+                    let trimmedText = trimTextToLines(
+                        newText,
+                        maxLines: maxLines,
+                        textView: textView
                     )
+                    if trimmedText != current {
+                        // Apply the trimmed text
+                        self.text = trimmedText
+                        // Position cursor at end
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            let position = self.endOfDocument
+                            self.selectedTextRange = self.textRange(
+                                from: position,
+                                to: position
+                            )
+                        }
+                    }
                 }
+                return false
             }
-            let limitedEnd = incoming.index(
-                incoming.startIndex,
-                offsetBy: max(0, cutIndex)
-            )
-            let limited = String(incoming[..<limitedEnd])
+        }
 
-            // Now replace the characters in the current string in the given range
-            if let stringRange = Range(range, in: current) {
-                let newText = current.replacingCharacters(
-                    in: stringRange,
-                    with: limited
-                )
-                self.text = newText
+        // Check character limits (only when not composing)
+        if let maxLen = self.maxLength {
+            let allowedLength = maxLen - current.count + range.length
+            if allowedLength <= 0 {
+                // Always allow deletions
+                return text.isEmpty
+            }
 
-                // Keep caret right after the actually inserted (trimmed) text.
-                let targetOffset = min(
-                    newText.count,
-                    range.location + limited.count
-                )
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    if let start = self.position(
-                        from: self.beginningOfDocument,
-                        offset: targetOffset
-                    ) {
-                        self.selectedTextRange = self.textRange(
-                            from: start,
-                            to: start
+            if text.count > allowedLength {
+                var cutIndex = allowedLength
+                if allowedLength > 0 {
+                    let idx = text.index(
+                        text.startIndex,
+                        offsetBy: allowedLength - 1
+                    )
+                    let composed = text.rangeOfComposedCharacterSequence(
+                        at: idx
+                    )
+                    let composedEnd = text.distance(
+                        from: text.startIndex,
+                        to: composed.upperBound
+                    )
+                    if composedEnd > allowedLength {
+                        cutIndex = text.distance(
+                            from: text.startIndex,
+                            to: composed.lowerBound
                         )
                     }
                 }
+                let limitedEnd = text.index(
+                    text.startIndex,
+                    offsetBy: max(0, cutIndex)
+                )
+                let limited = String(text[..<limitedEnd])
+
+                // Apply the limited text
+                if let stringRange = Range(range, in: current) {
+                    let finalText = current.replacingCharacters(
+                        in: stringRange,
+                        with: limited
+                    )
+                    self.text = finalText
+
+                    // Position cursor after inserted text
+                    let targetOffset = min(
+                        finalText.count,
+                        range.location + limited.count
+                    )
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        if let start = self.position(
+                            from: self.beginningOfDocument,
+                            offset: targetOffset
+                        ) {
+                            self.selectedTextRange = self.textRange(
+                                from: start,
+                                to: start
+                            )
+                        }
+                    }
+                }
+                return false
             }
-            return false
         }
+
         return true
     }
 
@@ -252,53 +340,106 @@ class CustomTextView: UITextView, UITextViewDelegate {
     }
 
     @objc private func handleTextDidChange(_ notification: Notification) {
-        // Re-apply text decoration and shadow when not composing (markedTextRange is nil)
-        if self.markedTextRange == nil {
+        let isComposing = self.markedTextRange != nil
+
+        // Re-apply text decoration and shadow when not composing
+        if !isComposing {
             self.parentView?.reapplyTextDecoration()
             self.parentView?.reapplyTextShadow()
         }
 
-        guard let maxLen = self.maxLength else {
-            // Notify text changed and content size changed
-            onTextChanged?(self.text ?? "")
-            onContentSizeChanged?(
-                Double(self.contentSize.width),
-                Double(self.contentSize.height)
-            )
-            return
-        }
+        let currentText = self.text ?? ""
 
-        // Do not enforce while composing
-        if self.markedTextRange != nil { return }
-        let current = self.text ?? ""
-        if current.count > maxLen {
-            var cutIndex = maxLen
-            if maxLen > 0 {
-                let idx = current.index(
-                    current.startIndex,
-                    offsetBy: maxLen - 1
+        // Only enforce limits when IME composition is complete
+        if !isComposing {
+            var textToApply = currentText
+            var wasModified = false
+
+            // Handle line limits - preserve as much text as possible
+            if let maxLines = numberOfLines, maxLines > 0 {
+                let currentLines = numberOfLinesInText(
+                    textToApply,
+                    textView: self
                 )
-                let composed = current.rangeOfComposedCharacterSequence(at: idx)
-                let composedEnd = current.distance(
-                    from: current.startIndex,
-                    to: composed.upperBound
-                )
-                if composedEnd > maxLen {
-                    cutIndex = current.distance(
-                        from: current.startIndex,
-                        to: composed.lowerBound
+                if currentLines > maxLines {
+                    let trimmedText = trimTextToLines(
+                        textToApply,
+                        maxLines: maxLines,
+                        textView: self
+                    )
+                    if trimmedText != textToApply {
+                        textToApply = trimmedText
+                        wasModified = true
+                    }
+                }
+            }
+
+            // Handle character limits - preserve as much text as possible
+            if let maxLen = self.maxLength {
+                if textToApply.count > maxLen {
+                    var cutIndex = maxLen
+                    if maxLen > 0 {
+                        let idx = textToApply.index(
+                            textToApply.startIndex,
+                            offsetBy: maxLen - 1
+                        )
+                        let composed =
+                            textToApply.rangeOfComposedCharacterSequence(
+                                at: idx
+                            )
+                        let composedEnd = textToApply.distance(
+                            from: textToApply.startIndex,
+                            to: composed.upperBound
+                        )
+                        if composedEnd > maxLen {
+                            cutIndex = textToApply.distance(
+                                from: textToApply.startIndex,
+                                to: composed.lowerBound
+                            )
+                        }
+                    }
+                    let endIdx = textToApply.index(
+                        textToApply.startIndex,
+                        offsetBy: max(0, cutIndex)
+                    )
+                    let limited = String(textToApply[..<endIdx])
+                    if limited != textToApply {
+                        textToApply = limited
+                        wasModified = true
+                    }
+                }
+            }
+
+            // Apply the modified text if needed
+            if wasModified {
+                self.text = textToApply
+                // Position cursor at end of preserved text
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    let position = self.endOfDocument
+                    self.selectedTextRange = self.textRange(
+                        from: position,
+                        to: position
                     )
                 }
             }
-            let endIdx = current.index(
-                current.startIndex,
-                offsetBy: max(0, cutIndex)
-            )
-            let limited = String(current[..<endIdx])
-            self.text = limited
+
+            // Update return key based on current line count
+            if let maxLines = numberOfLines, maxLines > 0 {
+                let finalLines = numberOfLinesInText(
+                    self.text ?? "",
+                    textView: self
+                )
+                if finalLines >= maxLines {
+                    self.returnKeyType = .done
+                } else {
+                    // Restore original return key type
+                    self.parentView?.updateReturnKeyType()
+                }
+            }
         }
 
-        // Notify text changed and content size changed after any trimming
+        // Always notify of changes
         onTextChanged?(self.text ?? "")
         onContentSizeChanged?(
             Double(self.contentSize.width),
@@ -314,6 +455,143 @@ class CustomTextView: UITextView, UITextViewDelegate {
             let end = self.offset(from: self.beginningOfDocument, to: range.end)
             onSelectionChanged?(Double(max(0, start)), Double(max(0, end)))
         }
+    }
+
+    // MARK: - Helper methods for line counting (Japanese IME aware)
+    private func numberOfLinesInText(_ text: String, textView: UITextView)
+        -> Int
+    {
+        guard !text.isEmpty else { return 1 }
+
+        let textWidth =
+            textView.frame.width - textView.textContainerInset.left
+            - textView.textContainerInset.right - 2.0
+            * textView.textContainer.lineFragmentPadding
+
+        let boundingRect = (text as NSString).boundingRect(
+            with: CGSize(
+                width: textWidth,
+                height: CGFloat.greatestFiniteMagnitude
+            ),
+            options: [.usesLineFragmentOrigin],
+            attributes: [.font: textView.font ?? UIFont.systemFont(ofSize: 17)],
+            context: nil
+        )
+
+        let lineHeight = textView.font?.lineHeight ?? 17
+        let numberOfLines = Int(ceil(boundingRect.height / lineHeight))
+
+        return max(numberOfLines, 1)
+    }
+
+    private func trimTextToLines(
+        _ text: String,
+        maxLines: Int,
+        textView: UITextView
+    ) -> String {
+        guard maxLines > 0 else { return text }
+
+        let font = textView.font ?? UIFont.systemFont(ofSize: 17)
+        let textWidth =
+            textView.frame.width - textView.textContainerInset.left
+            - textView.textContainerInset.right - 2.0
+            * textView.textContainer.lineFragmentPadding
+        let lineHeight = font.lineHeight
+
+        var currentText = ""
+        let paragraphs = text.components(separatedBy: .newlines)
+        var currentLineCount = 0
+
+        for paragraph in paragraphs {
+            if paragraph.isEmpty {
+                currentLineCount += 1
+                if currentLineCount <= maxLines {
+                    currentText += "\n"
+                } else {
+                    break
+                }
+                continue
+            }
+
+            let boundingRect = (paragraph as NSString).boundingRect(
+                with: CGSize(
+                    width: textWidth,
+                    height: CGFloat.greatestFiniteMagnitude
+                ),
+                options: [.usesLineFragmentOrigin],
+                attributes: [.font: font],
+                context: nil
+            )
+
+            let linesForParagraph = Int(ceil(boundingRect.height / lineHeight))
+
+            if currentLineCount + linesForParagraph <= maxLines {
+                if !currentText.isEmpty && !currentText.hasSuffix("\n") {
+                    currentText += "\n"
+                    currentLineCount += 1
+                }
+                currentText += paragraph
+                currentLineCount += linesForParagraph
+            } else {
+                // Fit as much as possible in the remaining lines
+                let remainingLines = maxLines - currentLineCount
+                if remainingLines > 0 {
+                    if !currentText.isEmpty && !currentText.hasSuffix("\n") {
+                        currentText += "\n"
+                    }
+                    let partialText = fitTextInLines(
+                        paragraph,
+                        maxLines: remainingLines,
+                        font: font,
+                        width: textWidth
+                    )
+                    currentText += partialText
+                }
+                break
+            }
+        }
+
+        return currentText
+    }
+
+    private func fitTextInLines(
+        _ text: String,
+        maxLines: Int,
+        font: UIFont,
+        width: CGFloat
+    )
+        -> String
+    {
+        guard maxLines > 0 else { return "" }
+
+        let lineHeight = font.lineHeight
+        let maxHeight = CGFloat(maxLines) * lineHeight
+
+        var left = 0
+        var right = text.count
+
+        while left < right {
+            let mid = (left + right + 1) / 2
+            let substring = String(text.prefix(mid))
+
+            let boundingRect = (substring as NSString).boundingRect(
+                with: CGSize(
+                    width: width,
+                    height: CGFloat.greatestFiniteMagnitude
+                ),
+                options: [.usesLineFragmentOrigin],
+                attributes: [.font: font],
+                context: nil
+            )
+
+            if boundingRect.height <= maxHeight {
+                left = mid
+            } else {
+                right = mid - 1
+            }
+        }
+
+        return String(text.prefix(left))
     }
 
     deinit {
@@ -548,6 +826,21 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
                 self.textView.maxLength = max(0, Int(floor(value)))
             } else {
                 self.textView.maxLength = nil
+            }
+        }
+    }
+
+    /// 現在の行数（日本語や折返しにも対応）
+    var numberOfLines: Double? {
+        didSet {
+            Task { @MainActor in
+                updateNumberOfLines()
+                // Pass numberOfLines to CustomTextView
+                if let lines = numberOfLines, lines > 0 {
+                    self.textView.maxNumberOfLines = Int(lines)
+                } else {
+                    self.textView.maxNumberOfLines = nil
+                }
             }
         }
     }
@@ -947,43 +1240,6 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         self.hasAppliedDefaultValue = true
     }
 
-    private func updateReturnKeyType() {
-        guard let type = self.returnKeyType else {
-            self.textView.returnKeyType = .default
-            return
-        }
-        switch type {
-        case .default:
-            self.textView.returnKeyType = .default
-        case .go:
-            self.textView.returnKeyType = .go
-        case .google:
-            self.textView.returnKeyType = .google
-        case .join:
-            self.textView.returnKeyType = .join
-        case .next:
-            self.textView.returnKeyType = .next
-        case .route:
-            self.textView.returnKeyType = .route
-        case .search:
-            self.textView.returnKeyType = .search
-        case .send:
-            self.textView.returnKeyType = .send
-        case .yahoo:
-            self.textView.returnKeyType = .yahoo
-        case .done:
-            self.textView.returnKeyType = .done
-        case .emergencyCall:
-            self.textView.returnKeyType = .emergencyCall
-        case .continue:
-            if #available(iOS 9.0, *) {
-                self.textView.returnKeyType = .`continue`
-            } else {
-                self.textView.returnKeyType = .default
-            }
-        }
-    }
-
     private func updateKeyboardType() {
         guard let type = self.keyboardType else {
             self.textView.keyboardType = .default
@@ -1034,6 +1290,43 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             appearance = .default
         }
         self.textView.keyboardAppearance = appearance
+    }
+
+    fileprivate func updateReturnKeyType() {
+        guard let type = self.returnKeyType else {
+            self.textView.returnKeyType = .default
+            return
+        }
+        switch type {
+        case .default:
+            self.textView.returnKeyType = .default
+        case .go:
+            self.textView.returnKeyType = .go
+        case .google:
+            self.textView.returnKeyType = .google
+        case .join:
+            self.textView.returnKeyType = .join
+        case .next:
+            self.textView.returnKeyType = .next
+        case .route:
+            self.textView.returnKeyType = .route
+        case .search:
+            self.textView.returnKeyType = .search
+        case .send:
+            self.textView.returnKeyType = .send
+        case .yahoo:
+            self.textView.returnKeyType = .yahoo
+        case .done:
+            self.textView.returnKeyType = .done
+        case .emergencyCall:
+            self.textView.returnKeyType = .emergencyCall
+        case .continue:
+            if #available(iOS 9.0, *) {
+                self.textView.returnKeyType = .`continue`
+            } else {
+                self.textView.returnKeyType = .default
+            }
+        }
     }
 
     private func updateSelectionTintColor() {
@@ -1390,5 +1683,87 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         case .justify: return .justified
         case .auto: return .natural
         }
+    }
+
+    // MARK: - Number of Lines Implementation
+    private func updateNumberOfLines() {
+        guard let numberOfLines = self.numberOfLines else {
+            // If numberOfLines is nil, allow unlimited lines
+            self.textView.textContainer.maximumNumberOfLines = 0
+            self.textView.returnKeyType = .default
+            return
+        }
+
+        // Convert Double to Int and ensure it's at least 0
+        let maxLines = max(0, Int(numberOfLines))
+
+        // Set the maximum number of lines for the text container
+        // 0 means unlimited lines in iOS
+        self.textView.textContainer.maximumNumberOfLines = maxLines
+
+        // Update return key type based on current content
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.updateReturnKeyForLineLimit()
+        }
+
+        // Force layout update to apply the changes
+        self.textView.setNeedsLayout()
+        self.textView.layoutIfNeeded()
+
+        // Notify content size change after line limit is applied
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.onContentSizeChanged?(
+                Double(self.textView.contentSize.width),
+                Double(self.textView.contentSize.height)
+            )
+        }
+    }
+
+    private func updateReturnKeyForLineLimit() {
+        guard let maxLines = self.numberOfLines, maxLines > 0 else {
+            return
+        }
+
+        let currentText = self.textView.text ?? ""
+        let currentLines = numberOfLinesInText(
+            currentText,
+            textView: self.textView
+        )
+
+        // If we're at or near the line limit, change return key to "Done"
+        if currentLines >= Int(maxLines) {
+            self.textView.returnKeyType = .done
+        } else {
+            // Restore original return key type
+            self.updateReturnKeyType()
+        }
+    }
+
+    private func numberOfLinesInText(_ text: String, textView: UITextView)
+        -> Int
+    {
+        guard !text.isEmpty else { return 1 }
+
+        let textWidth =
+            textView.frame.width - textView.textContainerInset.left
+            - textView.textContainerInset.right - 2.0
+            * textView.textContainer.lineFragmentPadding
+
+        let boundingRect = (text as NSString).boundingRect(
+            with: CGSize(
+                width: textWidth,
+                height: CGFloat.greatestFiniteMagnitude
+            ),
+            options: [.usesLineFragmentOrigin],
+            attributes: [.font: textView.font ?? UIFont.systemFont(ofSize: 17)],
+            context: nil
+        )
+
+        let lineHeight = textView.font?.lineHeight ?? 17
+        let numberOfLines = Int(ceil(boundingRect.height / lineHeight))
+
+        return max(numberOfLines, 1)
     }
 }
