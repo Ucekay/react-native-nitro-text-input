@@ -120,6 +120,12 @@ abstract class HybridNitroMultiLineTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var numberOfLines: Double?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var passwordRules: String?
   
   @get:DoNotStrip

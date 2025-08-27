@@ -24,6 +24,7 @@ public protocol HybridNitroMultiLineTextInputViewSpec_protocol: HybridObject, Hy
   var keyboardAppearance: KeyboardAppearance? { get set }
   var maxFontSizeMultiplier: Double? { get set }
   var maxLength: Double? { get set }
+  var numberOfLines: Double? { get set }
   var passwordRules: String? { get set }
   var placeholder: String? { get set }
   var placeholderTextColor: ProcessedColor? { get set }

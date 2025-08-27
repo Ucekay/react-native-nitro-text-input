@@ -46,13 +46,13 @@ class CustomTextView: UITextView, UITextViewDelegate {
         self.clipsToBounds = false
         self.layer.masksToBounds = false
         self.delegate = self
-        
+
         // Set default properties for UITextView
         self.backgroundColor = UIColor.clear
         self.isScrollEnabled = true
         self.isEditable = true
         self.isSelectable = true
-        
+
         // Add observers for text changes
         NotificationCenter.default.addObserver(
             self,
@@ -62,7 +62,9 @@ class CustomTextView: UITextView, UITextViewDelegate {
         )
     }
 
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?)
+        -> Bool
+    {
         if isContextMenuHidden { return false }
         return super.canPerformAction(action, withSender: sender)
     }
@@ -77,12 +79,16 @@ class CustomTextView: UITextView, UITextViewDelegate {
 
     // MARK: - UITextViewDelegate
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(
+        _ textView: UITextView,
+        shouldChangeTextIn range: NSRange,
+        replacementText text: String
+    ) -> Bool {
         // Handle key press events
         if self.textWasPasted == false {
             if text == "\n" {
                 onKeyPressed?("Enter")
-                
+
                 // Handle submit behavior for multi-line
                 if let behavior = submitBehavior {
                     switch behavior {
@@ -124,7 +130,9 @@ class CustomTextView: UITextView, UITextViewDelegate {
                     incoming.startIndex,
                     offsetBy: allowedLength - 1
                 )
-                let composed = incoming.rangeOfComposedCharacterSequence(at: idx)
+                let composed = incoming.rangeOfComposedCharacterSequence(
+                    at: idx
+                )
                 let composedEnd = incoming.distance(
                     from: incoming.startIndex,
                     to: composed.upperBound
@@ -141,21 +149,30 @@ class CustomTextView: UITextView, UITextViewDelegate {
                 offsetBy: max(0, cutIndex)
             )
             let limited = String(incoming[..<limitedEnd])
-            
+
             // Now replace the characters in the current string in the given range
             if let stringRange = Range(range, in: current) {
-                let newText = current.replacingCharacters(in: stringRange, with: limited)
+                let newText = current.replacingCharacters(
+                    in: stringRange,
+                    with: limited
+                )
                 self.text = newText
-                
+
                 // Keep caret right after the actually inserted (trimmed) text.
-                let targetOffset = min(newText.count, range.location + limited.count)
+                let targetOffset = min(
+                    newText.count,
+                    range.location + limited.count
+                )
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     if let start = self.position(
                         from: self.beginningOfDocument,
                         offset: targetOffset
                     ) {
-                        self.selectedTextRange = self.textRange(from: start, to: start)
+                        self.selectedTextRange = self.textRange(
+                            from: start,
+                            to: start
+                        )
                     }
                 }
             }
@@ -218,7 +235,10 @@ class CustomTextView: UITextView, UITextViewDelegate {
         super.touchesEnded(touches, with: event)
     }
 
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesCancelled(
+        _ touches: Set<UITouch>,
+        with event: UIEvent?
+    ) {
         if let touch = touches.first {
             let local = touch.location(in: self)
             var page = local
@@ -241,17 +261,23 @@ class CustomTextView: UITextView, UITextViewDelegate {
         guard let maxLen = self.maxLength else {
             // Notify text changed and content size changed
             onTextChanged?(self.text ?? "")
-            onContentSizeChanged?(Double(self.contentSize.width), Double(self.contentSize.height))
+            onContentSizeChanged?(
+                Double(self.contentSize.width),
+                Double(self.contentSize.height)
+            )
             return
         }
-        
+
         // Do not enforce while composing
         if self.markedTextRange != nil { return }
         let current = self.text ?? ""
         if current.count > maxLen {
             var cutIndex = maxLen
             if maxLen > 0 {
-                let idx = current.index(current.startIndex, offsetBy: maxLen - 1)
+                let idx = current.index(
+                    current.startIndex,
+                    offsetBy: maxLen - 1
+                )
                 let composed = current.rangeOfComposedCharacterSequence(at: idx)
                 let composedEnd = current.distance(
                     from: current.startIndex,
@@ -271,14 +297,20 @@ class CustomTextView: UITextView, UITextViewDelegate {
             let limited = String(current[..<endIdx])
             self.text = limited
         }
-        
+
         // Notify text changed and content size changed after any trimming
         onTextChanged?(self.text ?? "")
-        onContentSizeChanged?(Double(self.contentSize.width), Double(self.contentSize.height))
-        
+        onContentSizeChanged?(
+            Double(self.contentSize.width),
+            Double(self.contentSize.height)
+        )
+
         // Also notify selection changed after text updates
         if let range = self.selectedTextRange {
-            let start = self.offset(from: self.beginningOfDocument, to: range.start)
+            let start = self.offset(
+                from: self.beginningOfDocument,
+                to: range.start
+            )
             let end = self.offset(from: self.beginningOfDocument, to: range.end)
             onSelectionChanged?(Double(max(0, start)), Double(max(0, end)))
         }
@@ -303,30 +335,30 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         super.init()
         self.textView.clipsToBounds = false
         self.textView.layer.masksToBounds = false
-        
+
         // Set parent reference for text decoration re-application
         self.textView.parentView = self
-        
+
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
             self.textView.setNeedsLayout()
             self.textView.layoutIfNeeded()
-            
+
             // Set default font size to 14pt and cache base font for scaling
             self.baseFont = UIFont.systemFont(ofSize: 14)
             self.textView.font = self.baseFont
             self.applyTextAttributes()
             self.applyFontScaling()
             self.wireTextViewEventCallbacks()
-            
+
             // Calculate initial height using content size
             let initialHeight = Double(self.textView.contentSize.height)
             if let callback = self.onInitialHeightMeasured {
                 callback(initialHeight)
             }
         }
-        
+
         // Listen for Dynamic Type changes
         NotificationCenter.default.addObserver(
             self,
@@ -345,7 +377,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             self.textView.inputView = UIView()
         }
         _ = self.textView.becomeFirstResponder()
-        
+
         if self.selectTextOnFocus == true {
             DispatchQueue.main.async { [weak self] in
                 self?.textView.selectAll(nil)
@@ -367,7 +399,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             Task {
                 @MainActor in
                 self.applyFontScaling()
-                
+
                 // Recalculate height when font scaling changes
                 if let callback = self.onInitialHeightMeasured {
                     let newHeight = Double(self.textView.contentSize.height)
@@ -420,7 +452,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         didSet {
             Task {
                 @MainActor in
-                self.textView.isContextMenuHidden = self.contextMenuHidden ?? false
+                self.textView.isContextMenuHidden =
+                    self.contextMenuHidden ?? false
                 if #available(iOS 18.0, *) {
                     if self.contextMenuHidden == true {
                         self.textView.writingToolsBehavior = .none
@@ -456,7 +489,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.applyFontScaling()
-                
+
                 // Recalculate height when font multiplier changes
                 if let callback = self.onInitialHeightMeasured {
                     let newHeight = Double(self.textView.contentSize.height)
@@ -470,7 +503,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         didSet {
             Task {
                 @MainActor in
-                self.textView.enablesReturnKeyAutomatically = self.enablesReturnKeyAutomatically ?? false
+                self.textView.enablesReturnKeyAutomatically =
+                    self.enablesReturnKeyAutomatically ?? false
             }
         }
     }
@@ -489,7 +523,9 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             Task { @MainActor in
                 if #available(iOS 12.0, *) {
                     if let rules = self.passwordRules, rules.isEmpty == false {
-                        self.textView.passwordRules = UITextInputPasswordRules(descriptor: rules)
+                        self.textView.passwordRules = UITextInputPasswordRules(
+                            descriptor: rules
+                        )
                     } else {
                         self.textView.passwordRules = nil
                     }
@@ -612,7 +648,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             Task { @MainActor in
                 if #available(iOS 13.0, *) {
                     if let enabled = self.smartInsertDelete {
-                        self.textView.smartInsertDeleteType = enabled ? .yes : .no
+                        self.textView.smartInsertDeleteType =
+                            enabled ? .yes : .no
                     } else {
                         self.textView.smartInsertDeleteType = .default
                     }
@@ -648,7 +685,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
                 Task { @MainActor in
                     self.applyEffectiveTextAlignment()
                 }
-                
+
                 // Recalculate height when text attributes change (font size, etc.)
                 if let callback = self.onInitialHeightMeasured {
                     let newHeight = Double(self.textView.contentSize.height)
@@ -724,17 +761,22 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
     private func applyEffectiveTextAlignment() {
         let effectiveAlign: TextAlignAttributes? =
-            self.textAlignToAttributes(self.textAlign) ?? self.textAttributes?.textAlign
+            self.textAlignToAttributes(self.textAlign)
+            ?? self.textAttributes?.textAlign
         let alignment: NSTextAlignment
         if let align = effectiveAlign {
-            alignment = HybridMultiLineTextInputView.nsTextAlignment(from: align)
+            alignment = HybridMultiLineTextInputView.nsTextAlignment(
+                from: align
+            )
         } else {
             alignment = .natural
         }
         self.textView.textAlignment = alignment
     }
 
-    private func textAlignToAttributes(_ align: TextAlign?) -> TextAlignAttributes? {
+    private func textAlignToAttributes(_ align: TextAlign?)
+        -> TextAlignAttributes?
+    {
         guard let align = align else { return nil }
         switch align {
         case .center: return .center
@@ -1005,7 +1047,12 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             let r = CGFloat((v >> 16) & 0xFF) / 255.0
             let g = CGFloat((v >> 8) & 0xFF) / 255.0
             let b = CGFloat(v & 0xFF) / 255.0
-            self.textView.tintColor = UIColor(red: r, green: g, blue: b, alpha: a)
+            self.textView.tintColor = UIColor(
+                red: r,
+                green: g,
+                blue: b,
+                alpha: a
+            )
             return
         }
         // Additional color resolution logic would go here (semantic/dynamic colors)
@@ -1014,7 +1061,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
     // MARK: - Font Scaling
     @objc private func handleContentSizeCategoryDidChange() {
         self.applyFontScaling()
-        
+
         // Recalculate height when system font size changes
         if let callback = self.onInitialHeightMeasured {
             let newHeight = Double(self.textView.contentSize.height)
@@ -1046,7 +1093,9 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
     private func applyFontScaling() {
         let multiplier = currentMultiplier(baseFont: self.baseFont)
-        let newFont = self.baseFont.withSize(self.baseFont.pointSize * multiplier)
+        let newFont = self.baseFont.withSize(
+            self.baseFont.pointSize * multiplier
+        )
         self.textView.font = newFont
     }
 
@@ -1061,7 +1110,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             }
             self.onFocused?()
         }
-        
+
         self.textView.onDidEndEditing = { [weak self] in
             guard let self = self else { return }
             if let onEditingEndedCallback = self.onEditingEnded {
@@ -1069,32 +1118,34 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             }
             self.onBlurred?()
         }
-        
+
         self.textView.onTextChanged = { [weak self] text in
             self?.onTextChanged?(text)
         }
-        
+
         self.textView.onSelectionChanged = { [weak self] start, end in
             self?.onSelectionChanged?(start, end)
         }
-        
+
         self.textView.onEditingSubmitted = { [weak self] text in
             self?.onEditingSubmitted?(text)
         }
-        
+
         self.textView.onContentSizeChanged = { [weak self] width, height in
             self?.onContentSizeChanged?(width, height)
         }
-        
+
         self.textView.onKeyPressed = { [weak self] key in
             self?.onKeyPressed?(key)
         }
-        
-        self.textView.onTouchBegan = { [weak self] pageX, pageY, locationX, locationY, timestamp in
+
+        self.textView.onTouchBegan = {
+            [weak self] pageX, pageY, locationX, locationY, timestamp in
             self?.onTouchBegan?(pageX, pageY, locationX, locationY, timestamp)
         }
-        
-        self.textView.onTouchEnded = { [weak self] pageX, pageY, locationX, locationY, timestamp in
+
+        self.textView.onTouchEnded = {
+            [weak self] pageX, pageY, locationX, locationY, timestamp in
             self?.onTouchEnded?(pageX, pageY, locationX, locationY, timestamp)
         }
     }
@@ -1117,7 +1168,11 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             let weight: UIFont.Weight
             switch weightVal {
             case .first(let weightName):
-                weight = UIFont.Weight(rawValue: HybridMultiLineTextInputView.fontWeightFromString(weightName))
+                weight = UIFont.Weight(
+                    rawValue: HybridMultiLineTextInputView.fontWeightFromString(
+                        weightName
+                    )
+                )
             case .second(let weightDouble):
                 weight = UIFont.Weight(rawValue: CGFloat(weightDouble))
             }
@@ -1140,7 +1195,12 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
                 let r = CGFloat((v >> 16) & 0xFF) / 255.0
                 let g = CGFloat((v >> 8) & 0xFF) / 255.0
                 let b = CGFloat(v & 0xFF) / 255.0
-                self.textView.textColor = UIColor(red: r, green: g, blue: b, alpha: a)
+                self.textView.textColor = UIColor(
+                    red: r,
+                    green: g,
+                    blue: b,
+                    alpha: a
+                )
             case .first(_):
                 // Handle semantic/dynamic colors if needed
                 break
@@ -1151,6 +1211,105 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         if let currentText = self.textView.text, !currentText.isEmpty {
             self.textView.text = applyTextTransform(currentText)
         }
+
+        // Apply lineBreakStrategyIOS and lineBreakModeIOS
+        applyLineBreakProperties()
+    }
+
+    // MARK: - Line Break Properties
+    private func applyLineBreakProperties() {
+        guard let attrs = self.textAttributes else { return }
+
+        // Get current attributed text or create new one
+        let currentText = self.textView.text ?? ""
+        let mutableAttributedString: NSMutableAttributedString
+
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+            // Apply current font and color
+            if let font = self.textView.font {
+                mutableAttributedString.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+            if let textColor = self.textView.textColor {
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+        }
+
+        let fullRange = NSRange(
+            location: 0,
+            length: mutableAttributedString.length
+        )
+
+        // Create or get existing paragraph style
+        let paragraphStyle = NSMutableParagraphStyle()
+
+        // Preserve existing paragraph style attributes if any
+        mutableAttributedString.enumerateAttribute(
+            .paragraphStyle,
+            in: fullRange,
+            options: []
+        ) {
+            (value, range, _) in
+            if let existingStyle = value as? NSParagraphStyle {
+                paragraphStyle.setParagraphStyle(existingStyle)
+            }
+        }
+
+        // Apply lineBreakStrategyIOS (iOS 14.0+)
+        if let lineBreakStrategy = attrs.lineBreakStrategyIOS {
+            if #available(iOS 14.0, *) {
+                switch lineBreakStrategy {
+                case .none:
+                    paragraphStyle.lineBreakStrategy = []
+                case .standard:
+                    paragraphStyle.lineBreakStrategy = .standard
+                case .hangulWord:
+                    paragraphStyle.lineBreakStrategy = .hangulWordPriority
+                case .pushOut:
+                    paragraphStyle.lineBreakStrategy = .pushOut
+                }
+            }
+        }
+
+        // Apply lineBreakModeIOS
+        if let lineBreakMode = attrs.lineBreakModeIOS {
+            switch lineBreakMode {
+            case .wordwrapping:
+                paragraphStyle.lineBreakMode = .byWordWrapping
+            case .char:
+                paragraphStyle.lineBreakMode = .byCharWrapping
+            case .clip:
+                paragraphStyle.lineBreakMode = .byClipping
+            case .head:
+                paragraphStyle.lineBreakMode = .byTruncatingHead
+            case .middle:
+                paragraphStyle.lineBreakMode = .byTruncatingMiddle
+            case .tail:
+                paragraphStyle.lineBreakMode = .byTruncatingTail
+            }
+        }
+
+        // Apply the paragraph style
+        mutableAttributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: fullRange
+        )
+        self.textView.attributedText = mutableAttributedString
     }
 
     private func resetToDefaultAttributes() {
@@ -1215,11 +1374,15 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
     }
 
     private static func italicFont(font: UIFont) -> UIFont {
-        let descriptor = font.fontDescriptor.withSymbolicTraits(.traitItalic) ?? font.fontDescriptor
+        let descriptor =
+            font.fontDescriptor.withSymbolicTraits(.traitItalic)
+            ?? font.fontDescriptor
         return UIFont(descriptor: descriptor, size: font.pointSize)
     }
 
-    private static func nsTextAlignment(from align: TextAlignAttributes) -> NSTextAlignment {
+    private static func nsTextAlignment(from align: TextAlignAttributes)
+        -> NSTextAlignment
+    {
         switch align {
         case .left: return .left
         case .right: return .right

@@ -34,6 +34,7 @@
 #include <optional>
 #include <optional>
 #include <optional>
+#include <optional>
 #include <string>
 #include <optional>
 #include <string>
@@ -125,6 +126,7 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<KeyboardAppearance>> keyboardAppearance;
     CachedProp<std::optional<double>> maxFontSizeMultiplier;
     CachedProp<std::optional<double>> maxLength;
+    CachedProp<std::optional<double>> numberOfLines;
     CachedProp<std::optional<std::string>> passwordRules;
     CachedProp<std::optional<std::string>> placeholder;
     CachedProp<std::optional<std::variant<std::string, double>>> placeholderTextColor;

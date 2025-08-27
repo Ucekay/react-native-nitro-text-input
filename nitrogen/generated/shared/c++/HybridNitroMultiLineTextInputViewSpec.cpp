@@ -40,6 +40,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("maxFontSizeMultiplier", &HybridNitroMultiLineTextInputViewSpec::setMaxFontSizeMultiplier);
       prototype.registerHybridGetter("maxLength", &HybridNitroMultiLineTextInputViewSpec::getMaxLength);
       prototype.registerHybridSetter("maxLength", &HybridNitroMultiLineTextInputViewSpec::setMaxLength);
+      prototype.registerHybridGetter("numberOfLines", &HybridNitroMultiLineTextInputViewSpec::getNumberOfLines);
+      prototype.registerHybridSetter("numberOfLines", &HybridNitroMultiLineTextInputViewSpec::setNumberOfLines);
       prototype.registerHybridGetter("passwordRules", &HybridNitroMultiLineTextInputViewSpec::getPasswordRules);
       prototype.registerHybridSetter("passwordRules", &HybridNitroMultiLineTextInputViewSpec::setPasswordRules);
       prototype.registerHybridGetter("placeholder", &HybridNitroMultiLineTextInputViewSpec::getPlaceholder);

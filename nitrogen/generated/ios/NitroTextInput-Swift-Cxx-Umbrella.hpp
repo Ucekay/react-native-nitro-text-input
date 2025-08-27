@@ -24,6 +24,10 @@ namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `LineBreakModeIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakModeIOS; }
+// Forward declaration of `LineBreakStrategyIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakStrategyIOS; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
@@ -58,6 +62,8 @@ namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
+#include "LineBreakModeIOS.hpp"
+#include "LineBreakStrategyIOS.hpp"
 #include "ReturnKeyType.hpp"
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"

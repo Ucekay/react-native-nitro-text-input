@@ -99,6 +99,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) = 0;
       virtual std::optional<double> getMaxLength() = 0;
       virtual void setMaxLength(std::optional<double> maxLength) = 0;
+      virtual std::optional<double> getNumberOfLines() = 0;
+      virtual void setNumberOfLines(std::optional<double> numberOfLines) = 0;
       virtual std::optional<std::string> getPasswordRules() = 0;
       virtual void setPasswordRules(const std::optional<std::string>& passwordRules) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;

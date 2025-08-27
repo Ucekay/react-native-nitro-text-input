@@ -41,6 +41,12 @@ data class TextAttributes
     val letterSpacing: Double?,
     @DoNotStrip
     @Keep
+    val lineBreakStrategyIOS: LineBreakStrategyIOS?,
+    @DoNotStrip
+    @Keep
+    val lineBreakModeIOS: LineBreakModeIOS?,
+    @DoNotStrip
+    @Keep
     val lineHeight: Double?,
     @DoNotStrip
     @Keep

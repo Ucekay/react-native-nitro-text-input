@@ -87,6 +87,7 @@ export default function App() {
 				keyboardAppearance="default"
 				maxLength={500}
 				multiline={true}
+				numberOfLines={2}
 				scrollEnabled={true}
 				onBlur={() => {
 					console.log("Multi-line blurred");
@@ -160,6 +161,13 @@ const styles = StyleSheet.create({
 	},
 	multiLineInput: {
 		overflow: "hidden",
+		color: "#00f",
+		textDecorationLine: "underline",
+		textDecorationStyle: "dashed",
+		textDecorationColor: "#000",
+		textShadowColor: "#888",
+		textShadowOffset: { width: 1, height: 1 },
+		textShadowRadius: 1,
 		borderWidth: 1,
 		borderColor: "#34C759",
 		borderRadius: 8,

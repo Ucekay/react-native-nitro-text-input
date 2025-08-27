@@ -29,6 +29,10 @@ namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 // Forward declaration of `FontVariant` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `LineBreakStrategyIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakStrategyIOS; }
+// Forward declaration of `LineBreakModeIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakModeIOS; }
 // Forward declaration of `TextAlignAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextDecorationLine` to properly resolve imports.
@@ -78,6 +82,10 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 #include "FontVariant.hpp"
 #include <vector>
 #include "JFontVariant.hpp"
+#include "LineBreakStrategyIOS.hpp"
+#include "JLineBreakStrategyIOS.hpp"
+#include "LineBreakModeIOS.hpp"
+#include "JLineBreakModeIOS.hpp"
 #include "TextAlignAttributes.hpp"
 #include "JTextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"

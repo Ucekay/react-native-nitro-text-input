@@ -32,6 +32,10 @@ namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 // Forward declaration of `FontVariant` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `LineBreakStrategyIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakStrategyIOS; }
+// Forward declaration of `LineBreakModeIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakModeIOS; }
 // Forward declaration of `TextAlignAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextDecorationLine` to properly resolve imports.
@@ -62,6 +66,8 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 #include "TextAttributes.hpp"
 #include "FontVariant.hpp"
 #include <vector>
+#include "LineBreakStrategyIOS.hpp"
+#include "LineBreakModeIOS.hpp"
 #include "TextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
@@ -197,6 +203,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setMaxLength(std::optional<double> maxLength) noexcept override {
       _swiftPart.setMaxLength(maxLength);
+    }
+    inline std::optional<double> getNumberOfLines() noexcept override {
+      auto __result = _swiftPart.getNumberOfLines();
+      return __result;
+    }
+    inline void setNumberOfLines(std::optional<double> numberOfLines) noexcept override {
+      _swiftPart.setNumberOfLines(numberOfLines);
     }
     inline std::optional<std::string> getPasswordRules() noexcept override {
       auto __result = _swiftPart.getPasswordRules();

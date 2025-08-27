@@ -3,6 +3,7 @@ import type {
 	InputModeOptions,
 	ReturnKeyTypeAndroid,
 	TextInputProps,
+	TextStyle,
 	ViewProps,
 } from "react-native";
 import { Platform, processColor, StyleSheet } from "react-native";
@@ -40,22 +41,21 @@ type NativeMultiLineTextInputProps = WrapFunctionsInObjects<
 		scrollEnabled?: boolean;
 	}
 
-type NativeTextInputProps =
-	| NativeSingleLineTextInputProps
-	| NativeMultiLineTextInputProps;
 // Base props interface (without ref)
-export interface NitroTextInputBaseProps
+
+
+
+export interface NitroTextInputSingleLineProps
 	extends Omit<
-		NativeTextInputProps,
+		NativeSingleLineTextInputProps,
 		| "onInitialHeightMeasured"
 		| "onBlurred"
-		| "onContentSizeChanged"
 		| "onEditingEnded"
 		| "onEditingSubmitted"
 		| "onFocused"
 		| "onKeyPressed"
 		| "onSelectionChanged"
-		| "onTauchBegan"
+		| "onTouchBegan"
 		| "onTouchEnded"
 		| "onTextChanged"
 		| "placeholderTextColor"
@@ -64,9 +64,9 @@ export interface NitroTextInputBaseProps
 		| "style"
 		| "hybridRef"
 	> {
+	multiline?: false;
 	enterKeyHint?: "done" | "next" | "search" | "send" | "go" | "enter";
 	inputMode?: InputModeOptions;
-	multiline?: boolean;
 	onBlur?: () => void;
 	onChangeText?: (text: string) => void;
 	onEndEditing?: (text: string) => void;
@@ -98,6 +98,68 @@ export interface NitroTextInputBaseProps
 	style?: TextInputProps["style"];
 }
 
+export interface NitroTextInputMultiLineProps
+	extends Omit<
+		NativeMultiLineTextInputProps,
+		| "onInitialHeightMeasured"
+		| "onBlurred"
+		| "onContentSizeChanged"
+		| "onEditingEnded"
+		| "onEditingSubmitted"
+		| "onFocused"
+		| "onKeyPressed"
+		| "onSelectionChanged"
+		| "onTouchBegan"
+		| "onTouchEnded"
+		| "onTextChanged"
+		| "placeholderTextColor"
+		| "returnKeyType"
+		| "selectionColor"
+		| "style"
+		| "hybridRef"
+	> {
+	multiline: true;
+	onContentSizeChange?: (width: number, height: number) => void;
+	scrollEnabled?: boolean;
+	enterKeyHint?: "done" | "next" | "search" | "send" | "go" | "enter";
+	inputMode?: InputModeOptions;
+	onBlur?: () => void;
+	onChangeText?: (text: string) => void;
+	onEndEditing?: (text: string) => void;
+	onSubmitEditing?: (text: string) => void;
+	onSelectionChange?: (selection: { start: number; end: number }) => void;
+	onPressIn?: (
+		pageX: number,
+		pageY: number,
+		locationX: number,
+		locationY: number,
+		timestamp: number,
+	) => void;
+	onPressOut?: (
+		pageX: number,
+		pageY: number,
+		locationX: number,
+		locationY: number,
+		timestamp: number,
+	) => void;
+	onFocus?: () => void;
+	onKeyPress?: (key: string) => void;
+	placeholderTextColor?: TextInputProps["placeholderTextColor"] | undefined;
+	ref?: React.RefObject<NitroTextInputViewMethods | null>;
+	returnKeyType?: Exclude<
+		TextInputProps["returnKeyType"],
+		ReturnKeyTypeAndroid
+	>;
+	selectionColor?: TextInputProps["selectionColor"] | undefined;
+	style?: TextInputProps["style"];
+}
+
+export type NitroTextInputBaseProps = NitroTextInputSingleLineProps | NitroTextInputMultiLineProps;
+
+// Function overloads for type safety
+export function NitroTextInput(inputProps: NitroTextInputMultiLineProps): React.JSX.Element;
+export function NitroTextInput(inputProps: NitroTextInputSingleLineProps): React.JSX.Element;
+export function NitroTextInput(inputProps: NitroTextInputBaseProps): React.JSX.Element;
 export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	const { ref: propsRef, ...props } = inputProps;
 
@@ -131,7 +193,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	const hasExplicitHeight = flattenedStyle?.height != null;
 
 	// Extract text attributes from style
-	const extractTextAttributes = (styleObj: any): TextAttributes | undefined => {
+	const extractTextAttributes = (styleObj: TextStyle): TextAttributes | undefined => {
 		if (!styleObj) return undefined;
 
 		const textAttributes: TextAttributes = {};
@@ -298,7 +360,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	};
 
 	// Remove all properties that are handled natively via textAttributes
-	const removeNativeHandledPropsFromStyle = (styleObj: any) => {
+	const removeNativeHandledPropsFromStyle = (styleObj: TextStyle) => {
 		if (!styleObj) return styleObj;
 
 		const {
@@ -439,7 +501,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 		onEditingEnded: { f: onEndEditing },
 		onEditingSubmitted: { f: onSubmitEditing },
 		onSelectionChanged: {
-			f: (start: any, end: any) => onSelectionChange?.({ start, end }),
+			f: (start: number, end: number) => onSelectionChange?.({ start, end }),
 		},
 		onTouchBegan: { f: onPressIn },
 		onTouchEnded: { f: onPressOut },

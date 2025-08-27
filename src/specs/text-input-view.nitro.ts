@@ -96,6 +96,10 @@ export type SubmitBehavior = "submit" | "blurAndSubmit" | "newline";
 
 export type TextAlign = "left" | "center" | "right" | "natural";
 
+export type LineBreakStrategyIOS = "none" | "standard" | "hangul-word" | "push-out";
+
+export type LineBreakModeIOS = "wordWrapping" | "char" | "clip" | "head" | "middle" | "tail";
+
 // A processed color (AARRGGBB) or JSON-stringified OpaqueColor (semantic/dynamic)
 export type ProcessedColor = number | string | null | undefined;
 
@@ -138,6 +142,8 @@ export interface TextAttributes {
 	fontWeight?: FontWeight;
 	fontVariant?: FontVariant[];
 	letterSpacing?: number;
+	lineBreakStrategyIOS?: LineBreakStrategyIOS;
+	lineBreakModeIOS?: LineBreakModeIOS;
 	lineHeight?: number;
 	textAlign?: TextAlignAttributes;
 	textDecorationColor?: ProcessedColor;

@@ -155,6 +155,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroMultiLineTextInputView.maxLength: ") + exc.what());
       }
     }()),
+    numberOfLines([&]() -> CachedProp<std::optional<double>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("numberOfLines", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.numberOfLines;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<double>>::fromRawValue(*runtime, value, sourceProps.numberOfLines);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroMultiLineTextInputView.numberOfLines: ") + exc.what());
+      }
+    }()),
     passwordRules([&]() -> CachedProp<std::optional<std::string>> {
       try {
         const react::RawValue* rawValue = rawProps.at("passwordRules", nullptr, nullptr);
@@ -441,6 +451,7 @@ namespace margelo::nitro::nitrotextinput::views {
     keyboardAppearance(other.keyboardAppearance),
     maxFontSizeMultiplier(other.maxFontSizeMultiplier),
     maxLength(other.maxLength),
+    numberOfLines(other.numberOfLines),
     passwordRules(other.passwordRules),
     placeholder(other.placeholder),
     placeholderTextColor(other.placeholderTextColor),
@@ -484,6 +495,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("keyboardAppearance"): return true;
       case hashString("maxFontSizeMultiplier"): return true;
       case hashString("maxLength"): return true;
+      case hashString("numberOfLines"): return true;
       case hashString("passwordRules"): return true;
       case hashString("placeholder"): return true;
       case hashString("placeholderTextColor"): return true;

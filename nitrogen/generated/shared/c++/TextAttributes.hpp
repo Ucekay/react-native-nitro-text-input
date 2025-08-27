@@ -20,6 +20,10 @@
 
 // Forward declaration of `FontVariant` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `LineBreakStrategyIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakStrategyIOS; }
+// Forward declaration of `LineBreakModeIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakModeIOS; }
 // Forward declaration of `TextAlignAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextDecorationLine` to properly resolve imports.
@@ -40,6 +44,8 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 #include <optional>
 #include "FontVariant.hpp"
 #include <vector>
+#include "LineBreakStrategyIOS.hpp"
+#include "LineBreakModeIOS.hpp"
 #include "TextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
@@ -61,6 +67,8 @@ namespace margelo::nitro::nitrotextinput {
     std::optional<std::variant<std::string, double>> fontWeight     SWIFT_PRIVATE;
     std::optional<std::vector<FontVariant>> fontVariant     SWIFT_PRIVATE;
     std::optional<double> letterSpacing     SWIFT_PRIVATE;
+    std::optional<LineBreakStrategyIOS> lineBreakStrategyIOS     SWIFT_PRIVATE;
+    std::optional<LineBreakModeIOS> lineBreakModeIOS     SWIFT_PRIVATE;
     std::optional<double> lineHeight     SWIFT_PRIVATE;
     std::optional<TextAlignAttributes> textAlign     SWIFT_PRIVATE;
     std::optional<std::variant<std::string, double>> textDecorationColor     SWIFT_PRIVATE;
@@ -75,7 +83,7 @@ namespace margelo::nitro::nitrotextinput {
 
   public:
     TextAttributes() = default;
-    explicit TextAttributes(std::optional<std::variant<std::string, double>> color, std::optional<double> fontSize, std::optional<std::string> fontStyle, std::optional<std::variant<std::string, double>> fontWeight, std::optional<std::vector<FontVariant>> fontVariant, std::optional<double> letterSpacing, std::optional<double> lineHeight, std::optional<TextAlignAttributes> textAlign, std::optional<std::variant<std::string, double>> textDecorationColor, std::optional<TextDecorationLine> textDecorationLine, std::optional<TextDecorationStyle> textDecorationStyle, std::optional<std::variant<std::string, double>> textShadowColor, std::optional<TextShadowOffset> textShadowOffset, std::optional<double> textShadowRadius, std::optional<TextTransform> textTransform, std::optional<WritingDirection> writingDirection, std::optional<UserSelect> userSelect): color(color), fontSize(fontSize), fontStyle(fontStyle), fontWeight(fontWeight), fontVariant(fontVariant), letterSpacing(letterSpacing), lineHeight(lineHeight), textAlign(textAlign), textDecorationColor(textDecorationColor), textDecorationLine(textDecorationLine), textDecorationStyle(textDecorationStyle), textShadowColor(textShadowColor), textShadowOffset(textShadowOffset), textShadowRadius(textShadowRadius), textTransform(textTransform), writingDirection(writingDirection), userSelect(userSelect) {}
+    explicit TextAttributes(std::optional<std::variant<std::string, double>> color, std::optional<double> fontSize, std::optional<std::string> fontStyle, std::optional<std::variant<std::string, double>> fontWeight, std::optional<std::vector<FontVariant>> fontVariant, std::optional<double> letterSpacing, std::optional<LineBreakStrategyIOS> lineBreakStrategyIOS, std::optional<LineBreakModeIOS> lineBreakModeIOS, std::optional<double> lineHeight, std::optional<TextAlignAttributes> textAlign, std::optional<std::variant<std::string, double>> textDecorationColor, std::optional<TextDecorationLine> textDecorationLine, std::optional<TextDecorationStyle> textDecorationStyle, std::optional<std::variant<std::string, double>> textShadowColor, std::optional<TextShadowOffset> textShadowOffset, std::optional<double> textShadowRadius, std::optional<TextTransform> textTransform, std::optional<WritingDirection> writingDirection, std::optional<UserSelect> userSelect): color(color), fontSize(fontSize), fontStyle(fontStyle), fontWeight(fontWeight), fontVariant(fontVariant), letterSpacing(letterSpacing), lineBreakStrategyIOS(lineBreakStrategyIOS), lineBreakModeIOS(lineBreakModeIOS), lineHeight(lineHeight), textAlign(textAlign), textDecorationColor(textDecorationColor), textDecorationLine(textDecorationLine), textDecorationStyle(textDecorationStyle), textShadowColor(textShadowColor), textShadowOffset(textShadowOffset), textShadowRadius(textShadowRadius), textTransform(textTransform), writingDirection(writingDirection), userSelect(userSelect) {}
   };
 
 } // namespace margelo::nitro::nitrotextinput
@@ -94,6 +102,8 @@ namespace margelo::nitro {
         JSIConverter<std::optional<std::variant<std::string, double>>>::fromJSI(runtime, obj.getProperty(runtime, "fontWeight")),
         JSIConverter<std::optional<std::vector<margelo::nitro::nitrotextinput::FontVariant>>>::fromJSI(runtime, obj.getProperty(runtime, "fontVariant")),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, "letterSpacing")),
+        JSIConverter<std::optional<margelo::nitro::nitrotextinput::LineBreakStrategyIOS>>::fromJSI(runtime, obj.getProperty(runtime, "lineBreakStrategyIOS")),
+        JSIConverter<std::optional<margelo::nitro::nitrotextinput::LineBreakModeIOS>>::fromJSI(runtime, obj.getProperty(runtime, "lineBreakModeIOS")),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, "lineHeight")),
         JSIConverter<std::optional<margelo::nitro::nitrotextinput::TextAlignAttributes>>::fromJSI(runtime, obj.getProperty(runtime, "textAlign")),
         JSIConverter<std::optional<std::variant<std::string, double>>>::fromJSI(runtime, obj.getProperty(runtime, "textDecorationColor")),
@@ -115,6 +125,8 @@ namespace margelo::nitro {
       obj.setProperty(runtime, "fontWeight", JSIConverter<std::optional<std::variant<std::string, double>>>::toJSI(runtime, arg.fontWeight));
       obj.setProperty(runtime, "fontVariant", JSIConverter<std::optional<std::vector<margelo::nitro::nitrotextinput::FontVariant>>>::toJSI(runtime, arg.fontVariant));
       obj.setProperty(runtime, "letterSpacing", JSIConverter<std::optional<double>>::toJSI(runtime, arg.letterSpacing));
+      obj.setProperty(runtime, "lineBreakStrategyIOS", JSIConverter<std::optional<margelo::nitro::nitrotextinput::LineBreakStrategyIOS>>::toJSI(runtime, arg.lineBreakStrategyIOS));
+      obj.setProperty(runtime, "lineBreakModeIOS", JSIConverter<std::optional<margelo::nitro::nitrotextinput::LineBreakModeIOS>>::toJSI(runtime, arg.lineBreakModeIOS));
       obj.setProperty(runtime, "lineHeight", JSIConverter<std::optional<double>>::toJSI(runtime, arg.lineHeight));
       obj.setProperty(runtime, "textAlign", JSIConverter<std::optional<margelo::nitro::nitrotextinput::TextAlignAttributes>>::toJSI(runtime, arg.textAlign));
       obj.setProperty(runtime, "textDecorationColor", JSIConverter<std::optional<std::variant<std::string, double>>>::toJSI(runtime, arg.textDecorationColor));
@@ -139,6 +151,8 @@ namespace margelo::nitro {
       if (!JSIConverter<std::optional<std::variant<std::string, double>>>::canConvert(runtime, obj.getProperty(runtime, "fontWeight"))) return false;
       if (!JSIConverter<std::optional<std::vector<margelo::nitro::nitrotextinput::FontVariant>>>::canConvert(runtime, obj.getProperty(runtime, "fontVariant"))) return false;
       if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, "letterSpacing"))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::nitrotextinput::LineBreakStrategyIOS>>::canConvert(runtime, obj.getProperty(runtime, "lineBreakStrategyIOS"))) return false;
+      if (!JSIConverter<std::optional<margelo::nitro::nitrotextinput::LineBreakModeIOS>>::canConvert(runtime, obj.getProperty(runtime, "lineBreakModeIOS"))) return false;
       if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, "lineHeight"))) return false;
       if (!JSIConverter<std::optional<margelo::nitro::nitrotextinput::TextAlignAttributes>>::canConvert(runtime, obj.getProperty(runtime, "textAlign"))) return false;
       if (!JSIConverter<std::optional<std::variant<std::string, double>>>::canConvert(runtime, obj.getProperty(runtime, "textDecorationColor"))) return false;

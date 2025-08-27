@@ -18,7 +18,7 @@ public extension TextAttributes {
   /**
    * Create a new instance of `TextAttributes`.
    */
-  init(color: ProcessedColor?, fontSize: Double?, fontStyle: String?, fontWeight: Variant_String_Double?, fontVariant: [FontVariant]?, letterSpacing: Double?, lineHeight: Double?, textAlign: TextAlignAttributes?, textDecorationColor: ProcessedColor?, textDecorationLine: TextDecorationLine?, textDecorationStyle: TextDecorationStyle?, textShadowColor: ProcessedColor?, textShadowOffset: TextShadowOffset?, textShadowRadius: Double?, textTransform: TextTransform?, writingDirection: WritingDirection?, userSelect: UserSelect?) {
+  init(color: ProcessedColor?, fontSize: Double?, fontStyle: String?, fontWeight: Variant_String_Double?, fontVariant: [FontVariant]?, letterSpacing: Double?, lineBreakStrategyIOS: LineBreakStrategyIOS?, lineBreakModeIOS: LineBreakModeIOS?, lineHeight: Double?, textAlign: TextAlignAttributes?, textDecorationColor: ProcessedColor?, textDecorationLine: TextDecorationLine?, textDecorationStyle: TextDecorationStyle?, textShadowColor: ProcessedColor?, textShadowOffset: TextShadowOffset?, textShadowRadius: Double?, textTransform: TextTransform?, writingDirection: WritingDirection?, userSelect: UserSelect?) {
     self.init({ () -> bridge.std__optional_std__variant_std__string__double__ in
       if let __unwrappedValue = color {
         return bridge.create_std__optional_std__variant_std__string__double__({ () -> bridge.std__variant_std__string__double_ in
@@ -72,6 +72,18 @@ public extension TextAttributes {
     }(), { () -> bridge.std__optional_double_ in
       if let __unwrappedValue = letterSpacing {
         return bridge.create_std__optional_double_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_LineBreakStrategyIOS_ in
+      if let __unwrappedValue = lineBreakStrategyIOS {
+        return bridge.create_std__optional_LineBreakStrategyIOS_(__unwrappedValue)
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_LineBreakModeIOS_ in
+      if let __unwrappedValue = lineBreakModeIOS {
+        return bridge.create_std__optional_LineBreakModeIOS_(__unwrappedValue)
       } else {
         return .init()
       }
@@ -325,6 +337,40 @@ public extension TextAttributes {
       self.__letterSpacing = { () -> bridge.std__optional_double_ in
         if let __unwrappedValue = newValue {
           return bridge.create_std__optional_double_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var lineBreakStrategyIOS: LineBreakStrategyIOS? {
+    @inline(__always)
+    get {
+      return self.__lineBreakStrategyIOS.value
+    }
+    @inline(__always)
+    set {
+      self.__lineBreakStrategyIOS = { () -> bridge.std__optional_LineBreakStrategyIOS_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_LineBreakStrategyIOS_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var lineBreakModeIOS: LineBreakModeIOS? {
+    @inline(__always)
+    get {
+      return self.__lineBreakModeIOS.value
+    }
+    @inline(__always)
+    set {
+      self.__lineBreakModeIOS = { () -> bridge.std__optional_LineBreakModeIOS_ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_LineBreakModeIOS_(__unwrappedValue)
         } else {
           return .init()
         }

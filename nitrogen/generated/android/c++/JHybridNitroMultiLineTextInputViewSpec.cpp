@@ -27,6 +27,10 @@ namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 // Forward declaration of `FontVariant` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `LineBreakStrategyIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakStrategyIOS; }
+// Forward declaration of `LineBreakModeIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakModeIOS; }
 // Forward declaration of `TextAlignAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextDecorationLine` to properly resolve imports.
@@ -74,6 +78,10 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 #include "FontVariant.hpp"
 #include <vector>
 #include "JFontVariant.hpp"
+#include "LineBreakStrategyIOS.hpp"
+#include "JLineBreakStrategyIOS.hpp"
+#include "LineBreakModeIOS.hpp"
+#include "JLineBreakModeIOS.hpp"
 #include "TextAlignAttributes.hpp"
 #include "JTextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"
@@ -228,6 +236,15 @@ namespace margelo::nitro::nitrotextinput {
   void JHybridNitroMultiLineTextInputViewSpec::setMaxLength(std::optional<double> maxLength) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* maxLength */)>("setMaxLength");
     method(_javaPart, maxLength.has_value() ? jni::JDouble::valueOf(maxLength.value()) : nullptr);
+  }
+  std::optional<double> JHybridNitroMultiLineTextInputViewSpec::getNumberOfLines() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JDouble>()>("getNumberOfLines");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->value()) : std::nullopt;
+  }
+  void JHybridNitroMultiLineTextInputViewSpec::setNumberOfLines(std::optional<double> numberOfLines) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JDouble> /* numberOfLines */)>("setNumberOfLines");
+    method(_javaPart, numberOfLines.has_value() ? jni::JDouble::valueOf(numberOfLines.value()) : nullptr);
   }
   std::optional<std::string> JHybridNitroMultiLineTextInputViewSpec::getPasswordRules() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getPasswordRules");

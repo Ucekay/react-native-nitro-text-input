@@ -24,6 +24,10 @@ namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
+// Forward declaration of `LineBreakModeIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakModeIOS; }
+// Forward declaration of `LineBreakStrategyIOS` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class LineBreakStrategyIOS; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
@@ -64,6 +68,8 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
+#include "LineBreakModeIOS.hpp"
+#include "LineBreakStrategyIOS.hpp"
 #include "ReturnKeyType.hpp"
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
@@ -538,6 +544,36 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return optional.has_value();
   }
   inline std::vector<FontVariant> get_std__optional_std__vector_FontVariant__(const std::optional<std::vector<FontVariant>>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<LineBreakStrategyIOS>
+  /**
+   * Specialized version of `std::optional<LineBreakStrategyIOS>`.
+   */
+  using std__optional_LineBreakStrategyIOS_ = std::optional<LineBreakStrategyIOS>;
+  inline std::optional<LineBreakStrategyIOS> create_std__optional_LineBreakStrategyIOS_(const LineBreakStrategyIOS& value) noexcept {
+    return std::optional<LineBreakStrategyIOS>(value);
+  }
+  inline bool has_value_std__optional_LineBreakStrategyIOS_(const std::optional<LineBreakStrategyIOS>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline LineBreakStrategyIOS get_std__optional_LineBreakStrategyIOS_(const std::optional<LineBreakStrategyIOS>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::optional<LineBreakModeIOS>
+  /**
+   * Specialized version of `std::optional<LineBreakModeIOS>`.
+   */
+  using std__optional_LineBreakModeIOS_ = std::optional<LineBreakModeIOS>;
+  inline std::optional<LineBreakModeIOS> create_std__optional_LineBreakModeIOS_(const LineBreakModeIOS& value) noexcept {
+    return std::optional<LineBreakModeIOS>(value);
+  }
+  inline bool has_value_std__optional_LineBreakModeIOS_(const std::optional<LineBreakModeIOS>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline LineBreakModeIOS get_std__optional_LineBreakModeIOS_(const std::optional<LineBreakModeIOS>& optional) noexcept {
     return *optional;
   }
   

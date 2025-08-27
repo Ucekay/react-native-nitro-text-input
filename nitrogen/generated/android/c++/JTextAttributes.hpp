@@ -12,6 +12,8 @@
 
 #include "FontVariant.hpp"
 #include "JFontVariant.hpp"
+#include "JLineBreakModeIOS.hpp"
+#include "JLineBreakStrategyIOS.hpp"
 #include "JProcessedColor.hpp"
 #include "JTextAlignAttributes.hpp"
 #include "JTextDecorationLine.hpp"
@@ -21,6 +23,8 @@
 #include "JUserSelect.hpp"
 #include "JVariant_String_Double.hpp"
 #include "JWritingDirection.hpp"
+#include "LineBreakModeIOS.hpp"
+#include "LineBreakStrategyIOS.hpp"
 #include "TextAlignAttributes.hpp"
 #include "TextDecorationLine.hpp"
 #include "TextDecorationStyle.hpp"
@@ -64,6 +68,10 @@ namespace margelo::nitro::nitrotextinput {
       jni::local_ref<jni::JArrayClass<JFontVariant>> fontVariant = this->getFieldValue(fieldFontVariant);
       static const auto fieldLetterSpacing = clazz->getField<jni::JDouble>("letterSpacing");
       jni::local_ref<jni::JDouble> letterSpacing = this->getFieldValue(fieldLetterSpacing);
+      static const auto fieldLineBreakStrategyIOS = clazz->getField<JLineBreakStrategyIOS>("lineBreakStrategyIOS");
+      jni::local_ref<JLineBreakStrategyIOS> lineBreakStrategyIOS = this->getFieldValue(fieldLineBreakStrategyIOS);
+      static const auto fieldLineBreakModeIOS = clazz->getField<JLineBreakModeIOS>("lineBreakModeIOS");
+      jni::local_ref<JLineBreakModeIOS> lineBreakModeIOS = this->getFieldValue(fieldLineBreakModeIOS);
       static const auto fieldLineHeight = clazz->getField<jni::JDouble>("lineHeight");
       jni::local_ref<jni::JDouble> lineHeight = this->getFieldValue(fieldLineHeight);
       static const auto fieldTextAlign = clazz->getField<JTextAlignAttributes>("textAlign");
@@ -102,6 +110,8 @@ namespace margelo::nitro::nitrotextinput {
           return __vector;
         }()) : std::nullopt,
         letterSpacing != nullptr ? std::make_optional(letterSpacing->value()) : std::nullopt,
+        lineBreakStrategyIOS != nullptr ? std::make_optional(lineBreakStrategyIOS->toCpp()) : std::nullopt,
+        lineBreakModeIOS != nullptr ? std::make_optional(lineBreakModeIOS->toCpp()) : std::nullopt,
         lineHeight != nullptr ? std::make_optional(lineHeight->value()) : std::nullopt,
         textAlign != nullptr ? std::make_optional(textAlign->toCpp()) : std::nullopt,
         textDecorationColor != nullptr ? std::make_optional(textDecorationColor->toCpp()) : std::nullopt,
@@ -137,6 +147,8 @@ namespace margelo::nitro::nitrotextinput {
           return __array;
         }() : nullptr,
         value.letterSpacing.has_value() ? jni::JDouble::valueOf(value.letterSpacing.value()) : nullptr,
+        value.lineBreakStrategyIOS.has_value() ? JLineBreakStrategyIOS::fromCpp(value.lineBreakStrategyIOS.value()) : nullptr,
+        value.lineBreakModeIOS.has_value() ? JLineBreakModeIOS::fromCpp(value.lineBreakModeIOS.value()) : nullptr,
         value.lineHeight.has_value() ? jni::JDouble::valueOf(value.lineHeight.value()) : nullptr,
         value.textAlign.has_value() ? JTextAlignAttributes::fromCpp(value.textAlign.value()) : nullptr,
         value.textDecorationColor.has_value() ? JProcessedColor::fromCpp(value.textDecorationColor.value()) : nullptr,
