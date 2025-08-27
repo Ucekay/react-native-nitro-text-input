@@ -215,16 +215,6 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.placeholder: ") + exc.what());
       }
     }()),
-    textAlign([&]() -> CachedProp<std::optional<TextAlign>> {
-      try {
-        const react::RawValue* rawValue = rawProps.at("textAlign", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.textAlign;
-        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<TextAlign>>::fromRawValue(*runtime, value, sourceProps.textAlign);
-      } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroTextInputView.textAlign: ") + exc.what());
-      }
-    }()),
     placeholderTextColor([&]() -> CachedProp<std::optional<std::variant<std::string, double>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("placeholderTextColor", nullptr, nullptr);
@@ -323,6 +313,16 @@ namespace margelo::nitro::nitrotextinput::views {
         return CachedProp<std::optional<SubmitBehavior>>::fromRawValue(*runtime, value, sourceProps.submitBehavior);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroTextInputView.submitBehavior: ") + exc.what());
+      }
+    }()),
+    textAlign([&]() -> CachedProp<std::optional<TextAlign>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("textAlign", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.textAlign;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<TextAlign>>::fromRawValue(*runtime, value, sourceProps.textAlign);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.textAlign: ") + exc.what());
       }
     }()),
     onFocused([&]() -> CachedProp<std::optional<std::function<void()>>> {
@@ -425,6 +425,16 @@ namespace margelo::nitro::nitrotextinput::views {
         throw std::runtime_error(std::string("NitroTextInputView.onInitialHeightMeasured: ") + exc.what());
       }
     }()),
+    textAttributes([&]() -> CachedProp<std::optional<TextAttributes>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("textAttributes", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.textAttributes;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<TextAttributes>>::fromRawValue(*runtime, value, sourceProps.textAttributes);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroTextInputView.textAttributes: ") + exc.what());
+      }
+    }()),
     hybridRef([&]() -> CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("hybridRef", nullptr, nullptr);
@@ -457,7 +467,6 @@ namespace margelo::nitro::nitrotextinput::views {
     multiline(other.multiline),
     passwordRules(other.passwordRules),
     placeholder(other.placeholder),
-    textAlign(other.textAlign),
     placeholderTextColor(other.placeholderTextColor),
     returnKeyType(other.returnKeyType),
     selection(other.selection),
@@ -468,6 +477,7 @@ namespace margelo::nitro::nitrotextinput::views {
     showSoftInputOnFocus(other.showSoftInputOnFocus),
     smartInsertDelete(other.smartInsertDelete),
     submitBehavior(other.submitBehavior),
+    textAlign(other.textAlign),
     onFocused(other.onFocused),
     onBlurred(other.onBlurred),
     onTextChanged(other.onTextChanged),
@@ -478,6 +488,7 @@ namespace margelo::nitro::nitrotextinput::views {
     onTouchBegan(other.onTouchBegan),
     onTouchEnded(other.onTouchEnded),
     onInitialHeightMeasured(other.onInitialHeightMeasured),
+    textAttributes(other.textAttributes),
     hybridRef(other.hybridRef) { }
 
   bool HybridNitroTextInputViewProps::filterObjectKeys(const std::string& propName) {
@@ -501,7 +512,6 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("multiline"): return true;
       case hashString("passwordRules"): return true;
       case hashString("placeholder"): return true;
-      case hashString("textAlign"): return true;
       case hashString("placeholderTextColor"): return true;
       case hashString("returnKeyType"): return true;
       case hashString("selection"): return true;
@@ -512,6 +522,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("showSoftInputOnFocus"): return true;
       case hashString("smartInsertDelete"): return true;
       case hashString("submitBehavior"): return true;
+      case hashString("textAlign"): return true;
       case hashString("onFocused"): return true;
       case hashString("onBlurred"): return true;
       case hashString("onTextChanged"): return true;
@@ -522,6 +533,7 @@ namespace margelo::nitro::nitrotextinput::views {
       case hashString("onTouchBegan"): return true;
       case hashString("onTouchEnded"): return true;
       case hashString("onInitialHeightMeasured"): return true;
+      case hashString("textAttributes"): return true;
       case hashString("hybridRef"): return true;
       default: return false;
     }

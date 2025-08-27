@@ -87,8 +87,6 @@ namespace margelo::nitro::nitrotextinput {
     void setPasswordRules(const std::optional<std::string>& passwordRules) override;
     std::optional<std::string> getPlaceholder() override;
     void setPlaceholder(const std::optional<std::string>& placeholder) override;
-    std::optional<TextAlign> getTextAlign() override;
-    void setTextAlign(std::optional<TextAlign> textAlign) override;
     std::optional<std::variant<std::string, double>> getPlaceholderTextColor() override;
     void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) override;
     std::optional<ReturnKeyType> getReturnKeyType() override;
@@ -109,6 +107,8 @@ namespace margelo::nitro::nitrotextinput {
     void setSmartInsertDelete(std::optional<bool> smartInsertDelete) override;
     std::optional<SubmitBehavior> getSubmitBehavior() override;
     void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) override;
+    std::optional<TextAlign> getTextAlign() override;
+    void setTextAlign(std::optional<TextAlign> textAlign) override;
     std::optional<std::function<void()>> getOnFocused() override;
     void setOnFocused(const std::optional<std::function<void()>>& onFocused) override;
     std::optional<std::function<void()>> getOnBlurred() override;
@@ -129,6 +129,8 @@ namespace margelo::nitro::nitrotextinput {
     void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) override;
     std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() override;
     void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) override;
+    std::optional<TextAttributes> getTextAttributes() override;
+    void setTextAttributes(const std::optional<TextAttributes>& textAttributes) override;
 
   public:
     // Methods

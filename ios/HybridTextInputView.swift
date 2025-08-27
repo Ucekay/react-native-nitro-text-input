@@ -31,6 +31,9 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             ) -> Void
         )?
 
+    // Reference to parent view for text decoration re-application
+    weak var parentView: HybridTextInputView?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.clipsToBounds = false
@@ -246,6 +249,12 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     }
 
     @objc private func handleTextDidChange(_ notification: Notification) {
+        // Re-apply text decoration and shadow when not composing (markedTextRange is nil)
+        if self.markedTextRange == nil {
+            self.parentView?.reapplyTextDecoration()
+            self.parentView?.reapplyTextShadow()
+        }
+
         guard let maxLen = self.maxLength else { return }
         // Do not enforce while composing
         if self.markedTextRange != nil { return }
@@ -306,11 +315,12 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             object: self
         )
     }
+
 }
 
 class HybridTextInputView: HybridNitroTextInputViewSpec {
     private let textField = CustomTextField()
-    private var baseFont: UIFont = UIFont.systemFont(ofSize: 17)
+    private var baseFont: UIFont = UIFont.systemFont(ofSize: 14)
     private var hasAppliedDefaultValue: Bool = false
     var view: UIView { return textField }
 
@@ -318,17 +328,23 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         super.init()
         self.textField.clipsToBounds = false
         self.textField.layer.masksToBounds = false
+        // Set parent reference for text decoration re-application
+        self.textField.parentView = self
         // Defer until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
             self.textField.setNeedsLayout()
             self.textField.layoutIfNeeded()
-            // Cache base font for scaling
-            self.baseFont = self.textField.font ?? UIFont.systemFont(ofSize: 17)
+            // Set default font size to 14pt and cache base font for scaling
+            self.baseFont = UIFont.systemFont(ofSize: 14)
+            self.textField.font = self.baseFont
+            self.applyTextAttributes()
             self.applyFontScaling()
             self.wireTextFieldEventCallbacks()
-            // Calculate height using intrinsicContentSize as first measurement
-            let initialHeight = self.textField.intrinsicContentSize.height
+            // Calculate initial height using intrinsic content size
+            let initialHeight = Double(
+                self.textField.intrinsicContentSize.height
+            )
             if let callback = self.onInitialHeightMeasured {
                 callback(initialHeight)
             }
@@ -351,7 +367,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         _ = self.textField.becomeFirstResponder()
         if self.clearTextOnFocus == true {
-            self.textField.attributedText = NSAttributedString()
+            // Apply textTransform if specified to empty string
+            self.textField.attributedText = NSAttributedString(
+                string: applyTextTransform("")
+            )
+            self.applyEffectiveTextAlignment()
         }
         if self.selectTextOnFocus == true {
             DispatchQueue.main.async { [weak self] in
@@ -375,6 +395,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 // We'll manage scaling manually to support maxFontSizeMultiplier caps
                 self.textField.adjustsFontForContentSizeCategory = false
                 self.applyFontScaling()
+                // Recalculate height when font scaling changes
+                if let callback = self.onInitialHeightMeasured {
+                    let newHeight = Double(
+                        self.textField.intrinsicContentSize.height
+                    )
+                    callback(newHeight)
+                }
             }
         }
     }
@@ -471,6 +498,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.applyFontScaling()
+                // Recalculate height when font multiplier changes
+                if let callback = self.onInitialHeightMeasured {
+                    let newHeight = Double(
+                        self.textField.intrinsicContentSize.height
+                    )
+                    callback(newHeight)
+                }
             }
         }
     }
@@ -534,14 +568,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var textAlign: TextAlign? {
         didSet {
             Task { @MainActor in
-                let alignment: NSTextAlignment
-                switch self.textAlign {
-                case .some(.center): alignment = .center
-                case .some(.right): alignment = .right
-                case .some(.left): alignment = .left
-                case .some(.natural), .none: alignment = .natural
-                }
-                self.textField.textAlignment = alignment
+                self.applyEffectiveTextAlignment()
             }
         }
     }
@@ -638,6 +665,23 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
+    var textAttributes: TextAttributes? {
+        didSet {
+            Task { @MainActor in
+                self.applyTextAttributes()
+                Task { @MainActor in
+                    self.applyEffectiveTextAlignment()
+                }
+                // Recalculate height when text attributes change (font size, etc.)
+                if let callback = self.onInitialHeightMeasured {
+                    let newHeight = Double(
+                        self.textField.intrinsicContentSize.height
+                    )
+                    callback(newHeight)
+                }
+            }
+        }
+    }
 
     var onInitialHeightMeasured: ((_ height: Double) -> Void)?
     var onBlurred: (() -> Void)?
@@ -662,6 +706,71 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             ) -> Void
         )?
 
+    private func applyEffectiveTextAlignment() {
+        let effectiveAlign: TextAlignAttributes? =
+            self.textAlignToAttributes(self.textAlign)
+            ?? self.textAttributes?.textAlign
+        let alignment: NSTextAlignment
+        if let align = effectiveAlign {
+            alignment = HybridTextInputView.nsTextAlignment(from: align)
+        } else {
+            alignment = .natural
+        }
+        self.textField.textAlignment = alignment
+
+        // Apply paragraph style alignment to attributedText or plain text if present
+        if let attributedText = self.textField.attributedText,
+            attributedText.length > 0
+        {
+            let mutableAttrText = NSMutableAttributedString(
+                attributedString: attributedText
+            )
+            let fullRange = NSRange(location: 0, length: mutableAttrText.length)
+            mutableAttrText.enumerateAttribute(
+                .paragraphStyle,
+                in: fullRange,
+                options: []
+            ) { value, range, _ in
+                let paragraphStyle: NSMutableParagraphStyle
+                if let existingStyle = value as? NSParagraphStyle {
+                    paragraphStyle =
+                        existingStyle.mutableCopy() as? NSMutableParagraphStyle
+                        ?? NSMutableParagraphStyle()
+                } else {
+                    paragraphStyle = NSMutableParagraphStyle()
+                }
+                paragraphStyle.alignment = alignment
+                mutableAttrText.addAttribute(
+                    .paragraphStyle,
+                    value: paragraphStyle,
+                    range: range
+                )
+            }
+            self.textField.attributedText = mutableAttrText
+        } else if let plainText = self.textField.text, !plainText.isEmpty {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = alignment
+            let attrString = NSAttributedString(
+                string: plainText,
+                attributes: [.paragraphStyle: paragraphStyle]
+            )
+            self.textField.attributedText = attrString
+        }
+    }
+
+    private func textAlignToAttributes(_ align: TextAlign?)
+        -> TextAlignAttributes?
+    {
+        guard let align = align else { return nil }
+        switch align {
+        case .center: return .center
+        case .left: return .left
+        case .right: return .right
+        case .natural: return nil
+        default: return .auto  // .natural相当は .auto に統一
+        }
+    }
+
     func focus() {
         Task { @MainActor in
             self.performFocus()
@@ -678,7 +787,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             guard self.textField.superview != nil else { return }
 
             // Clear text and reset selection
-            self.textField.text = ""
+            // Apply textTransform if specified to empty string
+            self.textField.text = applyTextTransform("")
 
             // Reset selection to the beginning
             let start = self.textField.beginningOfDocument
@@ -872,8 +982,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             textField.textContentType = .flightNumber
         case .shipmentTrackingNumber:
             textField.textContentType = .shipmentTrackingNumber
-        default:
-            break
         }
     }
 
@@ -899,7 +1007,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         guard let initialText = self.defaultValue,
             !(self.textField.text?.isEmpty == false)
         else { return }
-        self.textField.text = initialText
+        // Apply textTransform if specified
+        self.textField.text = applyTextTransform(initialText)
         self.hasAppliedDefaultValue = true
     }
 
@@ -1113,6 +1222,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     // MARK: - Font Scaling (allowFontScaling, maxFontSizeMultiplier)
     @objc private func handleContentSizeCategoryDidChange() {
         self.applyFontScaling()
+        // Recalculate height when system font size changes
+        if let callback = self.onInitialHeightMeasured {
+            let newHeight = Double(self.textField.intrinsicContentSize.height)
+            callback(newHeight)
+        }
     }
 
     private func resolvedMaxFontSizeMultiplier() -> CGFloat? {
@@ -1198,6 +1312,844 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             locationY,
             timestamp in
             self?.onTouchEnded?(pageX, pageY, locationX, locationY, timestamp)
+        }
+    }
+
+    private func applyTextAttributes() {
+        guard let attrs = self.textAttributes else {
+            // If no attributes are provided, reset to defaults
+            self.resetToDefaultAttributes()
+            return
+        }
+
+        // Color - reset to default if not specified
+        if let color = attrs.color {
+            // Resolve color similarly to updatePlaceholderAttributedColor
+            let uiColor: UIColor? = {
+                switch color {
+                case .second(let doubleValue):
+                    let v = UInt32(clamping: Int64(doubleValue))
+                    let a = CGFloat((v >> 24) & 0xFF) / 255.0
+                    let r = CGFloat((v >> 16) & 0xFF) / 255.0
+                    let g = CGFloat((v >> 8) & 0xFF) / 255.0
+                    let b = CGFloat(v & 0xFF) / 255.0
+                    return UIColor(red: r, green: g, blue: b, alpha: a)
+                case .first(let json):
+                    var parsedDict: [String: Any]? = nil
+                    if let data = json.data(using: .utf8),
+                        let dict = try? JSONSerialization.jsonObject(with: data)
+                            as? [String: Any]
+                    {
+                        parsedDict = dict
+                    }
+                    if let dict = parsedDict {
+                        if let semantic = dict["semantic"] as? [String],
+                            let name = semantic.first
+                        {
+                            // Try named color first, fallback to system semantic mapping if needed
+                            return UIColor(named: name) ?? UIColor.value(
+                                forKey: name
+                            ) as? UIColor
+                        }
+                        if let dynamic = dict["dynamic"] as? [String: Any] {
+                            let light =
+                                HybridTextInputView.resolveColor(
+                                    any: dynamic["light"]
+                                ) ?? UIColor.placeholderText
+                            let dark =
+                                HybridTextInputView.resolveColor(
+                                    any: dynamic["dark"]
+                                ) ?? light
+                            if #available(iOS 13.0, *) {
+                                return UIColor { traits in
+                                    traits.userInterfaceStyle == .dark
+                                        ? dark : light
+                                }
+                            } else {
+                                return light
+                            }
+                        }
+                    }
+                    return nil
+                }
+            }()
+            if let uiColor = uiColor {
+                self.textField.textColor = uiColor
+            }
+        } else {
+            // Reset to default color and clear any attributed text that might have color
+            self.textField.textColor = nil
+            // Clear attributed text to remove any color attributes
+            clearAttributedTextAndPreserveContent()
+        }
+
+        // Font size, weight, style
+        var font = self.baseFont
+
+        // Apply font size - use default (14pt) if not specified
+        if let fontSize = attrs.fontSize, fontSize > 0 {
+            font = font.withSize(CGFloat(fontSize))
+        } else {
+            // Reset to default font size (14pt)
+            font = font.withSize(14.0)
+        }
+
+        // Apply font weight - use default if not specified
+        if let weightVal = attrs.fontWeight {
+            let weight: UIFont.Weight
+            switch weightVal {
+            case .first(let weightName):
+                weight = UIFont.Weight(
+                    rawValue: HybridTextInputView.fontWeightFromString(
+                        weightName
+                    )
+                )
+            case .second(let weightDouble):
+                weight = UIFont.Weight(rawValue: CGFloat(weightDouble))
+            }
+            font = HybridTextInputView.font(font: font, weight: weight)
+        } else {
+            // Reset to default font weight (regular)
+            font = HybridTextInputView.font(font: font, weight: .regular)
+        }
+
+        // Apply font style - reset to normal if not specified
+        if let style = attrs.fontStyle, style.lowercased() == "italic" {
+            font = HybridTextInputView.italicFont(font: font)
+        }
+        // Note: If fontStyle is nil or not "italic", font remains non-italic (default)
+
+        // Font variant
+        if let fontVariant = attrs.fontVariant, !fontVariant.isEmpty {
+            font = self.applyFontVariant(to: font, variants: fontVariant)
+        }
+
+        self.textField.font = font
+
+        // Letter spacing - reset if not specified
+        if let spacing = attrs.letterSpacing, spacing != 0 {
+            if let currentText = self.textField.text, !currentText.isEmpty {
+                let attrStr = NSMutableAttributedString(string: currentText)
+                attrStr.addAttribute(
+                    .kern,
+                    value: CGFloat(spacing),
+                    range: NSRange(location: 0, length: attrStr.length)
+                )
+                self.textField.attributedText = attrStr
+            }
+        } else {
+            // Reset letter spacing by clearing attributed text if it was set for spacing
+            if self.textField.attributedText != nil {
+                clearAttributedTextAndPreserveContent()
+            }
+        }
+
+        // Text decoration - reset if not specified
+        if let decorationLine = attrs.textDecorationLine,
+            decorationLine != .none
+        {
+            self.applyTextDecoration(
+                decorationLine: decorationLine,
+                decorationStyle: attrs.textDecorationStyle ?? .solid,
+                decorationColor: attrs.textDecorationColor
+            )
+        } else {
+            // Reset text decoration by clearing attributed text decorations
+            clearAttributedTextAndPreserveContent()
+        }
+
+        // Text shadow - reset if not specified
+        if let shadowOffset = attrs.textShadowOffset,
+            let shadowRadius = attrs.textShadowRadius,
+            shadowRadius > 0
+        {
+            self.applyTextShadow(
+                offset: shadowOffset,
+                radius: shadowRadius,
+                color: attrs.textShadowColor
+            )
+        } else {
+            // Reset text shadow by clearing shadow attributes
+            clearAttributedTextAndPreserveContent()
+        }
+
+        // Writing Direction - reset to default if not specified
+        if let writingDirection = attrs.writingDirection {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.baseWritingDirection =
+                HybridTextInputView.nsWritingDirection(
+                    from: writingDirection
+                )
+
+            if let currentText = self.textField.text, !currentText.isEmpty {
+                let attrStr = NSMutableAttributedString(string: currentText)
+                attrStr.addAttribute(
+                    .paragraphStyle,
+                    value: paragraphStyle,
+                    range: NSRange(location: 0, length: attrStr.length)
+                )
+                self.textField.attributedText = attrStr
+            }
+        } else {
+            // Reset writing direction to default (.natural)
+            if let currentText = self.textField.text, !currentText.isEmpty {
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.baseWritingDirection = .natural
+                let attrStr = NSMutableAttributedString(string: currentText)
+                attrStr.addAttribute(
+                    .paragraphStyle,
+                    value: paragraphStyle,
+                    range: NSRange(location: 0, length: attrStr.length)
+                )
+                self.textField.attributedText = attrStr
+            }
+        }
+
+        // User Select - reset to default if not specified
+        if let userSelect = attrs.userSelect {
+            updateUserSelect(userSelect: userSelect)
+        } else {
+            // Reset to default user select behavior (.auto/.text)
+            updateUserSelect(userSelect: .auto)
+        }
+
+        // Apply effective text alignment once after all text attribute changes
+        self.applyEffectiveTextAlignment()
+
+        // Apply textTransform if specified
+        if let currentText = self.textField.text, !currentText.isEmpty {
+            self.textField.text = applyTextTransform(currentText)
+        } else if let attributedText = self.textField.attributedText,
+            attributedText.length > 0
+        {
+            let transformedString = applyTextTransform(attributedText.string)
+            let mutableAttrText = NSMutableAttributedString(
+                string: transformedString
+            )
+            // Keep font and color attributes if possible (optional)
+            if let font = self.textField.font {
+                mutableAttrText.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: mutableAttrText.length)
+                )
+            }
+            if let color = self.textField.textColor {
+                mutableAttrText.addAttribute(
+                    .foregroundColor,
+                    value: color,
+                    range: NSRange(location: 0, length: mutableAttrText.length)
+                )
+            }
+            self.textField.attributedText = mutableAttrText
+        }
+
+        // Line height is not supported for single-line fields
+    }
+
+    private func clearAttributedTextAndPreserveContent() {
+        // Helper method to clear all attributed text while preserving plain text content
+        if let currentText = self.textField.text, !currentText.isEmpty {
+            // Temporarily store the text
+            let plainText = currentText
+            // Clear attributed text first
+            self.textField.attributedText = nil
+            // Set plain text back
+            self.textField.text = plainText
+        } else {
+            // Clear both if no text
+            self.textField.attributedText = nil
+            self.textField.text = nil
+        }
+    }
+
+    private func resetToDefaultAttributes() {
+        // Reset all text attributes to defaults
+        self.textField.textColor = nil  // System default
+        self.baseFont = UIFont.systemFont(ofSize: 14)  // Reset base font to default
+        self.textField.font = self.baseFont  // Default size and weight
+
+        // Only set default alignment if textAlign is not specified
+        if self.textAlign == nil {
+            self.textField.textAlignment = .natural  // Default alignment
+        }
+
+        // Clear any attributed text to remove spacing, decorations, shadows, colors
+        clearAttributedTextAndPreserveContent()
+        self.applyEffectiveTextAlignment()
+
+        // Reset user interaction to default
+        updateUserSelect(userSelect: .auto)
+    }
+
+    // MARK: - Writing Direction Support
+
+    private static func nsWritingDirection(
+        from writingDirection: WritingDirection
+    )
+        -> NSWritingDirection
+    {
+        switch writingDirection {
+        case .ltr:
+            return .leftToRight
+        case .rtl:
+            return .rightToLeft
+        case .auto:
+            return .natural
+        }
+    }
+
+    // MARK: - User Select Support
+
+    private func updateUserSelect(userSelect: UserSelect) {
+        switch userSelect {
+        case .none:
+            // Disable text selection completely
+            self.textField.isUserInteractionEnabled = false
+        case .auto, .text:
+            // Enable text selection (default behavior)
+            self.textField.isUserInteractionEnabled = true
+        case .all:
+            // Enable text selection with select all behavior
+            self.textField.isUserInteractionEnabled = true
+        // Could add auto-select all behavior here if needed
+        case .contain:
+            // Enable limited text selection
+            self.textField.isUserInteractionEnabled = true
+        }
+    }
+
+    // MARK: - FontVariant Support
+
+    private static let fontVariantFeatureMap: [String: [String: Any]] = [
+        // Numeric variants
+        "oldstyle-nums": [
+            kCTFontFeatureTypeIdentifierKey as String: kNumberCaseType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kLowerCaseNumbersSelector,
+        ],
+        "lining-nums": [
+            kCTFontFeatureTypeIdentifierKey as String: kNumberCaseType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kUpperCaseNumbersSelector,
+        ],
+        "tabular-nums": [
+            kCTFontFeatureTypeIdentifierKey as String: kNumberSpacingType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kMonospacedNumbersSelector,
+        ],
+        "proportional-nums": [
+            kCTFontFeatureTypeIdentifierKey as String: kNumberSpacingType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kProportionalNumbersSelector,
+        ],
+
+        // Small caps
+        "small-caps": [
+            kCTFontFeatureTypeIdentifierKey as String: kLowerCaseType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kLowerCaseSmallCapsSelector,
+        ],
+
+        // Ligatures
+        "common-ligatures": [
+            kCTFontFeatureTypeIdentifierKey as String: kLigaturesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kCommonLigaturesOnSelector,
+        ],
+        "no-common-ligatures": [
+            kCTFontFeatureTypeIdentifierKey as String: kLigaturesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kCommonLigaturesOffSelector,
+        ],
+        "discretionary-ligatures": [
+            kCTFontFeatureTypeIdentifierKey as String: kLigaturesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kRareLigaturesOnSelector,
+        ],
+        "no-discretionary-ligatures": [
+            kCTFontFeatureTypeIdentifierKey as String: kLigaturesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kRareLigaturesOffSelector,
+        ],
+        "historical-ligatures": [
+            kCTFontFeatureTypeIdentifierKey as String: kLigaturesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kHistoricalLigaturesOnSelector,
+        ],
+        "no-historical-ligatures": [
+            kCTFontFeatureTypeIdentifierKey as String: kLigaturesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kHistoricalLigaturesOffSelector,
+        ],
+        "contextual": [
+            kCTFontFeatureTypeIdentifierKey as String:
+                kContextualAlternatesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kContextualAlternatesOnSelector,
+        ],
+        "no-contextual": [
+            kCTFontFeatureTypeIdentifierKey as String:
+                kContextualAlternatesType,
+            kCTFontFeatureSelectorIdentifierKey as String:
+                kContextualAlternatesOffSelector,
+        ],
+    ]
+
+    private func applyFontVariant(to font: UIFont, variants: [FontVariant])
+        -> UIFont
+    {
+        guard !variants.isEmpty else { return font }
+
+        var features: [[String: Any]] = []
+
+        for variant in variants {
+            // Convert enum to string representation
+            let variantString = fontVariantToString(variant)
+
+            // Handle stylistic alternates (stylistic-one through stylistic-twenty)
+            if variantString.hasPrefix("stylistic-") {
+                let numberPart = String(
+                    variantString.dropFirst("stylistic-".count)
+                )
+                if let number = stylisticNumberToInt(numberPart),
+                    number >= 1 && number <= 20
+                {
+                    features.append([
+                        kCTFontFeatureTypeIdentifierKey as String:
+                            kStylisticAlternativesType,
+                        kCTFontFeatureSelectorIdentifierKey as String: number
+                            - 1
+                            + kStylisticAltOneOnSelector,
+                    ])
+                }
+            } else if let featureSettings =
+                HybridTextInputView.fontVariantFeatureMap[variantString]
+            {
+                features.append(featureSettings)
+            }
+        }
+
+        guard !features.isEmpty else { return font }
+
+        let fontDescriptor = font.fontDescriptor
+        let newDescriptor = fontDescriptor.addingAttributes([
+            kCTFontFeatureSettingsAttribute as UIFontDescriptor.AttributeName:
+                features
+        ])
+
+        return UIFont(descriptor: newDescriptor, size: font.pointSize)
+    }
+
+    private func fontVariantToString(_ variant: FontVariant) -> String {
+        switch variant {
+        case .smallCaps: return "small-caps"
+        case .oldstyleNums: return "oldstyle-nums"
+        case .liningNums: return "lining-nums"
+        case .tabularNums: return "tabular-nums"
+        case .commonLigatures: return "common-ligatures"
+        case .noCommonLigatures: return "no-common-ligatures"
+        case .discretionaryLigatures: return "discretionary-ligatures"
+        case .noDiscretionaryLigatures: return "no-discretionary-ligatures"
+        case .historicalLigatures: return "historical-ligatures"
+        case .noHistoricalLigatures: return "no-historical-ligatures"
+        case .contextual: return "contextual"
+        case .noContextual: return "no-contextual"
+        case .proportionalNums: return "proportional-nums"
+        case .stylisticOne: return "stylistic-one"
+        case .stylisticTwo: return "stylistic-two"
+        case .stylisticThree: return "stylistic-three"
+        case .stylisticFour: return "stylistic-four"
+        case .stylisticFive: return "stylistic-five"
+        case .stylisticSix: return "stylistic-six"
+        case .stylisticSeven: return "stylistic-seven"
+        case .stylisticEight: return "stylistic-eight"
+        case .stylisticNine: return "stylistic-nine"
+        case .stylisticTen: return "stylistic-ten"
+        case .stylisticEleven: return "stylistic-eleven"
+        case .stylisticTwelve: return "stylistic-twelve"
+        case .stylisticThirteen: return "stylistic-thirteen"
+        case .stylisticFourteen: return "stylistic-fourteen"
+        case .stylisticFifteen: return "stylistic-fifteen"
+        case .stylisticSixteen: return "stylistic-sixteen"
+        case .stylisticSeventeen: return "stylistic-seventeen"
+        case .stylisticEighteen: return "stylistic-eighteen"
+        case .stylisticNineteen: return "stylistic-nineteen"
+        case .stylisticTwenty: return "stylistic-twenty"
+        }
+    }
+
+    private func stylisticNumberToInt(_ numberWord: String) -> Int? {
+        let numbers = [
+            "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+            "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+            "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+            "fifteen": 15,
+            "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+            "twenty": 20,
+        ]
+        return numbers[numberWord]
+    }
+
+    private static func fontWeightFromString(_ string: String) -> CGFloat {
+        switch string.lowercased() {
+        case "normal", "400": return UIFont.Weight.regular.rawValue
+        case "bold", "700": return UIFont.Weight.bold.rawValue
+        case "100": return UIFont.Weight.ultraLight.rawValue
+        case "200": return UIFont.Weight.thin.rawValue
+        case "300": return UIFont.Weight.light.rawValue
+        case "500": return UIFont.Weight.medium.rawValue
+        case "600": return UIFont.Weight.semibold.rawValue
+        case "800": return UIFont.Weight.heavy.rawValue
+        case "900": return UIFont.Weight.black.rawValue
+        default:
+            if let num = Double(string) {
+                return CGFloat(num)
+            }
+            return UIFont.Weight.regular.rawValue
+        }
+    }
+    private static func font(font: UIFont, weight: UIFont.Weight) -> UIFont {
+        let descriptor = font.fontDescriptor.addingAttributes([
+            .traits: [UIFontDescriptor.TraitKey.weight: weight]
+        ])
+        return UIFont(descriptor: descriptor, size: font.pointSize)
+    }
+    private static func italicFont(font: UIFont) -> UIFont {
+        let descriptor =
+            font.fontDescriptor.withSymbolicTraits(.traitItalic)
+            ?? font.fontDescriptor
+        return UIFont(descriptor: descriptor, size: font.pointSize)
+    }
+    private static func nsTextAlignment(from align: TextAlignAttributes)
+        -> NSTextAlignment
+    {
+        switch align {
+        case .left: return .left
+        case .right: return .right
+        case .center: return .center
+        case .justify: return .justified
+        case .auto: return .natural
+        }
+    }
+
+    private func applyTextDecoration(
+        decorationLine: TextDecorationLine,
+        decorationStyle: TextDecorationStyle,
+        decorationColor: ProcessedColor?
+    ) {
+        guard let text = self.textField.text, !text.isEmpty else { return }
+
+        let attributedString = NSMutableAttributedString(string: text)
+
+        // Copy existing attributes from the text field
+        if let existingFont = self.textField.font {
+            attributedString.addAttribute(
+                .font,
+                value: existingFont,
+                range: NSRange(location: 0, length: text.count)
+            )
+        }
+        if let existingColor = self.textField.textColor {
+            attributedString.addAttribute(
+                .foregroundColor,
+                value: existingColor,
+                range: NSRange(location: 0, length: text.count)
+            )
+        }
+
+        // Convert decoration style to NSUnderlineStyle
+        let underlineStyle = self.nsUnderlineStyle(from: decorationStyle)
+        let range = NSRange(location: 0, length: text.count)
+
+        // Apply decoration based on type
+        switch decorationLine {
+        case .underline:
+            attributedString.addAttribute(
+                .underlineStyle,
+                value: underlineStyle.rawValue,
+                range: range
+            )
+            if let color = self.resolveTextDecorationColor(decorationColor) {
+                attributedString.addAttribute(
+                    .underlineColor,
+                    value: color,
+                    range: range
+                )
+            }
+
+        case .lineThrough:
+            attributedString.addAttribute(
+                .strikethroughStyle,
+                value: underlineStyle.rawValue,
+                range: range
+            )
+            if let color = self.resolveTextDecorationColor(decorationColor) {
+                attributedString.addAttribute(
+                    .strikethroughColor,
+                    value: color,
+                    range: range
+                )
+            }
+
+        case .underlineLineThrough:
+            attributedString.addAttribute(
+                .underlineStyle,
+                value: underlineStyle.rawValue,
+                range: range
+            )
+            attributedString.addAttribute(
+                .strikethroughStyle,
+                value: underlineStyle.rawValue,
+                range: range
+            )
+            if let color = self.resolveTextDecorationColor(decorationColor) {
+                attributedString.addAttribute(
+                    .underlineColor,
+                    value: color,
+                    range: range
+                )
+                attributedString.addAttribute(
+                    .strikethroughColor,
+                    value: color,
+                    range: range
+                )
+            }
+
+        case .none:
+            break
+        }
+
+        self.textField.attributedText = attributedString
+        self.applyEffectiveTextAlignment()
+    }
+
+    private func nsUnderlineStyle(from decorationStyle: TextDecorationStyle)
+        -> NSUnderlineStyle
+    {
+        switch decorationStyle {
+        case .solid:
+            return .single
+        case .double:
+            return .double
+        case .dotted:
+            return [.single, .patternDot]
+        case .dashed:
+            return [.single, .patternDash]
+        }
+    }
+
+    func reapplyTextDecoration() {
+        guard let attrs = self.textAttributes,
+            let decorationLine = attrs.textDecorationLine,
+            decorationLine != .none
+        else { return }
+
+        self.applyTextDecoration(
+            decorationLine: decorationLine,
+            decorationStyle: attrs.textDecorationStyle ?? .solid,
+            decorationColor: attrs.textDecorationColor
+        )
+    }
+
+    private func resolveTextDecorationColor(_ decorationColor: ProcessedColor?)
+        -> UIColor?
+    {
+        guard let decorationColor = decorationColor else { return nil }
+        switch decorationColor {
+        case .second(let doubleValue):
+            let v = UInt32(clamping: Int64(doubleValue))
+            let a = CGFloat((v >> 24) & 0xFF) / 255.0
+            let r = CGFloat((v >> 16) & 0xFF) / 255.0
+            let g = CGFloat((v >> 8) & 0xFF) / 255.0
+            let b = CGFloat(v & 0xFF) / 255.0
+            return UIColor(red: r, green: g, blue: b, alpha: a)
+        case .first(let json):
+            var parsedDict: [String: Any]? = nil
+            if let data = json.data(using: .utf8),
+                let dict = try? JSONSerialization.jsonObject(with: data)
+                    as? [String: Any]
+            {
+                parsedDict = dict
+            }
+            if let dict = parsedDict {
+                if let semantic = dict["semantic"] as? [String],
+                    let name = semantic.first
+                {
+                    return UIColor(named: name) ?? UIColor.value(forKey: name)
+                        as? UIColor
+                }
+                if let dynamic = dict["dynamic"] as? [String: Any] {
+                    let light =
+                        HybridTextInputView.resolveColor(any: dynamic["light"])
+                        ?? UIColor.label
+                    let dark =
+                        HybridTextInputView.resolveColor(any: dynamic["dark"])
+                        ?? light
+                    if #available(iOS 13.0, *) {
+                        return UIColor { traits in
+                            traits.userInterfaceStyle == .dark ? dark : light
+                        }
+                    } else {
+                        return light
+                    }
+                }
+            }
+            return nil
+        }
+    }
+
+    // MARK: - Text Shadow Support
+
+    private func applyTextShadow(
+        offset: TextShadowOffset,
+        radius: Double,
+        color: ProcessedColor?
+    ) {
+        guard let text = self.textField.text, !text.isEmpty else { return }
+
+        let attributedString = NSMutableAttributedString(string: text)
+
+        // Copy existing attributes from the text field
+        if let existingFont = self.textField.font {
+            attributedString.addAttribute(
+                .font,
+                value: existingFont,
+                range: NSRange(location: 0, length: text.count)
+            )
+        }
+        if let existingColor = self.textField.textColor {
+            attributedString.addAttribute(
+                .foregroundColor,
+                value: existingColor,
+                range: NSRange(location: 0, length: text.count)
+            )
+        }
+
+        // Create shadow object
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize(width: offset.width, height: offset.height)
+        shadow.shadowBlurRadius = CGFloat(radius)
+
+        // Set shadow color if provided
+        if let shadowColor = self.resolveTextShadowColor(color) {
+            shadow.shadowColor = shadowColor
+        }
+
+        // Apply shadow to attributed string
+        attributedString.addAttribute(
+            .shadow,
+            value: shadow,
+            range: NSRange(location: 0, length: text.count)
+        )
+
+        self.textField.attributedText = attributedString
+        self.applyEffectiveTextAlignment()
+    }
+
+    private func resolveTextShadowColor(_ shadowColor: ProcessedColor?)
+        -> UIColor?
+    {
+        guard let shadowColor = shadowColor else {
+            return UIColor.black.withAlphaComponent(0.3)
+        }
+        switch shadowColor {
+        case .second(let doubleValue):
+            let v = UInt32(clamping: Int64(doubleValue))
+            let a = CGFloat((v >> 24) & 0xFF) / 255.0
+            let r = CGFloat((v >> 16) & 0xFF) / 255.0
+            let g = CGFloat((v >> 8) & 0xFF) / 255.0
+            let b = CGFloat(v & 0xFF) / 255.0
+            return UIColor(red: r, green: g, blue: b, alpha: a)
+        case .first(let json):
+            var parsedDict: [String: Any]? = nil
+            if let data = json.data(using: .utf8),
+                let dict = try? JSONSerialization.jsonObject(with: data)
+                    as? [String: Any]
+            {
+                parsedDict = dict
+            }
+            if let dict = parsedDict {
+                if let semantic = dict["semantic"] as? [String],
+                    let name = semantic.first
+                {
+                    return UIColor(named: name) ?? UIColor.value(forKey: name)
+                        as? UIColor
+                }
+                if let dynamic = dict["dynamic"] as? [String: Any] {
+                    let light =
+                        HybridTextInputView.resolveColor(any: dynamic["light"])
+                        ?? UIColor.black.withAlphaComponent(0.3)
+                    let dark =
+                        HybridTextInputView.resolveColor(any: dynamic["dark"])
+                        ?? light
+                    if #available(iOS 13.0, *) {
+                        return UIColor { traits in
+                            traits.userInterfaceStyle == .dark ? dark : light
+                        }
+                    } else {
+                        return light
+                    }
+                }
+            }
+            return UIColor.black.withAlphaComponent(0.3)
+        }
+    }
+
+    func reapplyTextShadow() {
+        guard let attrs = self.textAttributes,
+            let shadowOffset = attrs.textShadowOffset,
+            let shadowRadius = attrs.textShadowRadius,
+            shadowRadius > 0
+        else { return }
+
+        self.applyTextShadow(
+            offset: shadowOffset,
+            radius: shadowRadius,
+            color: attrs.textShadowColor
+        )
+    }
+
+    // New method to apply textTransform from textAttributes
+    private func applyTextTransform(_ text: String) -> String {
+        guard let transform = self.textAttributes?.textTransform else {
+            return text
+        }
+        switch transform {
+        case .uppercase:
+            return text.uppercased(with: Locale.current)
+        case .lowercase:
+            return text.lowercased(with: Locale.current)
+        case .capitalize:
+            // Capitalize each word boundary with .byWords option
+            var result = ""
+            text.enumerateSubstrings(
+                in: text.startIndex..<text.endIndex,
+                options: .byWords
+            ) { word, range, _, _ in
+                if let word = word {
+                    result += word.capitalized(with: Locale.current)
+                    result +=
+                        text[
+                            range
+                                .upperBound..<min(
+                                    text.endIndex,
+                                    text.index(
+                                        range.upperBound,
+                                        offsetBy: 0,
+                                        limitedBy: text.endIndex
+                                    ) ?? text.endIndex
+                                )
+                        ]
+                }
+            }
+            // Fallback if no word found
+            return result.isEmpty
+                ? text.capitalized(with: Locale.current) : result
+        case .none:
+            return text
+        @unknown default:
+            return text
         }
     }
 

@@ -112,10 +112,6 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setPlaceholder(props.placeholder.value);
     // TODO: Set isDirty = false
   }
-  if (props.textAlign.isDirty) {
-    view->setTextAlign(props.textAlign.value);
-    // TODO: Set isDirty = false
-  }
   if (props.placeholderTextColor.isDirty) {
     view->setPlaceholderTextColor(props.placeholderTextColor.value);
     // TODO: Set isDirty = false
@@ -156,6 +152,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
     view->setSubmitBehavior(props.submitBehavior.value);
     // TODO: Set isDirty = false
   }
+  if (props.textAlign.isDirty) {
+    view->setTextAlign(props.textAlign.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onFocused.isDirty) {
     view->setOnFocused(props.onFocused.value);
     // TODO: Set isDirty = false
@@ -194,6 +194,10 @@ void JHybridNitroTextInputViewStateUpdater::updateViewProps(jni::alias_ref<jni::
   }
   if (props.onInitialHeightMeasured.isDirty) {
     view->setOnInitialHeightMeasured(props.onInitialHeightMeasured.value);
+    // TODO: Set isDirty = false
+  }
+  if (props.textAttributes.isDirty) {
+    view->setTextAttributes(props.textAttributes.value);
     // TODO: Set isDirty = false
   }
 
