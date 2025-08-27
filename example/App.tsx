@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
-import { Button, StyleSheet, Text, View, ScrollView } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
 	NitroTextInput,
 	type NitroTextInputRef,
@@ -9,9 +9,12 @@ import {
 export default function App() {
 	const singleLineRef = useRef<NitroTextInputRef>(null);
 	const multiLineRef = useRef<NitroTextInputRef>(null);
-	const [currentInputType, setCurrentInputType] = useState<"single" | "multi">("single");
+	const [currentInputType, setCurrentInputType] = useState<"single" | "multi">(
+		"single",
+	);
 
-	const activeRef = currentInputType === "single" ? singleLineRef : multiLineRef;
+	const activeRef =
+		currentInputType === "single" ? singleLineRef : multiLineRef;
 
 	const handleFocus = () => {
 		activeRef.current?.focus();
@@ -26,9 +29,9 @@ export default function App() {
 	};
 
 	return (
-		<ScrollView contentContainerStyle={styles.container}>
+		<ScrollView scrollEnabled={false} contentContainerStyle={styles.container}>
 			<Text style={styles.title}>React Native Nitro Text Input</Text>
-			
+
 			<Text style={styles.sectionTitle}>Single Line Text Input</Text>
 			<NitroTextInput
 				ref={singleLineRef}
@@ -54,11 +57,15 @@ export default function App() {
 					console.log("Single-line focused");
 					setCurrentInputType("single");
 				}}
-				onKeyPress={(key: string) => console.log(`Single-line key pressed: ${key}`)}
+				onKeyPress={(key: string) =>
+					console.log(`Single-line key pressed: ${key}`)
+				}
 				onSelectionChange={({ start, end }: { start: number; end: number }) =>
 					console.log(`Single-line selection: ${start} - ${end}`)
 				}
-				onSubmitEditing={(text: string) => console.log(`Single-line submitted: ${text}`)}
+				onSubmitEditing={(text: string) =>
+					console.log(`Single-line submitted: ${text}`)
+				}
 				placeholder="Single-line Nitro Text Input 🔥"
 				secureTextEntry={false}
 				selectTextOnFocus={false}
@@ -89,12 +96,16 @@ export default function App() {
 					console.log("Multi-line focused");
 					setCurrentInputType("multi");
 				}}
-				onKeyPress={(key: string) => console.log(`Multi-line key pressed: ${key}`)}
+				onKeyPress={(key: string) =>
+					console.log(`Multi-line key pressed: ${key}`)
+				}
 				onSelectionChange={({ start, end }: { start: number; end: number }) =>
 					console.log(`Multi-line selection: ${start} - ${end}`)
 				}
-				onSubmitEditing={(text: string) => console.log(`Multi-line submitted: ${text}`)}
-				onContentSizeChanged={(width: number, height: number) =>
+				onSubmitEditing={(text: string) =>
+					console.log(`Multi-line submitted: ${text}`)
+				}
+				onContentSizeChange={(width: number, height: number) =>
 					console.log(`Multi-line content size: ${width}x${height}`)
 				}
 				placeholder="Multi-line Nitro Text Input 🔥&#10;Type multiple lines here..."
@@ -105,16 +116,12 @@ export default function App() {
 				submitBehavior="newline"
 			/>
 
-			<Text style={styles.statusText}>
-				Active Input: {currentInputType === "single" ? "Single Line" : "Multi Line"}
-			</Text>
-
 			<View style={styles.buttonContainer}>
 				<Button title="Focus" onPress={handleFocus} />
 				<Button title="Blur" onPress={handleBlur} />
 				<Button title="Clear" onPress={handleClear} />
 			</View>
-			
+
 			<StatusBar style="auto" />
 		</ScrollView>
 	);
@@ -125,7 +132,6 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 		backgroundColor: "#fff",
 		alignItems: "center",
-		justifyContent: "center",
 		gap: 15,
 		padding: 20,
 	},
@@ -153,6 +159,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#F8F9FA",
 	},
 	multiLineInput: {
+		overflow: "hidden",
 		borderWidth: 1,
 		borderColor: "#34C759",
 		borderRadius: 8,
