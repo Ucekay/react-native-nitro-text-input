@@ -23,7 +23,7 @@ type NativeTextInputProps = WrapFunctionsInObjects<
 	DefaultHybridViewProps<
 		HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
 	> &
-	NitroTextInputViewProps
+		NitroTextInputViewProps
 > &
 	ViewProps;
 // Base props interface (without ref)

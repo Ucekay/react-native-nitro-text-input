@@ -130,9 +130,6 @@ type WritingDirection = "auto" | "ltr" | "rtl";
 
 type UserSelect = "auto" | "text" | "none" | "contain" | "all";
 
-
-
-
 export interface TextAttributes {
 	color?: ProcessedColor;
 	// fontFamily?: string;
@@ -210,12 +207,6 @@ export interface NitroTextInputViewProps extends HybridViewProps {
 	 * Called once when the initial height has been measured (pt).
 	 */
 	onInitialHeightMeasured?: (height: number) => void;
-
-
-
-
-
-
 
 	textAttributes?: TextAttributes;
 }
