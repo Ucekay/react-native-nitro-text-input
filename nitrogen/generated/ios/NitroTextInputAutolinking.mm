@@ -11,6 +11,7 @@
 #import <type_traits>
 
 #include "HybridNitroTextInputViewSpecSwift.hpp"
+#include "HybridNitroMultiLineTextInputViewSpecSwift.hpp"
 
 @interface NitroTextInputAutolinking : NSObject
 @end
@@ -25,6 +26,13 @@
     "NitroTextInputView",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<HybridNitroTextInputViewSpec> hybridObject = NitroTextInput::NitroTextInputAutolinking::createNitroTextInputView();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "NitroMultiLineTextInputView",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<HybridNitroMultiLineTextInputViewSpec> hybridObject = NitroTextInput::NitroTextInputAutolinking::createNitroMultiLineTextInputView();
       return hybridObject;
     }
   );

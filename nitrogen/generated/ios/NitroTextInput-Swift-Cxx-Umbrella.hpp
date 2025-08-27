@@ -16,6 +16,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `FontVariant` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `HybridNitroMultiLineTextInputViewSpec` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { class HybridNitroMultiLineTextInputViewSpec; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
@@ -52,6 +54,7 @@ namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
 #include "FontVariant.hpp"
+#include "HybridNitroMultiLineTextInputViewSpec.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
@@ -86,6 +89,8 @@ namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 #include <NitroModules/DateToChronoDate.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridNitroMultiLineTextInputViewSpec_cxx` to properly resolve imports.
+namespace NitroTextInput { class HybridNitroMultiLineTextInputViewSpec_cxx; }
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
 namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 

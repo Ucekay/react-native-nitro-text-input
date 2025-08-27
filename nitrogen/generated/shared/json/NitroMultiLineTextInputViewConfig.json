@@ -1,5 +1,5 @@
 {
-  "uiViewClassName": "NitroTextInputView",
+  "uiViewClassName": "NitroMultiLineTextInputView",
   "supportsRawText": false,
   "bubblingEventTypes": {},
   "directEventTypes": {},
@@ -9,9 +9,6 @@
     "autoComplete": true,
     "autoCorrect": true,
     "autoFocus": true,
-    "caretHidden": true,
-    "clearButtonMode": true,
-    "clearTextOnFocus": true,
     "contextMenuHidden": true,
     "defaultValue": true,
     "editable": true,
@@ -20,7 +17,6 @@
     "keyboardAppearance": true,
     "maxFontSizeMultiplier": true,
     "maxLength": true,
-    "multiline": true,
     "passwordRules": true,
     "placeholder": true,
     "placeholderTextColor": true,
@@ -34,6 +30,7 @@
     "smartInsertDelete": true,
     "submitBehavior": true,
     "textAlign": true,
+    "scrollEnabled": true,
     "onFocused": true,
     "onBlurred": true,
     "onTextChanged": true,
@@ -44,6 +41,7 @@
     "onTouchBegan": true,
     "onTouchEnded": true,
     "onInitialHeightMeasured": true,
+    "onContentSizeChanged": true,
     "textAttributes": true,
     "hybridRef": true
   }

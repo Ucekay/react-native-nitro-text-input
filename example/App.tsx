@@ -1,37 +1,38 @@
 import { StatusBar } from "expo-status-bar";
-import { useRef } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useRef, useState } from "react";
+import { Button, StyleSheet, Text, View, ScrollView } from "react-native";
 import {
 	NitroTextInput,
 	type NitroTextInputRef,
 } from "react-native-nitro-text-input";
 
 export default function App() {
-	const ref = useRef<NitroTextInputRef>(null);
+	const singleLineRef = useRef<NitroTextInputRef>(null);
+	const multiLineRef = useRef<NitroTextInputRef>(null);
+	const [currentInputType, setCurrentInputType] = useState<"single" | "multi">("single");
+
+	const activeRef = currentInputType === "single" ? singleLineRef : multiLineRef;
 
 	const handleFocus = () => {
-		ref.current?.focus();
+		activeRef.current?.focus();
 	};
 
 	const handleBlur = () => {
-		ref.current?.blur();
+		activeRef.current?.blur();
 	};
 
 	const handleClear = () => {
-		ref.current?.clear();
+		activeRef.current?.clear();
 	};
 
 	return (
-		<View style={styles.container}>
+		<ScrollView contentContainerStyle={styles.container}>
+			<Text style={styles.title}>React Native Nitro Text Input</Text>
+			
+			<Text style={styles.sectionTitle}>Single Line Text Input</Text>
 			<NitroTextInput
-				style={{
-					borderWidth: 1,
-					borderColor: "gray",
-					borderRadius: 8,
-					padding: 10,
-					width: "100%",
-					fontSize: 17,
-				}}
+				ref={singleLineRef}
+				style={styles.singleLineInput}
 				allowFontScaling
 				autoCapitalize="none"
 				autoCorrect
@@ -43,41 +44,85 @@ export default function App() {
 				editable
 				enablesReturnKeyAutomatically
 				keyboardAppearance="default"
-				maxLength={50}
+				maxLength={100}
+				multiline={false}
 				onBlur={() => {
-					console.log("blurred");
+					console.log("Single-line blurred");
 				}}
-				onChangeText={(text: string) => console.log(text)}
+				onChangeText={(text: string) => console.log("Single-line text:", text)}
 				onFocus={() => {
-					console.log("focused");
+					console.log("Single-line focused");
+					setCurrentInputType("single");
 				}}
-				onKeyPress={(key: string) => console.log(`Key pressed: ${key}`)}
+				onKeyPress={(key: string) => console.log(`Single-line key pressed: ${key}`)}
 				onSelectionChange={({ start, end }: { start: number; end: number }) =>
-					console.log(`Selection changed: ${start} - ${end}`)
+					console.log(`Single-line selection: ${start} - ${end}`)
 				}
-				onSubmitEditing={(text: string) => console.log(`Submitted: ${text}`)}
-				placeholder="Nitro Text Input 🔥"
+				onSubmitEditing={(text: string) => console.log(`Single-line submitted: ${text}`)}
+				placeholder="Single-line Nitro Text Input 🔥"
 				secureTextEntry={false}
 				selectTextOnFocus={false}
 				showSoftInputOnFocus={true}
 				spellCheck={true}
 				submitBehavior="blurAndSubmit"
-				ref={ref}
 			/>
+
+			<Text style={styles.sectionTitle}>Multi-Line Text Input</Text>
+			<NitroTextInput
+				ref={multiLineRef}
+				style={styles.multiLineInput}
+				allowFontScaling
+				autoCapitalize="sentences"
+				autoCorrect
+				autoFocus={false}
+				contextMenuHidden={false}
+				editable
+				keyboardAppearance="default"
+				maxLength={500}
+				multiline={true}
+				scrollEnabled={true}
+				onBlur={() => {
+					console.log("Multi-line blurred");
+				}}
+				onChangeText={(text: string) => console.log("Multi-line text:", text)}
+				onFocus={() => {
+					console.log("Multi-line focused");
+					setCurrentInputType("multi");
+				}}
+				onKeyPress={(key: string) => console.log(`Multi-line key pressed: ${key}`)}
+				onSelectionChange={({ start, end }: { start: number; end: number }) =>
+					console.log(`Multi-line selection: ${start} - ${end}`)
+				}
+				onSubmitEditing={(text: string) => console.log(`Multi-line submitted: ${text}`)}
+				onContentSizeChanged={(width: number, height: number) =>
+					console.log(`Multi-line content size: ${width}x${height}`)
+				}
+				placeholder="Multi-line Nitro Text Input 🔥&#10;Type multiple lines here..."
+				secureTextEntry={false}
+				selectTextOnFocus={false}
+				showSoftInputOnFocus={true}
+				spellCheck={true}
+				submitBehavior="newline"
+			/>
+
+			<Text style={styles.statusText}>
+				Active Input: {currentInputType === "single" ? "Single Line" : "Multi Line"}
+			</Text>
 
 			<View style={styles.buttonContainer}>
 				<Button title="Focus" onPress={handleFocus} />
 				<Button title="Blur" onPress={handleBlur} />
 				<Button title="Clear" onPress={handleClear} />
 			</View>
+			
 			<StatusBar style="auto" />
-		</View>
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		flexGrow: 1,
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
@@ -85,21 +130,52 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	title: {
-		fontSize: 20,
+		fontSize: 24,
 		fontWeight: "bold",
 		textAlign: "center",
 		marginBottom: 20,
 		marginTop: 50,
 	},
-	statusText: {
+	sectionTitle: {
 		fontSize: 18,
-		fontWeight: "bold",
+		fontWeight: "600",
 		textAlign: "center",
+		marginTop: 20,
+		marginBottom: 10,
+	},
+	singleLineInput: {
+		borderWidth: 1,
+		borderColor: "#007AFF",
+		borderRadius: 8,
+		padding: 12,
+		width: "100%",
+		fontSize: 16,
+		backgroundColor: "#F8F9FA",
+	},
+	multiLineInput: {
+		borderWidth: 1,
+		borderColor: "#34C759",
+		borderRadius: 8,
+		padding: 12,
+		width: "100%",
+		fontSize: 16,
+		backgroundColor: "#F8F9FA",
+		minHeight: 100,
+		maxHeight: 200,
+		textAlignVertical: "top",
+	},
+	statusText: {
+		fontSize: 16,
+		fontWeight: "500",
+		textAlign: "center",
+		color: "#666",
+		marginTop: 10,
 	},
 	buttonContainer: {
 		flexDirection: "row",
 		gap: 10,
 		flexWrap: "wrap",
 		justifyContent: "center",
+		marginTop: 15,
 	},
 });

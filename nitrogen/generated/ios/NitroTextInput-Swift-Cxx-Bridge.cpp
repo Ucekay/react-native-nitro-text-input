@@ -8,6 +8,7 @@
 #include "NitroTextInput-Swift-Cxx-Bridge.hpp"
 
 // Include C++ implementation defined types
+#include "HybridNitroMultiLineTextInputViewSpecSwift.hpp"
 #include "HybridNitroTextInputViewSpecSwift.hpp"
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
 
@@ -51,6 +52,22 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return [swiftClosure = std::move(swiftClosure)](double height) mutable -> void {
       swiftClosure.call(height);
     };
+  }
+  
+  // pragma MARK: std::shared_ptr<HybridNitroMultiLineTextInputViewSpec>
+  std::shared_ptr<HybridNitroMultiLineTextInputViewSpec> create_std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) noexcept {
+    NitroTextInput::HybridNitroMultiLineTextInputViewSpec_cxx swiftPart = NitroTextInput::HybridNitroMultiLineTextInputViewSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::nitrotextinput::HybridNitroMultiLineTextInputViewSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_(std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_ cppType) noexcept {
+    std::shared_ptr<margelo::nitro::nitrotextinput::HybridNitroMultiLineTextInputViewSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::nitrotextinput::HybridNitroMultiLineTextInputViewSpecSwift>(cppType);
+    #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridNitroMultiLineTextInputViewSpec\" is not implemented in Swift!");
+    }
+    #endif
+    NitroTextInput::HybridNitroMultiLineTextInputViewSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
   }
   
   // pragma MARK: std::shared_ptr<HybridNitroTextInputViewSpec>
