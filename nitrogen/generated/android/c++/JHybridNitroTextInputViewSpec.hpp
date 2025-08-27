@@ -81,8 +81,6 @@ namespace margelo::nitro::nitrotextinput {
     void setMaxFontSizeMultiplier(std::optional<double> maxFontSizeMultiplier) override;
     std::optional<double> getMaxLength() override;
     void setMaxLength(std::optional<double> maxLength) override;
-    std::optional<bool> getMultiline() override;
-    void setMultiline(std::optional<bool> multiline) override;
     std::optional<std::string> getPasswordRules() override;
     void setPasswordRules(const std::optional<std::string>& passwordRules) override;
     std::optional<std::string> getPlaceholder() override;

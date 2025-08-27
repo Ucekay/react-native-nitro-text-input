@@ -20,7 +20,6 @@
     "keyboardAppearance": true,
     "maxFontSizeMultiplier": true,
     "maxLength": true,
-    "multiline": true,
     "passwordRules": true,
     "placeholder": true,
     "placeholderTextColor": true,

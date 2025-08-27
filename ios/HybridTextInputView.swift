@@ -556,7 +556,6 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             }
         }
     }
-    var multiline: Bool? = false
     var placeholder: String? {
         didSet {
             Task { @MainActor in

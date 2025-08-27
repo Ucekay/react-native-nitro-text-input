@@ -151,11 +151,6 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setMaxLength(newViewProps.maxLength.value);
     newViewProps.maxLength.isDirty = false;
   }
-  // multiline: optional
-  if (newViewProps.multiline.isDirty) {
-    swiftPart.setMultiline(newViewProps.multiline.value);
-    newViewProps.multiline.isDirty = false;
-  }
   // passwordRules: optional
   if (newViewProps.passwordRules.isDirty) {
     swiftPart.setPasswordRules(newViewProps.passwordRules.value);
