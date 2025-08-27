@@ -4,6 +4,12 @@
 
 * add TextAttributes and styling support to NitroTextInput ([#55](https://github.com/Ucekay/react-native-nitro-text-input/issues/55)) ([9f14c7e](https://github.com/Ucekay/react-native-nitro-text-input/commit/9f14c7e4408a596b3b0f42cf54c5dbffb4138bf0)), closes [#53](https://github.com/Ucekay/react-native-nitro-text-input/issues/53) [#54](https://github.com/Ucekay/react-native-nitro-text-input/issues/54)
 
+## [1.0.0-beta.3](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2025-08-25)
+
+### Bug Fixes
+
+* refactor text field maxLength logic and code formatting ([#50](https://github.com/Ucekay/react-native-nitro-text-input/issues/50)) ([fd358c9](https://github.com/Ucekay/react-native-nitro-text-input/commit/fd358c964ec90fdc5622342630a61a2207419515))
+
 ## [1.0.0-next.37](https://github.com/Ucekay/react-native-nitro-text-input/compare/v1.0.0-next.36...v1.0.0-next.37) (2025-08-25)
 
 ### Bug Fixes
