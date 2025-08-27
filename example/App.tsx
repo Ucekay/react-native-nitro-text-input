@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { useRef } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import {
 	NitroTextInput,
 	type NitroTextInputRef,
@@ -23,8 +23,15 @@ export default function App() {
 
 	return (
 		<View style={styles.container}>
-
 			<NitroTextInput
+				style={{
+					borderWidth: 1,
+					borderColor: "gray",
+					borderRadius: 8,
+					padding: 10,
+					width: "100%",
+					fontSize: 17,
+				}}
 				allowFontScaling
 				autoCapitalize="none"
 				autoCorrect
@@ -40,34 +47,21 @@ export default function App() {
 				onBlur={() => {
 					console.log("blurred");
 				}}
-				onChangeText={(text) => console.log(text)}
+				onChangeText={(text: string) => console.log(text)}
 				onFocus={() => {
 					console.log("focused");
 				}}
-				onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
-				onSelectionChange={({ start, end }) =>
+				onKeyPress={(key: string) => console.log(`Key pressed: ${key}`)}
+				onSelectionChange={({ start, end }: { start: number; end: number }) =>
 					console.log(`Selection changed: ${start} - ${end}`)
 				}
-				onSubmitEditing={(text) => console.log(`Submitted: ${text}`)}
-				placeholder="Type here..."
+				onSubmitEditing={(text: string) => console.log(`Submitted: ${text}`)}
+				placeholder="Nitro Text Input 🔥"
 				secureTextEntry={false}
 				selectTextOnFocus={false}
 				showSoftInputOnFocus={true}
 				spellCheck={true}
 				submitBehavior="blurAndSubmit"
-				textAlign="center"
-				style={{
-					width: "100%",
-					color: "red",
-					fontWeight: "600",
-					fontSize: 21,
-					textDecorationLine: "underline",
-					textDecorationStyle: "dashed",
-					fontStyle: "italic",
-					textShadowColor: "#00000080",
-					textShadowOffset: { width: 0, height: 1 },
-					textShadowRadius: 1,
-				}}
 				ref={ref}
 			/>
 
@@ -75,7 +69,6 @@ export default function App() {
 				<Button title="Focus" onPress={handleFocus} />
 				<Button title="Blur" onPress={handleBlur} />
 				<Button title="Clear" onPress={handleClear} />
-
 			</View>
 			<StatusBar style="auto" />
 		</View>
@@ -88,8 +81,15 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
-		gap: 20,
+		gap: 15,
 		padding: 20,
+	},
+	title: {
+		fontSize: 20,
+		fontWeight: "bold",
+		textAlign: "center",
+		marginBottom: 20,
+		marginTop: 50,
 	},
 	statusText: {
 		fontSize: 18,

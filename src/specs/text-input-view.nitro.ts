@@ -107,14 +107,15 @@ export interface TextSelection {
 }
 
 type FontStyle = string;
-type FontWeight =
-	| string
-	| number
-
+type FontWeight = string | number;
 
 type TextAlignAttributes = "auto" | "left" | "right" | "center" | "justify";
 
-type TextDecorationLine = "none" | "underline" | "line-through" | "underline line-through";
+type TextDecorationLine =
+	| "none"
+	| "underline"
+	| "line-through"
+	| "underline line-through";
 
 type TextDecorationStyle = "solid" | "double" | "dotted" | "dashed";
 
@@ -206,6 +207,7 @@ export interface NitroTextInputViewProps extends HybridViewProps {
 	 * Called once when the initial height has been measured (pt).
 	 */
 	onInitialHeightMeasured?: (height: number) => void;
+
 	textAttributes?: TextAttributes;
 }
 
