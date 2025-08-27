@@ -30,8 +30,6 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 // Forward declaration of `TextAlign` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
-// Forward declaration of `Position` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class Position; }
 // Forward declaration of `TextAttributes` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 // Forward declaration of `FontVariant` to properly resolve imports.
@@ -64,7 +62,6 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
 #include <functional>
-#include "Position.hpp"
 #include "TextAttributes.hpp"
 #include "FontVariant.hpp"
 #include <vector>
@@ -392,153 +389,6 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) noexcept override {
       _swiftPart.setOnInitialHeightMeasured(onInitialHeightMeasured);
-    }
-    inline std::optional<double> getWidth() noexcept override {
-      auto __result = _swiftPart.getWidth();
-      return __result;
-    }
-    inline void setWidth(std::optional<double> width) noexcept override {
-      _swiftPart.setWidth(width);
-    }
-    inline std::optional<double> getHeight() noexcept override {
-      auto __result = _swiftPart.getHeight();
-      return __result;
-    }
-    inline void setHeight(std::optional<double> height) noexcept override {
-      _swiftPart.setHeight(height);
-    }
-    inline std::optional<double> getMinWidth() noexcept override {
-      auto __result = _swiftPart.getMinWidth();
-      return __result;
-    }
-    inline void setMinWidth(std::optional<double> minWidth) noexcept override {
-      _swiftPart.setMinWidth(minWidth);
-    }
-    inline std::optional<double> getMaxWidth() noexcept override {
-      auto __result = _swiftPart.getMaxWidth();
-      return __result;
-    }
-    inline void setMaxWidth(std::optional<double> maxWidth) noexcept override {
-      _swiftPart.setMaxWidth(maxWidth);
-    }
-    inline std::optional<double> getMinHeight() noexcept override {
-      auto __result = _swiftPart.getMinHeight();
-      return __result;
-    }
-    inline void setMinHeight(std::optional<double> minHeight) noexcept override {
-      _swiftPart.setMinHeight(minHeight);
-    }
-    inline std::optional<double> getMaxHeight() noexcept override {
-      auto __result = _swiftPart.getMaxHeight();
-      return __result;
-    }
-    inline void setMaxHeight(std::optional<double> maxHeight) noexcept override {
-      _swiftPart.setMaxHeight(maxHeight);
-    }
-    inline std::optional<double> getMargin() noexcept override {
-      auto __result = _swiftPart.getMargin();
-      return __result;
-    }
-    inline void setMargin(std::optional<double> margin) noexcept override {
-      _swiftPart.setMargin(margin);
-    }
-    inline std::optional<double> getMarginTop() noexcept override {
-      auto __result = _swiftPart.getMarginTop();
-      return __result;
-    }
-    inline void setMarginTop(std::optional<double> marginTop) noexcept override {
-      _swiftPart.setMarginTop(marginTop);
-    }
-    inline std::optional<double> getMarginRight() noexcept override {
-      auto __result = _swiftPart.getMarginRight();
-      return __result;
-    }
-    inline void setMarginRight(std::optional<double> marginRight) noexcept override {
-      _swiftPart.setMarginRight(marginRight);
-    }
-    inline std::optional<double> getMarginBottom() noexcept override {
-      auto __result = _swiftPart.getMarginBottom();
-      return __result;
-    }
-    inline void setMarginBottom(std::optional<double> marginBottom) noexcept override {
-      _swiftPart.setMarginBottom(marginBottom);
-    }
-    inline std::optional<double> getMarginLeft() noexcept override {
-      auto __result = _swiftPart.getMarginLeft();
-      return __result;
-    }
-    inline void setMarginLeft(std::optional<double> marginLeft) noexcept override {
-      _swiftPart.setMarginLeft(marginLeft);
-    }
-    inline std::optional<double> getPadding() noexcept override {
-      auto __result = _swiftPart.getPadding();
-      return __result;
-    }
-    inline void setPadding(std::optional<double> padding) noexcept override {
-      _swiftPart.setPadding(padding);
-    }
-    inline std::optional<double> getPaddingTop() noexcept override {
-      auto __result = _swiftPart.getPaddingTop();
-      return __result;
-    }
-    inline void setPaddingTop(std::optional<double> paddingTop) noexcept override {
-      _swiftPart.setPaddingTop(paddingTop);
-    }
-    inline std::optional<double> getPaddingRight() noexcept override {
-      auto __result = _swiftPart.getPaddingRight();
-      return __result;
-    }
-    inline void setPaddingRight(std::optional<double> paddingRight) noexcept override {
-      _swiftPart.setPaddingRight(paddingRight);
-    }
-    inline std::optional<double> getPaddingBottom() noexcept override {
-      auto __result = _swiftPart.getPaddingBottom();
-      return __result;
-    }
-    inline void setPaddingBottom(std::optional<double> paddingBottom) noexcept override {
-      _swiftPart.setPaddingBottom(paddingBottom);
-    }
-    inline std::optional<double> getPaddingLeft() noexcept override {
-      auto __result = _swiftPart.getPaddingLeft();
-      return __result;
-    }
-    inline void setPaddingLeft(std::optional<double> paddingLeft) noexcept override {
-      _swiftPart.setPaddingLeft(paddingLeft);
-    }
-    inline std::optional<Position> getPosition() noexcept override {
-      auto __result = _swiftPart.getPosition();
-      return __result;
-    }
-    inline void setPosition(std::optional<Position> position) noexcept override {
-      _swiftPart.setPosition(position);
-    }
-    inline std::optional<double> getTop() noexcept override {
-      auto __result = _swiftPart.getTop();
-      return __result;
-    }
-    inline void setTop(std::optional<double> top) noexcept override {
-      _swiftPart.setTop(top);
-    }
-    inline std::optional<double> getRight() noexcept override {
-      auto __result = _swiftPart.getRight();
-      return __result;
-    }
-    inline void setRight(std::optional<double> right) noexcept override {
-      _swiftPart.setRight(right);
-    }
-    inline std::optional<double> getBottom() noexcept override {
-      auto __result = _swiftPart.getBottom();
-      return __result;
-    }
-    inline void setBottom(std::optional<double> bottom) noexcept override {
-      _swiftPart.setBottom(bottom);
-    }
-    inline std::optional<double> getLeft() noexcept override {
-      auto __result = _swiftPart.getLeft();
-      return __result;
-    }
-    inline void setLeft(std::optional<double> left) noexcept override {
-      _swiftPart.setLeft(left);
     }
     inline std::optional<TextAttributes> getTextAttributes() noexcept override {
       auto __result = _swiftPart.getTextAttributes();

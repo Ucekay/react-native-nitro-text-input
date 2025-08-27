@@ -86,28 +86,6 @@
 #include <optional>
 #include <functional>
 #include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include "Position.hpp"
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
-#include <optional>
 #include "TextAttributes.hpp"
 #include <optional>
 #include <memory>
@@ -176,27 +154,6 @@ namespace margelo::nitro::nitrotextinput::views {
     CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchBegan;
     CachedProp<std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>> onTouchEnded;
     CachedProp<std::optional<std::function<void(double /* height */)>>> onInitialHeightMeasured;
-    CachedProp<std::optional<double>> width;
-    CachedProp<std::optional<double>> height;
-    CachedProp<std::optional<double>> minWidth;
-    CachedProp<std::optional<double>> maxWidth;
-    CachedProp<std::optional<double>> minHeight;
-    CachedProp<std::optional<double>> maxHeight;
-    CachedProp<std::optional<double>> margin;
-    CachedProp<std::optional<double>> marginTop;
-    CachedProp<std::optional<double>> marginRight;
-    CachedProp<std::optional<double>> marginBottom;
-    CachedProp<std::optional<double>> marginLeft;
-    CachedProp<std::optional<double>> padding;
-    CachedProp<std::optional<double>> paddingTop;
-    CachedProp<std::optional<double>> paddingRight;
-    CachedProp<std::optional<double>> paddingBottom;
-    CachedProp<std::optional<double>> paddingLeft;
-    CachedProp<std::optional<Position>> position;
-    CachedProp<std::optional<double>> top;
-    CachedProp<std::optional<double>> right;
-    CachedProp<std::optional<double>> bottom;
-    CachedProp<std::optional<double>> left;
     CachedProp<std::optional<TextAttributes>> textAttributes;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroTextInputViewSpec>& /* ref */)>>> hybridRef;
 

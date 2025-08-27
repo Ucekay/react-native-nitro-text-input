@@ -51,27 +51,6 @@ public protocol HybridNitroTextInputViewSpec_protocol: HybridObject, HybridView 
   var onTouchBegan: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onTouchEnded: ((_ pageX: Double, _ pageY: Double, _ locationX: Double, _ locationY: Double, _ timestamp: Double) -> Void)? { get set }
   var onInitialHeightMeasured: ((_ height: Double) -> Void)? { get set }
-  var width: Double? { get set }
-  var height: Double? { get set }
-  var minWidth: Double? { get set }
-  var maxWidth: Double? { get set }
-  var minHeight: Double? { get set }
-  var maxHeight: Double? { get set }
-  var margin: Double? { get set }
-  var marginTop: Double? { get set }
-  var marginRight: Double? { get set }
-  var marginBottom: Double? { get set }
-  var marginLeft: Double? { get set }
-  var padding: Double? { get set }
-  var paddingTop: Double? { get set }
-  var paddingRight: Double? { get set }
-  var paddingBottom: Double? { get set }
-  var paddingLeft: Double? { get set }
-  var position: Position? { get set }
-  var top: Double? { get set }
-  var right: Double? { get set }
-  var bottom: Double? { get set }
-  var left: Double? { get set }
   var textAttributes: TextAttributes? { get set }
 
   // Methods

@@ -22,8 +22,6 @@ namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
 // Forward declaration of `KeyboardType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
-// Forward declaration of `Position` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class Position; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
@@ -61,7 +59,6 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
-#include "Position.hpp"
 #include "ReturnKeyType.hpp"
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
@@ -510,21 +507,6 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return optional.has_value();
   }
   inline std::function<void(double /* height */)> get_std__optional_std__function_void_double____height______(const std::optional<std::function<void(double /* height */)>>& optional) noexcept {
-    return *optional;
-  }
-  
-  // pragma MARK: std::optional<Position>
-  /**
-   * Specialized version of `std::optional<Position>`.
-   */
-  using std__optional_Position_ = std::optional<Position>;
-  inline std::optional<Position> create_std__optional_Position_(const Position& value) noexcept {
-    return std::optional<Position>(value);
-  }
-  inline bool has_value_std__optional_Position_(const std::optional<Position>& optional) noexcept {
-    return optional.has_value();
-  }
-  inline Position get_std__optional_Position_(const std::optional<Position>& optional) noexcept {
     return *optional;
   }
   

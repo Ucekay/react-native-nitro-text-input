@@ -23,7 +23,7 @@ type NativeTextInputProps = WrapFunctionsInObjects<
 	DefaultHybridViewProps<
 		HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
 	> &
-		NitroTextInputViewProps
+	NitroTextInputViewProps
 > &
 	ViewProps;
 // Base props interface (without ref)
@@ -171,7 +171,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			// Map React Native textAlign values to TextAlignAttributes
 			const mapTextAlign = (
 				align: string,
-			): "auto" | "left" | "right" | "center" | "justify" => {
+			): "auto" | "left" | "right" | "center" | "justify" | undefined => {
 				switch (align) {
 					case "left":
 						return "left";
@@ -182,8 +182,9 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 					case "justify":
 						return "justify";
 					case "auto":
-					default:
 						return "auto";
+					default:
+						return undefined;
 				}
 			};
 			textAttributes.textAlign = mapTextAlign(styleObj.textAlign);
@@ -247,11 +248,42 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 		return hasTextAttributes ? textAttributes : undefined;
 	};
 
-	// Remove text attributes from style to avoid duplication
-	const removeTextAttributesFromStyle = (styleObj: any) => {
+	// Calculate vertical padding for height adjustment
+	const calculateVerticalPadding = (styleObj: any): number => {
+		if (!styleObj) return 0;
+
+		let top = 0;
+		let bottom = 0;
+
+		// Start with base padding value
+		if (styleObj.padding !== undefined) {
+			top = styleObj.padding;
+			bottom = styleObj.padding;
+		}
+
+		// Apply paddingVertical
+		if (styleObj.paddingVertical !== undefined) {
+			top = styleObj.paddingVertical;
+			bottom = styleObj.paddingVertical;
+		}
+
+		// Individual padding properties take highest priority
+		if (styleObj.paddingTop !== undefined) {
+			top = styleObj.paddingTop;
+		}
+		if (styleObj.paddingBottom !== undefined) {
+			bottom = styleObj.paddingBottom;
+		}
+
+		return top + bottom;
+	};
+
+	// Remove all properties that are handled natively via textAttributes
+	const removeNativeHandledPropsFromStyle = (styleObj: any) => {
 		if (!styleObj) return styleObj;
 
 		const {
+			// Text attributes (handled natively via textAttributes)
 			textDecorationLine, // eslint-disable-line @typescript-eslint/no-unused-vars
 			textDecorationStyle, // eslint-disable-line @typescript-eslint/no-unused-vars
 			textDecorationColor, // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -268,6 +300,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			textShadowRadius, // eslint-disable-line @typescript-eslint/no-unused-vars
 			writingDirection, // eslint-disable-line @typescript-eslint/no-unused-vars
 			userSelect, // eslint-disable-line @typescript-eslint/no-unused-vars
+			// Keep all layout properties (margin, position, padding, width/height) for JS-side handling
 			...filteredStyle
 		} = styleObj;
 
@@ -275,7 +308,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	};
 
 	const textAttributes = extractTextAttributes(flattenedStyle);
-	const filteredStyle = removeTextAttributesFromStyle(flattenedStyle);
+	const filteredStyle = removeNativeHandledPropsFromStyle(flattenedStyle);
 
 	// Map inputMode to keyboardType
 	const getKeyboardTypeFromInputMode = () => {
@@ -309,14 +342,17 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 
 	const composedStyle = () => {
 		if (!hasExplicitHeight && measuredInitialHeight != null) {
+			// Calculate vertical padding on each render
+			const verticalPadding = calculateVerticalPadding(flattenedStyle);
+			const adjustedHeight = measuredInitialHeight + verticalPadding;
 			return [
-				// Preserve original user-provided style(s) but without text attributes
+				// Preserve original user-provided style(s) but without native-handled props
 				filteredStyle,
-				// Apply measured height only when height isn't explicitly set
-				{ height: measuredInitialHeight, width: "100%" as const },
+				// Apply measured height with padding adjustment
+				{ height: adjustedHeight, alignSelf: "stretch" as const },
 			];
 		}
-		return [filteredStyle, { width: "100%" as const }];
+		return [filteredStyle, { alignSelf: "stretch" as const }];
 	};
 
 	const handleInitialHeightMeasured = (height: number) => {

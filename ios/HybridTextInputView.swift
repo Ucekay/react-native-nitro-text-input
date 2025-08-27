@@ -33,10 +33,6 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 
     // Reference to parent view for text decoration re-application
     weak var parentView: HybridTextInputView?
-    
-    // Padding properties for vertical padding support
-    var topPadding: CGFloat = 0
-    var bottomPadding: CGFloat = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -319,27 +315,12 @@ class CustomTextField: UITextField, UITextFieldDelegate {
             object: self
         )
     }
-    
-    // Override text rect methods to support vertical padding
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.textRect(forBounds: bounds)
-        return rect.inset(by: UIEdgeInsets(top: topPadding, left: 0, bottom: bottomPadding, right: 0))
-    }
-    
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.editingRect(forBounds: bounds)
-        return rect.inset(by: UIEdgeInsets(top: topPadding, left: 0, bottom: bottomPadding, right: 0))
-    }
-    
-    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.placeholderRect(forBounds: bounds)
-        return rect.inset(by: UIEdgeInsets(top: topPadding, left: 0, bottom: bottomPadding, right: 0))
-    }
+
 }
 
 class HybridTextInputView: HybridNitroTextInputViewSpec {
     private let textField = CustomTextField()
-    private var baseFont: UIFont = UIFont.systemFont(ofSize: 17)
+    private var baseFont: UIFont = UIFont.systemFont(ofSize: 14)
     private var hasAppliedDefaultValue: Bool = false
     var view: UIView { return textField }
 
@@ -354,13 +335,16 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             // Ensure layout is up-to-date
             self.textField.setNeedsLayout()
             self.textField.layoutIfNeeded()
-            // Cache base font for scaling
-            self.baseFont = self.textField.font ?? UIFont.systemFont(ofSize: 17)
-            self.applyFontScaling()
+            // Set default font size to 14pt and cache base font for scaling
+            self.baseFont = UIFont.systemFont(ofSize: 14)
+            self.textField.font = self.baseFont
             self.applyTextAttributes()
+            self.applyFontScaling()
             self.wireTextFieldEventCallbacks()
-            // Calculate height using intrinsicContentSize as first measurement
-            let initialHeight = self.textField.intrinsicContentSize.height
+            // Calculate initial height using intrinsic content size
+            let initialHeight = Double(
+                self.textField.intrinsicContentSize.height
+            )
             if let callback = self.onInitialHeightMeasured {
                 callback(initialHeight)
             }
@@ -384,6 +368,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         _ = self.textField.becomeFirstResponder()
         if self.clearTextOnFocus == true {
             self.textField.attributedText = NSAttributedString()
+            self.applyEffectiveTextAlignment()
         }
         if self.selectTextOnFocus == true {
             DispatchQueue.main.async { [weak self] in
@@ -407,6 +392,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 // We'll manage scaling manually to support maxFontSizeMultiplier caps
                 self.textField.adjustsFontForContentSizeCategory = false
                 self.applyFontScaling()
+                // Recalculate height when font scaling changes
+                if let callback = self.onInitialHeightMeasured {
+                    let newHeight = Double(
+                        self.textField.intrinsicContentSize.height
+                    )
+                    callback(newHeight)
+                }
             }
         }
     }
@@ -503,6 +495,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.applyFontScaling()
+                // Recalculate height when font multiplier changes
+                if let callback = self.onInitialHeightMeasured {
+                    let newHeight = Double(
+                        self.textField.intrinsicContentSize.height
+                    )
+                    callback(newHeight)
+                }
             }
         }
     }
@@ -566,14 +565,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     var textAlign: TextAlign? {
         didSet {
             Task { @MainActor in
-                let alignment: NSTextAlignment
-                switch self.textAlign {
-                case .some(.center): alignment = .center
-                case .some(.right): alignment = .right
-                case .some(.left): alignment = .left
-                case .some(.natural), .none: alignment = .natural
-                }
-                self.textField.textAlignment = alignment
+                self.applyEffectiveTextAlignment()
             }
         }
     }
@@ -674,161 +666,16 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         didSet {
             Task { @MainActor in
                 self.applyTextAttributes()
-            }
-        }
-    }
-
-    // MARK: - Layout Style Properties
-    var width: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var height: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var minWidth: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var maxWidth: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var minHeight: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var maxHeight: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    
-    // MARK: - Margin Properties
-    var margin: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var marginTop: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var marginRight: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var marginBottom: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var marginLeft: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    
-    // MARK: - Padding Properties
-    var padding: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var paddingTop: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var paddingRight: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var paddingBottom: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var paddingLeft: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    
-    // MARK: - Position Properties
-    var position: Position? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var top: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var right: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var bottom: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
-            }
-        }
-    }
-    var left: Double? {
-        didSet {
-            Task { @MainActor in
-                self.applyLayoutStyles()
+                Task { @MainActor in
+                    self.applyEffectiveTextAlignment()
+                }
+                // Recalculate height when text attributes change (font size, etc.)
+                if let callback = self.onInitialHeightMeasured {
+                    let newHeight = Double(
+                        self.textField.intrinsicContentSize.height
+                    )
+                    callback(newHeight)
+                }
             }
         }
     }
@@ -855,6 +702,71 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 _ locationY: Double, _ timestamp: Double
             ) -> Void
         )?
+
+    private func applyEffectiveTextAlignment() {
+        let effectiveAlign: TextAlignAttributes? =
+            self.textAlignToAttributes(self.textAlign)
+            ?? self.textAttributes?.textAlign
+        let alignment: NSTextAlignment
+        if let align = effectiveAlign {
+            alignment = HybridTextInputView.nsTextAlignment(from: align)
+        } else {
+            alignment = .natural
+        }
+        self.textField.textAlignment = alignment
+
+        // Apply paragraph style alignment to attributedText or plain text if present
+        if let attributedText = self.textField.attributedText,
+            attributedText.length > 0
+        {
+            let mutableAttrText = NSMutableAttributedString(
+                attributedString: attributedText
+            )
+            let fullRange = NSRange(location: 0, length: mutableAttrText.length)
+            mutableAttrText.enumerateAttribute(
+                .paragraphStyle,
+                in: fullRange,
+                options: []
+            ) { value, range, _ in
+                let paragraphStyle: NSMutableParagraphStyle
+                if let existingStyle = value as? NSParagraphStyle {
+                    paragraphStyle =
+                        existingStyle.mutableCopy() as? NSMutableParagraphStyle
+                        ?? NSMutableParagraphStyle()
+                } else {
+                    paragraphStyle = NSMutableParagraphStyle()
+                }
+                paragraphStyle.alignment = alignment
+                mutableAttrText.addAttribute(
+                    .paragraphStyle,
+                    value: paragraphStyle,
+                    range: range
+                )
+            }
+            self.textField.attributedText = mutableAttrText
+        } else if let plainText = self.textField.text, !plainText.isEmpty {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = alignment
+            let attrString = NSAttributedString(
+                string: plainText,
+                attributes: [.paragraphStyle: paragraphStyle]
+            )
+            self.textField.attributedText = attrString
+        }
+    }
+
+    private func textAlignToAttributes(_ align: TextAlign?)
+        -> TextAlignAttributes?
+    {
+        guard let align = align else { return nil }
+        switch align {
+        case .center: return .center
+        case .left: return .left
+        case .right: return .right
+        case .natural: return nil
+        default: return .auto  // .natural相当は .auto に統一
+        }
+    }
 
     func focus() {
         Task { @MainActor in
@@ -1305,6 +1217,11 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     // MARK: - Font Scaling (allowFontScaling, maxFontSizeMultiplier)
     @objc private func handleContentSizeCategoryDidChange() {
         self.applyFontScaling()
+        // Recalculate height when system font size changes
+        if let callback = self.onInitialHeightMeasured {
+            let newHeight = Double(self.textField.intrinsicContentSize.height)
+            callback(newHeight)
+        }
     }
 
     private func resolvedMaxFontSizeMultiplier() -> CGFloat? {
@@ -1394,8 +1311,13 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
     }
 
     private func applyTextAttributes() {
-        guard let attrs = self.textAttributes else { return }
-        // Color
+        guard let attrs = self.textAttributes else {
+            // If no attributes are provided, reset to defaults
+            self.resetToDefaultAttributes()
+            return
+        }
+
+        // Color - reset to default if not specified
         if let color = attrs.color {
             // Resolve color similarly to updatePlaceholderAttributedColor
             let uiColor: UIColor? = {
@@ -1449,12 +1371,25 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             if let uiColor = uiColor {
                 self.textField.textColor = uiColor
             }
+        } else {
+            // Reset to default color and clear any attributed text that might have color
+            self.textField.textColor = nil
+            // Clear attributed text to remove any color attributes
+            clearAttributedTextAndPreserveContent()
         }
+
         // Font size, weight, style
         var font = self.baseFont
+
+        // Apply font size - use default (14pt) if not specified
         if let fontSize = attrs.fontSize, fontSize > 0 {
             font = font.withSize(CGFloat(fontSize))
+        } else {
+            // Reset to default font size (14pt)
+            font = font.withSize(14.0)
         }
+
+        // Apply font weight - use default if not specified
         if let weightVal = attrs.fontWeight {
             let weight: UIFont.Weight
             switch weightVal {
@@ -1468,10 +1403,16 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 weight = UIFont.Weight(rawValue: CGFloat(weightDouble))
             }
             font = HybridTextInputView.font(font: font, weight: weight)
+        } else {
+            // Reset to default font weight (regular)
+            font = HybridTextInputView.font(font: font, weight: .regular)
         }
+
+        // Apply font style - reset to normal if not specified
         if let style = attrs.fontStyle, style.lowercased() == "italic" {
             font = HybridTextInputView.italicFont(font: font)
         }
+        // Note: If fontStyle is nil or not "italic", font remains non-italic (default)
 
         // Font variant
         if let fontVariant = attrs.fontVariant, !fontVariant.isEmpty {
@@ -1479,7 +1420,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
 
         self.textField.font = font
-        // Letter spacing
+
+        // Letter spacing - reset if not specified
         if let spacing = attrs.letterSpacing, spacing != 0 {
             if let currentText = self.textField.text, !currentText.isEmpty {
                 let attrStr = NSMutableAttributedString(string: currentText)
@@ -1490,14 +1432,14 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 )
                 self.textField.attributedText = attrStr
             }
+        } else {
+            // Reset letter spacing by clearing attributed text if it was set for spacing
+            if self.textField.attributedText != nil {
+                clearAttributedTextAndPreserveContent()
+            }
         }
-        // Text Alignment
-        if let align = attrs.textAlign {
-            self.textField.textAlignment = HybridTextInputView.nsTextAlignment(
-                from: align
-            )
-        }
-        // Text decoration (underline, strikethrough)
+
+        // Text decoration - reset if not specified
         if let decorationLine = attrs.textDecorationLine,
             decorationLine != .none
         {
@@ -1506,9 +1448,12 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 decorationStyle: attrs.textDecorationStyle ?? .solid,
                 decorationColor: attrs.textDecorationColor
             )
+        } else {
+            // Reset text decoration by clearing attributed text decorations
+            clearAttributedTextAndPreserveContent()
         }
 
-        // Text shadow
+        // Text shadow - reset if not specified
         if let shadowOffset = attrs.textShadowOffset,
             let shadowRadius = attrs.textShadowRadius,
             shadowRadius > 0
@@ -1518,9 +1463,12 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 radius: shadowRadius,
                 color: attrs.textShadowColor
             )
+        } else {
+            // Reset text shadow by clearing shadow attributes
+            clearAttributedTextAndPreserveContent()
         }
 
-        // Writing Direction
+        // Writing Direction - reset to default if not specified
         if let writingDirection = attrs.writingDirection {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.baseWritingDirection =
@@ -1537,14 +1485,68 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
                 )
                 self.textField.attributedText = attrStr
             }
+        } else {
+            // Reset writing direction to default (.natural)
+            if let currentText = self.textField.text, !currentText.isEmpty {
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.baseWritingDirection = .natural
+                let attrStr = NSMutableAttributedString(string: currentText)
+                attrStr.addAttribute(
+                    .paragraphStyle,
+                    value: paragraphStyle,
+                    range: NSRange(location: 0, length: attrStr.length)
+                )
+                self.textField.attributedText = attrStr
+            }
         }
 
-        // User Select (text selection)
+        // User Select - reset to default if not specified
         if let userSelect = attrs.userSelect {
             updateUserSelect(userSelect: userSelect)
+        } else {
+            // Reset to default user select behavior (.auto/.text)
+            updateUserSelect(userSelect: .auto)
         }
 
+        // Apply effective text alignment once after all text attribute changes
+        self.applyEffectiveTextAlignment()
+
         // Line height is not supported for single-line fields
+    }
+
+    private func clearAttributedTextAndPreserveContent() {
+        // Helper method to clear all attributed text while preserving plain text content
+        if let currentText = self.textField.text, !currentText.isEmpty {
+            // Temporarily store the text
+            let plainText = currentText
+            // Clear attributed text first
+            self.textField.attributedText = nil
+            // Set plain text back
+            self.textField.text = plainText
+        } else {
+            // Clear both if no text
+            self.textField.attributedText = nil
+            self.textField.text = nil
+        }
+    }
+
+    private func resetToDefaultAttributes() {
+        // Reset all text attributes to defaults
+        self.textField.textColor = nil  // System default
+        self.baseFont = UIFont.systemFont(ofSize: 14)  // Reset base font to default
+        self.textField.font = self.baseFont  // Default size and weight
+
+        // Only set default alignment if textAlign is not specified
+        if self.textAlign == nil {
+            self.textField.textAlignment = .natural  // Default alignment
+        }
+
+        // Clear any attributed text to remove spacing, decorations, shadows, colors
+        clearAttributedTextAndPreserveContent()
+        self.applyEffectiveTextAlignment()
+
+        // Reset user interaction to default
+        updateUserSelect(userSelect: .auto)
     }
 
     // MARK: - Writing Direction Support
@@ -1886,6 +1888,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
 
         self.textField.attributedText = attributedString
+        self.applyEffectiveTextAlignment()
     }
 
     private func nsUnderlineStyle(from decorationStyle: TextDecorationStyle)
@@ -2008,6 +2011,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         )
 
         self.textField.attributedText = attributedString
+        self.applyEffectiveTextAlignment()
     }
 
     private func resolveTextShadowColor(_ shadowColor: ProcessedColor?)
@@ -2072,159 +2076,7 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             color: attrs.textShadowColor
         )
     }
-    
-    // MARK: - Layout Styles Application
-    private func applyLayoutStyles() {
-        // Apply size constraints
-        applyWidthHeight()
-        
-        // Apply padding as content insets
-        applyPadding()
-        
-        // Apply margin as frame adjustments
-        applyMargin()
-        
-        // Apply position properties
-        applyPosition()
-    }
-    
-    private func applyWidthHeight() {
-        // Remove existing constraints if they exist
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        // Apply width constraints
-        if let width = self.width, width > 0 {
-            textField.widthAnchor.constraint(equalToConstant: CGFloat(width)).isActive = true
-        }
-        
-        if let minWidth = self.minWidth, minWidth > 0 {
-            textField.widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(minWidth)).isActive = true
-        }
-        
-        if let maxWidth = self.maxWidth, maxWidth > 0 {
-            textField.widthAnchor.constraint(lessThanOrEqualToConstant: CGFloat(maxWidth)).isActive = true
-        }
-        
-        // Apply height constraints
-        if let height = self.height, height > 0 {
-            textField.heightAnchor.constraint(equalToConstant: CGFloat(height)).isActive = true
-        }
-        
-        if let minHeight = self.minHeight, minHeight > 0 {
-            textField.heightAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(minHeight)).isActive = true
-        }
-        
-        if let maxHeight = self.maxHeight, maxHeight > 0 {
-            textField.heightAnchor.constraint(lessThanOrEqualToConstant: CGFloat(maxHeight)).isActive = true
-        }
-    }
-    
-    private func applyPadding() {
-        // For UITextField, we can use leftView and rightView to simulate padding
-        let leftPadding = self.paddingLeft ?? self.padding ?? 0
-        let rightPadding = self.paddingRight ?? self.padding ?? 0
-        let topPadding = self.paddingTop ?? self.padding ?? 0
-        let bottomPadding = self.paddingBottom ?? self.padding ?? 0
-        
-        // Apply horizontal padding using leftView and rightView
-        if leftPadding > 0 {
-            let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat(leftPadding), height: 0))
-            textField.leftView = leftPaddingView
-            textField.leftViewMode = .always
-        } else {
-            textField.leftView = nil
-        }
-        
-        if rightPadding > 0 {
-            let rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat(rightPadding), height: 0))
-            textField.rightView = rightPaddingView
-            textField.rightViewMode = .always
-        } else {
-            textField.rightView = nil
-        }
-        
-        // Apply vertical padding using our custom text rect overrides
-        textField.topPadding = CGFloat(topPadding)
-        textField.bottomPadding = CGFloat(bottomPadding)
-        
-        // Force layout update
-        textField.setNeedsDisplay()
-    }
-    
-    private func applyMargin() {
-        // Margins affect the frame positioning relative to superview
-        // In React Native, margins are handled by the layout system
-        // For a Nitro module, we can adjust the frame directly
-        
-        guard let superview = textField.superview else { return }
-        
-        let marginTop = self.marginTop ?? self.margin ?? 0
-        let marginLeft = self.marginLeft ?? self.margin ?? 0
-        let marginBottom = self.marginBottom ?? self.margin ?? 0
-        let marginRight = self.marginRight ?? self.margin ?? 0
-        
-        // Adjust frame based on margins
-        var frame = textField.frame
-        frame.origin.x += CGFloat(marginLeft)
-        frame.origin.y += CGFloat(marginTop)
-        frame.size.width -= CGFloat(marginLeft + marginRight)
-        frame.size.height -= CGFloat(marginTop + marginBottom)
-        
-        textField.frame = frame
-    }
-    
-    private func applyPosition() {
-        guard let position = self.position else { return }
-        
-        switch position {
-        case .absolute:
-            // For absolute positioning, we need to position relative to superview
-            if let superview = textField.superview {
-                textField.translatesAutoresizingMaskIntoConstraints = true
-                
-                var frame = textField.frame
-                
-                if let top = self.top {
-                    frame.origin.y = CGFloat(top)
-                }
-                
-                if let left = self.left {
-                    frame.origin.x = CGFloat(left)
-                }
-                
-                if let right = self.right {
-                    frame.origin.x = superview.bounds.width - frame.width - CGFloat(right)
-                }
-                
-                if let bottom = self.bottom {
-                    frame.origin.y = superview.bounds.height - frame.height - CGFloat(bottom)
-                }
-                
-                textField.frame = frame
-            }
-        case .relative:
-            // Relative positioning adjusts from the normal position
-            var transform = CGAffineTransform.identity
-            
-            if let top = self.top {
-                transform = transform.translatedBy(x: 0, y: CGFloat(top))
-            }
-            
-            if let left = self.left {
-                transform = transform.translatedBy(x: CGFloat(left), y: 0)
-            }
-            
-            if let right = self.right {
-                transform = transform.translatedBy(x: -CGFloat(right), y: 0)
-            }
-            
-            if let bottom = self.bottom {
-                transform = transform.translatedBy(x: 0, y: -CGFloat(bottom))
-            }
-            
-            textField.transform = transform
-        }
-    }
+
 }
 
 extension HybridTextInputView {

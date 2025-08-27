@@ -130,7 +130,8 @@ type WritingDirection = "auto" | "ltr" | "rtl";
 
 type UserSelect = "auto" | "text" | "none" | "contain" | "all";
 
-export type Position = "absolute" | "relative";
+
+
 
 export interface TextAttributes {
 	color?: ProcessedColor;
@@ -210,34 +211,11 @@ export interface NitroTextInputViewProps extends HybridViewProps {
 	 */
 	onInitialHeightMeasured?: (height: number) => void;
 
-	// Layout style properties
-	width?: number;
-	height?: number;
-	minWidth?: number;
-	maxWidth?: number;
-	minHeight?: number;
-	maxHeight?: number;
 
-	// Margin properties
-	margin?: number;
-	marginTop?: number;
-	marginRight?: number;
-	marginBottom?: number;
-	marginLeft?: number;
 
-	// Padding properties
-	padding?: number;
-	paddingTop?: number;
-	paddingRight?: number;
-	paddingBottom?: number;
-	paddingLeft?: number;
 
-	// Position properties
-	position?: Position;
-	top?: number;
-	right?: number;
-	bottom?: number;
-	left?: number;
+
+
 
 	textAttributes?: TextAttributes;
 }

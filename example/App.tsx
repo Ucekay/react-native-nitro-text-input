@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useRef } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import {
 	NitroTextInput,
 	type NitroTextInputRef,
@@ -23,71 +23,15 @@ export default function App() {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>NitroTextInput Style Properties Test</Text>
-
-			{/* Test basic layout properties */}
 			<NitroTextInput
-				placeholder="Width & Height Test"
-				width={300}
-				height={50}
 				style={{
-					backgroundColor: "#f0f0f0",
 					borderWidth: 1,
-					borderColor: "#ccc",
-					textAlign: "center",
+					borderColor: "gray",
+					borderRadius: 8,
+					padding: 10,
+					width: "100%",
+					fontSize: 17,
 				}}
-			/>
-
-			{/* Test margin properties */}
-			<NitroTextInput
-				placeholder="Margin Test"
-				margin={20}
-				style={{
-					backgroundColor: "#e0e0ff",
-					borderWidth: 1,
-					borderColor: "#0000cc",
-				}}
-			/>
-
-			{/* Test padding properties */}
-			<NitroTextInput
-				placeholder="Padding Test"
-				padding={15}
-				style={{
-					backgroundColor: "#ffe0e0",
-					borderWidth: 1,
-					borderColor: "#cc0000",
-				}}
-			/>
-
-			{/* Test specific padding */}
-			<NitroTextInput
-				placeholder="Specific Padding"
-				paddingLeft={30}
-				paddingRight={10}
-				paddingTop={20}
-				paddingBottom={5}
-				style={{
-					backgroundColor: "#e0ffe0",
-					borderWidth: 1,
-					borderColor: "#00cc00",
-				}}
-			/>
-
-			{/* Test position properties */}
-			<NitroTextInput
-				placeholder="Position Test"
-				position="relative"
-				top={10}
-				left={20}
-				style={{
-					backgroundColor: "#ffffe0",
-					borderWidth: 1,
-					borderColor: "#cccc00",
-				}}
-			/>
-
-			<NitroTextInput
 				allowFontScaling
 				autoCapitalize="none"
 				autoCorrect
@@ -103,34 +47,21 @@ export default function App() {
 				onBlur={() => {
 					console.log("blurred");
 				}}
-				onChangeText={(text) => console.log(text)}
+				onChangeText={(text: string) => console.log(text)}
 				onFocus={() => {
 					console.log("focused");
 				}}
-				onKeyPress={(key) => console.log(`Key pressed: ${key}`)}
-				onSelectionChange={({ start, end }) =>
+				onKeyPress={(key: string) => console.log(`Key pressed: ${key}`)}
+				onSelectionChange={({ start, end }: { start: number; end: number }) =>
 					console.log(`Selection changed: ${start} - ${end}`)
 				}
-				onSubmitEditing={(text) => console.log(`Submitted: ${text}`)}
-				placeholder="Type here..."
+				onSubmitEditing={(text: string) => console.log(`Submitted: ${text}`)}
+				placeholder="Nitro Text Input 🔥"
 				secureTextEntry={false}
 				selectTextOnFocus={false}
 				showSoftInputOnFocus={true}
 				spellCheck={true}
 				submitBehavior="blurAndSubmit"
-				textAlign="center"
-				style={{
-					width: "100%",
-					color: "red",
-					fontWeight: "600",
-					fontSize: 21,
-					textDecorationLine: "underline",
-					textDecorationStyle: "dashed",
-					fontStyle: "italic",
-					textShadowColor: "#00000080",
-					textShadowOffset: { width: 0, height: 1 },
-					textShadowRadius: 1,
-				}}
 				ref={ref}
 			/>
 
@@ -149,7 +80,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "center",
-		justifyContent: "flex-start",
+		justifyContent: "center",
 		gap: 15,
 		padding: 20,
 	},
