@@ -367,7 +367,10 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         }
         _ = self.textField.becomeFirstResponder()
         if self.clearTextOnFocus == true {
-            self.textField.attributedText = NSAttributedString()
+            // Apply textTransform if specified to empty string
+            self.textField.attributedText = NSAttributedString(
+                string: applyTextTransform("")
+            )
             self.applyEffectiveTextAlignment()
         }
         if self.selectTextOnFocus == true {
@@ -784,7 +787,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             guard self.textField.superview != nil else { return }
 
             // Clear text and reset selection
-            self.textField.text = ""
+            // Apply textTransform if specified to empty string
+            self.textField.text = applyTextTransform("")
 
             // Reset selection to the beginning
             let start = self.textField.beginningOfDocument
@@ -1003,7 +1007,8 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
         guard let initialText = self.defaultValue,
             !(self.textField.text?.isEmpty == false)
         else { return }
-        self.textField.text = initialText
+        // Apply textTransform if specified
+        self.textField.text = applyTextTransform(initialText)
         self.hasAppliedDefaultValue = true
     }
 
@@ -1510,6 +1515,34 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
 
         // Apply effective text alignment once after all text attribute changes
         self.applyEffectiveTextAlignment()
+
+        // Apply textTransform if specified
+        if let currentText = self.textField.text, !currentText.isEmpty {
+            self.textField.text = applyTextTransform(currentText)
+        } else if let attributedText = self.textField.attributedText,
+            attributedText.length > 0
+        {
+            let transformedString = applyTextTransform(attributedText.string)
+            let mutableAttrText = NSMutableAttributedString(
+                string: transformedString
+            )
+            // Keep font and color attributes if possible (optional)
+            if let font = self.textField.font {
+                mutableAttrText.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: mutableAttrText.length)
+                )
+            }
+            if let color = self.textField.textColor {
+                mutableAttrText.addAttribute(
+                    .foregroundColor,
+                    value: color,
+                    range: NSRange(location: 0, length: mutableAttrText.length)
+                )
+            }
+            self.textField.attributedText = mutableAttrText
+        }
 
         // Line height is not supported for single-line fields
     }
@@ -2075,6 +2108,49 @@ class HybridTextInputView: HybridNitroTextInputViewSpec {
             radius: shadowRadius,
             color: attrs.textShadowColor
         )
+    }
+
+    // New method to apply textTransform from textAttributes
+    private func applyTextTransform(_ text: String) -> String {
+        guard let transform = self.textAttributes?.textTransform else {
+            return text
+        }
+        switch transform {
+        case .uppercase:
+            return text.uppercased(with: Locale.current)
+        case .lowercase:
+            return text.lowercased(with: Locale.current)
+        case .capitalize:
+            // Capitalize each word boundary with .byWords option
+            var result = ""
+            text.enumerateSubstrings(
+                in: text.startIndex..<text.endIndex,
+                options: .byWords
+            ) { word, range, _, _ in
+                if let word = word {
+                    result += word.capitalized(with: Locale.current)
+                    result +=
+                        text[
+                            range
+                                .upperBound..<min(
+                                    text.endIndex,
+                                    text.index(
+                                        range.upperBound,
+                                        offsetBy: 0,
+                                        limitedBy: text.endIndex
+                                    ) ?? text.endIndex
+                                )
+                        ]
+                }
+            }
+            // Fallback if no word found
+            return result.isEmpty
+                ? text.capitalized(with: Locale.current) : result
+        case .none:
+            return text
+        @unknown default:
+            return text
+        }
     }
 
 }
