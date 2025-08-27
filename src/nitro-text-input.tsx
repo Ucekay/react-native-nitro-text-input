@@ -11,7 +11,9 @@ import type {
 	DefaultHybridViewProps,
 	WrapFunctionsInObjects,
 } from "react-native-nitro-modules/src";
+import { NativeNitroMultiLineTextInput } from "./native-nitro-multi-line-text-input";
 import { NativeNitroTextInput } from "./native-nitro-text-input";
+import type { NitroMultiLineTextInputViewProps } from "./specs/multi-line-text-input-view.nitro";
 import type {
 	NitroTextInputViewMethods,
 	NitroTextInputViewProps,
@@ -19,27 +21,43 @@ import type {
 	TextAttributes,
 } from "./specs/text-input-view.nitro";
 
-type NativeTextInputProps = WrapFunctionsInObjects<
+type NativeSingleLineTextInputProps = WrapFunctionsInObjects<
 	DefaultHybridViewProps<
 		HybridView<NitroTextInputViewProps, NitroTextInputViewMethods>
 	> &
-		NitroTextInputViewProps
+	NitroTextInputViewProps
 > &
 	ViewProps;
+
+type NativeMultiLineTextInputProps = WrapFunctionsInObjects<
+	DefaultHybridViewProps<
+		HybridView<NitroMultiLineTextInputViewProps, NitroTextInputViewMethods>
+	> &
+	NitroMultiLineTextInputViewProps
+> &
+	ViewProps & {
+		onContentSizeChange?: (width: number, height: number) => void;
+		scrollEnabled?: boolean;
+	}
+
+type NativeTextInputProps =
+	| NativeSingleLineTextInputProps
+	| NativeMultiLineTextInputProps;
 // Base props interface (without ref)
 export interface NitroTextInputBaseProps
 	extends Omit<
 		NativeTextInputProps,
 		| "onInitialHeightMeasured"
 		| "onBlurred"
-		| "onTextChanged"
+		| "onContentSizeChanged"
 		| "onEditingEnded"
 		| "onEditingSubmitted"
-		| "onTauchBegan"
-		| "onTouchEnded"
-		| "onSelectionChanged"
 		| "onFocused"
 		| "onKeyPressed"
+		| "onSelectionChanged"
+		| "onTauchBegan"
+		| "onTouchEnded"
+		| "onTextChanged"
 		| "placeholderTextColor"
 		| "returnKeyType"
 		| "selectionColor"
@@ -48,6 +66,7 @@ export interface NitroTextInputBaseProps
 	> {
 	enterKeyHint?: "done" | "next" | "search" | "send" | "go" | "enter";
 	inputMode?: InputModeOptions;
+	multiline?: boolean;
 	onBlur?: () => void;
 	onChangeText?: (text: string) => void;
 	onEndEditing?: (text: string) => void;
@@ -398,8 +417,43 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			: JSON.stringify(processed);
 	};
 
+	// Determine which component to use based on multiline prop
+	const isMultiLine = (others as any).multiline === true;
+	const Component = isMultiLine
+		? NativeNitroMultiLineTextInput
+		: NativeNitroTextInput;
+
+	const handleContentSizeChanged = (_width: number, height: number) => {
+		// Additional logic for multi-line content size changes can be added here
+		// For now, we'll just update the measured height for multi-line views
+		if (isMultiLine && !hasExplicitHeight) {
+			setMeasuredInitialHeight(height);
+		}
+	};
+
+	// Prepare callback objects - both components use wrapped callbacks
+	const callbackProps = {
+		// Event handlers (wrapped in { f: ... } for both single-line and multi-line)
+		onBlurred: { f: onBlur },
+		onTextChanged: { f: onChangeText },
+		onEditingEnded: { f: onEndEditing },
+		onEditingSubmitted: { f: onSubmitEditing },
+		onSelectionChanged: {
+			f: (start: any, end: any) => onSelectionChange?.({ start, end }),
+		},
+		onTouchBegan: { f: onPressIn },
+		onTouchEnded: { f: onPressOut },
+		onFocused: { f: onFocus },
+		onKeyPressed: { f: onKeyPress },
+		onInitialHeightMeasured: { f: handleInitialHeightMeasured },
+		// Multi-line specific callback
+		...(isMultiLine
+			? { onContentSizeChanged: { f: handleContentSizeChanged } }
+			: {}),
+	};
+
 	return (
-		<NativeNitroTextInput
+		<Component
 			{...others}
 			keyboardType={getKeyboardTypeFromInputMode()}
 			placeholderTextColor={toProcessedColor(placeholderTextColor)}
@@ -409,25 +463,14 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			textAttributes={textAttributes}
 			// Hybrid ref for method access
 			hybridRef={{
-				f: (view) => {
+				f: (view: any) => {
 					if (propsRef) {
 						propsRef.current = view;
 					}
 				},
 			}}
 			// Event handlers
-			onBlurred={{ f: onBlur }}
-			onTextChanged={{ f: onChangeText }}
-			onEditingEnded={{ f: onEndEditing }}
-			onEditingSubmitted={{ f: onSubmitEditing }}
-			onSelectionChanged={{
-				f: (start, end) => onSelectionChange?.({ start, end }),
-			}}
-			onTouchBegan={{ f: onPressIn }}
-			onTouchEnded={{ f: onPressOut }}
-			onFocused={{ f: onFocus }}
-			onKeyPressed={{ f: onKeyPress }}
-			onInitialHeightMeasured={{ f: handleInitialHeightMeasured }}
+			{...callbackProps}
 			style={composedStyle()}
 		/>
 	);

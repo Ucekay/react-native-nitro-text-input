@@ -27,9 +27,13 @@ target_sources(
   # Autolinking Setup
   ../nitrogen/generated/android/NitroTextInputOnLoad.cpp
   # Shared Nitrogen C++ sources
+  ../nitrogen/generated/shared/c++/HybridNitroMultiLineTextInputViewSpec.cpp
+  ../nitrogen/generated/shared/c++/views/HybridNitroMultiLineTextInputViewComponent.cpp
   ../nitrogen/generated/shared/c++/HybridNitroTextInputViewSpec.cpp
   ../nitrogen/generated/shared/c++/views/HybridNitroTextInputViewComponent.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridNitroMultiLineTextInputViewSpec.cpp
+  ../nitrogen/generated/android/c++/views/JHybridNitroMultiLineTextInputViewStateUpdater.cpp
   ../nitrogen/generated/android/c++/JHybridNitroTextInputViewSpec.cpp
   ../nitrogen/generated/android/c++/views/JHybridNitroTextInputViewStateUpdater.cpp
 )

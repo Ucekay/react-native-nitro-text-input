@@ -16,6 +16,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 // Forward declaration of `FontVariant` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `HybridNitroMultiLineTextInputViewSpec` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { class HybridNitroMultiLineTextInputViewSpec; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
@@ -48,6 +50,8 @@ namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridNitroMultiLineTextInputViewSpec_cxx` to properly resolve imports.
+namespace NitroTextInput { class HybridNitroMultiLineTextInputViewSpec_cxx; }
 // Forward declaration of `HybridNitroTextInputViewSpec_cxx` to properly resolve imports.
 namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 
@@ -56,6 +60,7 @@ namespace NitroTextInput { class HybridNitroTextInputViewSpec_cxx; }
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
 #include "FontVariant.hpp"
+#include "HybridNitroMultiLineTextInputViewSpec.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
@@ -128,21 +133,6 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return optional.has_value();
   }
   inline AutoComplete get_std__optional_AutoComplete_(const std::optional<AutoComplete>& optional) noexcept {
-    return *optional;
-  }
-  
-  // pragma MARK: std::optional<ClearButtonMode>
-  /**
-   * Specialized version of `std::optional<ClearButtonMode>`.
-   */
-  using std__optional_ClearButtonMode_ = std::optional<ClearButtonMode>;
-  inline std::optional<ClearButtonMode> create_std__optional_ClearButtonMode_(const ClearButtonMode& value) noexcept {
-    return std::optional<ClearButtonMode>(value);
-  }
-  inline bool has_value_std__optional_ClearButtonMode_(const std::optional<ClearButtonMode>& optional) noexcept {
-    return optional.has_value();
-  }
-  inline ClearButtonMode get_std__optional_ClearButtonMode_(const std::optional<ClearButtonMode>& optional) noexcept {
     return *optional;
   }
   
@@ -510,6 +500,21 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return *optional;
   }
   
+  // pragma MARK: std::optional<std::function<void(double /* width */, double /* height */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(double / * width * /, double / * height * /)>>`.
+   */
+  using std__optional_std__function_void_double____width_____double____height______ = std::optional<std::function<void(double /* width */, double /* height */)>>;
+  inline std::optional<std::function<void(double /* width */, double /* height */)>> create_std__optional_std__function_void_double____width_____double____height______(const std::function<void(double /* width */, double /* height */)>& value) noexcept {
+    return std::optional<std::function<void(double /* width */, double /* height */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_double____width_____double____height______(const std::optional<std::function<void(double /* width */, double /* height */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(double /* width */, double /* height */)> get_std__optional_std__function_void_double____width_____double____height______(const std::optional<std::function<void(double /* width */, double /* height */)>>& optional) noexcept {
+    return *optional;
+  }
+  
   // pragma MARK: std::vector<FontVariant>
   /**
    * Specialized version of `std::vector<FontVariant>`.
@@ -656,17 +661,17 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
     return *optional;
   }
   
-  // pragma MARK: std::shared_ptr<HybridNitroTextInputViewSpec>
+  // pragma MARK: std::shared_ptr<HybridNitroMultiLineTextInputViewSpec>
   /**
-   * Specialized version of `std::shared_ptr<HybridNitroTextInputViewSpec>`.
+   * Specialized version of `std::shared_ptr<HybridNitroMultiLineTextInputViewSpec>`.
    */
-  using std__shared_ptr_HybridNitroTextInputViewSpec_ = std::shared_ptr<HybridNitroTextInputViewSpec>;
-  std::shared_ptr<HybridNitroTextInputViewSpec> create_std__shared_ptr_HybridNitroTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) noexcept;
-  void* _Nonnull get_std__shared_ptr_HybridNitroTextInputViewSpec_(std__shared_ptr_HybridNitroTextInputViewSpec_ cppType) noexcept;
+  using std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_ = std::shared_ptr<HybridNitroMultiLineTextInputViewSpec>;
+  std::shared_ptr<HybridNitroMultiLineTextInputViewSpec> create_std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) noexcept;
+  void* _Nonnull get_std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_(std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_ cppType) noexcept;
   
-  // pragma MARK: std::weak_ptr<HybridNitroTextInputViewSpec>
-  using std__weak_ptr_HybridNitroTextInputViewSpec_ = std::weak_ptr<HybridNitroTextInputViewSpec>;
-  inline std__weak_ptr_HybridNitroTextInputViewSpec_ weakify_std__shared_ptr_HybridNitroTextInputViewSpec_(const std::shared_ptr<HybridNitroTextInputViewSpec>& strong) noexcept { return strong; }
+  // pragma MARK: std::weak_ptr<HybridNitroMultiLineTextInputViewSpec>
+  using std__weak_ptr_HybridNitroMultiLineTextInputViewSpec_ = std::weak_ptr<HybridNitroMultiLineTextInputViewSpec>;
+  inline std__weak_ptr_HybridNitroMultiLineTextInputViewSpec_ weakify_std__shared_ptr_HybridNitroMultiLineTextInputViewSpec_(const std::shared_ptr<HybridNitroMultiLineTextInputViewSpec>& strong) noexcept { return strong; }
   
   // pragma MARK: Result<void>
   using Result_void_ = Result<void>;
@@ -685,5 +690,32 @@ namespace margelo::nitro::nitrotextinput::bridge::swift {
   inline Result_bool_ create_Result_bool_(const std::exception_ptr& error) noexcept {
     return Result<bool>::withError(error);
   }
+  
+  // pragma MARK: std::optional<ClearButtonMode>
+  /**
+   * Specialized version of `std::optional<ClearButtonMode>`.
+   */
+  using std__optional_ClearButtonMode_ = std::optional<ClearButtonMode>;
+  inline std::optional<ClearButtonMode> create_std__optional_ClearButtonMode_(const ClearButtonMode& value) noexcept {
+    return std::optional<ClearButtonMode>(value);
+  }
+  inline bool has_value_std__optional_ClearButtonMode_(const std::optional<ClearButtonMode>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline ClearButtonMode get_std__optional_ClearButtonMode_(const std::optional<ClearButtonMode>& optional) noexcept {
+    return *optional;
+  }
+  
+  // pragma MARK: std::shared_ptr<HybridNitroTextInputViewSpec>
+  /**
+   * Specialized version of `std::shared_ptr<HybridNitroTextInputViewSpec>`.
+   */
+  using std__shared_ptr_HybridNitroTextInputViewSpec_ = std::shared_ptr<HybridNitroTextInputViewSpec>;
+  std::shared_ptr<HybridNitroTextInputViewSpec> create_std__shared_ptr_HybridNitroTextInputViewSpec_(void* _Nonnull swiftUnsafePointer) noexcept;
+  void* _Nonnull get_std__shared_ptr_HybridNitroTextInputViewSpec_(std__shared_ptr_HybridNitroTextInputViewSpec_ cppType) noexcept;
+  
+  // pragma MARK: std::weak_ptr<HybridNitroTextInputViewSpec>
+  using std__weak_ptr_HybridNitroTextInputViewSpec_ = std::weak_ptr<HybridNitroTextInputViewSpec>;
+  inline std__weak_ptr_HybridNitroTextInputViewSpec_ weakify_std__shared_ptr_HybridNitroTextInputViewSpec_(const std::shared_ptr<HybridNitroTextInputViewSpec>& strong) noexcept { return strong; }
 
 } // namespace margelo::nitro::nitrotextinput::bridge::swift

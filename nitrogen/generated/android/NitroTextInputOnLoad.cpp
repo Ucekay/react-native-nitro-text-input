@@ -15,12 +15,14 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
-#include "JHybridNitroTextInputViewSpec.hpp"
+#include "JHybridNitroMultiLineTextInputViewSpec.hpp"
 #include "JFunc_void.hpp"
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_double.hpp"
 #include "JFunc_void_double_double_double_double_double.hpp"
 #include "JFunc_void_double.hpp"
+#include "views/JHybridNitroMultiLineTextInputViewStateUpdater.hpp"
+#include "JHybridNitroTextInputViewSpec.hpp"
 #include "views/JHybridNitroTextInputViewStateUpdater.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
 
@@ -33,12 +35,14 @@ int initialize(JavaVM* vm) {
 
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
-    margelo::nitro::nitrotextinput::JHybridNitroTextInputViewSpec::registerNatives();
+    margelo::nitro::nitrotextinput::JHybridNitroMultiLineTextInputViewSpec::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_std__string_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_double_double_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_double_double_double_double_double_cxx::registerNatives();
     margelo::nitro::nitrotextinput::JFunc_void_double_cxx::registerNatives();
+    margelo::nitro::nitrotextinput::views::JHybridNitroMultiLineTextInputViewStateUpdater::registerNatives();
+    margelo::nitro::nitrotextinput::JHybridNitroTextInputViewSpec::registerNatives();
     margelo::nitro::nitrotextinput::views::JHybridNitroTextInputViewStateUpdater::registerNatives();
 
     // Register Nitro Hybrid Objects
@@ -46,6 +50,15 @@ int initialize(JavaVM* vm) {
       "NitroTextInputView",
       []() -> std::shared_ptr<HybridObject> {
         static DefaultConstructableObject<JHybridNitroTextInputViewSpec::javaobject> object("com/margelo/nitro/nitrotextinput/HybridTextInputView");
+        auto instance = object.create();
+        auto globalRef = jni::make_global(instance);
+        return globalRef->cthis()->shared();
+      }
+    );
+    HybridObjectRegistry::registerHybridObjectConstructor(
+      "NitroMultiLineTextInputView",
+      []() -> std::shared_ptr<HybridObject> {
+        static DefaultConstructableObject<JHybridNitroMultiLineTextInputViewSpec::javaobject> object("com/margelo/nitro/nitrotextinput/HybridMultiLineTextInputView");
         auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return globalRef->cthis()->shared();

@@ -12,6 +12,10 @@
 		"NitroTextInputView": {
 			"kotlin": "HybridTextInputView",
 			"swift": "HybridTextInputView"
+		},
+		"NitroMultiLineTextInputView": {
+			"kotlin": "HybridMultiLineTextInputView",
+			"swift": "HybridMultiLineTextInputView"
 		}
 	},
 	"ignorePaths": ["**/node_modules"]
