@@ -22,14 +22,32 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
-// Forward declaration of `TextAlign` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
+// Forward declaration of `FontVariant` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
+// Forward declaration of `TextAlignAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
+// Forward declaration of `TextDecorationLine` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
+// Forward declaration of `TextDecorationStyle` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
+// Forward declaration of `TextShadowOffset` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextShadowOffset; }
+// Forward declaration of `TextTransform` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextTransform; }
+// Forward declaration of `WritingDirection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
+// Forward declaration of `UserSelect` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -38,12 +56,22 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include <string>
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
-#include "TextAlign.hpp"
 #include <variant>
 #include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
 #include "SubmitBehavior.hpp"
+#include "TextAlign.hpp"
 #include <functional>
+#include "TextAttributes.hpp"
+#include "FontVariant.hpp"
+#include <vector>
+#include "TextAlignAttributes.hpp"
+#include "TextDecorationLine.hpp"
+#include "TextDecorationStyle.hpp"
+#include "TextShadowOffset.hpp"
+#include "TextTransform.hpp"
+#include "WritingDirection.hpp"
+#include "UserSelect.hpp"
 
 #include "NitroTextInput-Swift-Cxx-Umbrella.hpp"
 
@@ -215,13 +243,6 @@ namespace margelo::nitro::nitrotextinput {
     inline void setPlaceholder(const std::optional<std::string>& placeholder) noexcept override {
       _swiftPart.setPlaceholder(placeholder);
     }
-    inline std::optional<TextAlign> getTextAlign() noexcept override {
-      auto __result = _swiftPart.getTextAlign();
-      return __result;
-    }
-    inline void setTextAlign(std::optional<TextAlign> textAlign) noexcept override {
-      _swiftPart.setTextAlign(textAlign);
-    }
     inline std::optional<std::variant<std::string, double>> getPlaceholderTextColor() noexcept override {
       auto __result = _swiftPart.getPlaceholderTextColor();
       return __result;
@@ -292,6 +313,13 @@ namespace margelo::nitro::nitrotextinput {
     inline void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) noexcept override {
       _swiftPart.setSubmitBehavior(submitBehavior);
     }
+    inline std::optional<TextAlign> getTextAlign() noexcept override {
+      auto __result = _swiftPart.getTextAlign();
+      return __result;
+    }
+    inline void setTextAlign(std::optional<TextAlign> textAlign) noexcept override {
+      _swiftPart.setTextAlign(textAlign);
+    }
     inline std::optional<std::function<void()>> getOnFocused() noexcept override {
       auto __result = _swiftPart.getOnFocused();
       return __result;
@@ -361,6 +389,13 @@ namespace margelo::nitro::nitrotextinput {
     }
     inline void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) noexcept override {
       _swiftPart.setOnInitialHeightMeasured(onInitialHeightMeasured);
+    }
+    inline std::optional<TextAttributes> getTextAttributes() noexcept override {
+      auto __result = _swiftPart.getTextAttributes();
+      return __result;
+    }
+    inline void setTextAttributes(const std::optional<TextAttributes>& textAttributes) noexcept override {
+      _swiftPart.setTextAttributes(textAttributes);
     }
 
   public:

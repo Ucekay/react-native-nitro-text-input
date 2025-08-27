@@ -156,12 +156,6 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var textAlign: TextAlign?
-  
-  @get:DoNotStrip
-  @get:Keep
-  @set:DoNotStrip
-  @set:Keep
   abstract var placeholderTextColor: ProcessedColor?
   
   @get:DoNotStrip
@@ -217,6 +211,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
   @set:DoNotStrip
   @set:Keep
   abstract var submitBehavior: SubmitBehavior?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var textAlign: TextAlign?
   
   abstract var onFocused: (() -> Unit)?
   
@@ -357,6 +357,12 @@ abstract class HybridNitroTextInputViewSpec: HybridView() {
     set(value) {
       onInitialHeightMeasured = value?.let { it }
     }
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var textAttributes: TextAttributes?
 
   // Methods
   @DoNotStrip

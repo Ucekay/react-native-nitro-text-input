@@ -166,11 +166,6 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setPlaceholder(newViewProps.placeholder.value);
     newViewProps.placeholder.isDirty = false;
   }
-  // textAlign: optional
-  if (newViewProps.textAlign.isDirty) {
-    swiftPart.setTextAlign(newViewProps.textAlign.value);
-    newViewProps.textAlign.isDirty = false;
-  }
   // placeholderTextColor: optional
   if (newViewProps.placeholderTextColor.isDirty) {
     swiftPart.setPlaceholderTextColor(newViewProps.placeholderTextColor.value);
@@ -221,6 +216,11 @@ using namespace margelo::nitro::nitrotextinput::views;
     swiftPart.setSubmitBehavior(newViewProps.submitBehavior.value);
     newViewProps.submitBehavior.isDirty = false;
   }
+  // textAlign: optional
+  if (newViewProps.textAlign.isDirty) {
+    swiftPart.setTextAlign(newViewProps.textAlign.value);
+    newViewProps.textAlign.isDirty = false;
+  }
   // onFocused: optional
   if (newViewProps.onFocused.isDirty) {
     swiftPart.setOnFocused(newViewProps.onFocused.value);
@@ -270,6 +270,11 @@ using namespace margelo::nitro::nitrotextinput::views;
   if (newViewProps.onInitialHeightMeasured.isDirty) {
     swiftPart.setOnInitialHeightMeasured(newViewProps.onInitialHeightMeasured.value);
     newViewProps.onInitialHeightMeasured.isDirty = false;
+  }
+  // textAttributes: optional
+  if (newViewProps.textAttributes.isDirty) {
+    swiftPart.setTextAttributes(newViewProps.textAttributes.value);
+    newViewProps.textAttributes.isDirty = false;
   }
 
   swiftPart.afterUpdate();

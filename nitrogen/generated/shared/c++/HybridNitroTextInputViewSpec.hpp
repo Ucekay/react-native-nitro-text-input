@@ -23,14 +23,16 @@ namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
 namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class KeyboardAppearance; }
-// Forward declaration of `TextAlign` to properly resolve imports.
-namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
 // Forward declaration of `ReturnKeyType` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlign` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
 
 #include <optional>
 #include "AutoCapitalize.hpp"
@@ -39,12 +41,13 @@ namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
 #include <string>
 #include "KeyboardType.hpp"
 #include "KeyboardAppearance.hpp"
-#include "TextAlign.hpp"
 #include <variant>
 #include "ReturnKeyType.hpp"
 #include "TextSelection.hpp"
 #include "SubmitBehavior.hpp"
+#include "TextAlign.hpp"
 #include <functional>
+#include "TextAttributes.hpp"
 
 namespace margelo::nitro::nitrotextinput {
 
@@ -111,8 +114,6 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setPasswordRules(const std::optional<std::string>& passwordRules) = 0;
       virtual std::optional<std::string> getPlaceholder() = 0;
       virtual void setPlaceholder(const std::optional<std::string>& placeholder) = 0;
-      virtual std::optional<TextAlign> getTextAlign() = 0;
-      virtual void setTextAlign(std::optional<TextAlign> textAlign) = 0;
       virtual std::optional<std::variant<std::string, double>> getPlaceholderTextColor() = 0;
       virtual void setPlaceholderTextColor(const std::optional<std::variant<std::string, double>>& placeholderTextColor) = 0;
       virtual std::optional<ReturnKeyType> getReturnKeyType() = 0;
@@ -133,6 +134,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setSmartInsertDelete(std::optional<bool> smartInsertDelete) = 0;
       virtual std::optional<SubmitBehavior> getSubmitBehavior() = 0;
       virtual void setSubmitBehavior(std::optional<SubmitBehavior> submitBehavior) = 0;
+      virtual std::optional<TextAlign> getTextAlign() = 0;
+      virtual void setTextAlign(std::optional<TextAlign> textAlign) = 0;
       virtual std::optional<std::function<void()>> getOnFocused() = 0;
       virtual void setOnFocused(const std::optional<std::function<void()>>& onFocused) = 0;
       virtual std::optional<std::function<void()>> getOnBlurred() = 0;
@@ -153,6 +156,8 @@ namespace margelo::nitro::nitrotextinput {
       virtual void setOnTouchEnded(const std::optional<std::function<void(double /* pageX */, double /* pageY */, double /* locationX */, double /* locationY */, double /* timestamp */)>>& onTouchEnded) = 0;
       virtual std::optional<std::function<void(double /* height */)>> getOnInitialHeightMeasured() = 0;
       virtual void setOnInitialHeightMeasured(const std::optional<std::function<void(double /* height */)>>& onInitialHeightMeasured) = 0;
+      virtual std::optional<TextAttributes> getTextAttributes() = 0;
+      virtual void setTextAttributes(const std::optional<TextAttributes>& textAttributes) = 0;
 
     public:
       // Methods

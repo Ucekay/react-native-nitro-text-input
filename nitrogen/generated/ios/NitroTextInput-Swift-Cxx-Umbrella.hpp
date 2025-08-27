@@ -14,6 +14,8 @@ namespace margelo::nitro::nitrotextinput { enum class AutoCapitalize; }
 namespace margelo::nitro::nitrotextinput { enum class AutoComplete; }
 // Forward declaration of `ClearButtonMode` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class ClearButtonMode; }
+// Forward declaration of `FontVariant` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class FontVariant; }
 // Forward declaration of `HybridNitroTextInputViewSpec` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { class HybridNitroTextInputViewSpec; }
 // Forward declaration of `KeyboardAppearance` to properly resolve imports.
@@ -24,22 +26,47 @@ namespace margelo::nitro::nitrotextinput { enum class KeyboardType; }
 namespace margelo::nitro::nitrotextinput { enum class ReturnKeyType; }
 // Forward declaration of `SubmitBehavior` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class SubmitBehavior; }
+// Forward declaration of `TextAlignAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextAlignAttributes; }
 // Forward declaration of `TextAlign` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { enum class TextAlign; }
+// Forward declaration of `TextAttributes` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextAttributes; }
+// Forward declaration of `TextDecorationLine` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationLine; }
+// Forward declaration of `TextDecorationStyle` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextDecorationStyle; }
 // Forward declaration of `TextSelection` to properly resolve imports.
 namespace margelo::nitro::nitrotextinput { struct TextSelection; }
+// Forward declaration of `TextShadowOffset` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { struct TextShadowOffset; }
+// Forward declaration of `TextTransform` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class TextTransform; }
+// Forward declaration of `UserSelect` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class UserSelect; }
+// Forward declaration of `WritingDirection` to properly resolve imports.
+namespace margelo::nitro::nitrotextinput { enum class WritingDirection; }
 
 // Include C++ defined types
 #include "AutoCapitalize.hpp"
 #include "AutoComplete.hpp"
 #include "ClearButtonMode.hpp"
+#include "FontVariant.hpp"
 #include "HybridNitroTextInputViewSpec.hpp"
 #include "KeyboardAppearance.hpp"
 #include "KeyboardType.hpp"
 #include "ReturnKeyType.hpp"
 #include "SubmitBehavior.hpp"
 #include "TextAlign.hpp"
+#include "TextAlignAttributes.hpp"
+#include "TextAttributes.hpp"
+#include "TextDecorationLine.hpp"
+#include "TextDecorationStyle.hpp"
 #include "TextSelection.hpp"
+#include "TextShadowOffset.hpp"
+#include "TextTransform.hpp"
+#include "UserSelect.hpp"
+#include "WritingDirection.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
@@ -47,6 +74,7 @@ namespace margelo::nitro::nitrotextinput { struct TextSelection; }
 #include <optional>
 #include <string>
 #include <variant>
+#include <vector>
 
 // C++ helpers for Swift
 #include "NitroTextInput-Swift-Cxx-Bridge.hpp"

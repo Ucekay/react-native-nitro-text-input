@@ -52,8 +52,6 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("passwordRules", &HybridNitroTextInputViewSpec::setPasswordRules);
       prototype.registerHybridGetter("placeholder", &HybridNitroTextInputViewSpec::getPlaceholder);
       prototype.registerHybridSetter("placeholder", &HybridNitroTextInputViewSpec::setPlaceholder);
-      prototype.registerHybridGetter("textAlign", &HybridNitroTextInputViewSpec::getTextAlign);
-      prototype.registerHybridSetter("textAlign", &HybridNitroTextInputViewSpec::setTextAlign);
       prototype.registerHybridGetter("placeholderTextColor", &HybridNitroTextInputViewSpec::getPlaceholderTextColor);
       prototype.registerHybridSetter("placeholderTextColor", &HybridNitroTextInputViewSpec::setPlaceholderTextColor);
       prototype.registerHybridGetter("returnKeyType", &HybridNitroTextInputViewSpec::getReturnKeyType);
@@ -74,6 +72,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("smartInsertDelete", &HybridNitroTextInputViewSpec::setSmartInsertDelete);
       prototype.registerHybridGetter("submitBehavior", &HybridNitroTextInputViewSpec::getSubmitBehavior);
       prototype.registerHybridSetter("submitBehavior", &HybridNitroTextInputViewSpec::setSubmitBehavior);
+      prototype.registerHybridGetter("textAlign", &HybridNitroTextInputViewSpec::getTextAlign);
+      prototype.registerHybridSetter("textAlign", &HybridNitroTextInputViewSpec::setTextAlign);
       prototype.registerHybridGetter("onFocused", &HybridNitroTextInputViewSpec::getOnFocused);
       prototype.registerHybridSetter("onFocused", &HybridNitroTextInputViewSpec::setOnFocused);
       prototype.registerHybridGetter("onBlurred", &HybridNitroTextInputViewSpec::getOnBlurred);
@@ -94,6 +94,8 @@ namespace margelo::nitro::nitrotextinput {
       prototype.registerHybridSetter("onTouchEnded", &HybridNitroTextInputViewSpec::setOnTouchEnded);
       prototype.registerHybridGetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::getOnInitialHeightMeasured);
       prototype.registerHybridSetter("onInitialHeightMeasured", &HybridNitroTextInputViewSpec::setOnInitialHeightMeasured);
+      prototype.registerHybridGetter("textAttributes", &HybridNitroTextInputViewSpec::getTextAttributes);
+      prototype.registerHybridSetter("textAttributes", &HybridNitroTextInputViewSpec::setTextAttributes);
       prototype.registerHybridMethod("focus", &HybridNitroTextInputViewSpec::focus);
       prototype.registerHybridMethod("blur", &HybridNitroTextInputViewSpec::blur);
       prototype.registerHybridMethod("clear", &HybridNitroTextInputViewSpec::clear);
