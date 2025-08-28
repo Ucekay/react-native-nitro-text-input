@@ -480,7 +480,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 	};
 
 	// Determine which component to use based on multiline prop
-	const isMultiLine = (others as any).multiline === true;
+	const isMultiLine = others.multiline === true;
 	const Component = isMultiLine
 		? NativeNitroMultiLineTextInput
 		: NativeNitroTextInput;
@@ -525,7 +525,7 @@ export function NitroTextInput(inputProps: NitroTextInputBaseProps) {
 			textAttributes={textAttributes}
 			// Hybrid ref for method access
 			hybridRef={{
-				f: (view: any) => {
+				f: (view) => {
 					if (propsRef) {
 						propsRef.current = view;
 					}

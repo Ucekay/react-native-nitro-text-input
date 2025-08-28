@@ -534,7 +534,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         self.textView.font = self.baseFont
         self.wireTextViewEventCallbacks()
 
-        // Defer layout-dependent operations until layout pass
+        // Defer layout-dependent operations until layout pass to get accurate intrinsic height
         Task { @MainActor in
             // Ensure layout is up-to-date
             self.textView.setNeedsLayout()
@@ -546,7 +546,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             self.updateNumberOfLines()
 
             // Calculate initial height using content size
-            let initialHeight = Double(self.textView.contentSize.height)
+            // For UITextView, we need to ensure proper sizing calculation
+            let initialHeight = self.calculateInitialHeight()
             if let callback = self.onInitialHeightMeasured {
                 callback(initialHeight)
             }
@@ -576,6 +577,25 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
                 self?.textView.selectAll(nil)
             }
         }
+    }
+
+    // MARK: - Initial Height Calculation
+    private func calculateInitialHeight() -> Double {
+        // For UITextView, we need to consider both content size and constraints
+        let contentHeight = self.textView.contentSize.height
+        let intrinsicHeight = self.textView.intrinsicContentSize.height
+
+        // Use the larger of content size or intrinsic content size
+        // This handles cases where UITextView hasn't fully calculated content size yet
+        let calculatedHeight = max(contentHeight, intrinsicHeight)
+
+        // Ensure we have a minimum sensible height (at least one line)
+        let lineHeight = self.textView.font?.lineHeight ?? 17.0
+        let minimumHeight =
+            lineHeight + self.textView.textContainerInset.top
+            + self.textView.textContainerInset.bottom
+
+        return Double(max(calculatedHeight, minimumHeight))
     }
 
     private func resolveProcessedColor(_ processedColor: ProcessedColor)
@@ -792,7 +812,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
                 // Recalculate height when font scaling changes
                 if let callback = self.onInitialHeightMeasured {
-                    let newHeight = Double(self.textView.contentSize.height)
+                    let newHeight = self.calculateInitialHeight()
                     callback(newHeight)
                 }
             }
@@ -903,7 +923,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
                 // Recalculate height when font multiplier changes
                 if let callback = self.onInitialHeightMeasured {
-                    let newHeight = Double(self.textView.contentSize.height)
+                    let newHeight = self.calculateInitialHeight()
                     callback(newHeight)
                 }
             }
@@ -1124,7 +1144,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
                 // Recalculate height when text attributes change (font size, etc.)
                 if let callback = self.onInitialHeightMeasured {
-                    let newHeight = Double(self.textView.contentSize.height)
+                    let newHeight = self.calculateInitialHeight()
                     callback(newHeight)
                 }
             }
@@ -1514,7 +1534,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
         // Recalculate height when system font size changes
         if let callback = self.onInitialHeightMeasured {
-            let newHeight = Double(self.textView.contentSize.height)
+            let newHeight = self.calculateInitialHeight()
             callback(newHeight)
         }
     }
