@@ -2,7 +2,9 @@ import Foundation
 import NitroModules
 import UIKit
 
-class CustomTextView: UITextView, UITextViewDelegate {
+class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
+    var isCaretHidden: Bool = false
+    var clearTextOnFocus: Bool = false
     var isContextMenuHidden: Bool = false
     var maxLength: Int?
     var onTextChanged: ((_ text: String) -> Void)?
@@ -33,6 +35,26 @@ class CustomTextView: UITextView, UITextViewDelegate {
     // Reference to parent view for text decoration re-application
     weak var parentView: HybridMultiLineTextInputView?
 
+    // Placeholder support
+    private let placeholderLabel = UILabel()
+    var placeholder: String? {
+        didSet {
+            placeholderLabel.text = placeholder
+            updatePlaceholderVisibility()
+        }
+    }
+    var placeholderTextColor: UIColor = UIColor.placeholderText {
+        didSet {
+            placeholderLabel.textColor = placeholderTextColor
+        }
+    }
+
+    override var font: UIFont? {
+        didSet {
+            placeholderLabel.font = font ?? UIFont.systemFont(ofSize: 14)
+        }
+    }
+
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setupTextView()
@@ -54,6 +76,9 @@ class CustomTextView: UITextView, UITextViewDelegate {
         self.isEditable = true
         self.isSelectable = true
 
+        // Setup placeholder
+        setupPlaceholderLabel()
+
         // Add observers for text changes
         NotificationCenter.default.addObserver(
             self,
@@ -61,6 +86,48 @@ class CustomTextView: UITextView, UITextViewDelegate {
             name: UITextView.textDidChangeNotification,
             object: self
         )
+    }
+
+    private func setupPlaceholderLabel() {
+        placeholderLabel.numberOfLines = 0
+        placeholderLabel.textColor = placeholderTextColor
+        placeholderLabel.font = self.font ?? UIFont.systemFont(ofSize: 14)
+        placeholderLabel.backgroundColor = UIColor.clear
+        placeholderLabel.isUserInteractionEnabled = false
+
+        self.addSubview(placeholderLabel)
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            placeholderLabel.topAnchor.constraint(
+                equalTo: self.topAnchor,
+                constant: 8
+            ),
+            placeholderLabel.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor,
+                constant: 5
+            ),
+            placeholderLabel.trailingAnchor.constraint(
+                lessThanOrEqualTo: self.trailingAnchor,
+                constant: -5
+            ),
+        ])
+
+        updatePlaceholderVisibility()
+    }
+
+    private func updatePlaceholderVisibility() {
+        placeholderLabel.isHidden = !self.text.isEmpty
+    }
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        return isCaretHidden ? .zero : super.caretRect(for: position)
+    }
+
+    override func becomeFirstResponder() -> Bool {
+        if clearTextOnFocus {
+            self.text = ""
+        }
+        return super.becomeFirstResponder()
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any?)
@@ -356,6 +423,10 @@ class CustomTextView: UITextView, UITextViewDelegate {
 
         // Notify text changed and content size changed after any trimming
         onTextChanged?(self.text ?? "")
+
+        // Update placeholder visibility
+        updatePlaceholderVisibility()
+
         onContentSizeChanged?(
             Double(self.contentSize.width),
             Double(self.contentSize.height)
@@ -423,6 +494,16 @@ class CustomTextView: UITextView, UITextViewDelegate {
         }
 
         return bestFit
+    }
+
+    // MARK: - UITextDropDelegate
+    @available(iOS 11.0, *)
+    func textDroppableView(
+        _ textDroppableView: UIView & UITextDroppable,
+        willBecomeEditableForDrop drop: UITextDropRequest
+    ) -> UITextDropEditability {
+        // Allow text editing for drops
+        return .temporary
     }
 
     deinit {
@@ -495,6 +576,203 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         }
     }
 
+    private func resolveProcessedColor(_ processedColor: ProcessedColor)
+        -> UIColor?
+    {
+        switch processedColor {
+        case .second(let doubleValue):
+            // Handle integer color values (convert from 32-bit ARGB)
+            let color = UInt32(doubleValue)
+            let alpha = CGFloat((color >> 24) & 0xFF) / 255.0
+            let red = CGFloat((color >> 16) & 0xFF) / 255.0
+            let green = CGFloat((color >> 8) & 0xFF) / 255.0
+            let blue = CGFloat(color & 0xFF) / 255.0
+            return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        case .first(let json):
+            // Handle semantic/dynamic colors
+            return resolveSemanticColor(from: json)
+        }
+    }
+
+    private func resolveSemanticColor(from json: Any) -> UIColor? {
+        guard let dict = json as? [String: Any] else {
+            return nil
+        }
+
+        // Handle semantic color names
+        if let semantic = dict["semantic"] as? String {
+            return resolveSystemColor(semantic)
+        }
+
+        // Handle dynamic colors with light/dark variants
+        if let dynamic = dict["dynamic"] as? [String: Any] {
+            if #available(iOS 13.0, *) {
+                return UIColor { traitCollection in
+                    let isDarkMode = traitCollection.userInterfaceStyle == .dark
+
+                    if isDarkMode,
+                        let darkColor = dynamic["dark"] as? [String: Any]
+                    {
+                        return self.resolveColorComponents(from: darkColor)
+                            ?? UIColor.label
+                    } else if let lightColor = dynamic["light"]
+                        as? [String: Any]
+                    {
+                        return self.resolveColorComponents(from: lightColor)
+                            ?? UIColor.label
+                    }
+
+                    return UIColor.label
+                }
+            } else {
+                // Fallback to light color for iOS < 13
+                if let lightColor = dynamic["light"] as? [String: Any] {
+                    return resolveColorComponents(from: lightColor)
+                }
+            }
+        }
+
+        // Handle direct color components
+        return resolveColorComponents(from: dict)
+    }
+
+    private func resolveSystemColor(_ colorName: String) -> UIColor? {
+        switch colorName.lowercased() {
+        case "label":
+            if #available(iOS 13.0, *) {
+                return UIColor.label
+            } else {
+                return UIColor.black
+            }
+        case "secondarylabel":
+            if #available(iOS 13.0, *) {
+                return UIColor.secondaryLabel
+            } else {
+                return UIColor.darkGray
+            }
+        case "tertiarylabel":
+            if #available(iOS 13.0, *) {
+                return UIColor.tertiaryLabel
+            } else {
+                return UIColor.lightGray
+            }
+        case "quaternarylabel":
+            if #available(iOS 13.0, *) {
+                return UIColor.quaternaryLabel
+            } else {
+                return UIColor.lightGray
+            }
+        case "placeholdertext":
+            if #available(iOS 13.0, *) {
+                return UIColor.placeholderText
+            } else {
+                return UIColor.lightGray
+            }
+        case "systembackground":
+            if #available(iOS 13.0, *) {
+                return UIColor.systemBackground
+            } else {
+                return UIColor.white
+            }
+        case "secondarysystembackground":
+            if #available(iOS 13.0, *) {
+                return UIColor.secondarySystemBackground
+            } else {
+                return UIColor.groupTableViewBackground
+            }
+        case "tertiarysystembackground":
+            if #available(iOS 13.0, *) {
+                return UIColor.tertiarySystemBackground
+            } else {
+                return UIColor.groupTableViewBackground
+            }
+        case "systemblue":
+            return UIColor.systemBlue
+        case "systemgreen":
+            return UIColor.systemGreen
+        case "systemred":
+            return UIColor.systemRed
+        case "systemorange":
+            return UIColor.systemOrange
+        case "systemyellow":
+            return UIColor.systemYellow
+        case "systempink":
+            return UIColor.systemPink
+        case "systempurple":
+            return UIColor.systemPurple
+        case "systemteal":
+            if #available(iOS 13.0, *) {
+                return UIColor.systemTeal
+            } else {
+                return UIColor.cyan
+            }
+        case "systemindigo":
+            if #available(iOS 13.0, *) {
+                return UIColor.systemIndigo
+            } else {
+                return UIColor.blue
+            }
+        case "systemgray":
+            return UIColor.systemGray
+        default:
+            return nil
+        }
+    }
+
+    private func resolveColorComponents(from dict: [String: Any]) -> UIColor? {
+        if let r = dict["r"] as? Double,
+            let g = dict["g"] as? Double,
+            let b = dict["b"] as? Double
+        {
+            let alpha = dict["a"] as? Double ?? 1.0
+            return UIColor(
+                red: CGFloat(r / 255.0),
+                green: CGFloat(g / 255.0),
+                blue: CGFloat(b / 255.0),
+                alpha: CGFloat(alpha)
+            )
+        }
+
+        if let hex = dict["hex"] as? String {
+            return resolveHexColor(hex)
+        }
+
+        return nil
+    }
+
+    private func resolveHexColor(_ hex: String) -> UIColor? {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+
+        var rgb: UInt64 = 0
+
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
+            return nil
+        }
+
+        let length = hexSanitized.count
+        let red: CGFloat
+        let green: CGFloat
+        let blue: CGFloat
+        let alpha: CGFloat
+
+        if length == 6 {
+            red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+            green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+            blue = CGFloat(rgb & 0x0000FF) / 255.0
+            alpha = 1.0
+        } else if length == 8 {
+            red = CGFloat((rgb & 0xFF00_0000) >> 24) / 255.0
+            green = CGFloat((rgb & 0x00FF_0000) >> 16) / 255.0
+            blue = CGFloat((rgb & 0x0000_FF00) >> 8) / 255.0
+            alpha = CGFloat(rgb & 0x0000_00FF) / 255.0
+        } else {
+            return nil
+        }
+
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(
             self,
@@ -555,6 +833,27 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
                     self.textView.resignFirstResponder()
                 }
             }
+        }
+    }
+
+    var caretHidden: Bool? {
+        didSet {
+            Task { @MainActor in
+                self.textView.isCaretHidden = self.caretHidden ?? false
+            }
+        }
+    }
+
+    var clearTextOnFocus: Bool? {
+        didSet {
+            self.textView.clearTextOnFocus = self.clearTextOnFocus ?? false
+        }
+    }
+
+    var clearButtonMode: ClearButtonMode? {
+        didSet {
+            // UITextView doesn't support clearButtonMode, but we handle it gracefully
+            // This is intentionally a no-op for multi-line text input
         }
     }
 
@@ -679,8 +978,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
     var placeholder: String? {
         didSet {
             Task { @MainActor in
-                // UITextView doesn't have built-in placeholder, but we can implement it if needed
-                // For now, this is a no-op for UITextView
+                self.textView.placeholder = self.placeholder
             }
         }
     }
@@ -696,8 +994,13 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
     var placeholderTextColor: ProcessedColor? {
         didSet {
             Task { @MainActor in
-                // UITextView doesn't have built-in placeholder, but we can implement it if needed
-                // For now, this is a no-op for UITextView
+                if let color = self.placeholderTextColor {
+                    self.textView.placeholderTextColor =
+                        self.resolveProcessedColor(color)
+                        ?? UIColor.placeholderText
+                } else {
+                    self.textView.placeholderTextColor = UIColor.placeholderText
+                }
             }
         }
     }
@@ -877,6 +1180,20 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
     func isFocused() -> Bool {
         return textView.isFirstResponder
+    }
+
+    func scrollRangeToVisible(start: Int, end: Int) {
+        Task { @MainActor in
+            let range = NSRange(location: start, length: max(0, end - start))
+            self.textView.scrollRangeToVisible(range)
+        }
+    }
+
+    func getContentSize() -> (width: Double, height: Double) {
+        return (
+            Double(textView.contentSize.width),
+            Double(textView.contentSize.height)
+        )
     }
 
     // MARK: - Private Implementation Methods
@@ -1340,6 +1657,408 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         applyLineBreakProperties()
     }
 
+    private func clearAttributedTextAndPreserveContent() {
+        // Helper method to clear all attributed text while preserving plain text content
+        if let currentText = self.textView.text, !currentText.isEmpty {
+            let plainText = currentText
+            self.textView.attributedText = nil
+            self.textView.text = plainText
+        } else {
+            self.textView.attributedText = nil
+        }
+    }
+
+    private func resetToDefaultAttributes() {
+        // Reset all text attributes to defaults
+        self.textView.textColor = nil  // System default
+        self.baseFont = UIFont.systemFont(ofSize: 14)  // Reset base font to default
+        self.textView.font = self.baseFont  // Default size and weight
+
+        // Only set default alignment if textAlign is not specified
+        if self.textAlign == nil {
+            self.textView.textAlignment = .natural
+        }
+
+        // Clear any attributed text to remove spacing, decorations, shadows, colors
+        clearAttributedTextAndPreserveContent()
+        self.applyEffectiveTextAlignment()
+
+        // Reset user interaction to default
+        updateUserSelect(userSelect: .auto)
+    }
+
+    // MARK: - Letter Spacing Support
+    private func applyLetterSpacing(spacing: Double) {
+        let currentText = self.textView.text ?? ""
+        guard !currentText.isEmpty else { return }
+
+        let mutableAttributedString: NSMutableAttributedString
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+            // Apply current font and color
+            if let font = self.textView.font {
+                mutableAttributedString.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+            if let textColor = self.textView.textColor {
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+        }
+
+        mutableAttributedString.addAttribute(
+            .kern,
+            value: spacing,
+            range: NSRange(location: 0, length: mutableAttributedString.length)
+        )
+
+        self.textView.attributedText = mutableAttributedString
+    }
+
+    // MARK: - Writing Direction Support
+    private func applyWritingDirection(_ writingDirection: WritingDirection) {
+        let currentText = self.textView.text ?? ""
+        guard !currentText.isEmpty else { return }
+
+        let mutableAttributedString: NSMutableAttributedString
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+        }
+
+        let nsWritingDirection =
+            HybridMultiLineTextInputView.nsWritingDirection(
+                from: writingDirection
+            )
+        mutableAttributedString.addAttribute(
+            .writingDirection,
+            value: [nsWritingDirection.rawValue],
+            range: NSRange(location: 0, length: mutableAttributedString.length)
+        )
+
+        self.textView.attributedText = mutableAttributedString
+    }
+
+    private static func nsWritingDirection(
+        from writingDirection: WritingDirection
+    ) -> NSWritingDirection {
+        switch writingDirection {
+        case .ltr:
+            return .leftToRight
+        case .rtl:
+            return .rightToLeft
+        case .auto:
+            return .natural
+        }
+    }
+
+    // MARK: - User Select Support
+    private func updateUserSelect(userSelect: UserSelect) {
+        switch userSelect {
+        case .none:
+            self.textView.isSelectable = false
+            self.textView.isUserInteractionEnabled = false
+        case .text:
+            self.textView.isSelectable = true
+            self.textView.isEditable = false
+            self.textView.isUserInteractionEnabled = true
+        case .all, .auto:
+            self.textView.isSelectable = true
+            self.textView.isEditable = self.editable ?? true
+            self.textView.isUserInteractionEnabled = true
+        case .contain:
+            // .contain allows selection but restricts dragging outside bounds
+            self.textView.isSelectable = true
+            self.textView.isEditable = self.editable ?? true
+            self.textView.isUserInteractionEnabled = true
+        // UITextView doesn't have direct equivalent to CSS user-select: contain
+        // but we can use the default behavior with selection enabled
+        @unknown default:
+            self.textView.isSelectable = true
+            self.textView.isEditable = self.editable ?? true
+            self.textView.isUserInteractionEnabled = true
+        }
+    }
+
+    // MARK: - FontVariant Support
+    private static let fontVariantFeatureMap:
+        [String: [UIFontDescriptor.FeatureKey: Any]] = {
+            if #available(iOS 15.0, *) {
+                return [
+                    "small-caps": [
+                        .type: kLowerCaseType,
+                        .selector: kLowerCaseSmallCapsSelector,
+                    ],
+                    "oldstyle-nums": [
+                        .type: kNumberCaseType,
+                        .selector: kLowerCaseNumbersSelector,
+                    ],
+                    "lining-nums": [
+                        .type: kNumberCaseType,
+                        .selector: kUpperCaseNumbersSelector,
+                    ],
+                    "tabular-nums": [
+                        .type: kNumberSpacingType,
+                        .selector: kMonospacedNumbersSelector,
+                    ],
+                    "proportional-nums": [
+                        .type: kNumberSpacingType,
+                        .selector: kProportionalNumbersSelector,
+                    ],
+                    "common-ligatures": [
+                        .type: kLigaturesType,
+                        .selector: kCommonLigaturesOnSelector,
+                    ],
+                    "no-common-ligatures": [
+                        .type: kLigaturesType,
+                        .selector: kCommonLigaturesOffSelector,
+                    ],
+                    "discretionary-ligatures": [
+                        .type: kLigaturesType,
+                        .selector: kRareLigaturesOnSelector,
+                    ],
+                    "no-discretionary-ligatures": [
+                        .type: kLigaturesType,
+                        .selector: kRareLigaturesOffSelector,
+                    ],
+                    "historical-ligatures": [
+                        .type: kLigaturesType,
+                        .selector: kHistoricalLigaturesOnSelector,
+                    ],
+                    "no-historical-ligatures": [
+                        .type: kLigaturesType,
+                        .selector: kHistoricalLigaturesOffSelector,
+                    ],
+                    "contextual": [
+                        .type: kContextualAlternatesType,
+                        .selector: kContextualAlternatesOnSelector,
+                    ],
+                    "no-contextual": [
+                        .type: kContextualAlternatesType,
+                        .selector: kContextualAlternatesOffSelector,
+                    ],
+                ]
+            } else {
+                return [
+                    "small-caps": [
+                        .featureIdentifier: kLowerCaseType,
+                        .typeIdentifier: kLowerCaseSmallCapsSelector,
+                    ],
+                    "oldstyle-nums": [
+                        .featureIdentifier: kNumberCaseType,
+                        .typeIdentifier: kLowerCaseNumbersSelector,
+                    ],
+                    "lining-nums": [
+                        .featureIdentifier: kNumberCaseType,
+                        .typeIdentifier: kUpperCaseNumbersSelector,
+                    ],
+                    "tabular-nums": [
+                        .featureIdentifier: kNumberSpacingType,
+                        .typeIdentifier: kMonospacedNumbersSelector,
+                    ],
+                    "proportional-nums": [
+                        .featureIdentifier: kNumberSpacingType,
+                        .typeIdentifier: kProportionalNumbersSelector,
+                    ],
+                    "common-ligatures": [
+                        .featureIdentifier: kLigaturesType,
+                        .typeIdentifier: kCommonLigaturesOnSelector,
+                    ],
+                    "no-common-ligatures": [
+                        .featureIdentifier: kLigaturesType,
+                        .typeIdentifier: kCommonLigaturesOffSelector,
+                    ],
+                    "discretionary-ligatures": [
+                        .featureIdentifier: kLigaturesType,
+                        .typeIdentifier: kRareLigaturesOnSelector,
+                    ],
+                    "no-discretionary-ligatures": [
+                        .featureIdentifier: kLigaturesType,
+                        .typeIdentifier: kRareLigaturesOffSelector,
+                    ],
+                    "historical-ligatures": [
+                        .featureIdentifier: kLigaturesType,
+                        .typeIdentifier: kHistoricalLigaturesOnSelector,
+                    ],
+                    "no-historical-ligatures": [
+                        .featureIdentifier: kLigaturesType,
+                        .typeIdentifier: kHistoricalLigaturesOffSelector,
+                    ],
+                    "contextual": [
+                        .featureIdentifier: kContextualAlternatesType,
+                        .typeIdentifier: kContextualAlternatesOnSelector,
+                    ],
+                    "no-contextual": [
+                        .featureIdentifier: kContextualAlternatesType,
+                        .typeIdentifier: kContextualAlternatesOffSelector,
+                    ],
+                ]
+            }
+        }()
+
+    private func applyFontVariant(to font: UIFont, variants: [FontVariant])
+        -> UIFont
+    {
+        var features: [[UIFontDescriptor.FeatureKey: Any]] = []
+
+        for variant in variants {
+            let variantString = fontVariantToString(variant)
+
+            // Handle stylistic sets separately
+            if variantString.hasPrefix("stylistic-") {
+                if let stylisticFeature = stylisticSetFeature(for: variant) {
+                    features.append(stylisticFeature)
+                }
+            } else if let feature =
+                HybridMultiLineTextInputView.fontVariantFeatureMap[
+                    variantString
+                ]
+            {
+                features.append(feature)
+            }
+        }
+
+        guard !features.isEmpty else { return font }
+
+        let descriptor = font.fontDescriptor.addingAttributes([
+            UIFontDescriptor.AttributeName.featureSettings: features
+        ])
+
+        return UIFont(descriptor: descriptor, size: font.pointSize)
+    }
+
+    private func stylisticSetFeature(for variant: FontVariant)
+        -> [UIFontDescriptor.FeatureKey: Any]?
+    {
+        let stylisticSetNumber: Int
+        switch variant {
+        case .stylisticOne: stylisticSetNumber = 1
+        case .stylisticTwo: stylisticSetNumber = 2
+        case .stylisticThree: stylisticSetNumber = 3
+        case .stylisticFour: stylisticSetNumber = 4
+        case .stylisticFive: stylisticSetNumber = 5
+        case .stylisticSix: stylisticSetNumber = 6
+        case .stylisticSeven: stylisticSetNumber = 7
+        case .stylisticEight: stylisticSetNumber = 8
+        case .stylisticNine: stylisticSetNumber = 9
+        case .stylisticTen: stylisticSetNumber = 10
+        case .stylisticEleven: stylisticSetNumber = 11
+        case .stylisticTwelve: stylisticSetNumber = 12
+        case .stylisticThirteen: stylisticSetNumber = 13
+        case .stylisticFourteen: stylisticSetNumber = 14
+        case .stylisticFifteen: stylisticSetNumber = 15
+        case .stylisticSixteen: stylisticSetNumber = 16
+        case .stylisticSeventeen: stylisticSetNumber = 17
+        case .stylisticEighteen: stylisticSetNumber = 18
+        case .stylisticNineteen: stylisticSetNumber = 19
+        case .stylisticTwenty: stylisticSetNumber = 20
+        default: return nil
+        }
+
+        if #available(iOS 15.0, *) {
+            return [
+                .type: kStylisticAlternativesType,
+                .selector: stylisticSetNumber + kStylisticAltOneOnSelector - 1,
+            ]
+        } else {
+            return [
+                .featureIdentifier: kStylisticAlternativesType,
+                .typeIdentifier: stylisticSetNumber + kStylisticAltOneOnSelector
+                    - 1,
+            ]
+        }
+    }
+
+    private func fontVariantToString(_ variant: FontVariant) -> String {
+        switch variant {
+        case .smallCaps:
+            return "small-caps"
+        case .oldstyleNums:
+            return "oldstyle-nums"
+        case .liningNums:
+            return "lining-nums"
+        case .tabularNums:
+            return "tabular-nums"
+        case .proportionalNums:
+            return "proportional-nums"
+        case .commonLigatures:
+            return "common-ligatures"
+        case .noCommonLigatures:
+            return "no-common-ligatures"
+        case .discretionaryLigatures:
+            return "discretionary-ligatures"
+        case .noDiscretionaryLigatures:
+            return "no-discretionary-ligatures"
+        case .historicalLigatures:
+            return "historical-ligatures"
+        case .noHistoricalLigatures:
+            return "no-historical-ligatures"
+        case .contextual:
+            return "contextual"
+        case .noContextual:
+            return "no-contextual"
+        case .stylisticOne:
+            return "stylistic-01"
+        case .stylisticTwo:
+            return "stylistic-02"
+        case .stylisticThree:
+            return "stylistic-03"
+        case .stylisticFour:
+            return "stylistic-04"
+        case .stylisticFive:
+            return "stylistic-05"
+        case .stylisticSix:
+            return "stylistic-06"
+        case .stylisticSeven:
+            return "stylistic-07"
+        case .stylisticEight:
+            return "stylistic-08"
+        case .stylisticNine:
+            return "stylistic-09"
+        case .stylisticTen:
+            return "stylistic-10"
+        case .stylisticEleven:
+            return "stylistic-11"
+        case .stylisticTwelve:
+            return "stylistic-12"
+        case .stylisticThirteen:
+            return "stylistic-13"
+        case .stylisticFourteen:
+            return "stylistic-14"
+        case .stylisticFifteen:
+            return "stylistic-15"
+        case .stylisticSixteen:
+            return "stylistic-16"
+        case .stylisticSeventeen:
+            return "stylistic-17"
+        case .stylisticEighteen:
+            return "stylistic-18"
+        case .stylisticNineteen:
+            return "stylistic-19"
+        case .stylisticTwenty:
+            return "stylistic-20"
+        @unknown default:
+            return ""
+        }
+    }
+
     // MARK: - Line Break Properties
     private func applyLineBreakProperties() {
         guard let attrs = self.textAttributes else { return }
@@ -1436,11 +2155,180 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         self.textView.attributedText = mutableAttributedString
     }
 
-    private func resetToDefaultAttributes() {
-        self.textView.textColor = nil
-        self.baseFont = UIFont.systemFont(ofSize: 14)
-        self.textView.font = self.baseFont
-        self.applyEffectiveTextAlignment()
+    // MARK: - Text Decoration Support
+    private func applyTextDecoration(
+        decorationLine: TextDecorationLine,
+        decorationStyle: TextDecorationStyle?,
+        decorationColor: ProcessedColor?
+    ) {
+        let currentText = self.textView.text ?? ""
+        guard !currentText.isEmpty else { return }
+
+        let mutableAttributedString: NSMutableAttributedString
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+            // Apply current font and color
+            if let font = self.textView.font {
+                mutableAttributedString.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+            if let textColor = self.textView.textColor {
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+        }
+
+        let fullRange = NSRange(
+            location: 0,
+            length: mutableAttributedString.length
+        )
+
+        // Apply underline
+        if decorationLine == .underline
+            || decorationLine == .underlineLineThrough
+        {
+            let underlineStyle = nsUnderlineStyle(
+                from: decorationStyle ?? .solid
+            )
+            mutableAttributedString.addAttribute(
+                .underlineStyle,
+                value: underlineStyle.rawValue,
+                range: fullRange
+            )
+
+            if let color = decorationColor {
+                if let resolvedColor = resolveTextDecorationColor(color) {
+                    mutableAttributedString.addAttribute(
+                        .underlineColor,
+                        value: resolvedColor,
+                        range: fullRange
+                    )
+                }
+            }
+        }
+
+        // Apply strikethrough
+        if decorationLine == .lineThrough
+            || decorationLine == .underlineLineThrough
+        {
+            let strikethroughStyle = nsUnderlineStyle(
+                from: decorationStyle ?? .solid
+            )
+            mutableAttributedString.addAttribute(
+                .strikethroughStyle,
+                value: strikethroughStyle.rawValue,
+                range: fullRange
+            )
+
+            if let color = decorationColor {
+                if let resolvedColor = resolveTextDecorationColor(color) {
+                    mutableAttributedString.addAttribute(
+                        .strikethroughColor,
+                        value: resolvedColor,
+                        range: fullRange
+                    )
+                }
+            }
+        }
+
+        self.textView.attributedText = mutableAttributedString
+    }
+
+    private func nsUnderlineStyle(from decorationStyle: TextDecorationStyle)
+        -> NSUnderlineStyle
+    {
+        switch decorationStyle {
+        case .solid:
+            return .single
+        case .double:
+            return .double
+        case .dotted:
+            return .patternDot
+        case .dashed:
+            return .patternDash
+        }
+    }
+
+    private func resolveTextDecorationColor(_ decorationColor: ProcessedColor)
+        -> UIColor?
+    {
+        return resolveProcessedColor(decorationColor)
+    }
+
+    // MARK: - Text Shadow Support
+    private func applyTextShadow(
+        shadowOffset: TextShadowOffset,
+        shadowRadius: Double,
+        color: ProcessedColor?
+    ) {
+        let currentText = self.textView.text ?? ""
+        guard !currentText.isEmpty else { return }
+
+        let mutableAttributedString: NSMutableAttributedString
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+            // Apply current font and color
+            if let font = self.textView.font {
+                mutableAttributedString.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+            if let textColor = self.textView.textColor {
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+        }
+
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize(
+            width: shadowOffset.width,
+            height: shadowOffset.height
+        )
+        shadow.shadowBlurRadius = CGFloat(shadowRadius)
+
+        if let shadowColor = color {
+            shadow.shadowColor =
+                resolveTextShadowColor(shadowColor) ?? UIColor.black
+        } else {
+            shadow.shadowColor = UIColor.black
+        }
+
+        mutableAttributedString.addAttribute(
+            .shadow,
+            value: shadow,
+            range: NSRange(location: 0, length: mutableAttributedString.length)
+        )
+
+        self.textView.attributedText = mutableAttributedString
+    }
+
+    private func resolveTextShadowColor(_ shadowColor: ProcessedColor)
+        -> UIColor?
+    {
+        return resolveProcessedColor(shadowColor)
     }
 
     private func applyTextTransform(_ text: String) -> String {
@@ -1461,13 +2349,32 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         }
     }
 
-    // MARK: - Utility Methods for Text Decoration (stubs for now)
+    // MARK: - Utility Methods for Text Decoration and Shadow
     func reapplyTextDecoration() {
-        // TODO: Implement text decoration re-application for UITextView
+        guard let attrs = self.textAttributes,
+            let decorationLine = attrs.textDecorationLine,
+            decorationLine != .none
+        else { return }
+
+        applyTextDecoration(
+            decorationLine: decorationLine,
+            decorationStyle: attrs.textDecorationStyle,
+            decorationColor: attrs.textDecorationColor
+        )
     }
 
     func reapplyTextShadow() {
-        // TODO: Implement text shadow re-application for UITextView
+        guard let attrs = self.textAttributes,
+            let shadowOffset = attrs.textShadowOffset,
+            let shadowRadius = attrs.textShadowRadius,
+            shadowRadius > 0
+        else { return }
+
+        applyTextShadow(
+            shadowOffset: shadowOffset,
+            shadowRadius: shadowRadius,
+            color: attrs.textShadowColor
+        )
     }
 
     // MARK: - Static Helper Methods
