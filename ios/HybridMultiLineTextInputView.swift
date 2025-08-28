@@ -529,19 +529,21 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         // Set parent reference for text decoration re-application
         self.textView.parentView = self
 
-        // Defer until layout pass to get accurate intrinsic height
+        // Initialize immediately for proper color application
+        self.baseFont = UIFont.systemFont(ofSize: 14)
+        self.textView.font = self.baseFont
+        self.wireTextViewEventCallbacks()
+
+        // Defer layout-dependent operations until layout pass
         Task { @MainActor in
             // Ensure layout is up-to-date
             self.textView.setNeedsLayout()
             self.textView.layoutIfNeeded()
 
-            // Set default font size to 14pt and cache base font for scaling
-            self.baseFont = UIFont.systemFont(ofSize: 14)
-            self.textView.font = self.baseFont
+            // Apply all styling immediately after layout
             self.applyTextAttributes()
             self.applyFontScaling()
             self.updateNumberOfLines()
-            self.wireTextViewEventCallbacks()
 
             // Calculate initial height using content size
             let initialHeight = Double(self.textView.contentSize.height)
@@ -1107,6 +1109,13 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
     var textAttributes: TextAttributes? {
         didSet {
+            // Apply text color immediately if available, even before full layout
+            if let attrs = self.textAttributes, let color = attrs.color {
+                if let resolvedColor = resolveProcessedColor(color) {
+                    self.textView.textColor = resolvedColor
+                }
+            }
+
             Task { @MainActor in
                 self.applyTextAttributes()
                 Task { @MainActor in
@@ -1598,6 +1607,13 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             return
         }
 
+        // Start with a clean attributed string to properly apply all attributes
+        let currentText = self.textView.text ?? ""
+        let mutableAttributedString = NSMutableAttributedString(
+            string: currentText
+        )
+        let fullRange = NSRange(location: 0, length: currentText.count)
+
         // Apply font size
         var font = self.baseFont
         if let fontSize = attrs.fontSize, fontSize > 0 {
@@ -1625,36 +1641,224 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             font = HybridMultiLineTextInputView.italicFont(font: font)
         }
 
-        self.textView.font = font
+        // Apply font variants if available
+        if let variants = attrs.fontVariant, !variants.isEmpty {
+            font = applyFontVariant(to: font, variants: variants)
+        }
+
+        // Add font attribute
+        mutableAttributedString.addAttribute(
+            .font,
+            value: font,
+            range: fullRange
+        )
 
         // Apply text color
         if let color = attrs.color {
-            switch color {
-            case .second(let doubleValue):
-                let v = UInt32(clamping: Int64(doubleValue))
-                let a = CGFloat((v >> 24) & 0xFF) / 255.0
-                let r = CGFloat((v >> 16) & 0xFF) / 255.0
-                let g = CGFloat((v >> 8) & 0xFF) / 255.0
-                let b = CGFloat(v & 0xFF) / 255.0
-                self.textView.textColor = UIColor(
-                    red: r,
-                    green: g,
-                    blue: b,
-                    alpha: a
+            let resolvedColor = resolveProcessedColor(color)
+            if let textColor = resolvedColor {
+                // Set both UITextView's textColor property and attributed string color
+                self.textView.textColor = textColor
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: fullRange
                 )
-            case .first(_):
-                // Handle semantic/dynamic colors if needed
-                break
+            }
+        } else {
+            // Reset to system default if no color specified
+            self.textView.textColor = nil
+        }
+
+        // Apply letter spacing
+        if let letterSpacing = attrs.letterSpacing {
+            mutableAttributedString.addAttribute(
+                .kern,
+                value: letterSpacing,
+                range: fullRange
+            )
+        }
+
+        // Apply writing direction
+        if let writingDirection = attrs.writingDirection {
+            let nsWritingDirection =
+                HybridMultiLineTextInputView.nsWritingDirection(
+                    from: writingDirection
+                )
+            mutableAttributedString.addAttribute(
+                .writingDirection,
+                value: [nsWritingDirection.rawValue],
+                range: fullRange
+            )
+        }
+
+        // Apply text decoration (underline/strikethrough)
+        if let decorationLine = attrs.textDecorationLine,
+            decorationLine != .none
+        {
+            // Apply underline
+            if decorationLine == .underline
+                || decorationLine == .underlineLineThrough
+            {
+                let underlineStyle = nsUnderlineStyle(
+                    from: attrs.textDecorationStyle ?? .solid
+                )
+                mutableAttributedString.addAttribute(
+                    .underlineStyle,
+                    value: underlineStyle.rawValue,
+                    range: fullRange
+                )
+
+                if let decorationColor = attrs.textDecorationColor,
+                    let resolvedColor = resolveProcessedColor(decorationColor)
+                {
+                    mutableAttributedString.addAttribute(
+                        .underlineColor,
+                        value: resolvedColor,
+                        range: fullRange
+                    )
+                }
+            }
+
+            // Apply strikethrough
+            if decorationLine == .lineThrough
+                || decorationLine == .underlineLineThrough
+            {
+                let strikethroughStyle = nsUnderlineStyle(
+                    from: attrs.textDecorationStyle ?? .solid
+                )
+                mutableAttributedString.addAttribute(
+                    .strikethroughStyle,
+                    value: strikethroughStyle.rawValue,
+                    range: fullRange
+                )
+
+                if let decorationColor = attrs.textDecorationColor,
+                    let resolvedColor = resolveProcessedColor(decorationColor)
+                {
+                    mutableAttributedString.addAttribute(
+                        .strikethroughColor,
+                        value: resolvedColor,
+                        range: fullRange
+                    )
+                }
             }
         }
 
-        // Apply text transform
-        if let currentText = self.textView.text, !currentText.isEmpty {
-            self.textView.text = applyTextTransform(currentText)
+        // Apply text shadow
+        if let shadowOffset = attrs.textShadowOffset,
+            let shadowRadius = attrs.textShadowRadius
+        {
+            let shadow = NSShadow()
+            shadow.shadowOffset = CGSize(
+                width: shadowOffset.width,
+                height: shadowOffset.height
+            )
+            shadow.shadowBlurRadius = CGFloat(shadowRadius)
+
+            if let shadowColor = attrs.textShadowColor,
+                let resolvedColor = resolveProcessedColor(shadowColor)
+            {
+                shadow.shadowColor = resolvedColor
+            }
+
+            mutableAttributedString.addAttribute(
+                .shadow,
+                value: shadow,
+                range: fullRange
+            )
         }
 
-        // Apply lineBreakStrategyIOS and lineBreakModeIOS
-        applyLineBreakProperties()
+        // Apply paragraph style for line break properties and text alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        var shouldApplyParagraphStyle = false
+
+        // Apply text alignment
+        let effectiveAlign: TextAlignAttributes? =
+            self.textAlignToAttributes(self.textAlign) ?? attrs.textAlign
+        if let align = effectiveAlign {
+            paragraphStyle.alignment =
+                HybridMultiLineTextInputView.nsTextAlignment(from: align)
+            shouldApplyParagraphStyle = true
+        }
+
+        // Apply lineBreakStrategyIOS (iOS 14.0+)
+        if let lineBreakStrategy = attrs.lineBreakStrategyIOS {
+            if #available(iOS 14.0, *) {
+                switch lineBreakStrategy {
+                case .none:
+                    paragraphStyle.lineBreakStrategy = []
+                case .standard:
+                    paragraphStyle.lineBreakStrategy = .standard
+                case .hangulWord:
+                    paragraphStyle.lineBreakStrategy = .hangulWordPriority
+                case .pushOut:
+                    paragraphStyle.lineBreakStrategy = .pushOut
+                }
+                shouldApplyParagraphStyle = true
+            }
+        }
+
+        // Apply lineBreakModeIOS
+        if let lineBreakMode = attrs.lineBreakModeIOS {
+            switch lineBreakMode {
+            case .wordwrapping:
+                paragraphStyle.lineBreakMode = .byWordWrapping
+            case .char:
+                paragraphStyle.lineBreakMode = .byCharWrapping
+            case .clip:
+                paragraphStyle.lineBreakMode = .byClipping
+            case .head:
+                paragraphStyle.lineBreakMode = .byTruncatingHead
+            case .middle:
+                paragraphStyle.lineBreakMode = .byTruncatingMiddle
+            case .tail:
+                paragraphStyle.lineBreakMode = .byTruncatingTail
+            }
+            shouldApplyParagraphStyle = true
+        }
+
+        if shouldApplyParagraphStyle {
+            mutableAttributedString.addAttribute(
+                .paragraphStyle,
+                value: paragraphStyle,
+                range: fullRange
+            )
+        }
+
+        // Set the attributed text with all attributes applied
+        self.textView.attributedText = mutableAttributedString
+
+        // Apply text transform to the plain text if needed
+        if let transform = attrs.textTransform {
+            let transformedText = applyTextTransform(currentText)
+            if transformedText != currentText {
+                // Reapply all attributes to the transformed text
+                let newAttributedString = NSMutableAttributedString(
+                    string: transformedText
+                )
+                let newRange = NSRange(
+                    location: 0,
+                    length: transformedText.count
+                )
+
+                // Copy all attributes from the previous attributed string
+                mutableAttributedString.enumerateAttributes(
+                    in: fullRange,
+                    options: []
+                ) { attributes, _, _ in
+                    for (key, value) in attributes {
+                        newAttributedString.addAttribute(
+                            key,
+                            value: value,
+                            range: newRange
+                        )
+                    }
+                }
+
+                self.textView.attributedText = newAttributedString
+            }
+        }
     }
 
     private func clearAttributedTextAndPreserveContent() {
@@ -1670,7 +1874,7 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
     private func resetToDefaultAttributes() {
         // Reset all text attributes to defaults
-        self.textView.textColor = nil  // System default
+        self.textView.textColor = UIColor.label  // Use system default label color
         self.baseFont = UIFont.systemFont(ofSize: 14)  // Reset base font to default
         self.textView.font = self.baseFont  // Default size and weight
 
@@ -1685,75 +1889,6 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
         // Reset user interaction to default
         updateUserSelect(userSelect: .auto)
-    }
-
-    // MARK: - Letter Spacing Support
-    private func applyLetterSpacing(spacing: Double) {
-        let currentText = self.textView.text ?? ""
-        guard !currentText.isEmpty else { return }
-
-        let mutableAttributedString: NSMutableAttributedString
-        if let existingAttributedText = self.textView.attributedText {
-            mutableAttributedString = NSMutableAttributedString(
-                attributedString: existingAttributedText
-            )
-        } else {
-            mutableAttributedString = NSMutableAttributedString(
-                string: currentText
-            )
-            // Apply current font and color
-            if let font = self.textView.font {
-                mutableAttributedString.addAttribute(
-                    .font,
-                    value: font,
-                    range: NSRange(location: 0, length: currentText.count)
-                )
-            }
-            if let textColor = self.textView.textColor {
-                mutableAttributedString.addAttribute(
-                    .foregroundColor,
-                    value: textColor,
-                    range: NSRange(location: 0, length: currentText.count)
-                )
-            }
-        }
-
-        mutableAttributedString.addAttribute(
-            .kern,
-            value: spacing,
-            range: NSRange(location: 0, length: mutableAttributedString.length)
-        )
-
-        self.textView.attributedText = mutableAttributedString
-    }
-
-    // MARK: - Writing Direction Support
-    private func applyWritingDirection(_ writingDirection: WritingDirection) {
-        let currentText = self.textView.text ?? ""
-        guard !currentText.isEmpty else { return }
-
-        let mutableAttributedString: NSMutableAttributedString
-        if let existingAttributedText = self.textView.attributedText {
-            mutableAttributedString = NSMutableAttributedString(
-                attributedString: existingAttributedText
-            )
-        } else {
-            mutableAttributedString = NSMutableAttributedString(
-                string: currentText
-            )
-        }
-
-        let nsWritingDirection =
-            HybridMultiLineTextInputView.nsWritingDirection(
-                from: writingDirection
-            )
-        mutableAttributedString.addAttribute(
-            .writingDirection,
-            value: [nsWritingDirection.rawValue],
-            range: NSRange(location: 0, length: mutableAttributedString.length)
-        )
-
-        self.textView.attributedText = mutableAttributedString
     }
 
     private static func nsWritingDirection(
@@ -2155,96 +2290,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         self.textView.attributedText = mutableAttributedString
     }
 
-    // MARK: - Text Decoration Support
-    private func applyTextDecoration(
-        decorationLine: TextDecorationLine,
-        decorationStyle: TextDecorationStyle?,
-        decorationColor: ProcessedColor?
-    ) {
-        let currentText = self.textView.text ?? ""
-        guard !currentText.isEmpty else { return }
-
-        let mutableAttributedString: NSMutableAttributedString
-        if let existingAttributedText = self.textView.attributedText {
-            mutableAttributedString = NSMutableAttributedString(
-                attributedString: existingAttributedText
-            )
-        } else {
-            mutableAttributedString = NSMutableAttributedString(
-                string: currentText
-            )
-            // Apply current font and color
-            if let font = self.textView.font {
-                mutableAttributedString.addAttribute(
-                    .font,
-                    value: font,
-                    range: NSRange(location: 0, length: currentText.count)
-                )
-            }
-            if let textColor = self.textView.textColor {
-                mutableAttributedString.addAttribute(
-                    .foregroundColor,
-                    value: textColor,
-                    range: NSRange(location: 0, length: currentText.count)
-                )
-            }
-        }
-
-        let fullRange = NSRange(
-            location: 0,
-            length: mutableAttributedString.length
-        )
-
-        // Apply underline
-        if decorationLine == .underline
-            || decorationLine == .underlineLineThrough
-        {
-            let underlineStyle = nsUnderlineStyle(
-                from: decorationStyle ?? .solid
-            )
-            mutableAttributedString.addAttribute(
-                .underlineStyle,
-                value: underlineStyle.rawValue,
-                range: fullRange
-            )
-
-            if let color = decorationColor {
-                if let resolvedColor = resolveTextDecorationColor(color) {
-                    mutableAttributedString.addAttribute(
-                        .underlineColor,
-                        value: resolvedColor,
-                        range: fullRange
-                    )
-                }
-            }
-        }
-
-        // Apply strikethrough
-        if decorationLine == .lineThrough
-            || decorationLine == .underlineLineThrough
-        {
-            let strikethroughStyle = nsUnderlineStyle(
-                from: decorationStyle ?? .solid
-            )
-            mutableAttributedString.addAttribute(
-                .strikethroughStyle,
-                value: strikethroughStyle.rawValue,
-                range: fullRange
-            )
-
-            if let color = decorationColor {
-                if let resolvedColor = resolveTextDecorationColor(color) {
-                    mutableAttributedString.addAttribute(
-                        .strikethroughColor,
-                        value: resolvedColor,
-                        range: fullRange
-                    )
-                }
-            }
-        }
-
-        self.textView.attributedText = mutableAttributedString
-    }
+    // MARK: - Text Decoration Support (moved to applyTextAttributes)
+    // Text decoration is now handled within applyTextAttributes() method
 
     private func nsUnderlineStyle(from decorationStyle: TextDecorationStyle)
         -> NSUnderlineStyle
@@ -2349,32 +2396,184 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         }
     }
 
-    // MARK: - Utility Methods for Text Decoration and Shadow
+    // MARK: - Utility Methods for Text Decoration and Shadow (updated)
+    // These methods now trigger full text attributes reapplication for consistency
     func reapplyTextDecoration() {
+        // Apply only text decoration attributes to current text
         guard let attrs = self.textAttributes,
             let decorationLine = attrs.textDecorationLine,
             decorationLine != .none
         else { return }
 
-        applyTextDecoration(
-            decorationLine: decorationLine,
-            decorationStyle: attrs.textDecorationStyle,
-            decorationColor: attrs.textDecorationColor
+        let currentText = self.textView.text ?? ""
+        guard !currentText.isEmpty else { return }
+
+        // Get existing attributed text or create new one
+        let mutableAttributedString: NSMutableAttributedString
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+            // Ensure basic attributes are preserved
+            if let font = self.textView.font {
+                mutableAttributedString.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+            if let textColor = self.textView.textColor {
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+        }
+
+        let fullRange = NSRange(
+            location: 0,
+            length: mutableAttributedString.length
         )
+
+        // Remove existing decoration attributes
+        mutableAttributedString.removeAttribute(
+            .underlineStyle,
+            range: fullRange
+        )
+        mutableAttributedString.removeAttribute(
+            .underlineColor,
+            range: fullRange
+        )
+        mutableAttributedString.removeAttribute(
+            .strikethroughStyle,
+            range: fullRange
+        )
+        mutableAttributedString.removeAttribute(
+            .strikethroughColor,
+            range: fullRange
+        )
+
+        // Apply new decoration
+        if decorationLine == .underline
+            || decorationLine == .underlineLineThrough
+        {
+            let underlineStyle = nsUnderlineStyle(
+                from: attrs.textDecorationStyle ?? .solid
+            )
+            mutableAttributedString.addAttribute(
+                .underlineStyle,
+                value: underlineStyle.rawValue,
+                range: fullRange
+            )
+
+            if let decorationColor = attrs.textDecorationColor,
+                let resolvedColor = resolveProcessedColor(decorationColor)
+            {
+                mutableAttributedString.addAttribute(
+                    .underlineColor,
+                    value: resolvedColor,
+                    range: fullRange
+                )
+            }
+        }
+
+        if decorationLine == .lineThrough
+            || decorationLine == .underlineLineThrough
+        {
+            let strikethroughStyle = nsUnderlineStyle(
+                from: attrs.textDecorationStyle ?? .solid
+            )
+            mutableAttributedString.addAttribute(
+                .strikethroughStyle,
+                value: strikethroughStyle.rawValue,
+                range: fullRange
+            )
+
+            if let decorationColor = attrs.textDecorationColor,
+                let resolvedColor = resolveProcessedColor(decorationColor)
+            {
+                mutableAttributedString.addAttribute(
+                    .strikethroughColor,
+                    value: resolvedColor,
+                    range: fullRange
+                )
+            }
+        }
+
+        self.textView.attributedText = mutableAttributedString
     }
 
     func reapplyTextShadow() {
+        // Apply only text shadow attributes to current text
         guard let attrs = self.textAttributes,
             let shadowOffset = attrs.textShadowOffset,
             let shadowRadius = attrs.textShadowRadius,
             shadowRadius > 0
         else { return }
 
-        applyTextShadow(
-            shadowOffset: shadowOffset,
-            shadowRadius: shadowRadius,
-            color: attrs.textShadowColor
+        let currentText = self.textView.text ?? ""
+        guard !currentText.isEmpty else { return }
+
+        // Get existing attributed text or create new one
+        let mutableAttributedString: NSMutableAttributedString
+        if let existingAttributedText = self.textView.attributedText {
+            mutableAttributedString = NSMutableAttributedString(
+                attributedString: existingAttributedText
+            )
+        } else {
+            mutableAttributedString = NSMutableAttributedString(
+                string: currentText
+            )
+            // Ensure basic attributes are preserved
+            if let font = self.textView.font {
+                mutableAttributedString.addAttribute(
+                    .font,
+                    value: font,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+            if let textColor = self.textView.textColor {
+                mutableAttributedString.addAttribute(
+                    .foregroundColor,
+                    value: textColor,
+                    range: NSRange(location: 0, length: currentText.count)
+                )
+            }
+        }
+
+        let fullRange = NSRange(
+            location: 0,
+            length: mutableAttributedString.length
         )
+
+        // Remove existing shadow
+        mutableAttributedString.removeAttribute(.shadow, range: fullRange)
+
+        // Apply new shadow
+        let shadow = NSShadow()
+        shadow.shadowOffset = CGSize(
+            width: shadowOffset.width,
+            height: shadowOffset.height
+        )
+        shadow.shadowBlurRadius = CGFloat(shadowRadius)
+
+        if let shadowColor = attrs.textShadowColor,
+            let resolvedColor = resolveProcessedColor(shadowColor)
+        {
+            shadow.shadowColor = resolvedColor
+        }
+
+        mutableAttributedString.addAttribute(
+            .shadow,
+            value: shadow,
+            range: fullRange
+        )
+        self.textView.attributedText = mutableAttributedString
     }
 
     // MARK: - Static Helper Methods
