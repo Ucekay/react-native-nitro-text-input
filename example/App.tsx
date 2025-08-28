@@ -87,7 +87,7 @@ export default function App() {
 				keyboardAppearance="default"
 				maxLength={500}
 				multiline={true}
-				numberOfLines={2}
+				numberOfLines={5}
 				scrollEnabled={true}
 				onBlur={() => {
 					console.log("Multi-line blurred");
@@ -109,7 +109,7 @@ export default function App() {
 				onContentSizeChange={(width: number, height: number) =>
 					console.log(`Multi-line content size: ${width}x${height}`)
 				}
-				placeholder="Multi-line Nitro Text Input 🔥&#10;Type multiple lines here..."
+				placeholder="Multi-line Nitro Text Input 🔥"
 				secureTextEntry={false}
 				selectTextOnFocus={false}
 				showSoftInputOnFocus={true}

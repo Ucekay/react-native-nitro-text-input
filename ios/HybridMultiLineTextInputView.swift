@@ -365,10 +365,15 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
             }
             // Notify text changed and content size changed
             onTextChanged?(self.text ?? "")
-            onContentSizeChanged?(
-                Double(self.contentSize.width),
-                Double(self.contentSize.height)
-            )
+            // Defer content size reporting to the next runloop so that UIKit has
+            // a chance to update contentSize after the text mutation & layout pass.
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.onContentSizeChanged?(
+                    Double(self.contentSize.width),
+                    Double(self.contentSize.height)
+                )
+            }
             return
         }
 
@@ -427,10 +432,14 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
         // Update placeholder visibility
         updatePlaceholderVisibility()
 
-        onContentSizeChanged?(
-            Double(self.contentSize.width),
-            Double(self.contentSize.height)
-        )
+        // Defer content size reporting (see comment above) to avoid transient 0 height values
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.onContentSizeChanged?(
+                Double(self.contentSize.width),
+                Double(self.contentSize.height)
+            )
+        }
 
         // Also notify selection changed after text updates
         if let range = self.selectedTextRange {
@@ -512,6 +521,29 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
             name: UITextView.textDidChangeNotification,
             object: self
         )
+    }
+
+    // MARK: - Layout observation for reliable content size events
+    private var lastReportedContentSize: CGSize = .zero
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let size = self.contentSize
+        // Avoid spamming identical values; also skip obviously invalid zero heights unless truly empty
+        if size != lastReportedContentSize {
+            lastReportedContentSize = size
+            // Only report after UIKit finalized layout in this cycle
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                // Re-check to ensure it hasn't changed again before dispatch executed
+                let current = self.contentSize
+                if current.height > 0 || current.width > 0 { // basic sanity
+                    self.onContentSizeChanged?(
+                        Double(current.width),
+                        Double(current.height)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -1602,7 +1634,12 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         }
 
         self.textView.onContentSizeChanged = { [weak self] width, height in
-            self?.onContentSizeChanged?(width, height)
+            guard let self = self else { return }
+            // Normalize height: ensure at least one line + insets (same idea as calculateInitialHeight)
+            let lineHeight = self.textView.font?.lineHeight ?? 17.0
+            let minimumHeight = lineHeight + self.textView.textContainerInset.top + self.textView.textContainerInset.bottom
+            let normalizedHeight = max(height, Double(minimumHeight))
+            self.onContentSizeChanged?(width, normalizedHeight)
         }
 
         self.textView.onKeyPressed = { [weak self] key in
