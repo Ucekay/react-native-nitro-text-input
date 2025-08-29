@@ -37,6 +37,7 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
 
     // Placeholder support
     private let placeholderLabel = UILabel()
+    private var placeholderTopConstraint: NSLayoutConstraint?
     var placeholder: String? {
         didSet {
             placeholderLabel.text = placeholder
@@ -52,6 +53,7 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
     override var font: UIFont? {
         didSet {
             placeholderLabel.font = font ?? UIFont.systemFont(ofSize: 14)
+            harmonizeInsetsWithSingleLineHeight()
         }
     }
 
@@ -79,6 +81,9 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
         // Setup placeholder
         setupPlaceholderLabel()
 
+    // Harmonize insets with a single-line text field appearance
+    harmonizeInsetsWithSingleLineHeight()
+
         // Add observers for text changes
         NotificationCenter.default.addObserver(
             self,
@@ -97,25 +102,46 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
 
         self.addSubview(placeholderLabel)
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+        let top = placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0)
+        self.placeholderTopConstraint = top
         NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(
-                equalTo: self.topAnchor,
-                constant: 8
-            ),
-            placeholderLabel.leadingAnchor.constraint(
-                equalTo: self.leadingAnchor,
-                constant: 5
-            ),
-            placeholderLabel.trailingAnchor.constraint(
-                lessThanOrEqualTo: self.trailingAnchor,
-                constant: -5
-            ),
+            top,
+            placeholderLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 2),
+            placeholderLabel.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -2),
         ])
 
         updatePlaceholderVisibility()
     }
 
-    private func updatePlaceholderVisibility() {
+    // Adjust textContainerInset so that (lineHeight + top+bottom) ~= intrinsic height of a UITextField with same font.
+    // This reduces the initial multiline height to match single-line appearance.
+    private func harmonizeInsetsWithSingleLineHeight() {
+        guard let f = self.font else { return }
+        // Create a transient text field to get the platform's intrinsic height for that font
+        let tf = UITextField()
+        tf.font = f
+        let target = tf.intrinsicContentSize.height
+        let line = f.lineHeight
+        // Extra vertical space we need to distribute as padding (not negative)
+        let extra = max(0, target - line)
+        let vertical = extra / 2.0
+        // Preserve current horizontal insets & padding; only adjust vertical parts
+        var inset = self.textContainerInset
+        inset.top = vertical
+        inset.bottom = vertical
+        // Avoid layout churn if unchanged
+        if abs(inset.top - self.textContainerInset.top) > 0.1 || abs(inset.bottom - self.textContainerInset.bottom) > 0.1 {
+            self.textContainerInset = inset
+        }
+        // Reduce internal left/right padding to feel closer to UITextField (lineFragmentPadding is applied on both sides)
+        self.textContainer.lineFragmentPadding = 0
+        // Update placeholder top constraint so placeholder baseline aligns similarly
+        self.placeholderTopConstraint?.constant = inset.top
+        // Trigger layout update without forcing immediate layout pass
+        self.setNeedsLayout()
+    }
+
+    func updatePlaceholderVisibility() {
         placeholderLabel.isHidden = !self.text.isEmpty
     }
 
@@ -473,7 +499,7 @@ class CustomTextView: UITextView, UITextViewDelegate, UITextDropDelegate {
             context: nil
         )
 
-        let lineHeight = textView.font?.lineHeight ?? 17
+    let lineHeight = textView.font?.lineHeight ?? 17
         let numberOfLines = Int(ceil(boundingRect.height / lineHeight))
 
         return max(numberOfLines, 1)
@@ -585,6 +611,17 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             }
         }
 
+        // Re-dispatch once more after next runloop to capture any inset/font adjustments done inside CustomTextView
+        Task { @MainActor in
+            await Task.yield()
+            self.textView.setNeedsLayout()
+            self.textView.layoutIfNeeded()
+            if let callback = self.onInitialHeightMeasured {
+                let height = self.calculateInitialHeight()
+                callback(height)
+            }
+        }
+
         // Listen for Dynamic Type changes
         NotificationCenter.default.addObserver(
             self,
@@ -613,21 +650,24 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
     // MARK: - Initial Height Calculation
     private func calculateInitialHeight() -> Double {
-        // For UITextView, we need to consider both content size and constraints
         let contentHeight = self.textView.contentSize.height
         let intrinsicHeight = self.textView.intrinsicContentSize.height
-
-        // Use the larger of content size or intrinsic content size
-        // This handles cases where UITextView hasn't fully calculated content size yet
         let calculatedHeight = max(contentHeight, intrinsicHeight)
+        let referenceHeight = self.singleLineReferenceHeight()
+        return Double(max(calculatedHeight, referenceHeight))
+    }
 
-        // Ensure we have a minimum sensible height (at least one line)
-        let lineHeight = self.textView.font?.lineHeight ?? 17.0
-        let minimumHeight =
-            lineHeight + self.textView.textContainerInset.top
-            + self.textView.textContainerInset.bottom
-
-        return Double(max(calculatedHeight, minimumHeight))
+    // Intrinsic single-line reference (UITextField) height cache
+    private static var singleLineHeightCache: [String: CGFloat] = [:]
+    private func singleLineReferenceHeight() -> CGFloat {
+        let font = self.textView.font ?? self.baseFont
+        let key = "\(font.fontName)#\(font.pointSize)"
+        if let cached = Self.singleLineHeightCache[key] { return cached }
+        let tf = UITextField()
+        tf.font = font
+        let h = tf.intrinsicContentSize.height
+        Self.singleLineHeightCache[key] = h
+        return h
     }
 
     private func resolveProcessedColor(_ processedColor: ProcessedColor)
@@ -1236,6 +1276,10 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
             // Trigger text changed event
             self.textView.onTextChanged?("")
+
+            // Explicitly refresh placeholder visibility because programmatic text change + manual onTextChanged
+            // may run before UITextView posts its textDidChange notification.
+            self.textView.updatePlaceholderVisibility()
         }
     }
 
@@ -1635,10 +1679,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
         self.textView.onContentSizeChanged = { [weak self] width, height in
             guard let self = self else { return }
-            // Normalize height: ensure at least one line + insets (same idea as calculateInitialHeight)
-            let lineHeight = self.textView.font?.lineHeight ?? 17.0
-            let minimumHeight = lineHeight + self.textView.textContainerInset.top + self.textView.textContainerInset.bottom
-            let normalizedHeight = max(height, Double(minimumHeight))
+            let reference = Double(self.singleLineReferenceHeight())
+            let normalizedHeight = max(height, reference)
             self.onContentSizeChanged?(width, normalizedHeight)
         }
 
@@ -1830,6 +1872,8 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         let paragraphStyle = NSMutableParagraphStyle()
         var shouldApplyParagraphStyle = false
 
+        // (Removed custom lineHeight support)
+
         // Apply text alignment
         let effectiveAlign: TextAlignAttributes? =
             self.textAlignToAttributes(self.textAlign) ?? attrs.textAlign
@@ -1885,6 +1929,14 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
 
         // Set the attributed text with all attributes applied
         self.textView.attributedText = mutableAttributedString
+        // Build typingAttributes once so newly typed text inherits all styles (underline, strike, shadow, color, etc.)
+        var typingAttributes: [NSAttributedString.Key: Any] = [:]
+        mutableAttributedString.enumerateAttributes(in: fullRange, options: []) { attrs, _, _ in
+            for (k, v) in attrs { typingAttributes[k] = v }
+        }
+        if typingAttributes[.font] == nil { typingAttributes[.font] = self.textView.font }
+        if typingAttributes[.foregroundColor] == nil { typingAttributes[.foregroundColor] = self.textView.textColor }
+        self.textView.typingAttributes = typingAttributes
 
         // Apply text transform to the plain text if needed
         if let transform = attrs.textTransform {
@@ -1914,6 +1966,15 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
                 }
 
                 self.textView.attributedText = newAttributedString
+                // Update typingAttributes to reflect transformed text's attributes.
+                var newTyping: [NSAttributedString.Key: Any] = [:]
+                let newFullRange = NSRange(location: 0, length: newAttributedString.length)
+                newAttributedString.enumerateAttributes(in: newFullRange, options: []) { attrs, _, _ in
+                    for (k, v) in attrs { newTyping[k] = v }
+                }
+                if newTyping[.font] == nil { newTyping[.font] = self.textView.font }
+                if newTyping[.foregroundColor] == nil { newTyping[.foregroundColor] = self.textView.textColor }
+                self.textView.typingAttributes = newTyping
             }
         }
     }
@@ -2345,6 +2406,14 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             range: fullRange
         )
         self.textView.attributedText = mutableAttributedString
+        // Keep typingAttributes in sync so decoration persists while typing.
+        var typingAttrs: [NSAttributedString.Key: Any] = [:]
+        mutableAttributedString.enumerateAttributes(in: fullRange, options: []) { attrs, _, _ in
+            for (k, v) in attrs { typingAttrs[k] = v }
+        }
+        if typingAttrs[.font] == nil { typingAttrs[.font] = self.textView.font }
+        if typingAttrs[.foregroundColor] == nil { typingAttrs[.foregroundColor] = self.textView.textColor }
+        self.textView.typingAttributes = typingAttrs
     }
 
     // MARK: - Text Decoration Support (moved to applyTextAttributes)
@@ -2359,9 +2428,11 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
         case .double:
             return .double
         case .dotted:
-            return .patternDot
+            // Need to include a base style (single) + pattern to actually render.
+            return [.single, .patternDot]
         case .dashed:
-            return .patternDash
+            // Need to include a base style (single) + pattern to actually render.
+            return [.single, .patternDash]
         }
     }
 
@@ -2755,7 +2826,10 @@ class HybridMultiLineTextInputView: HybridNitroMultiLineTextInputViewSpec {
             context: nil
         )
 
-        let lineHeight = textView.font?.lineHeight ?? 17
+        // Prefer explicit textAttributes.lineHeight if set (and >= font lineHeight), else font lineHeight
+        let explicit = self.textAttributes?.lineHeight.flatMap { $0 > 0 ? CGFloat($0) : nil }
+        let fontLine = textView.font?.lineHeight ?? 17
+        let lineHeight = max(explicit ?? fontLine, fontLine)
         let numberOfLines = Int(ceil(boundingRect.height / lineHeight))
 
         return max(numberOfLines, 1)
